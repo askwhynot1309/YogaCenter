@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+    transition: all .2s;
+    text-transform: capitalize;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.head{
+    padding: 2em ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(195, 245, 195);
+}
+
+.navbar a{
+    padding: 0 2em ;
+}
+
+.icon div{
+    padding: 0 1rem;
+}
+
+.container{
+    padding-top: 2em;
+}
+
+.col{
+    text-align: center;
+}
+
+.form_register div{
+    padding: 1% 0;
+}
