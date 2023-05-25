@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.min.css">
+    <title>Yoga Center</title>
 </head>
 
 <body>
@@ -25,8 +26,8 @@
         <div class="search-form">
             <div class="inner-form">
                 <form action="">
-                    <input type="email" name="" id="" placeholder="your email">
-                    <input type="password" name="" id="" placeholder="your password">
+                    <input type="text" name="account" placeholder="your account">
+                    <input type="password" name="password" placeholder="your password">
                     <button name="Login">Login</button>
                 </form>
             </div>
@@ -35,7 +36,8 @@
                 <div class="google-icon-wrapper">
                   <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
                 </div>
-                <p class="btn-text"><b>Sign in with google</b></p>
+                <p class="btn-text"><b><a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/YogaCenter/LoginGoogle&response_type=code
+		   &client_id=770844928975-77pd0lq2vg2adjg6s2hb0r6kn5fevu58.apps.googleusercontent.com&approval_prompt=force">Sign in with google</a></b></p>
               </div>
         </div>
 
@@ -181,7 +183,7 @@
                 <h1>Contact us</h1>
                 <div class="inner-form-contact">
                     <input type="text" placeholder="your name">
-                    <input type="email" placeholder="your email">
+                    <input type="tel" placeholder="your phone">
                     <textarea name="" id="" cols="30" rows="10"></textarea>
                 </div>
             </div>
