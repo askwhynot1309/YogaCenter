@@ -1,2 +1,34 @@
 /YogaCenter/build/
 /YogaCenter/dist/
+
+# Gradle
+.gradle/
+build/
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+nbproject/
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.swp
+*~
+
+# Application-specific files
+/application.properties
+/application.yml
+
