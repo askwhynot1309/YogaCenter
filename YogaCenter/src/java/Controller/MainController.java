@@ -32,14 +32,16 @@ public class MainController extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String action = request.getParameter("action");
-            if(action == null){
+            if (action == null) {
                 response.sendRedirect("error.html");
-            }
-            else{
+            } else {
                 String url = "";
                 switch (action) {
                     case "Login":
-                      url = "LoginServlet";//login to manage website:admin,staff,instructor  
+                        url = "LoginServlet";//login to manage website:admin,staff,instructor  
+                        break;
+                    case "Logout":
+                        url = "LogoutServlet";
                         break;
                     default:
                         throw new AssertionError();

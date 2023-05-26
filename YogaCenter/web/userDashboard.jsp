@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
@@ -6,15 +5,16 @@
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="admin.css">
+        <link rel="stylesheet" href="user.css">
     </head>
 
     <body>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3">
+                    <!-- Sidebar -->
                     <div class="sidebar">
-                        <h3>Admin Dashboard</h3>
+                        <h3>User Dashboard</h3>
                         <ul>
                             <li>
                                 <a href="MainController?action=ManageAccount">
@@ -23,15 +23,21 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="MainController?action=ManageSchedule">
+                                <a href="MainController?action=Booking">
                                     <i class="fas fa-calendar-alt icon"></i>
-                                    Manage Schedule
+                                    Class booking
                                 </a>
                             </li>
                             <li>
-                                <a href="MainController?action=ManageUser">
-                                    <i class="fas fa-users icon"></i>
-                                    Manage User
+                                <a href="MainController?action=ManageSub">
+                                    <i class="fas fa-money-bill"></i>                
+                                    Manage subscription
+                                </a>
+                            </li>
+                            <li>
+                                <a href="MainController?action=ChangePassword">
+                                    <i class="fas fa-lock"></i>
+                                    Change password
                                 </a>
                             </li>
                         </ul>
