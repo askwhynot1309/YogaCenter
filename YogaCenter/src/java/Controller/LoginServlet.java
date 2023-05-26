@@ -4,18 +4,20 @@
  */
 package Controller;
 
+import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ADMIN
  */
-public class MainController extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,21 +33,35 @@ public class MainController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String action = request.getParameter("action");
-            if(action == null){
-                response.sendRedirect("error.html");
-            }
-            else{
-                String url = "";
-                switch (action) {
-                    case "Login":
-                      url = "LoginServlet";//login to manage website:admin,staff,instructor  
+            String account = request.getParameter("account");
+            String password = request.getParameter("password");
+            HttpSession session = request.getSession();
+            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, password);
+            if(accountLogin != null){
+                switch (accountLogin.getRole()) {
+                    case 0:
+                        session.setAttribute("Admin", accountLogin.getName());
+                        response.sendRedirect("adminDashboard.jsp");
+                        break;
+                    case 1:
+                        session.setAttribute("Staff", accountLogin.getName());
+                        response.sendRedirect("staffDashboard.jsp");
+                        break;
+                    case 2:
+                        session.setAttribute("Trainer", accountLogin.getName());
+                        response.sendRedirect("trainerDashboard.jsp");
                         break;
                     default:
-                        throw new AssertionError();
-                }
-                request.getRequestDispatcher(url).forward(request, response);
+                        response.sendRedirect("error.html");
+                        break;
+                }                
             }
+            else{
+                request.setAttribute("Loginfail", "Sai tài khoản hoặc mật khẩu. Vui lòng nhập lại");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 
