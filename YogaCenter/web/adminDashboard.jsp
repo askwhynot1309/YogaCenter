@@ -17,19 +17,19 @@
                         <h3>Admin Dashboard</h3>
                         <ul>
                             <li>
-                                <a href="MainController?action=ManageAccount">
+                                <a href="/YogaCenter/request?action=ManageAccount">
                                     <i class="fas fa-user icon"></i>
                                     Manage Account
                                 </a>
                             </li>
                             <li>
-                                <a href="MainController?action=ManageSchedule">
+                                <a href="/YogaCenter/request?action=ManageSchedule">
                                     <i class="fas fa-calendar-alt icon"></i>
                                     Manage Schedule
                                 </a>
                             </li>
                             <li>
-                                <a href="MainController?action=ManageUser">
+                                <a href="/YogaCenter/request?action=ManageUser">
                                     <i class="fas fa-users icon"></i>
                                     Manage User
                                 </a>
@@ -39,7 +39,7 @@
                         <h4>Settings</h4>
                         <ul>
                             <li>
-                                <a href="MainController?action=Logout">
+                                <a href="/YogaCenter/request?action=Logout">
                                     <i class="fas fa-sign-out-alt icon"></i>
                                     Logout
                                 </a>

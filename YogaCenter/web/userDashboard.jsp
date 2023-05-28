@@ -17,25 +17,25 @@
                         <h3>User Dashboard</h3>
                         <ul>
                             <li>
-                                <a href="MainController?action=ManageAccount">
+                                <a href="/YogaCenter/request?action=ManageAccount">
                                     <i class="fas fa-user icon"></i>
                                     Manage Account
                                 </a>
                             </li>
                             <li>
-                                <a href="MainController?action=Booking">
+                                <a href="/YogaCenter/request?action=Booking">
                                     <i class="fas fa-calendar-alt icon"></i>
                                     Class booking
                                 </a>
                             </li>
                             <li>
-                                <a href="MainController?action=ManageSub">
+                                <a href="/YogaCenter/request?action=ManageSub">
                                     <i class="fas fa-money-bill"></i>                
                                     Manage subscription
                                 </a>
                             </li>
                             <li>
-                                <a href="MainController?action=ChangePassword">
+                                <a href="/YogaCenter/request?action=ChangePassword">
                                     <i class="fas fa-lock"></i>
                                     Change password
                                 </a>
@@ -45,7 +45,7 @@
                         <h4>Settings</h4>
                         <ul>
                             <li>
-                                <a href="MainController?action=Logout">
+                                <a href="/YogaCenter/request?action=Logout">
                                     <i class="fas fa-sign-out-alt icon"></i>
                                     Logout
                                 </a>

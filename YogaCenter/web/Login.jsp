@@ -49,7 +49,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <div class="login-form">
                 <h1 class="signin-heading">Sign In</h1>
                 <div class="inner-form">
-                    <form action="MainController" method="POST">
+                    <form action="/YogaCenter/request" method="POST">
                         <input type="text" name="account" placeholder="your account">
                         <input type="password" name="password" placeholder="your password">
                         <button name="action" value="Login">Login</button>

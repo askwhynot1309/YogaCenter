@@ -47,12 +47,12 @@ public class LoginGoogle extends HttpServlet {
             GoogleInformation checkEmail = Dao.UserDao.checkEmailTraineeIsExist(email);
             if (checkEmail != null) {
                 session.setAttribute("User", user.getEmail());
-                response.sendRedirect("user.jsp");
+                response.sendRedirect("userDashboard.jsp");
             } else {
                 int insertNewEmail = Dao.UserDao.insertNewEmailTrainee(email);
                 if (insertNewEmail == 1) {
                     session.setAttribute("User", user.getEmail());
-                    response.sendRedirect("user.jsp");
+                    response.sendRedirect("userDashboard.jsp");
                 } else {
                     response.sendRedirect("error.html");
                 }
