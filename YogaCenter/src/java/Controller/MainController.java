@@ -47,7 +47,7 @@ public class MainController extends HttpServlet {
                         throw new AssertionError();
                 }
                 request.getRequestDispatcher(url).forward(request, response);
-            }
+                }
         }
     }
 
