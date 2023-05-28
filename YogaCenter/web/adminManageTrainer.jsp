@@ -53,6 +53,41 @@
                         </ul>
                     </div>
                 </div>
+                <div class="col-lg-9">
+                    <h2 style="display: flex; justify-content: center">
+                        Manage Trainer
+                    </h2>
+                    <div style="display: flex; float: right; margin-bottom: 10px;">
+                        <form action="MainController">
+                            <input type="text" name="txtUsername" value="" />
+                            <input type="submit" name="action" value="Search" />
+                        </form>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Email</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>example@example.com</td>
+                                    <td>John Doe</td>
+                                    <td>1234567890</td>
+                                    <td>123 Street, City</td>
+                                    <td><span>Active</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 

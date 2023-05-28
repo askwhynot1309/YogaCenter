@@ -5,9 +5,15 @@
         <group>
             <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/src/java/Controller/LoginGoogle.java</file>
             <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/css/style.css</file>
-            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/user.jsp</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/adminManageUser.jsp</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/src/java/Controller/MainController.java</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/nbproject/build-impl.xml</file>
             <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/adminDashboard.jsp</file>
-            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/homepage.html</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/admin.css</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/userDashboard.jsp</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/src/java/Controller/LogoutServlet.java</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/src/java/Controller/LoginServlet.java</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/user.css</file>
         </group>
     </open-files>
 </project-private>

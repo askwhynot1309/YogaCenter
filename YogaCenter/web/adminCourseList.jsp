@@ -53,6 +53,37 @@
                         </ul>
                     </div>
                 </div>
+                <div class="col-lg-9">
+                    <h2 style="display: flex; justify-content: center; margin-bottom: 20px;">Yoga Center Course List</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Course Name</th>
+                                <th>Duration</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Chill Yoga</td>
+                                <td>60 minutes</td>
+                                <td><button class="btn btn-primary">Details</button></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Tao</td>
+                                <td>175 minutes</td>
+                                <td><button class="btn btn-primary">Details</button></td>
+                            </tr>
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                    <button>Add New Course</button>
+                </div>
+
+
             </div>
         </div>
 
