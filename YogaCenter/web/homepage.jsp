@@ -27,7 +27,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <div id="home" class="back">
             <div class="mian-home">
                 <div class="inner-home">
-                    <img src="images/for bg.png" alt="">
+                    <img src="https://i.pinimg.com/originals/56/b3/3f/56b33f65326afe02aedf24361452a3db.jpg" alt="">
                 </div>
 
                 <div class="inner-home">
@@ -46,7 +46,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
             <div class="main-class">
                 <div class="inner-class">
-                    <img src="images/class1.png" alt="">
+                    <img src="https://th.bing.com/th/id/OIP.G2jgzWc8V31XSFTpSiy_2gHaE_?pid=ImgDet&rs=1" alt="">
                     <div class="class-content">
                         <h2>newbie class</h2>
                         <p>Lt. At, illum veniam. Earum debitis asperiores voluptatem ut nemo harum voluptatibus</p>
@@ -55,7 +55,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </div>
 
                 <div class="inner-class">
-                    <img src="images/class1.png" alt="">
+                    <img src="https://th.bing.com/th/id/OIP.blWQYSfXrtizCN_SVPXoBwHaFj?pid=ImgDet&rs=1" alt="">
                     <div class="class-content">
                         <h2>newbie class</h2>
                         <p>Lt. At, illum veniam. Earum debitis asperiores voluptatem ut nemo harum voluptatibus</p>
@@ -64,7 +64,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </div>
 
                 <div class="inner-class">
-                    <img src="images/class1.png" alt="">
+                    <img src="https://th.bing.com/th/id/R.03b4c91e95e86d967f43bdbafa929e57?rik=wo8ZKug8nMBWjg&pid=ImgRaw&r=0" alt="">
                     <div class="class-content">
                         <h2>newbie class</h2>
                         <p>Lt. At, illum veniam. Earum debitis asperiores voluptatem ut nemo harum voluptatibus</p>

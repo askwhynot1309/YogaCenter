@@ -43,11 +43,23 @@ public class MainController extends HttpServlet {
                     case "Logout":
                         url = "LogoutServlet";
                         break;
+                    case "ManageTrainer":
+                        url = "adminManageTrainer.jsp";
+                        break;
+                    case "ManageUser":
+                        url = "adminManageUser.jsp";
+                        break;
+                    case "ManageSchedule":
+                        url = "adminManageSchedule.jsp";
+                        break;
+                    case "adminCourseList":
+                        url = "adminCourseList.jsp";
+                        break;
                     default:
                         throw new AssertionError();
                 }
                 request.getRequestDispatcher(url).forward(request, response);
-                }
+            }
         }
     }
 
