@@ -17,7 +17,7 @@
                         <h3>Admin Dashboard</h3>
                         <ul>
                             <li>
-                                <a href="/YogaCenter/request?action=ManageTrainer">
+                                <a href="/YogaCenter/request?action=ManageEmployee">
                                     <i class="fas fa-user icon"></i>
                                     Manage Trainer
                                 </a>

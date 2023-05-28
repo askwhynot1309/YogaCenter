@@ -16,18 +16,28 @@ public class GoogleInformation implements Serializable{
     private String name;
     private String phone;
     private String address;
+    private String image;
     private int status;
 
     public GoogleInformation() {
     }
 
-    public GoogleInformation(int idEmail, String email, String name, String phone, String address, int status) {
+    public GoogleInformation(int idEmail, String email, String name, String phone, String address, String image, int status) {
         this.idEmail = idEmail;
         this.email = email;
         this.name = name;
         this.phone = phone;
         this.address = address;
+        this.image = image;
         this.status = status;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getIdEmail() {

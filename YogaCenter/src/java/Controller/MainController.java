@@ -43,8 +43,8 @@ public class MainController extends HttpServlet {
                     case "Logout":
                         url = "LogoutServlet";
                         break;
-                    case "ManageTrainer":
-                        url = "adminManageTrainer.jsp";
+                    case "ManageEmployee":
+                        url = "AdminManageEmployeeServlet";
                         break;
                     case "ManageUser":
                         url = "adminManageUser.jsp";
@@ -75,6 +75,7 @@ public class MainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setCharacterEncoding("UTF-8");
         processRequest(request, response);
     }
 
@@ -89,6 +90,7 @@ public class MainController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setCharacterEncoding("UTF-8");
         processRequest(request, response);
     }
 

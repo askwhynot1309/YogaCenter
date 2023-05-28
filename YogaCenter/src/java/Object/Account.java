@@ -15,23 +15,43 @@ public class Account implements Serializable{
     private String account;
     private String password;
     private String name;
+    private String cccd;
     private String phone;
     private String address;
+    private String image;
     private int role;
     private int status;
 
     public Account() {
     }
 
-    public Account(int idaccount, String account, String password, String name, String phone, String address, int role, int status) {
+    public Account(int idaccount, String account, String password, String name, String cccd, String phone, String address, String img, int role, int status) {
         this.idaccount = idaccount;
         this.account = account;
         this.password = password;
         this.name = name;
+        this.cccd = cccd;
         this.phone = phone;
         this.address = address;
+        this.image = img;
         this.role = role;
         this.status = status;
+    }
+
+    public String getCccd() {
+        return cccd;
+    }
+
+    public void setCccd(String cccd) {
+        this.cccd = cccd;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getIdaccount() {
