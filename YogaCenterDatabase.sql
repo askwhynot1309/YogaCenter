@@ -1,8 +1,9 @@
-CREATE DATABASE YogaCenter
+﻿CREATE DATABASE YogaCenter
 
 CREATE TABLE Employee(
 ID_Employee int IDENTITY(1,1) PRIMARY KEY,
 Name Nvarchar(50),
+CCCD varchar(20),
 Account varchar(50),
 Password varchar(50),
 Phone varchar(10),
@@ -31,12 +32,12 @@ Level_Name Nvarchar(50)
 CREATE TABLE Course(
 Course_ID int IDENTITY(1,1) PRIMARY KEY,
 Course_Name Nvarchar(100) NOT NULL,
-Course_Fee DECIMAL(18,2), 
+Img varchar(500),
+Course_Fee DECIMAL(10,3), 
 Start_date date,
 End_date date,
 Description Nvarchar(MAX),
 ID_Level int FOREIGN KEY REFERENCES Level(Level_ID),
-ID_Trainer int FOREIGN KEY REFERENCES Employee(ID_Employee),
 Status int CHECK(Status = 0 or Status = 1) --active:1,unactive:0
 )
 
@@ -89,3 +90,11 @@ Status int check(Status = 0 or Status = 1) --0:absent,1:present
 )
 
 insert into Employee(Account,Password,Role,Status) values ('admin','123',0,0)
+
+insert into Level(Level_Name) values ('Cơ bản')
+
+insert into Level(Level_Name) values ('Trung bình')
+
+insert into Level(Level_Name) values ('Nâng cao')
+
+insert into Level(Level_Name) values ('Chuyên nghiệp')
