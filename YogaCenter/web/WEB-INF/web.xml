@@ -21,8 +21,32 @@
         <servlet-class>Controller.AdminManageEmployeeServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ChangeStatusEmployee</servlet-name>
-        <servlet-class>Controller.ChangeStatusEmployee</servlet-class>
+        <servlet-name>SearchValueServlet</servlet-name>
+        <servlet-class>Controller.SearchValueServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminManageUserServlet</servlet-name>
+        <servlet-class>Controller.AdminManageUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminManageCourseServlet</servlet-name>
+        <servlet-class>Controller.AdminManageCourseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddServlet</servlet-name>
+        <servlet-class>Controller.AddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InformationCourseServlet</servlet-name>
+        <servlet-class>Controller.InformationCourseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateInformationCourseServlet</servlet-name>
+        <servlet-class>Controller.UpdateInformationCourseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeStatusServlet</servlet-name>
+        <servlet-class>Controller.ChangeStatusServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -37,16 +61,40 @@
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>MainController</servlet-name>
-        <url-pattern>/request</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AdminManageEmployeeServlet</servlet-name>
         <url-pattern>/AdminManageEmployeeServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ChangeStatusEmployee</servlet-name>
-        <url-pattern>/status</url-pattern>
+        <servlet-name>MainController</servlet-name>
+        <url-pattern>/request</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchValueServlet</servlet-name>
+        <url-pattern>/SearchValueServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminManageUserServlet</servlet-name>
+        <url-pattern>/AdminManageUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminManageCourseServlet</servlet-name>
+        <url-pattern>/AdminManageCourseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddServlet</servlet-name>
+        <url-pattern>/AddServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InformationCourseServlet</servlet-name>
+        <url-pattern>/InformationCourseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateInformationCourseServlet</servlet-name>
+        <url-pattern>/UpdateInformationCourseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeStatusServlet</servlet-name>
+        <url-pattern>/ChangeStatusServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -56,4 +104,12 @@
     <welcome-file-list>
         <welcome-file>homepage.jsp</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <exception-type>Exception</exception-type>
+        <location>/error.html</location>
+    </error-page>
+    <error-page>
+        <error-code>505</error-code>
+        <location>/error.html</location>
+    </error-page>
 </web-app>

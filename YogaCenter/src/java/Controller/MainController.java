@@ -4,13 +4,17 @@
  */
 package Controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
+@MultipartConfig
 /**
  *
  * @author ADMIN
@@ -46,17 +50,33 @@ public class MainController extends HttpServlet {
                     case "ManageEmployee":
                         url = "AdminManageEmployeeServlet";
                         break;
+                    case "search":
+                        url = "SearchValueServlet";
+                        break;
+                    case "comfirm":
+                        url = "ChangeStatusServlet";
+                        break;
                     case "ManageUser":
-                        url = "adminManageUser.jsp";
+                        url = "AdminManageUserServlet";
                         break;
                     case "ManageSchedule":
                         url = "adminManageSchedule.jsp";
                         break;
                     case "adminCourseList":
-                        url = "adminCourseList.jsp";
+                        url = "AdminManageCourseServlet";
                         break;
-                    default:
-                        throw new AssertionError();
+                    case "Add":
+                        response.setContentType("multipart/form-data");
+                        url = "AddServlet";
+                        break;
+                    case "inf":
+                        url = "InformationCourseServlet";
+                        break;
+                    case "ButtonChange":
+                        response.setContentType("multipart/form-data");
+                        url = "UpdateInformationCourseServlet";
+                        break;
+
                 }
                 request.getRequestDispatcher(url).forward(request, response);
             }
@@ -75,7 +95,7 @@ public class MainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         processRequest(request, response);
     }
 
@@ -90,7 +110,7 @@ public class MainController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         processRequest(request, response);
     }
 

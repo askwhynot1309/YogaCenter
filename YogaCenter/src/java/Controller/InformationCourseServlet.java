@@ -4,7 +4,8 @@
  */
 package Controller;
 
-import Object.Account;
+import Object.Course;
+import Object.Level;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class AdminManageEmployeeServlet extends HttpServlet {
+public class InformationCourseServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,15 +34,12 @@ public class AdminManageEmployeeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Account> listEmployee = Dao.AccountDao.getAllEmployees();
-            if(listEmployee != null && !listEmployee.isEmpty()){
-                request.setAttribute("listEmployee", listEmployee);
-                request.getRequestDispatcher("adminManageEmployee.jsp").forward(request, response);
-            } 
-            else{
-                request.setAttribute("nulllist", "Không có nhân viên nào trong dữ liệu data");
-                request.getRequestDispatcher("adminManageEmployee.jsp").forward(request, response);
-            }
+            int id = Integer.parseInt(request.getParameter("id"));
+            Course info = Dao.CourseDao.getInformationOfCourse(id);
+            ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+            request.setAttribute("informationCourse", info);
+            request.setAttribute("listLevel", listLevel);
+            request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
         }

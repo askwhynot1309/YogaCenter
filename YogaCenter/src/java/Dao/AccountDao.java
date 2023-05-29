@@ -39,7 +39,7 @@ public class AccountDao {
                     String img = table.getString("Img");
                     int role = table.getInt("Role");
                     int status = table.getInt("Status");
-                    kq = new Account(status, account, password, name, cccd, phone, address, img, role, status);
+                    kq = new Account(idEmployee, account, password, name, cccd, phone, address, img, role, status);
                 }
             }
             cn.close();
@@ -47,8 +47,8 @@ public class AccountDao {
         return kq;
     }
 
-    public static ArrayList<Account> getAllEmployee() throws Exception {
-        ArrayList<Account> kq = null;
+    public static ArrayList<Account> getAllEmployees() throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
@@ -60,7 +60,7 @@ public class AccountDao {
                 while (table.next()) {
                     int idEmployee = table.getInt("ID_Employee");
                     String name = table.getNString("Name");
-                    String cccd = table.getNString("CCCD");
+                    String cccd = table.getString("CCCD");
                     String account = table.getString("Account");
                     String password = table.getString("Password");
                     String phone = table.getString("Phone");
@@ -68,7 +68,7 @@ public class AccountDao {
                     String img = table.getString("Img");
                     int role = table.getInt("Role");
                     int status = table.getInt("Status");
-                    Account employee = new Account(status, account, password, name, cccd, phone, address, img, role, status);
+                    Account employee = new Account(idEmployee, account, password, name, cccd, phone, address, img, role, status);
                     kq.add(employee);
                 }
             }
@@ -88,6 +88,37 @@ public class AccountDao {
             pst.setInt(1, status);
             pst.setInt(2, id);
             kq = pst.executeUpdate();
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ArrayList<Account> getAllEmplyeeBySearch(String search) throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Employee\n"
+                    + "where Name like ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setNString(1, "%" + search + "%");
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idEmployee = table.getInt("ID_Employee");
+                    String name = table.getNString("Name");
+                    String cccd = table.getString("CCCD");
+                    String account = table.getString("Account");
+                    String password = table.getString("Password");
+                    String phone = table.getString("Phone");
+                    String address = table.getString("Address");
+                    String img = table.getString("Img");
+                    int role = table.getInt("Role");
+                    int status = table.getInt("Status");
+                    Account employee = new Account(idEmployee, account, password, name, cccd, phone, address, img, role, status);
+                    kq.add(employee);
+                }
+            }
             cn.close();
         }
         return kq;

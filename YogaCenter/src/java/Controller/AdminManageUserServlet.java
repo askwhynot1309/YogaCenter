@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import Object.Account;
+import Object.GoogleInformation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class AdminManageEmployeeServlet extends HttpServlet {
+public class AdminManageUserServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,14 +33,14 @@ public class AdminManageEmployeeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Account> listEmployee = Dao.AccountDao.getAllEmployees();
-            if(listEmployee != null && !listEmployee.isEmpty()){
-                request.setAttribute("listEmployee", listEmployee);
-                request.getRequestDispatcher("adminManageEmployee.jsp").forward(request, response);
-            } 
+            ArrayList<GoogleInformation> listUser = Dao.UserDao.getAllTrainee();
+            if(listUser != null && !listUser.isEmpty()){
+                request.setAttribute("listUser", listUser);
+                request.getRequestDispatcher("adminManageUser.jsp").forward(request, response);
+            }
             else{
-                request.setAttribute("nulllist", "Không có nhân viên nào trong dữ liệu data");
-                request.getRequestDispatcher("adminManageEmployee.jsp").forward(request, response);
+                request.setAttribute("nulllist", "Không có users nào trong dữ liệu data");
+                request.getRequestDispatcher("adminManageUser.jsp").forward(request, response);
             }
         }catch(Exception e){
             e.printStackTrace();

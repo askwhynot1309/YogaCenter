@@ -7,14 +7,13 @@
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <link rel="stylesheet" href="admin.css">
+        <link rel="stylesheet" href="Admin.css"
     </head>
 
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <div class="sidebar">
                         <h3>Admin Dashboard</h3>
                         <ul>
@@ -55,18 +54,22 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-10">
                     <h2 style="display: flex; justify-content: center">
                         Manage Trainer
                     </h2>
-                    <div style="display: flex; float: right; margin-bottom: 10px;">
-                        <form action="/request" method="POST">
-                            <input type="text" name="txtUsername" value="" />
+                    <div style="display: flex; margin-left: 30%; margin-bottom: 2rem; margin-top: 2rem">
+                        <form action="/YogaCenter/request" method="POST">
+                            <input type="text" name="txtsearch" value="${param.txtsearch}" style="width: 400px"/>
                             <input name="option" value="searchEmployee" hidden="">
-                            <input type="submit" name="action" value="Tìm kiếm"/>
+                            <button name="action" value="search">Tìm kiếm</button>
                         </form>
                     </div>
                     <c:set var="listEmployee" value="${requestScope.listEmployee}"/>
+                    <c:set var="nulllist" value="${requestScope.nulllist}"/>
+                    <c:if test="${listEmployee == null}">
+                        <p style="text-align: center"><c:out value="${nulllist}"/></p>
+                    </c:if>
                     <c:if test="${listEmployee != null && listEmployee.size() > 0}">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
@@ -84,7 +87,7 @@
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="font">
                                     <c:forEach var="employee" items="${listEmployee}" varStatus="loop">
                                         <tr>
                                             <td>${loop.count}</td>
@@ -94,7 +97,10 @@
                                             <td>${employee.cccd}</td>
                                             <td>${employee.phone}</td>
                                             <td>${employee.address}</td>
-                                            <td><<img src="img/${employee.image}" width="100px" height="100px"></td>
+                                            <td>
+                                                <c:if test="${not empty employee.image}">
+                                                    <img src="img/${employee.image}" width="100px" height="100px"></td>
+                                                </c:if>
                                             <td>
                                                 <c:if test="${employee.role == 0}">
                                                     Owner
@@ -107,22 +113,36 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <c:if test="${employee.status == 0}">
-                                                    <span>Hoạt động</span> <input type="radio" name="status" value="0" checked="">
-                                                    <span>Không Hoạt động</span> <input type="radio" name="status" value="1">
-                                                    <input name="id" value="${employee.idaccount}" hidden="">
+                                                <c:if test="${employee.status == 0 && employee.role == 0}">
+                                                    <form>
+                                                        <span>Hoạt động</span>&ensp; <input type="radio" name="status" value="0" checked="">
+                                                        <span>Không Hoạt động</span>&ensp; <input type="radio" name="status" value="1" disabled="">
+                                                    </form>
+                                                </c:if>
+                                                <c:if test="${employee.status == 0 && (employee.role == 1 || employee.role == 2)}">
+                                                    <form action="/YogaCenter/request" method="POST">
+                                                        <span>Hoạt động</span>&ensp; <input type="radio" name="status" value="0" checked="">
+                                                        <span>Không hoạt động</span>&ensp; <input type="radio" name="status" value="1">
+                                                        <input name="id" value="${employee.idaccount}" hidden="">
+                                                        <input name="option" value="employeeChange" hidden="">
+                                                        <button value="comfirm" name="action">Xác nhận</button>
+                                                    </form>
                                                 </c:if>
                                                 <c:if test="${employee.status == 1}">
-                                                    <span>Hoạt động</span> <input type="radio" name="status" value="0">
-                                                    <span>Không Hoạt động</span> <input type="radio" name="status" value="1" checked="">
-                                                    <input name="id" value="${employee.idaccount}" hidden="">
+                                                    <form action="/YogaCenter/request" method="POST">
+                                                        <span>Hoạt động</span>&ensp; <input type="radio" name="status" value="0">
+                                                        <span>Không hoạt động</span>&ensp; <input type="radio" name="status" value="1" checked="">
+                                                        <input name="id" value="${employee.idaccount}" hidden="">
+                                                        <input name="option" value="employeeChange" hidden="">
+                                                        <button value="comfirm" name="action">Xác nhận</button>
+                                                    </form>
                                                 </c:if>
                                             </td>
                                         </tr>
                                     </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
+                        </div>
                     </c:if>
                 </div>
             </div>
@@ -130,27 +150,4 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
     </body>
-
-    <script>
-  $(document).ready(function() {
-    $('input[name="status"]').change(function() {
-      var statusValue = $(this).val();
-      var idValue = $('input[name="id"]').val();
-      var url = '/status';
-      $.ajax({
-            url: url,
-            method: 'POST',
-            data: {
-                status: status,
-                id: employeeId
-            },
-            success: function(response) {
-                alert("Thay đổi trạng thái thành công!");
-            },
-            error: function(xhr, status, error) {
-                alert("Đã xảy ra lỗi khi thay đổi trạng thái!");
-            }
-        });
-    });
-</script>
 </html>
