@@ -123,7 +123,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>STT</th>
                                     <th>Tên khoá học</th>
                                     <th>Giá khoá học</th>
                                     <th>Tình trạng khoá học</th>
