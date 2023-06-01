@@ -17,7 +17,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/loginStyle.css">
+        <link rel="stylesheet" href="css/Login.css">
         <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.min.css">
         <title>Login</title>
     </head>

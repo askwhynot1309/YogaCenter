@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import Object.GoogleInformation;
+import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class AdminManageUserServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<GoogleInformation> listUser = Dao.UserDao.getAllTrainee();
+            ArrayList<Account> listUser = Dao.UserDao.getAllTrainee();
             if(listUser != null && !listUser.isEmpty()){
                 request.setAttribute("listUser", listUser);
                 request.getRequestDispatcher("adminManageUser.jsp").forward(request, response);

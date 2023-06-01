@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 public class Account implements Serializable{
     private int idaccount;
+    private String email;
     private String account;
     private String password;
     private String name;
@@ -25,33 +26,18 @@ public class Account implements Serializable{
     public Account() {
     }
 
-    public Account(int idaccount, String account, String password, String name, String cccd, String phone, String address, String img, int role, int status) {
+    public Account(int idaccount, String email, String account, String password, String name, String cccd, String phone, String address, String image, int role, int status) {
         this.idaccount = idaccount;
+        this.email = email;
         this.account = account;
         this.password = password;
         this.name = name;
         this.cccd = cccd;
         this.phone = phone;
         this.address = address;
-        this.image = img;
+        this.image = image;
         this.role = role;
         this.status = status;
-    }
-
-    public String getCccd() {
-        return cccd;
-    }
-
-    public void setCccd(String cccd) {
-        this.cccd = cccd;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public int getIdaccount() {
@@ -60,6 +46,14 @@ public class Account implements Serializable{
 
     public void setIdaccount(int idaccount) {
         this.idaccount = idaccount;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAccount() {
@@ -86,6 +80,14 @@ public class Account implements Serializable{
         this.name = name;
     }
 
+    public String getCccd() {
+        return cccd;
+    }
+
+    public void setCccd(String cccd) {
+        this.cccd = cccd;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -100,6 +102,14 @@ public class Account implements Serializable{
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getRole() {
@@ -117,5 +127,7 @@ public class Account implements Serializable{
     public void setStatus(int status) {
         this.status = status;
     }
+
+    
     
 }

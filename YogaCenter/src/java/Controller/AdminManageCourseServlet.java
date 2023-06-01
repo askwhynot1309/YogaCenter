@@ -46,8 +46,11 @@ public class AdminManageCourseServlet extends HttpServlet {
                 }
             } else {
                 if (listLevel != null && !listLevel.isEmpty()) {
+                    if (listLevel != null && !listLevel.isEmpty()) {
+                    request.setAttribute("listLevel", listLevel);
                     request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
                     request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                    }
                 } else {
                     request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
                 }

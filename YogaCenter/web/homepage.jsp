@@ -33,7 +33,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <div class="inner-home">
                     <div class="inner-content">
                         <h1>Yoga class</h1>
-                        <p>Là một phòng tập Yoga uy tín ở Việt Nam có hơn 60.000 học viên lựa chọn.</p>
+                        <p>As a prestigious Yoga studio in Vietnam with more than 60,000 students to choose from.</p>
                         <a href="#">Register now</a>
                     </div>
                 </div>
@@ -49,7 +49,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <img src="https://th.bing.com/th/id/OIP.G2jgzWc8V31XSFTpSiy_2gHaE_?pid=ImgDet&rs=1" alt="">
                     <div class="class-content">
                         <h2>newbie class</h2>
-                        <p>Lt. At, illum veniam. Earum debitis asperiores voluptatem ut nemo harum voluptatibus</p>
+                        <p>You owe them a harsher pleasure than any of these pleasures</p>
                         <a href="#">register now</a>
                     </div>
                 </div>
@@ -58,7 +58,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <img src="https://th.bing.com/th/id/OIP.blWQYSfXrtizCN_SVPXoBwHaFj?pid=ImgDet&rs=1" alt="">
                     <div class="class-content">
                         <h2>newbie class</h2>
-                        <p>Lt. At, illum veniam. Earum debitis asperiores voluptatem ut nemo harum voluptatibus</p>
+                        <p>You owe them a harsher pleasure than any of these pleasures</p>
                         <a href="#">register now</a>
                     </div>
                 </div>
@@ -67,7 +67,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <img src="https://th.bing.com/th/id/R.03b4c91e95e86d967f43bdbafa929e57?rik=wo8ZKug8nMBWjg&pid=ImgRaw&r=0" alt="">
                     <div class="class-content">
                         <h2>newbie class</h2>
-                        <p>Lt. At, illum veniam. Earum debitis asperiores voluptatem ut nemo harum voluptatibus</p>
+                        <p>You owe them a harsher pleasure than any of these pleasures</p>
                         <a href="#">register now</a>
                     </div>
                 </div>
@@ -80,8 +80,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <div class="inner-instructor">
                     <div class="inner-content-instructor">
                         <h2>best <br> Instructor</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, cum non! Eveniet qui
-                            doloribus rem ipsa, veritatis culpa </p>
+                        <p>The company itself is a very successful company. Rejecting, when not! 
+                            It will happen that he who suffers the thing itself, the fault of the truth </p>
                         <a href="#">Read more</a>
                     </div>
 
@@ -103,8 +103,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <div class="inner-instructor">
                     <div class="inner-content-instructor">
                         <h2>New<br> Experience</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, cum non! Eveniet qui
-                            doloribus rem ipsa, veritatis culpa </p>
+                        <p>The company itself is a very successful company. Rejecting, when not! It will happen who
+                            the thing itself, the fault of the truth </p>
                         <a href="#">Read more</a>
                     </div>
 

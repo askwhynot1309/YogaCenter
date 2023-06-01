@@ -57,7 +57,6 @@
                 <div class="col-lg-9">
                     <h2 style="display: flex; justify-content: center; margin-bottom: 20px;">Thông tin cụ thể khoá học</h2>
                     <c:set var="informationCourse" value="${requestScope.informationCourse}"/>
-                    <c:set var="unlogical" value="${requestScope.unlogical}"/>
                     <c:set var="expired" value="${requestScope.expired}"/>
                     <c:set var="success" value="${requestScope.success}"/>
                     <c:if test="${informationCourse != null}">
@@ -67,7 +66,7 @@
                                 <p>Giá khoá học : <input type="number" name="course_fee" value="${informationCourse.fee_course}"> đồng</p>
                                 <p>Bắt đầu khoá học : <input type="date" name="course_start" value="${informationCourse.date_start}"></p>
                                 <input name="id" value="${informationCourse.idCourse}" hidden="">
-                                <p>Kết thúc khoá học : <input type="date" name="course_finish" value="${informationCourse.date_finish}"></p>
+                                <p>Số slots : <input type="number" name="slot" value="${informationCourse.slot}"></p>
                                 <p>Thông tin chi tiết : <textarea name="course_description">${informationCourse.description}</textarea></p>
                                     <c:set var="listLevel" value="${requestScope.listLevel}"/>
                                     <c:if test="${listLevel != null && !listLevel.isEmpty()}">
@@ -91,11 +90,6 @@
                     </c:if>
                 </div>
                 </body>
-                <c:if test="${unlogical != null}">
-                    <script>
-                        alert("Ngày bắt đầu phải trước ngày kết thúc.");
-                    </script>
-                </c:if>
 
                 <c:if test="${expired != null}">
                     <script>

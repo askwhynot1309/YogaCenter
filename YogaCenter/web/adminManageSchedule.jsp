@@ -66,6 +66,7 @@
                                     <th>Thursday</th>
                                     <th>Friday</th>
                                     <th>Saturday</th>
+                                    <th>Sunday</th>
                                 </tr>
                             </thead>
                             <tbody>

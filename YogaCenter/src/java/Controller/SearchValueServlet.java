@@ -6,7 +6,6 @@ package Controller;
 
 import Object.Account;
 import Object.Course;
-import Object.GoogleInformation;
 import Object.Level;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,7 +49,7 @@ public class SearchValueServlet extends HttpServlet {
                     }
                     break;
                 case "searchUser":
-                    ArrayList<GoogleInformation> listUser = Dao.UserDao.getAllTraineeBySearch(search);
+                    ArrayList<Account> listUser = Dao.UserDao.getAllTraineeBySearch(search);
                     if (listUser != null && !listUser.isEmpty()) {
                         request.setAttribute("listUser", listUser);
                         request.getRequestDispatcher("adminManageUser.jsp").forward(request, response);

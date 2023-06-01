@@ -52,23 +52,11 @@ public class UpdateInformationCourseServlet extends HttpServlet {
             BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
             int level = Integer.parseInt(request.getParameter("level"));
             String datestart = request.getParameter("course_start");
-            String dateend = request.getParameter("course_finish");
+            int slot = Integer.parseInt(request.getParameter("slot"));
             Date start = Date.valueOf(datestart);
-            Date end = Date.valueOf(dateend);
             Date currentDate = new Date(System.currentTimeMillis());
             if ("".equals(fileName)) {
-                if (start.toLocalDate().isAfter(end.toLocalDate())) { // check if start date sau end date
-                    ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-                    if (listLevel != null && !listLevel.isEmpty()) {
-                        Course info = Dao.CourseDao.getInformationOfCourse(id);
-                            request.setAttribute("informationCourse", info);
-                        request.setAttribute("listLevel", listLevel);
-                        request.setAttribute("unlogical", "Ngày bắt đầu phải trước ngày kết thúc");
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                    } else {
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                    }
-                } else if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
+                if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
                     ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                     if (listLevel != null && !listLevel.isEmpty()) {
                         Course info = Dao.CourseDao.getInformationOfCourse(id);
@@ -80,7 +68,7 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                         request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
                     }
                 } else {
-                    int updateCourse = Dao.CourseDao.updateCourse(id, name, oldimg, fee, description, start, end, level);
+                    int updateCourse = Dao.CourseDao.updateCourse(id, name, oldimg, fee, description, start, slot, level);
                     if (updateCourse == 1) {
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                         if (listLevel != null && !listLevel.isEmpty()) {
@@ -95,18 +83,7 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                     }
                 }
             } else {
-                if (start.toLocalDate().isAfter(end.toLocalDate())) { // check if start date sau end date
-                    ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-                    if (listLevel != null && !listLevel.isEmpty()) {
-                        Course info = Dao.CourseDao.getInformationOfCourse(id);
-                            request.setAttribute("informationCourse", info);
-                        request.setAttribute("listLevel", listLevel);
-                        request.setAttribute("unlogical", "Ngày bắt đầu phải trước ngày kết thúc");
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                    } else {
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                    }
-                } else if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
+                if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
                     ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                     if (listLevel != null && !listLevel.isEmpty()) {
                         Course info = Dao.CourseDao.getInformationOfCourse(id);
@@ -118,7 +95,7 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                         request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
                     }
                 } else {
-                    int updateCourse = Dao.CourseDao.updateCourse(id, name, fileName, fee, description, start, end, level);
+                    int updateCourse = Dao.CourseDao.updateCourse(id, name, fileName, fee, description, start, slot, level);
                     if (updateCourse == 1) {
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                         if (listLevel != null && !listLevel.isEmpty()) {

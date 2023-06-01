@@ -81,7 +81,6 @@
                     <c:set var="listCourse" value="${requestScope.listCourse}"/>
                     <c:set var="nulllist" value="${requestScope.nulllist}"/>
                     <c:set var="blank" value="${requestScope.blank}"/>
-                    <c:set var="unlogical" value="${requestScope.unlogical}"/>
                     <c:set var="expired" value="${requestScope.expired}"/>
                     <c:set var="success" value="${requestScope.success}"/>
                     <c:if test="${listCourse == null}">
@@ -98,7 +97,7 @@
                                 <p>Hình : <input type="file" name="course_img"></p>
                                 <p>Giá khoá học : <input type="number" name="course_fee" value="${param.course_fee}" required=""></p>
                                 <p>Ngày bắt đầu : <input type="date" name="course_start" value="${param.course_start}" required=""></p>
-                                <p>Ngày kết thúc : <input type="date" name="course_finish" value="${param.course_finish}" required=""></p>
+                                <p>Số slots : <input type="number" name="slot" value="${param.slot}" required=""></p>
                                 <p>Thông tin chi tiết : <textarea name="course_description" value="${param.course_description}" style="width: 400px;height: 100px"></textarea></p>
                                     <c:if test="${listLevel != null && !listLevel.isEmpty()}">
                                     <p>Level : <select name="level">
@@ -171,12 +170,6 @@
                 alert("Vui lòng chọn level cho khoá học.");
             </script>
         </c:if> 
-            
-            <c:if test="${unlogical != null}">
-                <script>
-                    alert("Ngày bắt đầu phải trước ngày kết thúc.");
-                </script>
-            </c:if>
 
             <c:if test="${expired != null}">
                 <script>
