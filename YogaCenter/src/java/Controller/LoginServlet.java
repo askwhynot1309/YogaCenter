@@ -37,30 +37,38 @@ public class LoginServlet extends HttpServlet {
             String password = request.getParameter("password");
             HttpSession session = request.getSession();
             Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, password);
-            if(accountLogin != null){
-                switch (accountLogin.getRole()) {
-                    case 0:
-                        session.setAttribute("Admin", accountLogin.getName());
-                        response.sendRedirect("adminDashboard.jsp");
-                        break;
-                    case 1:
-                        session.setAttribute("Staff", accountLogin.getName());
-                        response.sendRedirect("staffDashboard.jsp");
-                        break;
-                    case 2:
-                        session.setAttribute("Trainer", accountLogin.getName());
-                        response.sendRedirect("trainerDashboard.jsp");
-                        break;
-                    default:
-                        response.sendRedirect("error.html");
-                        break;
-                }                
-            }
-            else{
+            if (accountLogin != null) {
+                if (accountLogin.getStatus() == 0) {
+                    switch (accountLogin.getRole()) {
+                        case 0:
+                            session.setAttribute("Admin", accountLogin.getName());
+                            response.sendRedirect("adminDashboard.jsp");
+                            break;
+                        case 1:
+                            session.setAttribute("Staff", accountLogin.getName());
+                            response.sendRedirect("staffDashboard.jsp");
+                            break;
+                        case 2:
+                            session.setAttribute("Trainer", accountLogin.getName());
+                            response.sendRedirect("trainerDashboard.jsp");
+                            break;
+                        case 3:
+                            session.setAttribute("Trainee", accountLogin.getName());
+                            response.sendRedirect("traineeDashboard.jsp");
+                        default:
+                            response.sendRedirect("error.html");
+                            break;
+                    }
+                }else{
+                    request.setAttribute("Loginfail", "Tài khoản không khả dụng");
+                    request.getRequestDispatcher("Login.jsp").forward(request, response);
+                }
+
+            } else {
                 request.setAttribute("Loginfail", "Sai tài khoản hoặc mật khẩu. Vui lòng nhập lại");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("Login.jsp").forward(request, response);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
