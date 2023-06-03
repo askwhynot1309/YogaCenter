@@ -48,6 +48,10 @@
         <servlet-name>ChangeStatusServlet</servlet-name>
         <servlet-class>Controller.ChangeStatusServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>Controller.RegisterServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>ChangeStatusServlet</servlet-name>
         <url-pattern>/ChangeStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/RegisterServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
