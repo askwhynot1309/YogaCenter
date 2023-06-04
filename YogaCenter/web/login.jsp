@@ -40,7 +40,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
             <div class="search-form">
                 <div class="navbar">
-                    <span><a href="Login.jsp">Login </a></span>
+                    <span><a href="login.jsp">Login </a></span>
                     <span><a href="Register.jsp">Register</a></span>
                 </div>
 
