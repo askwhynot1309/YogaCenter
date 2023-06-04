@@ -17,7 +17,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/loginStyle.css">
+        <link rel="stylesheet" href="css/Login.css">
         <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.min.css">
         <title>Login</title>
     </head>
@@ -165,7 +165,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 display: block;
                 width: 100%;
                 padding: 15px 5px;
-                font-size: 18px;
+                font-size: 15px;
                 color: #111;
             }
 
@@ -184,7 +184,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
             .form-control label span {
                 display: inline-block;
-                font-size: 18px;
+                font-size: 15px;
                 min-width: 5px;
                 color: #111;
                 transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -193,7 +193,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             .form-control input:focus+label span,
             .form-control input:valid+label span {
                 color: #1669F2;
-                transform: translateY(-30px);
+                transform: translateY(-40px);
             }
         </style>
     </body>

@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
                 switch (accountLogin.getRole()) {
                     case 0:
                         session.setAttribute("Admin", accountLogin.getName());
-                        response.sendRedirect(".jsp");
+                        response.sendRedirect("adminDashboard.jsp");
                         break;
                     case 1:
                         session.setAttribute("Staff", accountLogin.getName());

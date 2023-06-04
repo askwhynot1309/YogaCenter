@@ -107,21 +107,12 @@
                             <form action="/YogaCenter/request" method="POST" enctype="multipart/form-data">
                                 <p>Tên khoá học : <input type="text" name="course_name" value="${param.course_name}" required="" class="input-course"></p>
                                 <p>Hình : <input type="file" name="course_img"></p>
-<<<<<<< Updated upstream
-                                <p>Giá khoá học : <input type="number" name="course_fee" value="${param.course_fee}" required=""></p>
-                                <p>Ngày bắt đầu : <input type="date" name="course_start" value="${param.course_start}" required=""></p>
-                                <p>Ngày kết thúc : <input type="date" name="course_finish" value="${param.course_finish}" required=""></p>
-                                <p>Thông tin chi tiết : <textarea name="course_description" value="${param.course_description}" style="width: 400px;height: 100px"></textarea></p>
-                                    <c:if test="${listLevel != null && !listLevel.isEmpty()}">
-                                    <p>Level : <select name="level">
-=======
                                 <p>Giá khoá học : <input type="number" name="course_fee" value="${param.course_fee}" required="" class="input-course"></p>
                                 <p>Ngày bắt đầu : <input type="date" name="course_start" value="${param.course_start}" required="" class="input-course"></p>
                                 <p>Số slots : <input type="number" name="slot" value="${param.slot}" required="" class="input-course"></p>
                                 <p>Thông tin chi tiết :</p><textarea name="course_description" value="${param.course_description}" class="input-description"></textarea>
                                 <c:if test="${listLevel != null && !listLevel.isEmpty()}">
                                     <p>Level : <select name="level" class="input-course">
->>>>>>> Stashed changes
                                             <option value="0"></option>
                                             <c:forEach var="level" items="${listLevel}">
                                                 <option value="${level.getIdLevel()}">${level.getLevel_Name()}</option>

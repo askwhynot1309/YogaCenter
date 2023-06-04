@@ -34,11 +34,11 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
-                    Date course_end = table.getDate("End_date");
+                    int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     int level = table.getInt("ID_Level");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_end, description, level, status);
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, level, status);
                     kq.add(course);
                 }
             }
@@ -64,11 +64,11 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
-                    Date course_end = table.getDate("End_date");
+                    int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     int level = table.getInt("ID_Level");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_end, description, level, status);
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, level, status);
                     kq.add(course);
                 }
             }
@@ -95,11 +95,11 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
-                    Date course_end = table.getDate("End_date");
+                    int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     int level = table.getInt("ID_Level");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_end, description, level, status);
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, level, status);
                     kq.add(course);
                 }
             }
@@ -108,18 +108,18 @@ public class CourseDao {
         return kq;
     }
 
-    public static int insertCourse(String name, String img, BigDecimal fee, String description, Date start, Date end, int level, int status) throws Exception {
+    public static int insertCourse(String name, String img, BigDecimal fee, String description, Date start, int slot, int level, int status) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "insert into Course(Course_Name, Course_Fee, Img, Start_date, End_date, Description, ID_Level, Status)\n"
+            String s = "insert into Course(Course_Name, Course_Fee, Img, Start_date, Slot, Description, ID_Level, Status)\n"
                     + "Values (?,?,?,?,?,?,?,?)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, name);
             pst.setBigDecimal(2, fee);
             pst.setString(3, img);
             pst.setDate(4, start);
-            pst.setDate(5, end);
+            pst.setInt(5, slot);
             pst.setNString(6, description);
             pst.setInt(7, level);
             pst.setInt(8, status);
@@ -145,11 +145,11 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
-                    Date course_end = table.getDate("End_date");
+                    int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     int level = table.getInt("ID_Level");
                     int status = table.getInt("Status");
-                    kq = new Course(id, course_name, course_img, course_fee, course_start, course_end, description, level, status);
+                    kq = new Course(id, course_name, course_img, course_fee, course_start, slot, description, level, status);
                 }
             }
             cn.close();
@@ -157,19 +157,19 @@ public class CourseDao {
         return kq;
     }
 
-    public static int updateCourse(int id, String name, String img, BigDecimal fee, String description, Date start, Date end, int level) throws Exception {
+    public static int updateCourse(int id, String name, String img, BigDecimal fee, String description, Date start, int slot, int level) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "update Course\n"
-                    + "set Course_Name = ?, Course_Fee = ?, Img = ?, Start_date = ?, End_date = ?, Description = ?, ID_Level = ?\n"
+                    + "set Course_Name = ?, Course_Fee = ?, Img = ?, Start_date = ?, Slot = ?, Description = ?, ID_Level = ?\n"
                     + "where Course_ID = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, name);
             pst.setBigDecimal(2, fee);
             pst.setString(3, img);
             pst.setDate(4, start);
-            pst.setDate(5, end);
+            pst.setInt(5, slot);
             pst.setNString(6, description);
             pst.setInt(7, level);
             pst.setInt(8, id);

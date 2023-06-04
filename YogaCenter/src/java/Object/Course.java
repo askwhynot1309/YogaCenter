@@ -18,7 +18,7 @@ public class Course implements Serializable{
     private String img_course;
     private BigDecimal fee_course;
     private Date date_start;
-    private Date date_finish;
+    private int slot;
     private String description;
     private int level;
     private int status;
@@ -26,24 +26,16 @@ public class Course implements Serializable{
     public Course() {
     }
 
-    public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, Date date_finish, String description, int level, int status) {
+    public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, int slot, String description, int level, int status) {
         this.idCourse = idCourse;
         this.name_course = name_course;
         this.img_course = img_course;
         this.fee_course = fee_course;
         this.date_start = date_start;
-        this.date_finish = date_finish;
+        this.slot = slot;
         this.description = description;
         this.level = level;
         this.status = status;
-    }
-
-    public String getImg_course() {
-        return img_course;
-    }
-
-    public void setImg_course(String img_course) {
-        this.img_course = img_course;
     }
 
     public int getIdCourse() {
@@ -62,6 +54,14 @@ public class Course implements Serializable{
         this.name_course = name_course;
     }
 
+    public String getImg_course() {
+        return img_course;
+    }
+
+    public void setImg_course(String img_course) {
+        this.img_course = img_course;
+    }
+
     public BigDecimal getFee_course() {
         return fee_course;
     }
@@ -78,12 +78,12 @@ public class Course implements Serializable{
         this.date_start = date_start;
     }
 
-    public Date getDate_finish() {
-        return date_finish;
+    public int getSlot() {
+        return slot;
     }
 
-    public void setDate_finish(Date date_finish) {
-        this.date_finish = date_finish;
+    public void setSlot(int slot) {
+        this.slot = slot;
     }
 
     public String getDescription() {
@@ -109,6 +109,7 @@ public class Course implements Serializable{
     public void setStatus(int status) {
         this.status = status;
     }
+
     
     
 }

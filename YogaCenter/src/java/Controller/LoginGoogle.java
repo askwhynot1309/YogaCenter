@@ -4,8 +4,8 @@
  */
 package Controller;
 
+import Object.Account;
 import Object.Constant;
-import Object.GoogleInformation;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
@@ -42,9 +42,9 @@ public class LoginGoogle extends HttpServlet {
             String code = request.getParameter("code");
             HttpSession session = request.getSession();
             String accessToken = getToken(code);
-            GoogleInformation user = getUserInfo(accessToken);
+            Account user = getUserInfo(accessToken);
             String email = user.getEmail();
-            GoogleInformation checkEmail = Dao.UserDao.checkEmailTraineeIsExist(email);
+            Account checkEmail = Dao.UserDao.checkEmailTraineeIsExist(email);
             if (checkEmail != null) {
                 session.setAttribute("User", user.getEmail());
                 response.sendRedirect("userDashboard.jsp");
@@ -76,11 +76,11 @@ public class LoginGoogle extends HttpServlet {
         return accessToken;
     }
 
-    public static GoogleInformation getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+    public static Account getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
         String link = Constant.GOOGLE_LINK_GET_USER_INFO + accessToken;
         String response = Request.Get(link).execute().returnContent().asString();
 
-        GoogleInformation googlePojo = new Gson().fromJson(response, GoogleInformation.class);
+        Account googlePojo = new Gson().fromJson(response, Account.class);
 
         return googlePojo;
     }

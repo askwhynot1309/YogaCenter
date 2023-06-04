@@ -73,19 +73,11 @@
                                 <p>Giá khoá học : <input type="number" name="course_fee" value="${informationCourse.fee_course}" class="input-course"> đồng</p>
                                 <p>Bắt đầu khoá học : <input type="date" name="course_start" value="${informationCourse.date_start}" class="input-course"></p>
                                 <input name="id" value="${informationCourse.idCourse}" hidden="">
-<<<<<<< Updated upstream
-                                <p>Kết thúc khoá học : <input type="date" name="course_finish" value="${informationCourse.date_finish}"></p>
-                                <p>Thông tin chi tiết : <textarea name="course_description">${informationCourse.description}</textarea></p>
-                                    <c:set var="listLevel" value="${requestScope.listLevel}"/>
-                                    <c:if test="${listLevel != null && !listLevel.isEmpty()}">
-                                    <p><select name="level">
-=======
                                 <p>Số slots : <input type="number" name="slot" value="${informationCourse.slot}" class="input-course"></p>
                                 <p>Thông tin chi tiết : </p><textarea name="course_description" class="input-description">${informationCourse.description}</textarea>
                                 <c:set var="listLevel" value="${requestScope.listLevel}"/>
                                 <c:if test="${listLevel != null && !listLevel.isEmpty()}">
                                     <p>Level : <select name="level" class="input-course">
->>>>>>> Stashed changes
                                             <option value="0"></option>
                                             <c:forEach var="level" items="${listLevel}">
                                                 <c:set var="isSelected" value="${informationCourse.level == level.getIdLevel()}"/>
@@ -128,14 +120,11 @@
                         </script>
                     </c:if>
                 </div>
-<<<<<<< Updated upstream
-                </body>
                 <c:if test="${unlogical != null}">
                     <script>
                         alert("Ngày bắt đầu phải trước ngày kết thúc.");
                     </script>
                 </c:if>
-=======
                 <style>
                     html{
                         overflow-y: hidden;
@@ -151,7 +140,6 @@
                         transition: .3s;
                         color: #3b82f6;
                     }
->>>>>>> Stashed changes
 
                     .input-course:focus {
                         border: 1px solid #3b82f6;

@@ -4,7 +4,7 @@
  */
 package Dao;
 
-import Object.GoogleInformation;
+import Object.Account;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,26 +16,30 @@ import java.util.ArrayList;
  */
 public class UserDao {
 
-    public static GoogleInformation checkEmailTraineeIsExist(String input) throws Exception {
-        GoogleInformation kq = null;
+    public static Account checkEmailTraineeIsExist(String input) throws Exception {
+        Account kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "from Trainee\n"
+                    + "from Account\n"
                     + "where Email = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, input);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainee = table.getInt("ID_Trainee");
+                    int idTrainee = table.getInt("ID_Account");
                     String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String account = table.getString("Account");
+                    String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
                     String address = table.getNString("Address");
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
-                    kq = new GoogleInformation(idTrainee, email, name, phone, address, img, status);
+                    int role = table.getInt("Role");
+                    kq = new Account(idTrainee, email, account, password, name, cccd, phone, address, img, role, status);
                 }
             }
             cn.close();
@@ -47,7 +51,7 @@ public class UserDao {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "insert into Trainee(Email) values (?)";
+            String s = "insert into Account(Email, Role, Status) values (?,3,0)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, email);
             kq = pst.executeUpdate();
@@ -56,26 +60,31 @@ public class UserDao {
         return kq;
     }
 
-    public static ArrayList<GoogleInformation> getAllTrainee() throws Exception {
-        ArrayList<GoogleInformation> kq = new ArrayList<>();
+    public static ArrayList<Account> getAllTrainee() throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "from Trainee\n"
-                    + "Order by ID_Trainee desc";
+                    + "from Account\n"
+                    + "where Role = 3\n"
+                    + "Order by ID_Account desc";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainee = table.getInt("ID_Trainee");
+                    int idTrainee = table.getInt("ID_Account");
                     String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
                     String address = table.getNString("Address");
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
-                    GoogleInformation trainee = new GoogleInformation(idTrainee, email, name, phone, address, img, status);
-                    kq.add(trainee);
+                    int role = table.getInt("Role");
+                    Account account = new Account(idTrainee, email, acc, password, name, cccd, phone, address, img, role, status);
+                    kq.add(account);
                 }
             }
             cn.close();
@@ -83,43 +92,32 @@ public class UserDao {
         return kq;
     }
 
-    public static int changeStatusUser(int status, int id) throws Exception {
-        int kq = 0;
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "update Trainee\n"
-                    + "set Status = ?\n"
-                    + "where ID_Trainee = ?";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, status);
-            pst.setInt(2, id);
-            kq = pst.executeUpdate();
-            cn.close();
-        }
-        return kq;
-    }
 
-    public static ArrayList<GoogleInformation> getAllTraineeBySearch(String search) throws Exception {
-        ArrayList<GoogleInformation> kq = new ArrayList<>();
+    public static ArrayList<Account> getAllTraineeBySearch(String search) throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "from Trainee\n"
-                    + "where Email like ?";
+                    + "from Account\n"
+                    + "where Email = ? And Role = 3";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, "%" + search + "%");
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainee = table.getInt("ID_Trainee");
+                    int idTrainee = table.getInt("ID_Account");
                     String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
                     String address = table.getNString("Address");
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
-                    GoogleInformation trainee = new GoogleInformation(idTrainee, email, name, phone, address, img, status);
-                    kq.add(trainee);
+                    int role = table.getInt("Role");
+                    Account account = new Account(idTrainee, email, acc, password, name, cccd, phone, address, img, role, status);
+                    kq.add(account);
                 }
             }
             cn.close();

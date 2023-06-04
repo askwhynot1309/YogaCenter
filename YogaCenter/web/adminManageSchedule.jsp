@@ -61,78 +61,6 @@
                         </ul>
                     </div>
                 </div>
-<<<<<<< Updated upstream
-                <div class="col-lg-9">
-                    <h2 style="display: flex; justify-content: center; margin-bottom: 20px;">Yoga Center Schedule</h2>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Time</th>
-                                    <th>Monday</th>
-                                    <th>Tuesday</th>
-                                    <th>Wednesday</th>
-                                    <th>Thursday</th>
-                                    <th>Friday</th>
-                                    <th>Saturday</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Morning 1</td>
-                                    <td>
-                                        <p>Yoga Class 1</p>
-                                        <p>Instructor: John Doe</p>
-                                        <button class="btn btn-primary">Details</button>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <p>Yoga Class 3</p>
-                                        <p>Instructor: Michael Johnson</p>
-                                        <button class="btn btn-primary">Details</button>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Morning 2</td>
-                                    <td></td>
-                                    <td>
-                                        <p>Yoga Class 5</p>
-                                        <p>Instructor: David Wilson</p>
-                                        <button class="btn btn-primary">Details</button>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <p>Yoga Class 7</p>
-                                        <p>Instructor: Jessica Brown</p>
-                                        <button class="btn btn-primary">Details</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Afternoon 1</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Afternoon 2</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>                             
-                                </tr>
-                            </tbody>
-                        </table>
-=======
                 <div class="col-md-10">
                     <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Yoga Center Schedule</h2>
                     <c:set var="listDays" value="${requestScope.listDay}" />
@@ -793,7 +721,6 @@
                             </div>
                             <button value="ButtonSchedule" name="action" class="button-schedule">Arrange</button>
                         </form>
->>>>>>> Stashed changes
                     </div>
                 </div>
             </div>

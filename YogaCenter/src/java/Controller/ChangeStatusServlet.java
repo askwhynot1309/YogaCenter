@@ -36,13 +36,13 @@ public class ChangeStatusServlet extends HttpServlet {
             String option = request.getParameter("option");
             switch (option) {
                 case "employeeChange":
-                    int changeStatusEmployee = Dao.AccountDao.changeStatusEmployee(status, id);
+                    int changeStatusEmployee = Dao.AccountDao.changeStatus(status, id);
                     if (changeStatusEmployee == 1) {
                         request.getRequestDispatcher("AdminManageEmployeeServlet").forward(request, response);
                     }
                     break;
                 case "userChange":
-                    int changeStatusUser = Dao.UserDao.changeStatusUser(status, id);
+                    int changeStatusUser = Dao.AccountDao.changeStatus(status, id);
                     if (changeStatusUser == 1) {
                         request.getRequestDispatcher("AdminManageUserServlet").forward(request, response);
                     }
