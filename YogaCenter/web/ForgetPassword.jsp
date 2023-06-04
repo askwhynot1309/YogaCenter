@@ -87,7 +87,7 @@
                 <div style="color: red" class="error-message">${requestScope.ErrorMessageOTP}</div>
             </form>
 
-            <p class="text-center mt-3">Remember your password? <a href="Login.jsp">Login here</a></p>
+            <p class="text-center mt-3">Remember your password? <a href="login.jsp">Login here</a></p>
         </div>
     </body>
 

@@ -108,7 +108,7 @@
                 </div>
                 <button type="submit" class="btn btn-register btn-block" name="action" value="Register">Register</button>
             </form>      
-            <p class="text-center mt-3">Already have an account? <a href="Login.jsp">Login here</a></p>
+            <p class="text-center mt-3">Already have an account? <a href="login.jsp">Login here</a></p>
         </div>
     </body>
 
