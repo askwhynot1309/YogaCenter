@@ -4,22 +4,26 @@
  */
 package Controller;
 
-import java.io.File;
+import Object.Account;
+import Object.ClassDetail;
+import Object.Course;
+import Object.Room;
+import Object.Time;
+import Utils.DisplayAllDaysByWeek;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
-@MultipartConfig
 /**
  *
  * @author ADMIN
  */
-public class MainController extends HttpServlet {
+public class ViewScheduleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,53 +39,34 @@ public class MainController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String action = request.getParameter("action");
-            if (action == null) {
-                response.sendRedirect("error.html");
-            } else {
-                String url = "";
-                switch (action) {
-                    case "Login":
-                        url = "LoginServlet";//login to manage website:admin,staff,instructor  
-                        break;
-                    case "Logout":
-                        url = "LogoutServlet";
-                        break;
-                    case "ManageEmployee":
-                        url = "AdminManageEmployeeServlet";
-                        break;
-                    case "AdminDashBoard":
-                        url = "AdminDashBoardServlet";
-                        break;
-                    case "search":
-                        url = "SearchValueServlet";
-                        break;
-                    case "comfirm":
-                        url = "ChangeStatusServlet";
-                        break;
-                    case "ManageUser":
-                        url = "AdminManageUserServlet";
-                        break;
-                    case "adminCourseList":
-                        url = "AdminManageCourseServlet";
-                        break;
-                    case "Add":
-                        response.setContentType("multipart/form-data");
-                        url = "AddServlet";
-                        break;
-                    case "inf":
-                        url = "InformationServlet";
-                        break;
-                    case "ButtonChange":
-                        response.setContentType("multipart/form-data");
-                        url = "UpdateInformationCourseServlet";
-                        break;
-                    case "ManageSchedule":
-                        url = "ViewScheduleServlet";
-                        break;
-                }
-                request.getRequestDispatcher(url).forward(request, response);
+            List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
+            List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
+            request.setAttribute("currentweek", currentweek);
+            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetails();
+            if (listClass != null && !listClass.isEmpty()) {
+                request.setAttribute("listClass", listClass);
             }
+            ArrayList<Account> listTrainer = Dao.AccountDao.getAllTrainer();
+            ArrayList<Room> listRoom = Dao.RoomDao.getAllRoom();
+            ArrayList<Time> listTime = Dao.TimeDao.getAllTime();
+            ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
+            if (listTrainer == null) {
+                request.getRequestDispatcher("adminManageSchedule.jsp").forward(request, response);
+            }
+            if(listRoom == null){
+                request.getRequestDispatcher("adminManageSchedule.jsp").forward(request, response);
+            }
+            if (listCourse == null) {
+                request.getRequestDispatcher("adminManageSchedule.jsp").forward(request, response);
+            }
+            request.setAttribute("listCourse", listCourse);
+            request.setAttribute("listTrainer", listTrainer);
+            request.setAttribute("listRoom", listRoom);
+            request.setAttribute("listTime", listTime);
+            request.setAttribute("listDay", list);
+            request.getRequestDispatcher("adminManageSchedule.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -97,7 +82,6 @@ public class MainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         processRequest(request, response);
     }
 
@@ -112,7 +96,6 @@ public class MainController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         processRequest(request, response);
     }
 

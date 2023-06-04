@@ -52,8 +52,14 @@ public class AccountDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
+<<<<<<< Updated upstream
                     + "from Employee\n"
                     + "Order by ID_Employee desc";
+=======
+                    + "from Account\n"
+                    + "where Role = 1 OR Role = 2\n"
+                    + "Order by ID_Account desc";
+>>>>>>> Stashed changes
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
             if (table != null) {
@@ -117,6 +123,69 @@ public class AccountDao {
                     int status = table.getInt("Status");
                     Account employee = new Account(idEmployee, account, password, name, cccd, phone, address, img, role, status);
                     kq.add(employee);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ArrayList<Account> getAllTrainer() throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Role = 2\n"
+                    + "Order by ID_Account desc";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainee = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    Account account = new Account(idTrainee, email, acc, password, name, cccd, phone, address, img, role, status);
+                    kq.add(account);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static Account getInformationOfEmployee(int id) throws Exception {
+        Account kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select * \n"
+                    + "from Account\n"
+                    + "where ID_Account = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainee = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    kq = new Account(status, email, acc, password, name, cccd, phone, address, img, role, status);
                 }
             }
             cn.close();

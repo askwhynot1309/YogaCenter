@@ -44,9 +44,11 @@ public class UpdateInformationCourseServlet extends HttpServlet {
             String name = request.getParameter("course_name");
             Part filePart = request.getPart("img");
             String fileName = filePart.getSubmittedFileName();
-            String imagePath = "D:/YogaCenter/YogaCenter/web/img";
-            File file = new File(imagePath + File.separator + fileName);
-            filePart.write(file.getAbsolutePath());
+            if (!"".equals(fileName)) {
+                String imagePath = "D:/YogaCenter/YogaCenter/web/img";
+                File file = new File(imagePath + File.separator + fileName);
+                filePart.write(file.getAbsolutePath());
+            }
             String oldimg = request.getParameter("oldimg");
             String description = request.getParameter("course_description");
             BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
@@ -72,12 +74,12 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                     ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                     if (listLevel != null && !listLevel.isEmpty()) {
                         Course info = Dao.CourseDao.getInformationOfCourse(id);
-                            request.setAttribute("informationCourse", info);
+                        request.setAttribute("informationCourse", info);
                         request.setAttribute("listLevel", listLevel);
                         request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
+                        request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
                     } else {
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
+                        request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
                     }
                 } else {
                     int updateCourse = Dao.CourseDao.updateCourse(id, name, oldimg, fee, description, start, end, level);
@@ -88,9 +90,9 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                             request.setAttribute("informationCourse", info);
                             request.setAttribute("listLevel", listLevel);
                             request.setAttribute("success", "Update mới khoá học thành công");
-                            request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
+                            request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
                         } else {
-                            request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
+                            request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
                         }
                     }
                 }
@@ -110,12 +112,12 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                     ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                     if (listLevel != null && !listLevel.isEmpty()) {
                         Course info = Dao.CourseDao.getInformationOfCourse(id);
-                            request.setAttribute("informationCourse", info);
+                        request.setAttribute("informationCourse", info);
                         request.setAttribute("listLevel", listLevel);
                         request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
+                        request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
                     } else {
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
+                        request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
                     }
                 } else {
                     int updateCourse = Dao.CourseDao.updateCourse(id, name, fileName, fee, description, start, end, level);
@@ -126,9 +128,9 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                             request.setAttribute("informationCourse", info);
                             request.setAttribute("listLevel", listLevel);
                             request.setAttribute("success", "Update mới khoá học thành công");
-                            request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
+                            request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
                         } else {
-                            request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
+                            request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
                         }
                     }
                 }

@@ -38,10 +38,11 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, password);
             if(accountLogin != null){
+                if(accountLogin.getStatus() == 0){
                 switch (accountLogin.getRole()) {
                     case 0:
                         session.setAttribute("Admin", accountLogin.getName());
-                        response.sendRedirect("adminDashboard.jsp");
+                        response.sendRedirect(".jsp");
                         break;
                     case 1:
                         session.setAttribute("Staff", accountLogin.getName());
@@ -56,9 +57,12 @@ public class LoginServlet extends HttpServlet {
                         break;
                 }                
             }
+                request.setAttribute("LoginLimited", "This account has been blocked !");
+                request.getRequestDispatcher("Login.jsp").forward(request, response);
+                }
             else{
-                request.setAttribute("Loginfail", "Sai tài khoản hoặc mật khẩu. Vui lòng nhập lại");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.setAttribute("Loginfail", "This account or password is not correct. Please sign in again.");
+                request.getRequestDispatcher("Login.jsp").forward(request, response);
             }
         }catch(Exception e){
             e.printStackTrace();

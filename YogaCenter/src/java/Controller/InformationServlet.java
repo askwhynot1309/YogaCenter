@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Object.Account;
 import Object.Course;
 import Object.Level;
 import java.io.IOException;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class InformationCourseServlet extends HttpServlet {
+public class InformationServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,12 +36,21 @@ public class InformationCourseServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.parseInt(request.getParameter("id"));
-            Course info = Dao.CourseDao.getInformationOfCourse(id);
-            ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            request.setAttribute("informationCourse", info);
-            request.setAttribute("listLevel", listLevel);
-            request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-        }catch(Exception e){
+            String option = request.getParameter("option");
+            switch (option) {
+                case "infCourse":
+                    Course info = Dao.CourseDao.getInformationOfCourse(id);
+                    ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                    request.setAttribute("informationCourse", info);
+                    request.setAttribute("listLevel", listLevel);
+                    request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
+                    break;
+                case "infEmployee":
+                    Account inf = Dao.AccountDao.getInformationOfEmployee(id);
+                    request.setAttribute("informationEmployee", inf);
+                    request.getRequestDispatcher("adminInforEmployee.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

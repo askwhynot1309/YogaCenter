@@ -4,22 +4,18 @@
  */
 package Controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
-@MultipartConfig
 /**
  *
  * @author ADMIN
  */
-public class MainController extends HttpServlet {
+public class AdminDashBoardServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,53 +31,7 @@ public class MainController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String action = request.getParameter("action");
-            if (action == null) {
-                response.sendRedirect("error.html");
-            } else {
-                String url = "";
-                switch (action) {
-                    case "Login":
-                        url = "LoginServlet";//login to manage website:admin,staff,instructor  
-                        break;
-                    case "Logout":
-                        url = "LogoutServlet";
-                        break;
-                    case "ManageEmployee":
-                        url = "AdminManageEmployeeServlet";
-                        break;
-                    case "AdminDashBoard":
-                        url = "AdminDashBoardServlet";
-                        break;
-                    case "search":
-                        url = "SearchValueServlet";
-                        break;
-                    case "comfirm":
-                        url = "ChangeStatusServlet";
-                        break;
-                    case "ManageUser":
-                        url = "AdminManageUserServlet";
-                        break;
-                    case "adminCourseList":
-                        url = "AdminManageCourseServlet";
-                        break;
-                    case "Add":
-                        response.setContentType("multipart/form-data");
-                        url = "AddServlet";
-                        break;
-                    case "inf":
-                        url = "InformationServlet";
-                        break;
-                    case "ButtonChange":
-                        response.setContentType("multipart/form-data");
-                        url = "UpdateInformationCourseServlet";
-                        break;
-                    case "ManageSchedule":
-                        url = "ViewScheduleServlet";
-                        break;
-                }
-                request.getRequestDispatcher(url).forward(request, response);
-            }
+            request.getRequestDispatcher("adminDashboard.jsp").forward(request, response);
         }
     }
 
@@ -97,7 +47,6 @@ public class MainController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         processRequest(request, response);
     }
 
@@ -112,7 +61,6 @@ public class MainController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         processRequest(request, response);
     }
 
