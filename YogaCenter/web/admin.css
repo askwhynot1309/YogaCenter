@@ -53,3 +53,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   padding-top: 20px;
 }
 
+<<<<<<< Updated upstream
+=======
+.font{
+    font-size: 15px;
+    text-align: center;
+}
+.thead-dark{
+    text-align: center;
+}
+
+>>>>>>> Stashed changes
