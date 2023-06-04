@@ -3,6 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/Register.jsp</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/src/java/Controller/SendOTP.java</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/src/java/Utils/EmailUtils.java</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/src/java/Controller/RegisterServlet.java</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/src/java/Controller/SubmitOTPServlet.java</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/src/java/Dao/AccountDao.java</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/ForgetPassword.jsp</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/src/java/Controller/ResetPasswordServlet.java</file>
+            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/ResetPassword.jsp</file>
         </group>
     </open-files>
 </project-private>
