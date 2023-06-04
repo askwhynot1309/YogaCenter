@@ -7,7 +7,7 @@
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="Admin.css">
+        <link rel="stylesheet" href="admin.css">
     </head>
 
     <body>
@@ -102,7 +102,7 @@
                                         <form action="/YogaCenter/request" method="POST">
                                             <span>Hoạt động</span>&ensp; <input type="radio" name="status" value="0" checked="">
                                             <span>Không hoạt động</span>&ensp; <input type="radio" name="status" value="1">
-                                            <input name="id" value="${user.idEmail}" hidden="">
+                                            <input name="id" value="${user.idaccount}" hidden="">
                                             <input name="option" value="userChange" hidden="">
                                             <button value="comfirm" name="action">Xác nhận</button>
                                         </form>
@@ -111,7 +111,7 @@
                                         <form action="/YogaCenter/request" method="POST">
                                             <span>Hoạt động</span>&ensp; <input type="radio" name="status" value="0">
                                             <span>Không hoạt động</span>&ensp; <input type="radio" name="status" value="1" checked="">
-                                            <input name="id" value="${user.idEmail}" hidden="">
+                                            <input name="id" value="${user.idaccount}" hidden="">
                                             <input name="option" value="userChange" hidden="">
                                             <button value="comfirm" name="action">Xác nhận</button>
                                         </form>
