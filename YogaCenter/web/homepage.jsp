@@ -34,7 +34,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div class="inner-content">
                         <h1>Yoga class</h1>
                         <p>As a prestigious Yoga studio in Vietnam with more than 60,000 students to choose from.</p>
-                        <a href="Register.jsp">Register now</a>
+                        <a href="#">Register now</a>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div class="class-content">
                         <h2>newbie class</h2>
                         <p>You owe them a harsher pleasure than any of these pleasures</p>
-                        <a href="Register.jsp">register now</a>
+                        <a href="#">register now</a>
                     </div>
                 </div>
 
@@ -59,7 +59,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div class="class-content">
                         <h2>newbie class</h2>
                         <p>You owe them a harsher pleasure than any of these pleasures</p>
-                        <a href="Register.jsp">register now</a>
+                        <a href="#">register now</a>
                     </div>
                 </div>
 
@@ -68,7 +68,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div class="class-content">
                         <h2>newbie class</h2>
                         <p>You owe them a harsher pleasure than any of these pleasures</p>
-                        <a href="Register.jsp">register now</a>
+                        <a href="#">register now</a>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <h2>best <br> Instructor</h2>
                         <p>The company itself is a very successful company. Rejecting, when not! 
                             It will happen that he who suffers the thing itself, the fault of the truth </p>
-                        <a href="AboutUs.jsp">Read more</a>
+                        <a href="#">Read more</a>
                     </div>
 
                 </div>
@@ -105,7 +105,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <h2>New<br> Experience</h2>
                         <p>The company itself is a very successful company. Rejecting, when not! It will happen who
                             the thing itself, the fault of the truth </p>
-                        <a href="AboutUs.jsp">Read more</a>
+                        <a href="#">Read more</a>
                     </div>
 
                 </div>
@@ -131,7 +131,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div class="price-icon">
                         <i class="fas fa-award"></i>
                     </div>
-                    <a href="Register.jsp">Register now</a>
+                    <a href="#">Register now</a>
                 </div>
 
                 <div class="inner-prices">
@@ -140,7 +140,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div class="price-icon">
                         <i class="fas fa-award"></i>
                     </div>
-                    <a href="Register.jsp">Register now</a>
+                    <a href="#">Register now</a>
                 </div>
 
                 <div class="inner-prices">
@@ -149,7 +149,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div class="price-icon">
                         <i class="fas fa-award"></i>
                     </div>
-                    <a href="Register.jsp">Register now</a>
+                    <a href="#">Register now</a>
                 </div>
             </div>
         </div>
@@ -169,7 +169,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </div>
 
                 <div class="inner-contact">
-                    <img src="https://th.bing.com/th/id/R.5bc6a94ca0114ea56198bccc0a2b0d98?rik=eDteuVFFJ12iYg&pid=ImgRaw&r=0">
+                    <img src="images/Instructer.png" alt="">
                 </div>
             </div>
         </div>
