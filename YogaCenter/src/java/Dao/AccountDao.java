@@ -127,4 +127,87 @@ public class AccountDao {
         }
         return kq;
     }
+
+    public boolean isEmailExists(String email) throws SQLException, Exception {
+        String query = "SELECT COUNT(*) FROM Account WHERE Email = ?";
+        Connection connection = DBUtils.getConnection();
+        try (
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            try ( ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isAccountExists(String account) throws SQLException, Exception {
+        String query = "SELECT COUNT(*) FROM Account WHERE Account = ?";
+        Connection connection = DBUtils.getConnection();
+        try (
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, account);
+            try ( ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isCccdExists(String cccd) throws SQLException, Exception {
+        String query = "SELECT COUNT(*) FROM Account WHERE CCCD = ?";
+        Connection connection = DBUtils.getConnection();
+        try (
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, cccd);
+            try ( ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isPhoneExists(String phone) throws SQLException, Exception {
+        String query = "SELECT COUNT(*) FROM Account WHERE Phone = ?";
+        Connection connection = DBUtils.getConnection();
+        try (
+                 PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, phone);
+            try ( ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean updatePassword(String email, String newPassword) throws SQLException, Exception {
+        boolean check = false;
+        String query = "UPDATE Account SET Password = ? WHERE Email = ?";
+        try ( Connection connection = DBUtils.getConnection();  PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, newPassword);
+            statement.setString(2, email);
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                check = true; 
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return check;
+    }
+
 }
