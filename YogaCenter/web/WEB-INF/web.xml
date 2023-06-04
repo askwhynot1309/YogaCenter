@@ -52,6 +52,22 @@
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>Controller.RegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SendOTP</servlet-name>
+        <servlet-class>Controller.SendOTP</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitOTPServlet</servlet-name>
+        <servlet-class>Controller.SubmitOTPServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>Controller.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitFeedbackServlet</servlet-name>
+        <servlet-class>Controller.SubmitFeedbackServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -103,6 +119,22 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendOTP</servlet-name>
+        <url-pattern>/SendOTP</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitOTPServlet</servlet-name>
+        <url-pattern>/SubmitOTPServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/ResetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitFeedbackServlet</servlet-name>
+        <url-pattern>/SubmitFeedbackServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
