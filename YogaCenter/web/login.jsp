@@ -28,11 +28,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <a href="#" id="logo">Your logo</a>
 
             <nav class="navbar">
+
                 <a href="homepage.jsp">home</a>
                 <a href="#">class</a>
                 <a href="#">about</a>
                 <a href="#">gallery</a>
                 <a href="ContactUs.jsp">contact</a>
+
             </nav>
 
 
@@ -55,9 +57,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <button name="action" value="Login">Login</button>
                     </form>
                 </div>
+
                 <div class="forgot-password">
                     <a href="ForgetPassword.jsp">Forget Password?</a>
                 </div>
+
                 <div class="signin-or"><span>or</span></div>
 
                 <div class="google-btn">

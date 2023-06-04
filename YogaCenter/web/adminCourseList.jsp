@@ -75,9 +75,9 @@
                             </c:if>
                             <button name="action" value="search">Tìm kiếm</button>
                         </form>
-                            
+
                     </div>
-                            <button id="addCourseButton" style="margin-bottom: 10px">Add New Course</button>
+                    <button id="addCourseButton" style="margin-bottom: 10px">Add New Course</button>
                     <c:set var="listCourse" value="${requestScope.listCourse}"/>
                     <c:set var="nulllist" value="${requestScope.nulllist}"/>
                     <c:set var="blank" value="${requestScope.blank}"/>
@@ -112,7 +112,7 @@
                                             <option value="0"></option>
                                         </select></p>
                                     </c:if>
-                                        <input name="course_status" value="0" hidden="">
+                                <input name="course_status" value="0" hidden="">
                                 <button name="action" value="Add">Thêm</button>
                             </form>
                         </div>
@@ -137,23 +137,23 @@
                                         <td>${course.fee_course} đồng</td>
                                         <td>
                                             <c:if test="${course.status == 0}">
-                                        <form action="/YogaCenter/request" method="POST">
-                                            <span>Hoạt động</span>&ensp; <input type="radio" name="status" value="0" checked="">
-                                            <span>Không hoạt động</span>&ensp; <input type="radio" name="status" value="1">
-                                            <input name="id" value="${course.idCourse}" hidden="">
-                                            <input name="option" value="courseChange" hidden="">
-                                            <button value="comfirm" name="action">Xác nhận</button>
-                                        </form>
-                                    </c:if>
-                                    <c:if test="${course.status == 1}">
-                                        <form action="/YogaCenter/request" method="POST">
-                                            <span>Hoạt động</span>&ensp; <input type="radio" name="status" value="0">
-                                            <span>Không hoạt động</span>&ensp; <input type="radio" name="status" value="1" checked="">
-                                            <input name="id" value="${course.idCourse}" hidden="">
-                                            <input name="option" value="courseChange" hidden="">
-                                            <button value="comfirm" name="action">Xác nhận</button>
-                                        </form>
-                                    </c:if>
+                                                <form action="/YogaCenter/request" method="POST">
+                                                    <span>Hoạt động</span>&ensp; <input type="radio" name="status" value="0" checked="">
+                                                    <span>Không hoạt động</span>&ensp; <input type="radio" name="status" value="1">
+                                                    <input name="id" value="${course.idCourse}" hidden="">
+                                                    <input name="option" value="courseChange" hidden="">
+                                                    <button value="comfirm" name="action">Xác nhận</button>
+                                                </form>
+                                            </c:if>
+                                            <c:if test="${course.status == 1}">
+                                                <form action="/YogaCenter/request" method="POST">
+                                                    <span>Hoạt động</span>&ensp; <input type="radio" name="status" value="0">
+                                                    <span>Không hoạt động</span>&ensp; <input type="radio" name="status" value="1" checked="">
+                                                    <input name="id" value="${course.idCourse}" hidden="">
+                                                    <input name="option" value="courseChange" hidden="">
+                                                    <button value="comfirm" name="action">Xác nhận</button>
+                                                </form>
+                                            </c:if>
                                         </td>
                                         <td><a href="/YogaCenter/request?action=inf&id=${course.idCourse}" class="btn btn-primary">Thông tin chi tiết</a></td>
                                     </tr>
@@ -171,18 +171,18 @@
             </script>
         </c:if> 
 
-            <c:if test="${expired != null}">
-                <script>
-                    alert("Ngày bắt đầu đã qua.");
-                </script>
-            </c:if>
+        <c:if test="${expired != null}">
+            <script>
+                alert("Ngày bắt đầu đã qua.");
+            </script>
+        </c:if>
 
-            <c:if test="${success != null}">
-                <script>
-                    alert("Tạo mới khoá học thành công.");
-                </script>
-            </c:if>
-            
+        <c:if test="${success != null}">
+            <script>
+                alert("Tạo mới khoá học thành công.");
+            </script>
+        </c:if>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
     </body>
 
@@ -217,25 +217,25 @@
     </style>
 
     <script>
-                var addCourseButton = document.getElementById("addCourseButton");
-                var courseForm = document.getElementById("courseForm");
-                var closeButton = document.getElementById("closeButton");
-                var overlay = document.getElementById("overlay");
+                    var addCourseButton = document.getElementById("addCourseButton");
+                    var courseForm = document.getElementById("courseForm");
+                    var closeButton = document.getElementById("closeButton");
+                    var overlay = document.getElementById("overlay");
 
-                addCourseButton.addEventListener("click", function () {
-                    courseForm.classList.remove("hidden");
-                    overlay.classList.remove("hidden");
-                });
+                    addCourseButton.addEventListener("click", function () {
+                        courseForm.classList.remove("hidden");
+                        overlay.classList.remove("hidden");
+                    });
 
-                closeButton.addEventListener("click", function () {
-                    courseForm.classList.add("hidden");
-                    overlay.classList.add("hidden");
-                });
+                    closeButton.addEventListener("click", function () {
+                        courseForm.classList.add("hidden");
+                        overlay.classList.add("hidden");
+                    });
 
-                overlay.addEventListener("click", function () {
-                    courseForm.classList.add("hidden");
-                    overlay.classList.add("hidden");
-                });
+                    overlay.addEventListener("click", function () {
+                        courseForm.classList.add("hidden");
+                        overlay.classList.add("hidden");
+                    });
     </script>
 
 </html>
