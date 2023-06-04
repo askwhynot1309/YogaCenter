@@ -28,11 +28,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <a href="#" id="logo">Your logo</a>
 
             <nav class="navbar">
-                <a href="#">home</a>
+
+                <a href="homepage.jsp">home</a>
                 <a href="#">class</a>
                 <a href="#">about</a>
                 <a href="#">gallery</a>
-                <a href="#">contact</a>
+                <a href="ContactUs.jsp">contact</a>
+
             </nav>
 
 
@@ -56,6 +58,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </form>
                 </div>
 
+                <div class="forgot-password">
+                    <a href="ForgetPassword.jsp">Forget Password?</a>
+                </div>
+
                 <div class="signin-or"><span>or</span></div>
 
                 <div class="google-btn">
@@ -65,7 +71,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <div class="btn-text"><b><a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8080/YogaCenter/LoginGoogle&response_type=code
                                                 &client_id=770844928975-77pd0lq2vg2adjg6s2hb0r6kn5fevu58.apps.googleusercontent.com&approval_prompt=force">Sign in with google</a></b></div>
                 </div>
+
             </div>
+
         </div>
         <%
             String login = (String) request.getAttribute("Loginfail");
