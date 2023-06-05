@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
                             break;
                         case 3:
                             session.setAttribute("Trainee", accountLogin.getName());
-                            response.sendRedirect("traineeDashboard.jsp");
+                            response.sendRedirect("homepageTrainee.jsp");
                         default:
                             response.sendRedirect("error.html");
                             break;
