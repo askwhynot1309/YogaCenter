@@ -91,6 +91,9 @@ public class MainController extends HttpServlet {
                         response.setContentType("multipart/form-data");
                         url = "UpdateInformationCourseServlet";
                         break;
+                    case "TraineeManageInformation":
+                        url = "traineeManageInformation.jsp";
+                        break;
                     case "ManageSchedule":
                         url = "ViewScheduleServlet";
                         break;

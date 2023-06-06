@@ -117,7 +117,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <div class="our-gallery">
             <h1>Gallery</h1>
             <div class="main-gallery">
-
+                <img src="img/download.jpg" alt="alt"/>
             </div>
         </div>
 
@@ -173,6 +173,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </div>
             </div>
         </div>
-        <script src="script.js"></script>
+        <script src="js/script.js"></script>
     </body>
 </html>

@@ -9,6 +9,7 @@ Account varchar(50),
 Password varchar(50),
 Phone varchar(10),
 Img varchar(max),
+CV varchar(max),
 Address Nvarchar(100),
 Role int check(Role = 0 or Role = 1 or Role = 2 or Role = 3 or Role = 4), --admin:0, staff:1, trainer:2, trainee:3, guest:4
 Status int check(Status = 0 or Status = 1) --active:0,unactive:1
@@ -55,7 +56,9 @@ ClassDetail_ID int IDENTITY(1,1) PRIMARY KEY,
 Class_ID int FOREIGN KEY REFERENCES Class(Class_ID),
 IDtime int FOREIGN KEY REFERENCES Time(Time_ID),
 DateStudy DATE,
+IDAccount int FOREIGN KEY REFERENCES Account(ID_Account),
 IDCourse int FOREIGN KEY REFERENCES Course(Course_ID),
+Choice int CHECK(Choice = 1 OR Choice = 2 OR Choice = 3) --1:2,4,6 2:3,5,7 3:CN
 )
 
 CREATE TABLE BookingCourse(
@@ -86,7 +89,7 @@ AttendanceDate date,
 Status int check(Status = 0 or Status = 1) --0:absent,1:present
 )
 
-insert into Account(Account,Password,Role,Status) values ('admin','123',0,0)
+insert into Account(Account,Password,Role,Status) values ('admin','202CB962AC59075B964B07152D234B70',0,0)
 
 insert into Level(Level_Name) values (N'Cơ bản')
 
@@ -104,3 +107,10 @@ insert into Time(Time_Choose) values (N'16h - 18h')
 
 insert into Time(Time_Choose) values (N'19h - 21h')
 
+insert into Class(Class_Name, Status) values (N'Room 1', 0)
+
+insert into Class(Class_Name, Status) values (N'Room 2', 0)
+
+insert into Class(Class_Name, Status) values (N'Room 3', 0)
+
+insert into Class(Class_Name, Status) values (N'Room 4', 0)
