@@ -7,77 +7,36 @@
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="admin.css">
+        <link rel="stylesheet" href="css/admin.css">
     </head>
 
     <body>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="sidebar">
-                        <h3>Admin Dashboard</h3>
-                        <ul>
-                            <li>
-                                <a href="/YogaCenter/request?action=AdminDashBoard">
-                                    <i class="fas fa-user icon"></i>
-                                    Admin DashBoard
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/YogaCenter/request?action=ManageEmployee">
-                                    <i class="fas fa-user icon"></i>
-                                    Manage Trainer
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/YogaCenter/request?action=ManageSchedule">
-                                    <i class="fas fa-calendar-alt icon"></i>
-                                    Manage Schedule
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/YogaCenter/request?action=ManageUser">
-                                    <i class="fas fa-users icon"></i>
-                                    Manage User
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/YogaCenter/request?action=adminCourseList">
-                                    <i class="fas fa-book icon"></i>
-                                    Course List
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="divider"></div>
-                        <h4>Settings</h4>
-                        <ul>
-                            <li>
-                                <a href="/YogaCenter/request?action=Logout">
-                                    <i class="fas fa-sign-out-alt icon"></i>
-                                    Logout
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <c:import url="adminMenu.jsp"></c:import>
                 </div>
                 <div class="col-lg-9">
-                    <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Thông tin cụ thể khoá học</h2>
+                    <h2 style="display: flex; justify-content: center; margin-bottom: 10px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Information of course</h2>
                     <c:set var="informationCourse" value="${requestScope.informationCourse}"/>
-                    <c:set var="unlogical" value="${requestScope.unlogical}"/>
                     <c:set var="expired" value="${requestScope.expired}"/>
                     <c:set var="success" value="${requestScope.success}"/>
                     <c:if test="${informationCourse != null}">
-                        <form action="/YogaCenter/request" method="POST" enctype="multipart/form-data" style="height: 100%; padding: 20px; position: relative; margin-top: 5rem">
-                            <div style="float: left">
-                                <p>Tên khoá học : <input type="text" name="course_name" value="${informationCourse.name_course}" class="input-course"></p>
-                                <p>Giá khoá học : <input type="number" name="course_fee" value="${informationCourse.fee_course}" class="input-course"> đồng</p>
-                                <p>Bắt đầu khoá học : <input type="date" name="course_start" value="${informationCourse.date_start}" class="input-course"></p>
-                                <input name="id" value="${informationCourse.idCourse}" hidden="">
-                                <p>Số slots : <input type="number" name="slot" value="${informationCourse.slot}" class="input-course"></p>
-                                <p>Thông tin chi tiết : </p><textarea name="course_description" class="input-description">${informationCourse.description}</textarea>
+                        <form action="/YogaCenter/request" method="POST" enctype="multipart/form-data" style="height: 100vh; padding: 20px; margin-top: 1rem">
+                            <div style="float: left; width: 700px">
+                                <div style="display: flex; align-items: center; justify-content: space-between">
+                                    <p>Name of course : <input type="text" name="course_name" value="${informationCourse.name_course}" class="input-course"></p>
+                                    <p>Fee of course : <input type="number" name="course_fee" value="${informationCourse.fee_course}" class="input-course"></p>
+                                </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between">
+                                    <p>Start-date of course : <input type="date" name="course_start" value="${informationCourse.date_start}" class="input-course"></p>
+                                    <input name="id" value="${informationCourse.idCourse}" hidden="">
+                                    <p>Slots : <input type="number" name="slot" value="${informationCourse.slot}" class="input-course"></p>
+                                </div>
+                                <p>Detail of course : </p><textarea name="course_description">${informationCourse.description}</textarea>
                                 <c:set var="listLevel" value="${requestScope.listLevel}"/>
                                 <c:if test="${listLevel != null && !listLevel.isEmpty()}">
-                                    <p>Level : <select name="level" class="input-course">
+                                    <p style="margin-top: 10px">Level : <select name="level" class="input-course">
                                             <option value="0"></option>
                                             <c:forEach var="level" items="${listLevel}">
                                                 <c:set var="isSelected" value="${informationCourse.level == level.getIdLevel()}"/>
@@ -85,24 +44,25 @@
                                             </c:forEach>
                                         </select></p>
                                     </c:if>
+                            <button name="action" value="ButtonChange" class="btn-update">Change information</button>
                             </div>
-                            <div style="float: right; width: 350px; border: 5px solid black; padding: 10px">
-                                <img src="img/${informationCourse.img_course}" height="200px" width="200px" id="img" style="margin-left: 20%"><br><br>
-                                <input type="file" name="img" id="img-input">
-                                <input name="oldimg" value="${informationCourse.img_course}" hidden="">
+                            <div style="float: right; height: 540px">
+                                <div style="width: 350px; border: 5px solid black; padding: 10px">
+                                    <img src="img/${informationCourse.img_course}" height="200px" width="200px" id="img" style="margin-left: 20%"><br><br>
+                                    <input type="file" name="img" id="img-input">
+                                    <input name="oldimg" value="${informationCourse.img_course}" hidden="">
+                                </div>
                             </div>
-
-                            <button name="action" value="ButtonChange" class="btn-update">Thay đổi thông tin</button>
                         </form>  
                         <c:if test="${expired != null}">
                             <script>
-                                alert("Ngày bắt đầu đã qua.");
+                                alert("The start date is over.");
                             </script>
                         </c:if>
 
                         <c:if test="${success != null}">
                             <script>
-                                alert("Update khoá học thành công.");
+                                alert("Update the course successfully.");
                             </script>
                         </c:if>
                         <script>
@@ -120,14 +80,10 @@
                         </script>
                     </c:if>
                 </div>
-                <c:if test="${unlogical != null}">
-                    <script>
-                        alert("Ngày bắt đầu phải trước ngày kết thúc.");
-                    </script>
-                </c:if>
                 <style>
                     html{
                         overflow-y: hidden;
+                        height: 100vh;
                     }
                     .input-course {
                         font-family: monospace;
@@ -145,23 +101,7 @@
                         border: 1px solid #3b82f6;
                         box-shadow: 0 0 0 4px #3b83f65f;
                     }
-                    .input-description {
-                        font-family: monospace;
-                        width: 500px;
-                        height: 150px;
-                        outline: none;
-                        border: 1px solid #dadada;
-                        padding: 10px;
-                        border-radius: 5px;
-                        background-color: #f3f7fe;
-                        transition: .3s;
-                        color: #3b82f6;
-                    }
 
-                    .input-description:focus {
-                        border: 1px solid #3b82f6;
-                        box-shadow: 0 0 0 4px #3b83f65f;
-                    }
                     input[type ="file"] {
                         display: inline-block;
                         position: relative;
@@ -238,7 +178,7 @@
                             opacity: 0.4;
                         }
                     }
-                    
+
                     .btn-update {
                         padding: 12.5px 30px;
                         border: 0;
@@ -248,9 +188,7 @@
                         font-weight: Bold;
                         transition: all 0.5s;
                         -webkit-transition: all 0.5s;
-                        position: absolute;
-                        bottom: 20%;
-                        float: left;
+                        margin-left: 45%
                     }
 
                     .btn-update:hover {
@@ -267,5 +205,10 @@
                         transform: scale(0.98);
                     }
                 </style>
+                <script type="text/javascript" <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+                <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+                <script>
+                        CKEDITOR.replace('course_description');
+                </script>
                 </body>
                 </html>

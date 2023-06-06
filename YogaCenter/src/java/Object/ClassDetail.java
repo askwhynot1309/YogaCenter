@@ -13,10 +13,12 @@ import java.sql.Date;
 public class ClassDetail {
 
     private int id_detail;
+    private int id_room;
     private String class_name;
     private int time;
     private String datestudy;
     private int idaccount;
+    private Date date;
     private String account;
     private int id_course;
     private String course;
@@ -24,10 +26,28 @@ public class ClassDetail {
     public ClassDetail() {
     }
 
-    public ClassDetail(int idaccount, String account) {
+    public ClassDetail(int id_detail, int id_room, int time, int idaccount, Date date, String account, int id_course, String course) {
+        this.id_detail = id_detail;
+        this.id_room = id_room;
+        this.time = time;
         this.idaccount = idaccount;
+        this.date = date;
         this.account = account;
+        this.id_course = id_course;
+        this.course = course;
     }
+
+    public ClassDetail(int id_detail, String class_name, int time, int idaccount, Date date, String account, int id_course, String course) {
+        this.id_detail = id_detail;
+        this.class_name = class_name;
+        this.time = time;
+        this.idaccount = idaccount;
+        this.date = date;
+        this.account = account;
+        this.id_course = id_course;
+        this.course = course;
+    }
+
 
     public ClassDetail(int id_detail, String class_name, int time, String datestudy, int idaccount, String account, int id_course, String course) {
         this.id_detail = id_detail;
@@ -38,6 +58,22 @@ public class ClassDetail {
         this.account = account;
         this.id_course = id_course;
         this.course = course;
+    }
+
+    public int getId_room() {
+        return id_room;
+    }
+
+    public void setId_room(int id_room) {
+        this.id_room = id_room;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getId_detail() {

@@ -29,10 +29,6 @@
         <servlet-class>Controller.AdminManageCourseServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddServlet</servlet-name>
-        <servlet-class>Controller.AddServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UpdateInformationCourseServlet</servlet-name>
         <servlet-class>Controller.UpdateInformationCourseServlet</servlet-class>
     </servlet>
@@ -55,6 +51,26 @@
     <servlet>
         <servlet-name>AdminDashBoardServlet</servlet-name>
         <servlet-class>Controller.AdminDashBoardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ButtonScheduleServlet</servlet-name>
+        <servlet-class>Controller.ButtonScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>Controller.HomeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddNewEmployeeServlet</servlet-name>
+        <servlet-class>Controller.AddNewEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ButtonAddNewEmployeeServet</servlet-name>
+        <servlet-class>Controller.ButtonAddNewEmployeeServet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCourseServlet</servlet-name>
+        <servlet-class>Controller.AddCourseServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -85,10 +101,6 @@
         <url-pattern>/AdminManageCourseServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddServlet</servlet-name>
-        <url-pattern>/AddServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>UpdateInformationCourseServlet</servlet-name>
         <url-pattern>/UpdateInformationCourseServlet</url-pattern>
     </servlet-mapping>
@@ -112,13 +124,33 @@
         <servlet-name>AdminDashBoardServlet</servlet-name>
         <url-pattern>/AdminDashBoardServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ButtonScheduleServlet</servlet-name>
+        <url-pattern>/ButtonScheduleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/HomeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewEmployeeServlet</servlet-name>
+        <url-pattern>/AddNewEmployeeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ButtonAddNewEmployeeServet</servlet-name>
+        <url-pattern>/ButtonAddNewEmployeeServet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCourseServlet</servlet-name>
+        <url-pattern>/AddCourseServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>homepage.jsp</welcome-file>
+        <welcome-file>HomeServlet</welcome-file>
     </welcome-file-list>
     <error-page>
         <exception-type>Exception</exception-type>

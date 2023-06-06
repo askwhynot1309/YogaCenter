@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,23 +51,15 @@ public class ViewScheduleServlet extends HttpServlet {
             ArrayList<Room> listRoom = Dao.RoomDao.getAllRoom();
             ArrayList<Time> listTime = Dao.TimeDao.getAllTime();
             ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
-            if (listTrainer == null) {
-                request.getRequestDispatcher("adminManageSchedule.jsp").forward(request, response);
-            }
-            if(listRoom == null){
-                request.getRequestDispatcher("adminManageSchedule.jsp").forward(request, response);
-            }
-            if (listCourse == null) {
-                request.getRequestDispatcher("adminManageSchedule.jsp").forward(request, response);
-            }
             request.setAttribute("listCourse", listCourse);
             request.setAttribute("listTrainer", listTrainer);
             request.setAttribute("listRoom", listRoom);
             request.setAttribute("listTime", listTime);
             request.setAttribute("listDay", list);
-            request.getRequestDispatcher("adminManageSchedule.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/adminManageSchedule.jsp").forward(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.html");
+            dispatcher.forward(request, response);
         }
     }
 

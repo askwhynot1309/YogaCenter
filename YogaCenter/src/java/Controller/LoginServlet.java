@@ -7,6 +7,7 @@ package Controller;
 import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,36 +37,38 @@ public class LoginServlet extends HttpServlet {
             String account = request.getParameter("account");
             String password = request.getParameter("password");
             HttpSession session = request.getSession();
-            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, password);
-            if(accountLogin != null){
-                if(accountLogin.getStatus() == 0){
-                switch (accountLogin.getRole()) {
-                    case 0:
-                        session.setAttribute("Admin", accountLogin.getName());
-                        response.sendRedirect("adminDashboard.jsp");
-                        break;
-                    case 1:
-                        session.setAttribute("Staff", accountLogin.getName());
-                        response.sendRedirect("staffDashboard.jsp");
-                        break;
-                    case 2:
-                        session.setAttribute("Trainer", accountLogin.getName());
-                        response.sendRedirect("trainerDashboard.jsp");
-                        break;
-                    default:
-                        response.sendRedirect("error.html");
-                        break;
-                }                
-            }
-                request.setAttribute("LoginLimited", "This account has been blocked !");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
+            String newpassword = Utils.HexPassword.HexPassword(password);
+            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);
+            if (accountLogin != null) {
+                if (accountLogin.getStatus() == 0) {
+                    switch (accountLogin.getRole()) {
+                        case 0:
+                            session.setAttribute("Admin", accountLogin.getName());
+                            response.sendRedirect("AdminDashBoardServlet");
+                            break;
+                        case 1:
+                            session.setAttribute("Staff", accountLogin.getName());
+                            response.sendRedirect("admin/staffDashboard.jsp");
+                            break;
+                        case 2:
+                            session.setAttribute("Trainer", accountLogin.getName());
+                            response.sendRedirect("admin/trainerDashboard.jsp");
+                            break;
+                        default:
+                            response.sendRedirect("error.html");
+                            break;
+                    }
+                } else {
+                    request.setAttribute("LoginLimited", "This account has been blocked !");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
-            else{
+            } else {
                 request.setAttribute("Loginfail", "This account or password is not correct. Please sign in again.");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
-        }catch(Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
+            dispatcher.forward(request, response);
         }
     }
 

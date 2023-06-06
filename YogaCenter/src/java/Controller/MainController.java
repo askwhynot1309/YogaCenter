@@ -67,7 +67,7 @@ public class MainController extends HttpServlet {
                         break;
                     case "Add":
                         response.setContentType("multipart/form-data");
-                        url = "AddServlet";
+                        url = "AddCourseServlet";
                         break;
                     case "inf":
                         url = "InformationServlet";
@@ -78,6 +78,12 @@ public class MainController extends HttpServlet {
                         break;
                     case "ManageSchedule":
                         url = "ViewScheduleServlet";
+                        break;
+                    case "ButtonSchedule":
+                        url = "ButtonScheduleServlet";
+                        break;
+                    case "ButtonAdd":
+                        url = "ButtonAddNewEmployeeServet";
                         break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);

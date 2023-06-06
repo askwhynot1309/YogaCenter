@@ -17,6 +17,7 @@ public class Account implements Serializable{
     private String password;
     private String name;
     private String cccd;
+    private String cv;
     private String phone;
     private String address;
     private String image;
@@ -26,19 +27,30 @@ public class Account implements Serializable{
     public Account() {
     }
 
-    public Account(int idaccount, String email, String account, String password, String name, String cccd, String phone, String address, String image, int role, int status) {
+    public Account(int idaccount, String email, String account, String password, String name, String cccd, String cv, String phone, String address, String image, int role, int status) {
         this.idaccount = idaccount;
         this.email = email;
         this.account = account;
         this.password = password;
         this.name = name;
         this.cccd = cccd;
+        this.cv = cv;
         this.phone = phone;
         this.address = address;
         this.image = image;
         this.role = role;
         this.status = status;
     }
+
+    public String getCv() {
+        return cv;
+    }
+
+    public void setCv(String cv) {
+        this.cv = cv;
+    }
+
+    
 
     public int getIdaccount() {
         return idaccount;

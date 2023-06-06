@@ -29,10 +29,11 @@ public class AccountDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainee = table.getInt("ID_Account");
+                    int idTrainer = table.getInt("ID_Account");
                     String email = table.getString("Email");
                     String cccd = table.getString("CCCD");
                     String acc = table.getString("Account");
+                    String cv = table.getString("CV");
                     String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
@@ -40,7 +41,7 @@ public class AccountDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    kq = new Account(idTrainee, email, acc, password, name, cccd, phone, address, img, role, status);
+                    kq = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
                 }
             }
             cn.close();
@@ -60,10 +61,11 @@ public class AccountDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainee = table.getInt("ID_Account");
+                    int idTrainer = table.getInt("ID_Account");
                     String email = table.getString("Email");
                     String cccd = table.getString("CCCD");
                     String acc = table.getString("Account");
+                    String cv = table.getString("CV");
                     String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
@@ -71,7 +73,7 @@ public class AccountDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    Account account = new Account(idTrainee, email, acc, password, name, cccd, phone, address, img, role, status);
+                    Account account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
                     kq.add(account);
                 }
             }
@@ -108,10 +110,11 @@ public class AccountDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainee = table.getInt("ID_Account");
+                    int idTrainer = table.getInt("ID_Account");
                     String email = table.getString("Email");
                     String cccd = table.getString("CCCD");
                     String acc = table.getString("Account");
+                    String cv = table.getString("CV");
                     String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
@@ -119,7 +122,7 @@ public class AccountDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    Account account = new Account(idTrainee, email, acc, password, name, cccd, phone, address, img, role, status);
+                    Account account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
                     kq.add(account);
                 }
             }
@@ -140,10 +143,11 @@ public class AccountDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainee = table.getInt("ID_Account");
+                    int idTrainer = table.getInt("ID_Account");
                     String email = table.getString("Email");
                     String cccd = table.getString("CCCD");
                     String acc = table.getString("Account");
+                    String cv = table.getString("CV");
                     String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
@@ -151,7 +155,7 @@ public class AccountDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    Account account = new Account(idTrainee, email, acc, password, name, cccd, phone, address, img, role, status);
+                    Account account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
                     kq.add(account);
                 }
             }
@@ -172,10 +176,11 @@ public class AccountDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainee = table.getInt("ID_Account");
+                    int idTrainer = table.getInt("ID_Account");
                     String email = table.getString("Email");
                     String cccd = table.getString("CCCD");
                     String acc = table.getString("Account");
+                    String cv = table.getString("CV");
                     String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
@@ -183,7 +188,59 @@ public class AccountDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    kq = new Account(status, email, acc, password, name, cccd, phone, address, img, role, status);
+                    kq = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static int insertNewEmployee(String name, String email, String phone, String cccd, String address, String account, String password, int role) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "insert into Account(Name, Email, Phone, CCCD, Address, Account, Password, Role, Status) values (?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, name);
+            pst.setString(2, email);
+            pst.setString(3, phone);
+            pst.setString(4, cccd);
+            pst.setString(5, address);
+            pst.setString(6, account);
+            pst.setString(7, password);
+            pst.setInt(8, role);
+            pst.setInt(9, 0);
+            kq = pst.executeUpdate();
+            cn.close();
+        }
+        return kq;
+    }
+    public static Account checkAccountToInsertNewEmployee(String account) throws Exception {
+        Account kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Account = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, account);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    kq = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
                 }
             }
             cn.close();

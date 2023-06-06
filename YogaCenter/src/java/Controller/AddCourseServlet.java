@@ -12,18 +12,18 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-@MultipartConfig
+
 /**
  *
  * @author ADMIN
  */
-public class AddServlet extends HttpServlet {
+public class AddCourseServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,9 +44,9 @@ public class AddServlet extends HttpServlet {
             String fileName = filePart.getSubmittedFileName();
             String imagePath = "D:/YogaCenter/YogaCenter/web/img";
             File file = new File(imagePath + File.separator + fileName);
-            if(!file.exists()){
+            if (!file.exists()) {
                 filePart.write(file.getAbsolutePath());
-            }else{
+            } else {
                 filePart.write(file.getAbsolutePath());
             }
             String description = request.getParameter("course_description");
@@ -65,19 +65,19 @@ public class AddServlet extends HttpServlet {
                         request.setAttribute("listCourse", listCourse);
                         request.setAttribute("listLevel", listLevel);
                         request.setAttribute("blank", "Điền đầy đủ các thông tin.");
-                        request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                        request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                     } else {
-                        request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                        request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                     }
                 } else {
                     if (listLevel != null && !listLevel.isEmpty()) {
                         request.setAttribute("listLevel", listLevel);
                         request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
                         request.setAttribute("blank", "Điền đầy đủ các thông tin.");
-                        request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                        request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                     } else {
                         request.setAttribute("blank", "Điền đầy đủ các thông tin.");
-                        request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                        request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                     }
                 }
             } else {
@@ -133,7 +133,8 @@ public class AddServlet extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
     }
 

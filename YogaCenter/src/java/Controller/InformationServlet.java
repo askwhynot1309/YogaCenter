@@ -5,11 +5,13 @@
 package Controller;
 
 import Object.Account;
+import Object.ClassDetail;
 import Object.Course;
 import Object.Level;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,15 +45,27 @@ public class InformationServlet extends HttpServlet {
                     ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                     request.setAttribute("informationCourse", info);
                     request.setAttribute("listLevel", listLevel);
-                    request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
+                    request.getRequestDispatcher("admin/adminInforCourse.jsp").forward(request, response);
                     break;
                 case "infEmployee":
                     Account inf = Dao.AccountDao.getInformationOfEmployee(id);
                     request.setAttribute("informationEmployee", inf);
-                    request.getRequestDispatcher("adminInforEmployee.jsp").forward(request, response);
+                    request.getRequestDispatcher("admin/adminInforEmployee.jsp").forward(request, response);
+                case "classDetail":
+                    ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id);
+                    ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(information.getTime(), information.getId_room(), information.getDate(), information.getId_course());
+                    if(listTrainee.isEmpty() ){
+                        request.setAttribute("InforClass", information);
+                        request.getRequestDispatcher("admin/adminInforClass.jsp").forward(request, response);
+                    }else{
+                    request.setAttribute("ListTrainee", listTrainee);
+                    request.setAttribute("InforClass", information);
+                    request.getRequestDispatcher("admin/adminInforClass.jsp").forward(request, response);
+                    }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
+            dispatcher.forward(request, response);
         }
     }
 

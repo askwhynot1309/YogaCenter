@@ -10,6 +10,7 @@ import Object.Level;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,20 +43,20 @@ public class SearchValueServlet extends HttpServlet {
                     ArrayList<Account> listEmployee = Dao.AccountDao.getAllEmplyeeBySearch(search);
                     if (listEmployee != null && !listEmployee.isEmpty()) {
                         request.setAttribute("listEmployee", listEmployee);
-                        request.getRequestDispatcher("adminManageEmployee.jsp").forward(request, response);
+                        request.getRequestDispatcher("admin/adminManageEmployee.jsp").forward(request, response);
                     } else {
                         request.setAttribute("nulllist", "Không có nhân viên nào trong dữ liệu data trùng khớp với dữ liệu bạn tìm kiếm");
-                        request.getRequestDispatcher("adminManageEmployee.jsp").forward(request, response);
+                        request.getRequestDispatcher("admin/adminManageEmployee.jsp").forward(request, response);
                     }
                     break;
                 case "searchUser":
                     ArrayList<Account> listUser = Dao.UserDao.getAllTraineeBySearch(search);
                     if (listUser != null && !listUser.isEmpty()) {
                         request.setAttribute("listUser", listUser);
-                        request.getRequestDispatcher("adminManageUser.jsp").forward(request, response);
+                        request.getRequestDispatcher("admin/adminManageUser.jsp").forward(request, response);
                     } else {
                         request.setAttribute("nulllist", "Không có users nào trong dữ liệu data trùng khớp với dữ liệu bạn tìm kiếm");
-                        request.getRequestDispatcher("adminManageUser.jsp").forward(request, response);
+                        request.getRequestDispatcher("admin/adminManageUser.jsp").forward(request, response);
                     }
                     break;
                 case "searchCourse":
@@ -66,10 +67,10 @@ public class SearchValueServlet extends HttpServlet {
                         if (listCourse != null && !listCourse.isEmpty()) {
                             request.setAttribute("listCourse", listCourse);
                             request.setAttribute("listLevel", listLevel);
-                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                         } else {
                             request.setAttribute("nulllist", "Không có khoá học nào nào trong dữ liệu data trùng khớp với dữ liệu bạn tìm kiếm");
-                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                         }
                     }else{
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
@@ -77,17 +78,18 @@ public class SearchValueServlet extends HttpServlet {
                         if (listCourse != null && !listCourse.isEmpty()) {
                             request.setAttribute("listCourse", listCourse);
                             request.setAttribute("listLevel", listLevel);
-                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                         } else {
                             request.setAttribute("listLevel", listLevel);
                             request.setAttribute("nulllist", "Không có khoá học nào nào trong dữ liệu data trùng khớp với dữ liệu bạn tìm kiếm");
-                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                         }
                     }
                     break;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
+            dispatcher.forward(request, response);
         }
     }
 
