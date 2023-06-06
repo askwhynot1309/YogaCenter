@@ -6,6 +6,8 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +50,15 @@ public class ChangeStatusServlet extends HttpServlet {
                     }
                     break;
                 case "courseChange":
+                    String datestart = request.getParameter("date");
+                    if(status == 0){
+                        Date newdate = Date.valueOf(datestart);
+                        Date currentdate = new Date(System.currentTimeMillis());
+                        if(newdate.equals(currentdate)){
+                            request.setAttribute("errorDate", "message");
+                            request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
+                        }
+                    }
                     int changeStatusCourse = Dao.CourseDao.changeStatusCourse(status, id);
                     if (changeStatusCourse == 1) {
                         request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
@@ -55,7 +66,8 @@ public class ChangeStatusServlet extends HttpServlet {
                     break;
             }
         } catch (Exception e) {
-            response.sendRedirect("error.html");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
+            dispatcher.forward(request, response);
     }
 }
 

@@ -38,14 +38,6 @@ public class Course implements Serializable{
         this.status = status;
     }
 
-    public String getImg_course() {
-        return img_course;
-    }
-
-    public void setImg_course(String img_course) {
-        this.img_course = img_course;
-    }
-
     public int getIdCourse() {
         return idCourse;
     }
@@ -60,6 +52,14 @@ public class Course implements Serializable{
 
     public void setName_course(String name_course) {
         this.name_course = name_course;
+    }
+
+    public String getImg_course() {
+        return img_course;
+    }
+
+    public void setImg_course(String img_course) {
+        this.img_course = img_course;
     }
 
     public BigDecimal getFee_course() {
@@ -109,6 +109,7 @@ public class Course implements Serializable{
     public void setStatus(int status) {
         this.status = status;
     }
+
     
     
 }

@@ -8,6 +8,7 @@ import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,14 +37,15 @@ public class AdminManageEmployeeServlet extends HttpServlet {
             ArrayList<Account> listEmployee = Dao.AccountDao.getAllEmployees();
             if(listEmployee != null && !listEmployee.isEmpty()){
                 request.setAttribute("listEmployee", listEmployee);
-                request.getRequestDispatcher("adminManageEmployee.jsp").forward(request, response);
+                request.getRequestDispatcher("admin/adminManageEmployee.jsp").forward(request, response);
             } 
             else{
-                request.setAttribute("nulllist", "Không có nhân viên nào trong dữ liệu data");
-                request.getRequestDispatcher("adminManageEmployee.jsp").forward(request, response);
+                request.setAttribute("nulllist", "There are no employees in the data.");
+                request.getRequestDispatcher("admin/adminManageEmployee.jsp").forward(request, response);
             }
         }catch(Exception e){
-            e.printStackTrace();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
+            dispatcher.forward(request, response);
         }
     }
 

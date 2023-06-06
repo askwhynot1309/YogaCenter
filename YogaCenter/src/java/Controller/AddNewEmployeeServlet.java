@@ -4,12 +4,8 @@
  */
 package Controller;
 
-import Object.Course;
-import Object.Level;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class AdminManageCourseServlet extends HttpServlet {
+public class AddNewEmployeeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,28 +31,7 @@ public class AdminManageCourseServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
-            ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            if (listCourse != null && !listCourse.isEmpty()) {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listCourse", listCourse);
-                    request.setAttribute("listLevel", listLevel);
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                }
-            } else {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listLevel", listLevel);
-                    request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                }
-            }
-        } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
         }
     }
 

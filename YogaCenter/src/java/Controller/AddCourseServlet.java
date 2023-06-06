@@ -44,18 +44,15 @@ public class AddServlet extends HttpServlet {
             String fileName = filePart.getSubmittedFileName();
             String imagePath = "D:/YogaCenter/YogaCenter/web/img";
             File file = new File(imagePath + File.separator + fileName);
-            if(!file.exists()){
-                filePart.write(file.getAbsolutePath());
-            }else{
-                filePart.write(file.getAbsolutePath());
-            }
+            filePart.write(file.getAbsolutePath());
             String description = request.getParameter("course_description");
             BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
             int course_status = Integer.parseInt(request.getParameter("course_status"));
             int level = Integer.parseInt(request.getParameter("level"));
             String datestart = request.getParameter("course_start");
-            int slot = Integer.parseInt(request.getParameter("slot"));
+            String dateend = request.getParameter("course_finish");
             Date start = Date.valueOf(datestart);
+            Date end = Date.valueOf(dateend);
             Date currentDate = new Date(System.currentTimeMillis());
             if (level == 0) {
                 ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
@@ -71,7 +68,6 @@ public class AddServlet extends HttpServlet {
                     }
                 } else {
                     if (listLevel != null && !listLevel.isEmpty()) {
-                        request.setAttribute("listLevel", listLevel);
                         request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
                         request.setAttribute("blank", "Điền đầy đủ các thông tin.");
                         request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
@@ -81,7 +77,29 @@ public class AddServlet extends HttpServlet {
                     }
                 }
             } else {
-                if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
+                if (start.toLocalDate().isAfter(end.toLocalDate())) { // check if start date sau end date
+                    ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
+                    ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                    if (listCourse != null && !listCourse.isEmpty()) {
+                        if (listLevel != null && !listLevel.isEmpty()) {
+                            request.setAttribute("listCourse", listCourse);
+                            request.setAttribute("listLevel", listLevel);
+                            request.setAttribute("unlogical", "Ngày bắt đầu phải trước ngày kết thúc");
+                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                        } else {
+                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                        }
+                    } else {
+                        if (listLevel != null && !listLevel.isEmpty()) {
+                            request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
+                            request.setAttribute("unlogical", "Ngày bắt đầu phải trước ngày kết thúc");
+                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("unlogical", "Ngày bắt đầu phải trước ngày kết thúc");
+                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                        }
+                    }
+                } else if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
                     ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
                     ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                     if (listCourse != null && !listCourse.isEmpty()) {
@@ -95,7 +113,6 @@ public class AddServlet extends HttpServlet {
                         }
                     } else {
                         if (listLevel != null && !listLevel.isEmpty()) {
-                            request.setAttribute("listLevel", listLevel);
                             request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
                             request.setAttribute("expired", "Ngày bắt đầu đã qua");
                             request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
@@ -105,7 +122,7 @@ public class AddServlet extends HttpServlet {
                         }
                     }
                 } else {
-                    int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, start, slot, level, course_status);
+                    int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, start, end, level, course_status);
                     if (insertCourse == 1) {
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
@@ -120,7 +137,6 @@ public class AddServlet extends HttpServlet {
                             }
                         } else {
                             if (listLevel != null && !listLevel.isEmpty()) {
-                                request.setAttribute("listLevel", listLevel);
                                 request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
                                 request.setAttribute("success", "Tạo mới khoá học thành công");
                                 request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);

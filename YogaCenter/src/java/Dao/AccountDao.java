@@ -5,11 +5,9 @@
 package Dao;
 
 import Object.Account;
-import Utils.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -31,10 +29,11 @@ public class AccountDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainee = table.getInt("ID_Account");
+                    int idTrainer = table.getInt("ID_Account");
                     String email = table.getString("Email");
                     String cccd = table.getString("CCCD");
                     String acc = table.getString("Account");
+                    String cv = table.getString("CV");
                     String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
@@ -42,7 +41,7 @@ public class AccountDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    kq = new Account(idTrainee, email, acc, password, name, cccd, phone, address, img, role, status);
+                    kq = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
                 }
             }
             cn.close();
@@ -56,16 +55,17 @@ public class AccountDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Account\n"
-                    + "where Role = 0 OR Role = 1 OR Role = 2\n"
+                    + "where Role = 1 OR Role = 2\n"
                     + "Order by ID_Account desc";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainee = table.getInt("ID_Account");
+                    int idTrainer = table.getInt("ID_Account");
                     String email = table.getString("Email");
                     String cccd = table.getString("CCCD");
                     String acc = table.getString("Account");
+                    String cv = table.getString("CV");
                     String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
@@ -73,8 +73,7 @@ public class AccountDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    Account account = new Account(idTrainee, email, acc, password, name, cccd, phone, address, img,
-                            role, status);
+                    Account account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
                     kq.add(account);
                 }
             }
@@ -99,36 +98,6 @@ public class AccountDao {
         return kq;
     }
 
-    public boolean registerUser(Account account) throws Exception {
-        boolean success = false;
-        Connection conn = DBUtils.getConnection();
-        try {
-
-            String query = "INSERT INTO Account (Email, Name, CCCD, Account, Password, Phone, Img, Address, Role, status) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = conn.prepareStatement(query);
-            statement.setString(1, account.getEmail());
-            statement.setString(2, account.getName());
-            statement.setString(3, account.getCccd());
-            statement.setString(4, account.getAccount());
-            statement.setString(5, account.getPassword());
-            statement.setString(6, account.getPhone());
-            statement.setString(7, account.getImage());
-            statement.setString(8, account.getAddress());
-            statement.setInt(9, account.getRole());
-            statement.setInt(10, account.getStatus());
-
-            int rowsAffected = statement.executeUpdate();
-            if (rowsAffected > 0) {
-                success = true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        conn.close();
-        return success;
-    }
-
     public static ArrayList<Account> getAllEmplyeeBySearch(String search) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -141,10 +110,11 @@ public class AccountDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainee = table.getInt("ID_Account");
+                    int idTrainer = table.getInt("ID_Account");
                     String email = table.getString("Email");
                     String cccd = table.getString("CCCD");
                     String acc = table.getString("Account");
+                    String cv = table.getString("CV");
                     String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
@@ -152,8 +122,7 @@ public class AccountDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    Account account = new Account(idTrainee, email, acc, password, name, cccd, phone, address, img,
-                            role, status);
+                    Account account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
                     kq.add(account);
                 }
             }
@@ -162,87 +131,120 @@ public class AccountDao {
         return kq;
     }
 
-    public boolean isEmailExists(String email) throws SQLException, Exception {
-        String query = "SELECT COUNT(*) FROM Account WHERE Email = ?";
-        Connection connection = DBUtils.getConnection();
-        try (
-                PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, email);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    int count = resultSet.getInt(1);
-                    return count > 0;
+    public static ArrayList<Account> getAllTrainer() throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Role = 2\n"
+                    + "Order by ID_Account desc";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    Account account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    kq.add(account);
                 }
             }
+            cn.close();
         }
-        return false;
+        return kq;
     }
 
-    public boolean isAccountExists(String account) throws SQLException, Exception {
-        String query = "SELECT COUNT(*) FROM Account WHERE Account = ?";
-        Connection connection = DBUtils.getConnection();
-        try (
-                PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, account);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    int count = resultSet.getInt(1);
-                    return count > 0;
+    public static Account getInformationOfEmployee(int id) throws Exception {
+        Account kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select * \n"
+                    + "from Account\n"
+                    + "where ID_Account = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    kq = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
                 }
             }
+            cn.close();
         }
-        return false;
+        return kq;
     }
 
-    public boolean isCccdExists(String cccd) throws SQLException, Exception {
-        String query = "SELECT COUNT(*) FROM Account WHERE CCCD = ?";
-        Connection connection = DBUtils.getConnection();
-        try (
-                PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, cccd);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    int count = resultSet.getInt(1);
-                    return count > 0;
+    public static int insertNewEmployee(String name, String email, String phone, String cccd, String address, String account, String password, int role) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "insert into Account(Name, Email, Phone, CCCD, Address, Account, Password, Role, Status) values (?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, name);
+            pst.setString(2, email);
+            pst.setString(3, phone);
+            pst.setString(4, cccd);
+            pst.setString(5, address);
+            pst.setString(6, account);
+            pst.setString(7, password);
+            pst.setInt(8, role);
+            pst.setInt(9, 0);
+            kq = pst.executeUpdate();
+            cn.close();
+        }
+        return kq;
+    }
+    public static Account checkAccountToInsertNewEmployee(String account) throws Exception {
+        Account kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Account = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, account);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    kq = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
                 }
             }
+            cn.close();
         }
-        return false;
+        return kq;
     }
-
-    public boolean isPhoneExists(String phone) throws SQLException, Exception {
-        String query = "SELECT COUNT(*) FROM Account WHERE Phone = ?";
-        Connection connection = DBUtils.getConnection();
-        try (
-                PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, phone);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    int count = resultSet.getInt(1);
-                    return count > 0;
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean updatePassword(String email, String newPassword) throws SQLException, Exception {
-        boolean check = false;
-        String query = "UPDATE Account SET Password = ? WHERE Email = ?";
-        try (Connection connection = DBUtils.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, newPassword);
-            statement.setString(2, email);
-            int rowsAffected = statement.executeUpdate();
-            if (rowsAffected > 0) {
-                check = true;
-            }
-        } catch (SQLException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            throw ex;
-        }
-        return check;
-    }
-
 }

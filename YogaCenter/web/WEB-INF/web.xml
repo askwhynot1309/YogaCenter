@@ -17,10 +17,6 @@
         <servlet-class>Controller.MainController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminManageEmployeeServlet</servlet-name>
-        <servlet-class>Controller.AdminManageEmployeeServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>SearchValueServlet</servlet-name>
         <servlet-class>Controller.SearchValueServlet</servlet-class>
     </servlet>
@@ -33,14 +29,6 @@
         <servlet-class>Controller.AdminManageCourseServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddServlet</servlet-name>
-        <servlet-class>Controller.AddServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>InformationCourseServlet</servlet-name>
-        <servlet-class>Controller.InformationCourseServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UpdateInformationCourseServlet</servlet-name>
         <servlet-class>Controller.UpdateInformationCourseServlet</servlet-class>
     </servlet>
@@ -49,24 +37,40 @@
         <servlet-class>Controller.ChangeStatusServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>Controller.RegisterServlet</servlet-class>
+        <servlet-name>ViewScheduleServlet</servlet-name>
+        <servlet-class>Controller.ViewScheduleServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SendOTP</servlet-name>
-        <servlet-class>Controller.SendOTP</servlet-class>
+        <servlet-name>AdminManageEmployeeServlet</servlet-name>
+        <servlet-class>Controller.AdminManageEmployeeServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SubmitOTPServlet</servlet-name>
-        <servlet-class>Controller.SubmitOTPServlet</servlet-class>
+        <servlet-name>InformationServlet</servlet-name>
+        <servlet-class>Controller.InformationServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ResetPasswordServlet</servlet-name>
-        <servlet-class>Controller.ResetPasswordServlet</servlet-class>
+        <servlet-name>AdminDashBoardServlet</servlet-name>
+        <servlet-class>Controller.AdminDashBoardServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SubmitFeedbackServlet</servlet-name>
-        <servlet-class>Controller.SubmitFeedbackServlet</servlet-class>
+        <servlet-name>ButtonScheduleServlet</servlet-name>
+        <servlet-class>Controller.ButtonScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>Controller.HomeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddNewEmployeeServlet</servlet-name>
+        <servlet-class>Controller.AddNewEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ButtonAddNewEmployeeServet</servlet-name>
+        <servlet-class>Controller.ButtonAddNewEmployeeServet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCourseServlet</servlet-name>
+        <servlet-class>Controller.AddCourseServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -79,10 +83,6 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdminManageEmployeeServlet</servlet-name>
-        <url-pattern>/AdminManageEmployeeServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
@@ -101,14 +101,6 @@
         <url-pattern>/AdminManageCourseServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddServlet</servlet-name>
-        <url-pattern>/AddServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>InformationCourseServlet</servlet-name>
-        <url-pattern>/InformationCourseServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>UpdateInformationCourseServlet</servlet-name>
         <url-pattern>/UpdateInformationCourseServlet</url-pattern>
     </servlet-mapping>
@@ -117,24 +109,40 @@
         <url-pattern>/ChangeStatusServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>RegisterServlet</servlet-name>
-        <url-pattern>/RegisterServlet</url-pattern>
+        <servlet-name>ViewScheduleServlet</servlet-name>
+        <url-pattern>/ViewScheduleServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SendOTP</servlet-name>
-        <url-pattern>/SendOTP</url-pattern>
+        <servlet-name>AdminManageEmployeeServlet</servlet-name>
+        <url-pattern>/AdminManageEmployeeServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SubmitOTPServlet</servlet-name>
-        <url-pattern>/SubmitOTPServlet</url-pattern>
+        <servlet-name>InformationServlet</servlet-name>
+        <url-pattern>/InformationServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ResetPasswordServlet</servlet-name>
-        <url-pattern>/ResetPasswordServlet</url-pattern>
+        <servlet-name>AdminDashBoardServlet</servlet-name>
+        <url-pattern>/AdminDashBoardServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SubmitFeedbackServlet</servlet-name>
-        <url-pattern>/SubmitFeedbackServlet</url-pattern>
+        <servlet-name>ButtonScheduleServlet</servlet-name>
+        <url-pattern>/ButtonScheduleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/HomeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewEmployeeServlet</servlet-name>
+        <url-pattern>/AddNewEmployeeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ButtonAddNewEmployeeServet</servlet-name>
+        <url-pattern>/ButtonAddNewEmployeeServet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCourseServlet</servlet-name>
+        <url-pattern>/AddCourseServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -142,7 +150,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>homepage.jsp</welcome-file>
+        <welcome-file>HomeServlet</welcome-file>
     </welcome-file-list>
     <error-page>
         <exception-type>Exception</exception-type>

@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import Object.Account;
+import Object.ClassDetail;
 import Object.Course;
 import Object.Level;
 import java.io.IOException;
@@ -19,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class AdminManageCourseServlet extends HttpServlet {
+public class InformationServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,24 +37,31 @@ public class AdminManageCourseServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
-            ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            if (listCourse != null && !listCourse.isEmpty()) {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listCourse", listCourse);
+            int id = Integer.parseInt(request.getParameter("id"));
+            String option = request.getParameter("option");
+            switch (option) {
+                case "infCourse":
+                    Course info = Dao.CourseDao.getInformationOfCourse(id);
+                    ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                    request.setAttribute("informationCourse", info);
                     request.setAttribute("listLevel", listLevel);
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                }
-            } else {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listLevel", listLevel);
-                    request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                }
+                    request.getRequestDispatcher("admin/adminInforCourse.jsp").forward(request, response);
+                    break;
+                case "infEmployee":
+                    Account inf = Dao.AccountDao.getInformationOfEmployee(id);
+                    request.setAttribute("informationEmployee", inf);
+                    request.getRequestDispatcher("admin/adminInforEmployee.jsp").forward(request, response);
+                case "classDetail":
+                    ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id);
+                    ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(information.getTime(), information.getId_room(), information.getDate(), information.getId_course());
+                    if(listTrainee.isEmpty() ){
+                        request.setAttribute("InforClass", information);
+                        request.getRequestDispatcher("admin/adminInforClass.jsp").forward(request, response);
+                    }else{
+                    request.setAttribute("ListTrainee", listTrainee);
+                    request.setAttribute("InforClass", information);
+                    request.getRequestDispatcher("admin/adminInforClass.jsp").forward(request, response);
+                    }
             }
         } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");

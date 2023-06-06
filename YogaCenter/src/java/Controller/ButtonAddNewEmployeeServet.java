@@ -4,11 +4,10 @@
  */
 package Controller;
 
-import Object.Course;
-import Object.Level;
+import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class InformationCourseServlet extends HttpServlet {
+public class ButtonAddNewEmployeeServet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,14 +33,29 @@ public class InformationCourseServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int id = Integer.parseInt(request.getParameter("id"));
-            Course info = Dao.CourseDao.getInformationOfCourse(id);
-            ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            request.setAttribute("informationCourse", info);
-            request.setAttribute("listLevel", listLevel);
-            request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-        }catch(Exception e){
-            e.printStackTrace();
+            String name = request.getParameter("name");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
+            String cccd = request.getParameter("cccd");
+            String address = request.getParameter("address");
+            String account = request.getParameter("account");
+            String password = request.getParameter("password");
+            int role = Integer.parseInt(request.getParameter("role"));
+            String newpassword = Utils.HexPassword.HexPassword(password);
+            Account acc = Dao.AccountDao.checkAccountToInsertNewEmployee(account);
+            if (acc != null) {
+                request.setAttribute("addUnsuccess", "addUnsuccess");
+                request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
+            } else {
+                int insertNewEmployee = Dao.AccountDao.insertNewEmployee(name, email, phone, cccd, address, account, newpassword, role);
+                if (insertNewEmployee == 1) {
+                    request.setAttribute("addSuccess", "addSuccess");
+                    request.getRequestDispatcher("AdminManageEmployeeServlet").forward(request, response);
+                }
+            }
+        } catch (Exception e) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
+            dispatcher.forward(request, response);
         }
     }
 

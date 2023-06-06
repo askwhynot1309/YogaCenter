@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -42,12 +43,14 @@ public class UpdateInformationCourseServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.parseInt(request.getParameter("id"));
             String name = request.getParameter("course_name");
+            String oldimg = request.getParameter("oldimg");
             Part filePart = request.getPart("img");
             String fileName = filePart.getSubmittedFileName();
             String imagePath = "D:/YogaCenter/YogaCenter/web/img";
             File file = new File(imagePath + File.separator + fileName);
-            filePart.write(file.getAbsolutePath());
-            String oldimg = request.getParameter("oldimg");
+            if (!file.exists()) {
+                filePart.write(file.getAbsolutePath());
+            }
             String description = request.getParameter("course_description");
             BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
             int level = Integer.parseInt(request.getParameter("level"));
@@ -57,61 +60,30 @@ public class UpdateInformationCourseServlet extends HttpServlet {
             Date currentDate = new Date(System.currentTimeMillis());
             if ("".equals(fileName)) {
                 if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
-                    ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-                    if (listLevel != null && !listLevel.isEmpty()) {
-                        Course info = Dao.CourseDao.getInformationOfCourse(id);
-                            request.setAttribute("informationCourse", info);
-                        request.setAttribute("listLevel", listLevel);
-                        request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                    } else {
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                    }
+                    request.setAttribute("expired", "Ngày bắt đầu đã qua");
+                    request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
                 } else {
                     int updateCourse = Dao.CourseDao.updateCourse(id, name, oldimg, fee, description, start, slot, level);
                     if (updateCourse == 1) {
-                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-                        if (listLevel != null && !listLevel.isEmpty()) {
-                            Course info = Dao.CourseDao.getInformationOfCourse(id);
-                            request.setAttribute("informationCourse", info);
-                            request.setAttribute("listLevel", listLevel);
                             request.setAttribute("success", "Update mới khoá học thành công");
-                            request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                        } else {
-                            request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                        }
+                            request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
                     }
                 }
             } else {
                 if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
-                    ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-                    if (listLevel != null && !listLevel.isEmpty()) {
-                        Course info = Dao.CourseDao.getInformationOfCourse(id);
-                            request.setAttribute("informationCourse", info);
-                        request.setAttribute("listLevel", listLevel);
                         request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                    } else {
-                        request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                    }
+                        request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
                 } else {
                     int updateCourse = Dao.CourseDao.updateCourse(id, name, fileName, fee, description, start, slot, level);
                     if (updateCourse == 1) {
-                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-                        if (listLevel != null && !listLevel.isEmpty()) {
-                            Course info = Dao.CourseDao.getInformationOfCourse(id);
-                            request.setAttribute("informationCourse", info);
-                            request.setAttribute("listLevel", listLevel);
                             request.setAttribute("success", "Update mới khoá học thành công");
-                            request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                        } else {
-                            request.getRequestDispatcher("adminInforCourse.jsp").forward(request, response);
-                        }
+                            request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
                     }
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
+            dispatcher.forward(request, response);
         }
     }
 

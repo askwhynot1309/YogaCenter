@@ -8,6 +8,7 @@ import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,16 +35,16 @@ public class AdminManageUserServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             ArrayList<Account> listUser = Dao.UserDao.getAllTrainee();
-            if(listUser != null && !listUser.isEmpty()){
+            if (listUser != null && !listUser.isEmpty()) {
                 request.setAttribute("listUser", listUser);
-                request.getRequestDispatcher("adminManageUser.jsp").forward(request, response);
+                request.getRequestDispatcher("admin/adminManageUser.jsp").forward(request, response);
+            } else {
+                request.setAttribute("nulllist", "There are no users in the data");
+                request.getRequestDispatcher("admin/adminManageUser.jsp").forward(request, response);
             }
-            else{
-                request.setAttribute("nulllist", "Không có users nào trong dữ liệu data");
-                request.getRequestDispatcher("adminManageUser.jsp").forward(request, response);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
+            dispatcher.forward(request, response);
         }
     }
 

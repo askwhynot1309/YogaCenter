@@ -50,6 +50,9 @@ public class MainController extends HttpServlet {
                     case "ManageEmployee":
                         url = "AdminManageEmployeeServlet";
                         break;
+                    case "AdminDashBoard":
+                        url = "AdminDashBoardServlet";
+                        break;
                     case "search":
                         url = "SearchValueServlet";
                         break;
@@ -59,24 +62,29 @@ public class MainController extends HttpServlet {
                     case "ManageUser":
                         url = "AdminManageUserServlet";
                         break;
-                    case "ManageSchedule":
-                        url = "adminManageSchedule.jsp";
-                        break;
                     case "adminCourseList":
                         url = "AdminManageCourseServlet";
                         break;
                     case "Add":
                         response.setContentType("multipart/form-data");
-                        url = "AddServlet";
+                        url = "AddCourseServlet";
                         break;
                     case "inf":
-                        url = "InformationCourseServlet";
+                        url = "InformationServlet";
                         break;
                     case "ButtonChange":
                         response.setContentType("multipart/form-data");
                         url = "UpdateInformationCourseServlet";
                         break;
-
+                    case "ManageSchedule":
+                        url = "ViewScheduleServlet";
+                        break;
+                    case "ButtonSchedule":
+                        url = "ButtonScheduleServlet";
+                        break;
+                    case "ButtonAdd":
+                        url = "ButtonAddNewEmployeeServet";
+                        break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);
             }

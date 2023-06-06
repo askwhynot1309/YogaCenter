@@ -7,6 +7,7 @@ package Controller;
 import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,40 +37,38 @@ public class LoginServlet extends HttpServlet {
             String account = request.getParameter("account");
             String password = request.getParameter("password");
             HttpSession session = request.getSession();
-            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, password);
+            String newpassword = Utils.HexPassword.HexPassword(password);
+            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);
             if (accountLogin != null) {
                 if (accountLogin.getStatus() == 0) {
                     switch (accountLogin.getRole()) {
                         case 0:
                             session.setAttribute("Admin", accountLogin.getName());
-                            response.sendRedirect("adminDashboard.jsp");
+                            response.sendRedirect("AdminDashBoardServlet");
                             break;
                         case 1:
                             session.setAttribute("Staff", accountLogin.getName());
-                            response.sendRedirect("staffDashboard.jsp");
+                            response.sendRedirect("admin/staffDashboard.jsp");
                             break;
                         case 2:
                             session.setAttribute("Trainer", accountLogin.getName());
-                            response.sendRedirect("trainerDashboard.jsp");
+                            response.sendRedirect("admin/trainerDashboard.jsp");
                             break;
-                        case 3:
-                            session.setAttribute("Trainee", accountLogin.getName());
-                            response.sendRedirect("traineeDashboard.jsp");
                         default:
                             response.sendRedirect("error.html");
                             break;
                     }
-                }else{
-                    request.setAttribute("Loginfail", "Tài khoản không khả dụng");
+                } else {
+                    request.setAttribute("LoginLimited", "This account has been blocked !");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
-
             } else {
-                request.setAttribute("Loginfail", "Sai tài khoản hoặc mật khẩu. Vui lòng nhập lại");
+                request.setAttribute("Loginfail", "This account or password is not correct. Please sign in again.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
+            dispatcher.forward(request, response);
         }
     }
 
