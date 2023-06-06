@@ -4,8 +4,6 @@
  */
 package Controller;
 
-import Dao.AccountDao;
-import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -14,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,10 +40,7 @@ public class RegisterServlet extends HttpServlet {
             String cccd = request.getParameter("cccd");
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
-            int role = 3;
-            int status = 0;
-            AccountDao dao = new AccountDao();
-
+            String newpassword = Utils.HexPassword.HexPassword(password);
             boolean checkValid = true;
             if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
                 request.setAttribute("ErrorMessageEmail", "Wrong email format");
@@ -60,31 +54,29 @@ public class RegisterServlet extends HttpServlet {
             } else if (email.isEmpty() || account.isEmpty() || password.isEmpty() || name.isEmpty() || cccd.isEmpty() || phone.isEmpty() || address.isEmpty()) {
                 request.setAttribute("ErrorMessage", "Fill in all the fields");
                 checkValid = false;
-            } else if (dao.isEmailExists(email)) {
+            } else if (Dao.UserDao.isEmailExist(email)) {
                 request.setAttribute("ErrorMessageEmail", "Email already exists");
                 checkValid = false;
-            } else if (dao.isAccountExists(account)) {
+            } else if (Dao.UserDao.checkAccountToInsertNewUser(account) != null) {
                 request.setAttribute("ErrorMessageAccount", "Account already exists");
                 checkValid = false;
-            } else if (dao.isCccdExists(cccd)) {
+            } else if (Dao.UserDao.isCccdExists(cccd)) {
                 request.setAttribute("ErrorMessageCccd", "CCCD already exists");
                 checkValid = false;
-            } else if (dao.isPhoneExists(phone)) {
+            } else if (Dao.UserDao.isPhoneExists(phone)) {
                 request.setAttribute("ErrorMessagePhone", "Phone already exists");
                 checkValid = false;
             }
 
             if (checkValid) {
-                Account accountObj = new Account(status, email, account, password, name, cccd, phone, address, "", role, status);
-
-                boolean registrationSuccess = dao.registerUser(accountObj);
-                if (registrationSuccess) {
+                int registrationSuccess = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, account, newpassword);
+                if (registrationSuccess == 1) {
                     response.sendRedirect("registrationSuccess.jsp");
                 } else {
                     response.sendRedirect("registrationFailure.jsp");
                 }
             } else {
-                request.getRequestDispatcher("Register.jsp").forward(request, response);
+                request.getRequestDispatcher("register.jsp").forward(request, response);
             }
         }
     }

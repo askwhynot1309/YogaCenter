@@ -48,15 +48,15 @@ public class LoginServlet extends HttpServlet {
                             break;
                         case 1:
                             session.setAttribute("Staff", accountLogin.getName());
-                            response.sendRedirect("admin/staffDashboard.jsp");
+                            response.sendRedirect("staffDashboard.jsp");
                             break;
                         case 2:
                             session.setAttribute("Trainer", accountLogin.getName());
-                            response.sendRedirect("admin/trainerDashboard.jsp");
+                            response.sendRedirect("trainerDashboard.jsp");
                             break;
-                        default:
-                            response.sendRedirect("error.html");
-                            break;
+                        case 3:
+                            session.setAttribute("Trainee", accountLogin.getName());
+                            response.sendRedirect("traineeDashboard.jsp");
                     }
                 } else {
                     request.setAttribute("LoginLimited", "This account has been blocked !");

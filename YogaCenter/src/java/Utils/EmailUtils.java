@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class EmailUtils {
 
-    private static final String SENDER_EMAIL = "t4ikhoancuaquyen4@gmail.com"; // Your Gmail address
-    private static final String SENDER_PASSWORD = "nfrgzjaptuxxpywx"; // Your Gmail app password
+    private static final String SENDER_EMAIL = "nguyencanqn123@gmail.com"; // Your Gmail address
+    private static final String SENDER_PASSWORD = "ewyjddnsrwgtwahi"; // Your Gmail app password
 
     public static void sendOtpEmail(String recipientEmail, String otp) {
         // Email properties
@@ -57,7 +57,7 @@ public class EmailUtils {
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        String email = "t4ikhoancuaquyen4@gmail.com";
+        String email = "nguyencanqn123@gmail.com";
         String subject = "User Feedback";
 
         String emailBody = "From: " + emailAddress + "\n";
