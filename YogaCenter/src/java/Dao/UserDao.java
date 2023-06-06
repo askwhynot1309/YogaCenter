@@ -5,6 +5,7 @@
 package Dao;
 
 import Object.Account;
+import Utils.DBUtils;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -95,6 +96,37 @@ public class UserDao {
         return kq;
     }
 
+    public static Account getAccountByID(int accountID) {
+        Account account = null;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "SELECT *\n"
+                        + "FROM [dbo].[Account]\n"
+                        + "WHERE [ID_Account] = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, accountID);
+                ResultSet table = pst.executeQuery();
+                if (table != null && table.next()) {
+                    int idTrainee = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    account = new Account(idTrainee, email, acc, password, name, cccd, phone, address, img, role, status);
+                }
+            }
+        } catch (Exception e) {
+        }
+        return account;
+    }
 
     public static ArrayList<Account> getAllTraineeBySearch(String search) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
