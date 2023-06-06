@@ -5,9 +5,10 @@
 package Controller;
 
 import Object.Course;
-import Object.Level;
+import Utils.Get30SlotsByCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class AdminManageCourseServlet extends HttpServlet {
+public class ButtonScheduleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,24 +36,29 @@ public class AdminManageCourseServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
-            ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            if (listCourse != null && !listCourse.isEmpty()) {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listCourse", listCourse);
-                    request.setAttribute("listLevel", listLevel);
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                }
+            int idaccount = Integer.parseInt(request.getParameter("trainer"));
+            int id_course = Integer.parseInt(request.getParameter("course"));
+            int id_room = Integer.parseInt(request.getParameter("room"));
+            int option = Integer.parseInt(request.getParameter("option"));
+            int id_time = Integer.parseInt(request.getParameter("time"));
+            Course course = Dao.CourseDao.getInformationOfCourse(id_course);
+            if (idaccount == 0 || id_course == 0 || id_room == 0 || id_time == 0) {
+                request.setAttribute("arrangeFail", "Fill all fields before arrange !");
+                request.getRequestDispatcher("ViewScheduleServlet").forward(request, response);
+            }
+            if (Dao.ClassDetailDao.checkTrainerHasTheSameClassInSameTime(id_room, id_time, course.getDate_start(), option) != null) {
+                request.setAttribute("arrangeSameTime", "This room has been have a course in this time !");
+                request.getRequestDispatcher("ViewScheduleServlet").forward(request, response);
+            } else if (Dao.ClassDetailDao.checkTrainerSameTimeToTeach(id_time, course.getDate_start(), option, idaccount) != null) {
+                request.setAttribute("arrangeSameTrainerInTime", "This trainer has had class in this time !");
+                request.getRequestDispatcher("ViewScheduleServlet").forward(request, response);
             } else {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listLevel", listLevel);
-                    request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), option);
+                for (Get30SlotsByCourse dateForSlot : list) {
+                    int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(id_room, id_time, idaccount, id_course, dateForSlot.getDay(), option);
                 }
+                request.setAttribute("arrangesuccess", "Settup successfully !");
+                request.getRequestDispatcher("ViewScheduleServlet").forward(request, response);
             }
         } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");

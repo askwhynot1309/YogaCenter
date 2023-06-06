@@ -8,6 +8,19 @@
             <file>file:/C:/Coding/SWP/YogaCenter/YogaCenter/web/homepageTrainee.jsp</file>
             <file>file:/C:/Coding/SWP/YogaCenter/YogaCenter/web/homepage.jsp</file>
             <file>file:/C:/Coding/SWP/YogaCenter/YogaCenter/web/header.html</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Object/Course.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Dao/CourseDao.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Controller/SearchValueServlet.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Controller/LoginGoogle.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/web/Login.jsp</file>
+            <file>file:/D:/YogaCenter/YogaCenter/web/adminManageSchedule.jsp</file>
+            <file>file:/D:/YogaCenter/YogaCenter/web/adminCourseList.jsp</file>
+            <file>file:/D:/YogaCenter/YogaCenter/web/adminInforCourse.jsp</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Dao/AccountDao.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Object/Account.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Dao/UserDao.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Controller/UpdateInformationCourseServlet.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Controller/LoginServlet.java</file>
         </group>
     </open-files>
 </project-private>

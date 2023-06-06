@@ -4,11 +4,16 @@
  */
 package Controller;
 
+import Object.Account;
+import Object.ClassDetail;
 import Object.Course;
-import Object.Level;
+import Object.Room;
+import Object.Time;
+import Utils.DisplayAllDaysByWeek;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class AdminManageCourseServlet extends HttpServlet {
+public class ViewScheduleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,27 +40,25 @@ public class AdminManageCourseServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
-            ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            if (listCourse != null && !listCourse.isEmpty()) {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listCourse", listCourse);
-                    request.setAttribute("listLevel", listLevel);
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                }
-            } else {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listLevel", listLevel);
-                    request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
-                }
+            List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
+            List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
+            request.setAttribute("currentweek", currentweek);
+            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetails();
+            if (listClass != null && !listClass.isEmpty()) {
+                request.setAttribute("listClass", listClass);
             }
+            ArrayList<Account> listTrainer = Dao.AccountDao.getAllTrainer();
+            ArrayList<Room> listRoom = Dao.RoomDao.getAllRoom();
+            ArrayList<Time> listTime = Dao.TimeDao.getAllTime();
+            ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
+            request.setAttribute("listCourse", listCourse);
+            request.setAttribute("listTrainer", listTrainer);
+            request.setAttribute("listRoom", listRoom);
+            request.setAttribute("listTime", listTime);
+            request.setAttribute("listDay", list);
+            request.getRequestDispatcher("admin/adminManageSchedule.jsp").forward(request, response);
         } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.html");
             dispatcher.forward(request, response);
         }
     }
