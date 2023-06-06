@@ -76,6 +76,9 @@ public class MainController extends HttpServlet {
                         response.setContentType("multipart/form-data");
                         url = "UpdateInformationCourseServlet";
                         break;
+                    case "TraineeManageInformation":
+                        url = "traineeManageInformation.jsp";
+                        break;
 
                 }
                 request.getRequestDispatcher(url).forward(request, response);
