@@ -92,6 +92,10 @@
         <servlet-name>SubmitFeedbackServlet</servlet-name>
         <servlet-class>Controller.SubmitFeedbackServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TraineeChangeInformationServlet</servlet-name>
+        <servlet-class>Controller.TraineeChangeInformationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -183,6 +187,10 @@
     <servlet-mapping>
         <servlet-name>SubmitFeedbackServlet</servlet-name>
         <url-pattern>/SubmitFeedbackServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeChangeInformationServlet</servlet-name>
+        <url-pattern>/TraineeChangeInformationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
