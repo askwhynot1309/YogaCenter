@@ -38,7 +38,7 @@
                     </c:if>
                     <c:if test="${listUser != null && !listUser.isEmpty()}">
                         <div class="table-responsive" style="height: 550px">
-                            <table class="table table-striped table-bordered">
+                            <table class="table table-striped table-bordered" style="text-align: center">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>No.</th>
