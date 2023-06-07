@@ -11,51 +11,51 @@
     </head>
 
     <body>
-                    <div class="sidebar">
-                        <h3>Admin Dashboard</h3>
-                        <ul>
-                            <li>
-                                <a href="/YogaCenter/request?action=AdminDashBoard">
-                                    <i class="fas fa-user icon"></i>
-                                    Admin DashBoard
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/YogaCenter/request?action=ManageEmployee">
-                                    <i class="fas fa-user icon"></i>
-                                    Manage Employee
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/YogaCenter/request?action=ManageSchedule">
-                                    <i class="fas fa-calendar-alt icon"></i>
-                                    Manage Schedule
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/YogaCenter/request?action=ManageUser">
-                                    <i class="fas fa-users icon"></i>
-                                    Manage User
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/YogaCenter/request?action=adminCourseList">
-                                    <i class="fas fa-book icon"></i>
-                                    Course List
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="divider"></div>
-                        <h4>Settings</h4>
-                        <ul>
-                            <li>
-                                <a href="/YogaCenter/request?action=Logout">
-                                    <i class="fas fa-sign-out-alt icon"></i>
-                                    Logout
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+        <div class="sidebar">
+            <h3>Admin Dashboard</h3>
+            <ul>
+                <li>
+                    <a href="/YogaCenter/request?action=AdminDashBoard">
+                        <i class="fas fa-user icon"></i>
+                        Admin DashBoard
+                    </a>
+                </li>
+                <li>
+                    <a href="/YogaCenter/request?action=ManageEmployee">
+                        <i class="fas fa-user icon"></i>
+                        Manage Employee
+                    </a>
+                </li>
+                <li>
+                    <a href="/YogaCenter/request?action=ManageSchedule">
+                        <i class="fas fa-calendar-alt icon"></i>
+                        Manage Schedule
+                    </a>
+                </li>
+                <li>
+                    <a href="/YogaCenter/request?action=ManageUser">
+                        <i class="fas fa-users icon"></i>
+                        Manage User
+                    </a>
+                </li>
+                <li>
+                    <a href="/YogaCenter/request?action=adminCourseList">
+                        <i class="fas fa-book icon"></i>
+                        Course List
+                    </a>
+                </li>
+            </ul>
+            <div class="divider"></div>
+            <h4>Settings</h4>
+            <ul>
+                <li>
+                    <a href="/YogaCenter/request?action=Logout">
+                        <i class="fas fa-sign-out-alt icon"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
 
     </body>
 </html>

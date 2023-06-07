@@ -57,7 +57,7 @@ public class EmailUtils {
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        String email = "nguyencanqn123@gmail.com";
+        String email = "t4ikhoancuaquyen4@gmail.com";
         String subject = "User Feedback";
 
         String emailBody = "From: " + emailAddress + "\n";
