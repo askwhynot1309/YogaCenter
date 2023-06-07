@@ -5,6 +5,7 @@
 package Dao;
 
 import Object.Account;
+import Utils.DBUtils;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -341,5 +342,65 @@ public class UserDao {
             cn.close();
         }
         return kq;
+    }
+    
+    public static int updateInformationTrainee(int ID_Account, String email, String name, String phone, String address) {
+        int updated = 0;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "UPDATE [dbo].[Account]\n"
+                        + "SET [Email] = ?, [Name] = ?, [Phone] = ?, [Address] = ?\n"
+                        + "WHERE [ID_Account] = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setString(1, email);
+                pst.setString(2, name);
+                pst.setString(3, phone);
+                pst.setString(4, address);
+                pst.setInt(5, ID_Account);
+                updated = pst.executeUpdate();
+                cn.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return updated;
+    }
+
+    public static Account getAccountByID(int ID_Account) {
+        Account acc = null;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "SELECT * \n"
+                        + "FROM [dbo].[Account]\n"
+                        + "WHERE [ID_Account] = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, ID_Account);
+                ResultSet table = pst.executeQuery();
+                if (table != null) {
+                    while (table.next()) {
+                        int idTrainee = table.getInt("ID_Account");
+                        String email = table.getString("Email");
+                        String cccd = table.getString("CCCD");
+                        String account = table.getString("Account");
+                        String cv = table.getString("CV");
+                        String password = table.getString("Password");
+                        String name = table.getNString("Name");
+                        String phone = table.getString("Phone");
+                        String address = table.getNString("Address");
+                        String img = table.getString("Img");
+                        int status = table.getInt("Status");
+                        int role = table.getInt("Role");
+                        acc = new Account(idTrainee, email, account, password, name, cccd, cv, phone, address, img, role, status);
+                    }
+                }
+                cn.close();
+            }
+        } catch (Exception e) {
+        }
+        return acc;
     }
 }
