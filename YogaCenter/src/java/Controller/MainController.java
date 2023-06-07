@@ -106,6 +106,12 @@ public class MainController extends HttpServlet {
                     case "ChangeInformation":
                         url = "TraineeChangeInformationServlet";
                         break;
+                    case "ChangePassword":
+                        url = "traineeManagePassword.jsp";
+                        break;
+                    case "UpdatePassword":
+                        url = "TraineeChangePasswordServlet";
+                        break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);
             }

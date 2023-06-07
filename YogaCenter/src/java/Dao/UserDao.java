@@ -290,7 +290,7 @@ public class UserDao {
         }
         return check;
     }
-    
+
     public static Account checkAccountToInsertNewUser(String account) throws Exception {
         Account kq = null;
         Connection cn = Utils.DBUtils.getConnection();
@@ -322,7 +322,7 @@ public class UserDao {
         }
         return kq;
     }
-    
+
     public static int insertNewUser(String name, String email, String phone, String cccd, String address, String account, String password) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
@@ -343,7 +343,7 @@ public class UserDao {
         }
         return kq;
     }
-    
+
     public static int updateInformationTrainee(int ID_Account, String email, String name, String phone, String address) {
         int updated = 0;
         Connection cn = null;
@@ -402,5 +402,25 @@ public class UserDao {
         } catch (Exception e) {
         }
         return acc;
+    }
+
+    public static int updatePasswordByID(String confirmPassword, int ID_Account) {
+        int updated = 0;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "UPDATE [dbo].[Account]\n"
+                        + "SET [Password] = ?\n"
+                        + "WHERE [ID_Account] = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setString(1, confirmPassword);
+                pst.setInt(2, ID_Account);
+                updated = pst.executeUpdate();
+                cn.close();
+            }
+        } catch (Exception e) {
+        }
+        return updated;
     }
 }
