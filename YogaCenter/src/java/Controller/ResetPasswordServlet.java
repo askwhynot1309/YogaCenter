@@ -4,7 +4,6 @@
  */
 package Controller;
 
-import Dao.AccountDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -34,19 +33,19 @@ public class ResetPasswordServlet extends HttpServlet {
             String newPassword = request.getParameter("newPassword");
             String confirmPassword = request.getParameter("confirmPassword");
             String email = (String) request.getSession().getAttribute("resetEmail"); 
-            AccountDao dao = new AccountDao();
             if (newPassword.equals(confirmPassword)) {
                 try {
-                    dao.updatePassword(email, newPassword);
+                    String newpwd = Utils.HexPassword.HexPassword(newPassword);
+                    int kq = Dao.UserDao.updatePassword(email, newpwd);
                     request.setAttribute("successMessage", "Password reset successful!");
-                    request.getRequestDispatcher("Login.jsp").forward(request, response);
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 } catch (Exception e) {
                     request.setAttribute("errorMessage", "An error occurred while updating the password. Please try again.");
-                    request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+                    request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
                 }
             } else {
                 request.setAttribute("errorMessage", "New password and confirm password do not match.");
-                request.getRequestDispatcher("ResetPassword.jsp").forward(request, response);
+                request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
             }
         }
     }

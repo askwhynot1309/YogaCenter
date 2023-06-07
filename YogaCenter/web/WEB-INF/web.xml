@@ -72,6 +72,10 @@
         <servlet-name>AddCourseServlet</servlet-name>
         <servlet-class>Controller.AddCourseServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TraineeChangeInformationServlet</servlet-name>
+        <servlet-class>Controller.TraineeChangeInformationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>AddCourseServlet</servlet-name>
         <url-pattern>/AddCourseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeChangeInformationServlet</servlet-name>
+        <url-pattern>/TraineeChangeInformationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

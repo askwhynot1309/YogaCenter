@@ -88,6 +88,9 @@ public class MainController extends HttpServlet {
                     case "ButtonAdd":
                         url = "ButtonAddNewEmployeeServet";
                         break;
+                    case "ChangeInformation":
+                        url = "TraineeChangeInformationServlet";
+                        break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);
             }

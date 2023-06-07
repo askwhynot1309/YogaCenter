@@ -4,7 +4,6 @@
  */
 package Controller;
 
-import Dao.AccountDao;
 import Utils.EmailUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,9 +37,8 @@ public class SendOTP extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             // Get the email address from the form
             String email = request.getParameter("txtemail");
-            AccountDao dao = new AccountDao();
             boolean check = true;
-            if (!dao.isEmailExists(email)) {
+            if (!Dao.UserDao.isEmailExist(email)) {
                 check = false;
                 request.setAttribute("ErrorMessageEmail", "Email doesn't exist!!!");
             }
@@ -50,7 +48,7 @@ public class SendOTP extends HttpServlet {
                 String otp = EmailUtils.generateOtp();
 
                 // Send OTP to the email address
-                EmailUtils.sendOtpEmail(email, otp);
+                Utils.EmailUtils.sendOtpEmail(email, otp);
 
                 // Store the OTP in session for verification
                 HttpSession session = request.getSession();
@@ -59,9 +57,9 @@ public class SendOTP extends HttpServlet {
                 request.setAttribute("SuccessMessage", "Sent OTP to " + email);
 
                 // Redirect to ResetPassword.jsp
-                request.getRequestDispatcher("ForgetPassword.jsp").forward(request, response);
+                request.getRequestDispatcher("forgetPassword.jsp").forward(request, response);
             } else {
-                request.getRequestDispatcher("ForgetPassword.jsp").forward(request, response);
+                request.getRequestDispatcher("forgetPassword.jsp").forward(request, response);
             }
         }
     }

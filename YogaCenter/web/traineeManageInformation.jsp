@@ -231,7 +231,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <p>Information about your self</p>
                     </div>
                     <div class="content-body">
-                        <form action="action">
+                        <form action="/YogaCenter/request">
                             <div class="form-container">
                                 <div>
                                     <fieldset class="">
@@ -256,7 +256,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                     </fieldset>
                                 </div>
                                 <div class="form-btn">
-                                    <button type="submit">Change</button>
+                                    <button type="submit" name="action" value="ChangeInformation">Change</button>
                                 </div>
                             </div>
                         </form>
