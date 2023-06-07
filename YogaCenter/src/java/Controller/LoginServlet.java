@@ -48,19 +48,15 @@ public class LoginServlet extends HttpServlet {
                             break;
                         case 1:
                             session.setAttribute("Staff", accountLogin.getName());
-<<<<<<< Updated upstream
-                            response.sendRedirect("admin/staffDashboard.jsp");
-=======
-                            response.sendRedirect("staff/staffDashboard.jsp");
->>>>>>> Stashed changes
+                            response.sendRedirect("StaffDashBoardServlet");
                             break;
                         case 2:
                             session.setAttribute("Trainer", accountLogin.getName());
-                            response.sendRedirect("admin/trainerDashboard.jsp");
+                            response.sendRedirect("trainerDashboard.jsp");
                             break;
-                        default:
-                            response.sendRedirect("error.html");
-                            break;
+                        case 3:
+                            session.setAttribute("account", accountLogin);
+                            response.sendRedirect("homepageTrainee.jsp");
                     }
                 } else {
                     request.setAttribute("LoginLimited", "This account has been blocked !");
@@ -71,8 +67,7 @@ public class LoginServlet extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            e.printStackTrace();
         }
     }
 

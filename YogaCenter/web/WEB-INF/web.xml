@@ -72,8 +72,6 @@
         <servlet-name>AddCourseServlet</servlet-name>
         <servlet-class>Controller.AddCourseServlet</servlet-class>
     </servlet>
-<<<<<<< Updated upstream
-=======
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>Controller.RegisterServlet</servlet-class>
@@ -102,7 +100,10 @@
         <servlet-name>StaffDashBoardServlet</servlet-name>
         <servlet-class>Controller.StaffDashBoardServlet</servlet-class>
     </servlet>
->>>>>>> Stashed changes
+    <servlet>
+        <servlet-name>ManageTraineeServlet</servlet-name>
+        <servlet-class>Controller.ManageTraineeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -175,8 +176,6 @@
         <servlet-name>AddCourseServlet</servlet-name>
         <url-pattern>/AddCourseServlet</url-pattern>
     </servlet-mapping>
-<<<<<<< Updated upstream
-=======
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
@@ -205,7 +204,10 @@
         <servlet-name>StaffDashBoardServlet</servlet-name>
         <url-pattern>/StaffDashBoardServlet</url-pattern>
     </servlet-mapping>
->>>>>>> Stashed changes
+    <servlet-mapping>
+        <servlet-name>ManageTraineeServlet</servlet-name>
+        <url-pattern>/ManageTraineeServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

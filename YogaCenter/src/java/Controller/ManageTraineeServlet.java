@@ -4,12 +4,10 @@
  */
 package Controller;
 
-import Object.Course;
+import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class HomeServlet extends HttpServlet {
+public class ManageTraineeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,16 +33,9 @@ public class HomeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            Date currentdate = new Date(System.currentTimeMillis());
-            ArrayList<Course> list = Dao.CourseDao.getCourseByDateStart(currentdate);
-            if(list != null && !list.isEmpty()){
-                for (Course course : list) {
-                int changeStatus = Dao.CourseDao.changeStatusCourse(1, course.getIdCourse());
-            }
-            }
-            request.getRequestDispatcher("homepage.jsp").forward(request, response);
-        }catch(Exception e){
-        request.getRequestDispatcher("error.jsp").forward(request, response);
+            ArrayList<Account> listTrainee = Dao.UserDao.getAllTrainee();
+        } catch (Exception e) {
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 

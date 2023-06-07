@@ -44,6 +44,21 @@ public class MainController extends HttpServlet {
                     case "Login":
                         url = "LoginServlet";//login to manage website:admin,staff,instructor  
                         break;
+                    case "Register":
+                        url = "RegisterServlet";
+                        break;
+                    case "SendOTP":
+                        url = "SendOTP";
+                        break;
+                    case "OTP":
+                        url = "SubmitOTPServlet";
+                        break;
+                    case "Reset":
+                        url = "ResetPasswordServlet";
+                        break;
+                    case "Feedback":
+                        url = "SubmitFeedbackServlet";
+                        break;
                     case "Logout":
                         url = "LogoutServlet";
                         break;
@@ -76,14 +91,10 @@ public class MainController extends HttpServlet {
                         response.setContentType("multipart/form-data");
                         url = "UpdateInformationCourseServlet";
                         break;
-<<<<<<< Updated upstream
-                    case "ManageSchedule":
-=======
                     case "TraineeManageInformation": //admin
                         url = "traineeManageInformation.jsp";
                         break;
                     case "ManageSchedule": //admin
->>>>>>> Stashed changes
                         url = "ViewScheduleServlet";
                         break;
                     case "ButtonSchedule": //admin
@@ -92,8 +103,6 @@ public class MainController extends HttpServlet {
                     case "ButtonAdd": //admin
                         url = "ButtonAddNewEmployeeServet";
                         break;
-<<<<<<< Updated upstream
-=======
                     case "ChangeInformation": //admin
                         url = "TraineeChangeInformationServlet";
                         break;
@@ -103,7 +112,6 @@ public class MainController extends HttpServlet {
                     case "ManageTrainee":
                         url = "ManageTraineeServlet";
                         break;
->>>>>>> Stashed changes
                 }
                 request.getRequestDispatcher(url).forward(request, response);
             }
