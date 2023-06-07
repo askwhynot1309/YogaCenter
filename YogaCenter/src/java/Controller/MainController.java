@@ -44,6 +44,21 @@ public class MainController extends HttpServlet {
                     case "Login":
                         url = "LoginServlet";//login to manage website:admin,staff,instructor  
                         break;
+                    case "Register":
+                        url = "RegisterServlet";
+                        break;
+                    case "SendOTP":
+                        url = "SendOTP";
+                        break;
+                    case "OTP":
+                        url = "SubmitOTPServlet";
+                        break;
+                    case "Reset":
+                        url = "ResetPasswordServlet";
+                        break;
+                    case "Feedback":
+                        url = "SubmitFeedbackServlet";
+                        break;
                     case "Logout":
                         url = "LogoutServlet";
                         break;

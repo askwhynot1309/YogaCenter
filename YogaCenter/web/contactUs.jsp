@@ -7,7 +7,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Feedback Form - Yoga Center</title>
+        <title>Feedback Form </title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <style>
@@ -75,7 +75,7 @@
 
         <div class="container">
             <h2 class="form-title">Feedback Form</h2>
-            <form action="SubmitFeedbackServlet" method="post">
+            <form action="/YogaCenter/request" method="post">
                 <div class="form-group">
                     <label for="name">Name:</label>
                     <input type="text" class="form-control" id="txtname" name="txtname" required>
@@ -90,7 +90,7 @@
                 </div>
                 <div style="color: green">${requestScope.FeedbackMessage}</div>
                 <div class="submit-button">
-                    <button type="submit" class="btn btn-block">Submit</button>
+                    <button class="btn btn-block" name="action" value="Feedback">Submit</button>
                 </div>
             </form>
         </div>

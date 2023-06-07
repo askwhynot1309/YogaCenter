@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Reset Password - Yoga Center</title>
+        <title>Reset Password</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <style>
             body {
@@ -64,7 +64,7 @@
     <body>
         <div class="container">
             <h2>Reset Password - Yoga Center</h2>
-            <form action="ResetPasswordServlet" method="post">
+            <form action="/YogaCenter/request" method="post">
                 <div class="form-group">
                     <label for="newPassword">New Password</label>
                     <input type="password" class="form-control" name="newPassword" required>

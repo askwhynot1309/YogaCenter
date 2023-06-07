@@ -216,6 +216,7 @@ public class AccountDao {
         }
         return kq;
     }
+
     public static Account checkAccountToInsertNewEmployee(String account) throws Exception {
         Account kq = null;
         Connection cn = Utils.DBUtils.getConnection();
@@ -247,4 +248,5 @@ public class AccountDao {
         }
         return kq;
     }
+
 }

@@ -11,8 +11,7 @@
 <html>
 
     <head>
-        <c:import url="header.html"></c:import>
-            <title>Register - Yoga Center</title>
+            <title>Register</title>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
             <style>
                 body {
@@ -34,6 +33,7 @@
                     color: #008000;
                     margin-bottom: 30px;
                     font-size: 28px;
+                    font-weight: 700;
                 }
 
                 .form-group label {
@@ -67,20 +67,20 @@
                 }
             </style>
         </head>
-
+<c:import url="header.html"></c:import>
         <body>
             <div class="container">
-                <h2>Register - Yoga Center</h2>
+                <h2>Register </h2>
                 <div style="color: red" class="error-message">${requestScope.ErrorMessage}</div>
-            <form action="RegisterServlet" method="post">
+            <form action="/YogaCenter/request" method="POST">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" required="" value="${param.email}">
                 </div>
                 <div style="color: red" class="error-message">${requestScope.ErrorMessageEmail}</div>
                 <div class="form-group">
                     <label for="account">Username</label>
-                    <input type="text" class="form-control" id="account" name="account" required>
+                    <input type="text" class="form-control" id="account" name="account" required value="${param.account}">
                 </div>
                 <div style="color: red" class="error-message">${requestScope.ErrorMessageAccount}</div>
                 <div class="form-group">
@@ -90,23 +90,23 @@
                 <div style="color: red" class="error-message">${requestScope.ErrorMessagePassword}</div>
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" name="name" required value="${param.name}">
                 </div>
                 <div class="form-group">
                     <label for="cccd">CCCD</label>
-                    <input type="text" class="form-control" id="cccd" name="cccd" required>
+                    <input type="text" class="form-control" id="cccd" name="cccd" required value="${param.cccd}">
                 </div>
                 <div style="color: red" class="error-message">${requestScope.ErrorMessageCccd}</div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="text" class="form-control" id="phone" name="phone" required>
+                    <input type="text" class="form-control" id="phone" name="phone" required value="${param.phone}">
                 </div>
                 <div style="color: red" class="error-message">${requestScope.ErrorMessagePhone}</div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" name="address" required>
+                    <input type="text" class="form-control" id="address" name="address" required value="${param.address}">
                 </div>
-                <button type="submit" class="btn btn-register btn-block" name="action" value="Register">Register</button>
+                <button class="btn btn-register btn-block" name="action" value="Register">Register</button>
             </form>      
             <p class="text-center mt-3">Already have an account? <a href="login.jsp">Login here</a></p>
         </div>

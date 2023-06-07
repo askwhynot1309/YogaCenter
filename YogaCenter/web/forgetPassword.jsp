@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Forget Password - Yoga Center</title>
+        <title>Forget Password</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <style>
             body {
@@ -64,13 +64,13 @@
     <body>
         <div class="container">
             <h2>Forget Password - Yoga Center</h2>
-            <form action="SendOTP" method="post">
+            <form action="/YogaCenter/request" method="post">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <div class="input-group">
                         <input type="email" class="form-control" name="txtemail" required>
                         <div class="input-group-append">
-                            <button type="submit" class="btn btn-primary btn-block">Send OTP</button>
+                            <button class="btn btn-primary btn-block" name="action" value="SendOTP">Send OTP</button>
                         </div>
                     </div>
                     <div style="color: red">${requestScope.ErrorMessageEmail}</div>
@@ -78,12 +78,12 @@
                 </div>
             </form>
 
-            <form action="SubmitOTPServlet" method="post">
+            <form action="/YogaCenter/request" method="post">
                 <div class="form-group">
                     <label for="otp">OTP</label>
                     <input type="text" class="form-control" name="otp" required>
                 </div>
-                <button type="submit" class="btn btn-submit btn-block" name="action" value="Reset">Reset Password</button>
+                <button type="submit" class="btn btn-submit btn-block" name="action" value="OTP">Comfirm OTP</button>
                 <div style="color: red" class="error-message">${requestScope.ErrorMessageOTP}</div>
             </form>
 
