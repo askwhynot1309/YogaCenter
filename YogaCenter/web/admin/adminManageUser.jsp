@@ -58,7 +58,7 @@
                                             <td>${user.name}</td>
                                             <td>${user.phone}</td>
                                             <td>${user.address}</td>
-                                            <td>
+                                            <td style="width: 75px;height: 75px">
                                                 <c:if test="${not empty user.image}">
                                                     <img src="img/${user.image}" width="75px" height="75px">
                                                 </c:if>
