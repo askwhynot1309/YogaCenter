@@ -95,7 +95,6 @@ public class UserDao {
         return kq;
     }
 
-
     public static ArrayList<Account> getAllTraineeBySearch(String search) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -128,7 +127,7 @@ public class UserDao {
         }
         return kq;
     }
-    
+
     public static ArrayList<Account> getAllTraineeInTimeAndRoom(int id_time, int id_room, Date date, int id_course) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -162,6 +161,183 @@ public class UserDao {
                     kq.add(classdetails);
                 }
             }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static boolean isEmailExist(String input) throws Exception {
+        boolean check = false;
+        Account account = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "Where Email = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, input);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    if (account != null) {
+                        check = true;
+                    }
+                }
+            }
+            cn.close();
+        }
+        return check;
+    }
+
+    public static int updatePassword(String email, String newPassword) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "update Account\n"
+                    + "set Password = ?\n"
+                    + "where Email = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, newPassword);
+            pst.setString(2, email);
+            kq = pst.executeUpdate();
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static boolean isCccdExists(String input) throws Exception {
+        boolean check = false;
+        Account account = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "Where CCCD = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, input);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    if (account != null) {
+                        check = true;
+                    }
+                }
+            }
+            cn.close();
+        }
+        return check;
+    }
+
+    public static boolean isPhoneExists(String input) throws Exception {
+        boolean check = false;
+        Account account = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "Where Phone = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, input);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    if (account != null) {
+                        check = true;
+                    }
+                }
+            }
+            cn.close();
+        }
+        return check;
+    }
+    
+    public static Account checkAccountToInsertNewUser(String account) throws Exception {
+        Account kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Account = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, account);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    kq = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
+    public static int insertNewUser(String name, String email, String phone, String cccd, String address, String account, String password) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "insert into Account(Name, Email, Phone, CCCD, Address, Account, Password, Role, Status) values (?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, name);
+            pst.setString(2, email);
+            pst.setString(3, phone);
+            pst.setString(4, cccd);
+            pst.setString(5, address);
+            pst.setString(6, account);
+            pst.setString(7, password);
+            pst.setInt(8, 3);
+            pst.setInt(9, 0);
+            kq = pst.executeUpdate();
             cn.close();
         }
         return kq;

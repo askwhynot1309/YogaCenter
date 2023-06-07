@@ -41,14 +41,6 @@
         <servlet-class>Controller.ViewScheduleServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminManageEmployeeServlet</servlet-name>
-        <servlet-class>Controller.AdminManageEmployeeServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>InformationServlet</servlet-name>
-        <servlet-class>Controller.InformationServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AdminDashBoardServlet</servlet-name>
         <servlet-class>Controller.AdminDashBoardServlet</servlet-class>
     </servlet>
@@ -143,14 +135,6 @@
     <servlet-mapping>
         <servlet-name>ViewScheduleServlet</servlet-name>
         <url-pattern>/ViewScheduleServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdminManageEmployeeServlet</servlet-name>
-        <url-pattern>/AdminManageEmployeeServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>InformationServlet</servlet-name>
-        <url-pattern>/InformationServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminDashBoardServlet</servlet-name>
