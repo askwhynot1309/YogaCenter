@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Forget Password</title>
+        <title>Reset Password</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <style>
             body {
@@ -63,31 +63,20 @@
 
     <body>
         <div class="container">
-            <h2>Forget Password - Yoga Center</h2>
+            <h2>Reset Password - Yoga Center</h2>
             <form action="/YogaCenter/request" method="post">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <div class="input-group">
-                        <input type="email" class="form-control" name="txtemail" required>
-                        <div class="input-group-append">
-                            <button class="btn btn-primary btn-block" name="action" value="SendOTP">Send OTP</button>
-                        </div>
-                    </div>
-                    <div style="color: red">${requestScope.ErrorMessageEmail}</div>
-                    <div style="color: green">${requestScope.SuccessMessage}</div>
+                    <label for="newPassword">New Password</label>
+                    <input type="password" class="form-control" name="newPassword" required>
                 </div>
-            </form>
-
-            <form action="/YogaCenter/request" method="post">
                 <div class="form-group">
-                    <label for="otp">OTP</label>
-                    <input type="text" class="form-control" name="otp" required>
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" class="form-control" name="confirmPassword" required>
                 </div>
-                <button type="submit" class="btn btn-submit btn-block" name="action" value="OTP">Comfirm OTP</button>
-                <div style="color: red" class="error-message">${requestScope.ErrorMessageOTP}</div>
+                <div style="color: green">${requestScope.successMessage}</div>
+                <div style="color: red">${requestScope.errorMessage}</div>
+                <button type="submit" class="btn btn-submit btn-block" name="action" value="Reset">Reset Password</button>
             </form>
-
-            <p class="text-center mt-3">Remember your password? <a href="login.jsp">Login here</a></p>
         </div>
     </body>
 
