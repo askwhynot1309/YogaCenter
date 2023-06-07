@@ -7,14 +7,9 @@
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<<<<<<< Updated upstream
         <link rel="stylesheet" href="css/admin.css">
         <link rel="stylesheet" href="css/admin-course.css">
-=======
-        <link rel="stylesheet" href="css/admin/admin.css">
-        <link rel="stylesheet" href="css/admin/admin-course.css">
-        <link rel="stylesheet" href="css/admin/admin-course-add.css">
->>>>>>> Stashed changes
+        <link rel="stylesheet" href="css/admin-course-add.css">
     </head>
 
     <body>
@@ -98,8 +93,8 @@
                         <br>
                     </div>
                     <c:if test="${listCourse != null && !listCourse.isEmpty()}">
-                        <div>
-                            <table class="table" style="height: 450px">
+                        <div style="height: 450px">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
@@ -156,25 +151,57 @@
         </div>
 
         <c:if test="${blank != null}">
+            <div class="notification">
+                <div class="content">
+                    <div class="title">Error</div>
+                    <span>Please select a level for the course.</span>
+                </div>
+                <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+            </div>
             <script>
-                alert("Please select a level for the course.");
+                let notification = document.querySelector('.notification');
+                notification.timeOut = setTimeout(() => notification.remove(), 5000);
             </script>
         </c:if> 
         <c:if test="${errorDate != null}">
+            <div class="notification-date">
+                <div class="content">
+                    <div class="title">Error</div>
+                    <span>Datestart of course was expired. Please edit date-start of course before set active.</span>
+                </div>
+                <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+            </div>
             <script>
-                alert("Datestart of course was expired. Please edit date-start of course before set active.");
+                let notification = document.querySelector('.notification-date');
+                notification.timeOut = setTimeout(() => notification.remove(), 5000);
             </script>
         </c:if> 
 
         <c:if test="${expired != null}">
+            <div class="notification">
+                <div class="content">
+                    <div class="title">Error</div>
+                    <span>The start date is over.</span>
+                </div>
+                <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+            </div>
             <script>
-                alert("The start date is over.");
+                let notification = document.querySelector('.notification');
+                notification.timeOut = setTimeout(() => notification.remove(), 5000);
             </script>
         </c:if>
 
         <c:if test="${success != null}">
+            <div class="notification-success">
+                <div class="content">
+                    <div class="title">Success</div>
+                    <span>Create a new successful course.</span>
+                </div>
+                <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+            </div>
             <script>
-                alert("Create a new successful course.");
+                let notification = document.querySelector('.notification-success');
+                notification.timeOut = setTimeout(() => notification.remove(), 5000);
             </script>
         </c:if>
 

@@ -1,9 +1,9 @@
+package Controller;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ADMIN
+ * @author CCLaptop
  */
 public class SubmitOTPServlet extends HttpServlet {
 
@@ -31,15 +31,19 @@ public class SubmitOTPServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SubmitOTPServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SubmitOTPServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            String enteredOtp = request.getParameter("otp");
+
+            // Get the stored OTP from session
+            String storedOtp = (String) request.getSession().getAttribute("otp");
+
+            if (enteredOtp.equals(storedOtp)) {
+                // OTP is correct, redirect to resetpassword.jsp
+                response.sendRedirect("resetPassword.jsp");
+            } else {
+                // OTP is incorrect, show error message
+                request.setAttribute("ErrorMessageOTP", "Invalid OTP");
+                request.getRequestDispatcher("forgetPassword.jsp").forward(request, response);
+            }
         }
     }
 

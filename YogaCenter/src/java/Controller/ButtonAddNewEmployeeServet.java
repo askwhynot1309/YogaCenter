@@ -50,7 +50,7 @@ public class ButtonAddNewEmployeeServet extends HttpServlet {
                 int insertNewEmployee = Dao.AccountDao.insertNewEmployee(name, email, phone, cccd, address, account, newpassword, role);
                 if (insertNewEmployee == 1) {
                     request.setAttribute("addSuccess", "addSuccess");
-                    request.getRequestDispatcher("AdminManageEmployeeServlet").forward(request, response);
+                    request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
                 }
             }
         } catch (Exception e) {

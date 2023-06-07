@@ -62,55 +62,49 @@ public class MainController extends HttpServlet {
                     case "Logout":
                         url = "LogoutServlet";
                         break;
-                    case "ManageEmployee":  //admin
+                    case "ManageEmployee":
                         url = "AdminManageEmployeeServlet";
                         break;
-                    case "AdminDashBoard": //admin
+                    case "AdminDashBoard":
                         url = "AdminDashBoardServlet";
                         break;
-                    case "search": //admin
+                    case "search":
                         url = "SearchValueServlet";
                         break;
-                    case "comfirm": //admin
+                    case "comfirm":
                         url = "ChangeStatusServlet";
                         break;
-                    case "ManageUser": //admin
+                    case "ManageUser":
                         url = "AdminManageUserServlet";
                         break;
-                    case "adminCourseList": //admin
+                    case "adminCourseList":
                         url = "AdminManageCourseServlet";
                         break;
-                    case "Add": //admin
+                    case "Add":
                         response.setContentType("multipart/form-data");
                         url = "AddCourseServlet";
                         break;
-                    case "inf": //admin
+                    case "inf":
                         url = "InformationServlet";
                         break;
-                    case "ButtonChange": //admin
+                    case "ButtonChange":
                         response.setContentType("multipart/form-data");
                         url = "UpdateInformationCourseServlet";
                         break;
-                    case "TraineeManageInformation": //admin
+                    case "TraineeManageInformation":
                         url = "traineeManageInformation.jsp";
                         break;
-                    case "ManageSchedule": //admin
+                    case "ManageSchedule":
                         url = "ViewScheduleServlet";
                         break;
-                    case "ButtonSchedule": //admin
+                    case "ButtonSchedule":
                         url = "ButtonScheduleServlet";
                         break;
-                    case "ButtonAdd": //admin
+                    case "ButtonAdd":
                         url = "ButtonAddNewEmployeeServet";
                         break;
-                    case "ChangeInformation": //admin
+                    case "ChangeInformation":
                         url = "TraineeChangeInformationServlet";
-                        break;
-                    case "StaffDashBoard":
-                        url = "StaffDashBoardServlet";
-                        break;
-                    case "ManageTrainee":
-                        url = "ManageTraineeServlet";
                         break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);

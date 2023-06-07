@@ -33,8 +33,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <div class="inner-home">
                     <div class="inner-content">
                         <h1>Yoga class</h1>
-                        <p>Là một phòng tập Yoga uy tín ở Việt Nam có hơn 60.000 học viên lựa chọn.</p>
-                        <a href="#">Register now</a>
+                        <p>As a prestigious Yoga studio in Vietnam with more than 60,000 students to choose from.</p>
+                        <a href="register.jsp">Register now</a>
                     </div>
                 </div>
             </div>
@@ -42,33 +42,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
         <div class="our-classes">
 
-            <h1>our classes</h1>
+            <h1>Our classes</h1>
 
             <div class="main-class">
                 <div class="inner-class">
                     <img src="https://th.bing.com/th/id/OIP.G2jgzWc8V31XSFTpSiy_2gHaE_?pid=ImgDet&rs=1" alt="">
                     <div class="class-content">
-                        <h2>newbie class</h2>
-                        <p>Lt. At, illum veniam. Earum debitis asperiores voluptatem ut nemo harum voluptatibus</p>
-                        <a href="#">register now</a>
+                        <h2>Newbie class</h2>
+                        <p>You owe them a harsher pleasure than any of these pleasures</p>
+                        <a href="register.jsp">register now</a>
                     </div>
                 </div>
 
                 <div class="inner-class">
                     <img src="https://th.bing.com/th/id/OIP.blWQYSfXrtizCN_SVPXoBwHaFj?pid=ImgDet&rs=1" alt="">
                     <div class="class-content">
-                        <h2>newbie class</h2>
-                        <p>Lt. At, illum veniam. Earum debitis asperiores voluptatem ut nemo harum voluptatibus</p>
-                        <a href="#">register now</a>
+                        <h2>Newbie class</h2>
+                        <p>You owe them a harsher pleasure than any of these pleasures</p>
+                        <a href="register.jsp">register now</a>
                     </div>
                 </div>
 
                 <div class="inner-class">
                     <img src="https://th.bing.com/th/id/R.03b4c91e95e86d967f43bdbafa929e57?rik=wo8ZKug8nMBWjg&pid=ImgRaw&r=0" alt="">
                     <div class="class-content">
-                        <h2>newbie class</h2>
-                        <p>Lt. At, illum veniam. Earum debitis asperiores voluptatem ut nemo harum voluptatibus</p>
-                        <a href="#">register now</a>
+                        <h2>Newbie class</h2>
+                        <p>You owe them a harsher pleasure than any of these pleasures</p>
+                        <a href="register.jsp">register now</a>
                     </div>
                 </div>
             </div>
@@ -79,10 +79,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <div class="main-instructor">
                 <div class="inner-instructor">
                     <div class="inner-content-instructor">
-                        <h2>best <br> Instructor</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, cum non! Eveniet qui
-                            doloribus rem ipsa, veritatis culpa </p>
-                        <a href="#">Read more</a>
+                        <h2>Best <br> Instructor</h2>
+                        <p>The company itself is a very successful company. Rejecting, when not! 
+                            It will happen that he who suffers the thing itself, the fault of the truth </p>
+                        <a href="AboutUs.jsp">Read more</a>
                     </div>
 
                 </div>
@@ -103,9 +103,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <div class="inner-instructor">
                     <div class="inner-content-instructor">
                         <h2>New<br> Experience</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis, cum non! Eveniet qui
-                            doloribus rem ipsa, veritatis culpa </p>
-                        <a href="#">Read more</a>
+                        <p>The company itself is a very successful company. Rejecting, when not! It will happen who
+                            the thing itself, the fault of the truth </p>
+                        <a href="AboutUs.jsp">Read more</a>
                     </div>
 
                 </div>
@@ -115,41 +115,41 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
 
         <div class="our-gallery">
-            <h1>gallery</h1>
+            <h1>Gallery</h1>
             <div class="main-gallery">
-
+                <img src="img/download.jpg" alt="alt"/>
             </div>
         </div>
 
 
         <div class="our-prices">
-            <h1>prices</h1>
+            <h1>Prices</h1>
             <div class="main-prices">
                 <div class="inner-prices">
                     <h2>Newbie classes</h2>
-                    <h3>prices : $00.00/</h3>
+                    <h3>Prices : $00.00/</h3>
                     <div class="price-icon">
                         <i class="fas fa-award"></i>
                     </div>
-                    <a href="#">Register now</a>
+                    <a href="Register.jsp">Register now</a>
                 </div>
 
                 <div class="inner-prices">
                     <h2>Newbie classes</h2>
-                    <h3>prices : $00.00/</h3>
+                    <h3>Prices : $00.00/</h3>
                     <div class="price-icon">
                         <i class="fas fa-award"></i>
                     </div>
-                    <a href="#">Register now</a>
+                    <a href="Register.jsp">Register now</a>
                 </div>
 
                 <div class="inner-prices">
                     <h2>Newbie classes</h2>
-                    <h3>prices : $00.00/</h3>
+                    <h3>Prices : $00.00/</h3>
                     <div class="price-icon">
                         <i class="fas fa-award"></i>
                     </div>
-                    <a href="#">Register now</a>
+                    <a href="Register.jsp">Register now</a>
                 </div>
             </div>
         </div>
@@ -169,10 +169,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </div>
 
                 <div class="inner-contact">
-                    <img src="images/Instructer.png" alt="">
+                    <img src="https://th.bing.com/th/id/R.5bc6a94ca0114ea56198bccc0a2b0d98?rik=eDteuVFFJ12iYg&pid=ImgRaw&r=0">
                 </div>
             </div>
         </div>
-        <script src="script.js"></script>
+        <script src="js/script.js"></script>
     </body>
 </html>

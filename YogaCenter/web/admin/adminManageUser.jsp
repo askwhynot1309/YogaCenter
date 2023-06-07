@@ -38,7 +38,7 @@
                     </c:if>
                     <c:if test="${listUser != null && !listUser.isEmpty()}">
                         <div class="table-responsive" style="height: 550px">
-                            <table class="table table-striped table-bordered">
+                            <table class="table table-striped table-bordered" style="text-align: center">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>No.</th>
@@ -58,7 +58,7 @@
                                             <td>${user.name}</td>
                                             <td>${user.phone}</td>
                                             <td>${user.address}</td>
-                                            <td>
+                                            <td style="width: 75px;height: 75px">
                                                 <c:if test="${not empty user.image}">
                                                     <img src="img/${user.image}" width="75px" height="75px">
                                                 </c:if>

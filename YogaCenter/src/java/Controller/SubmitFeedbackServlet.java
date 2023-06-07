@@ -38,7 +38,7 @@ public class SubmitFeedbackServlet extends HttpServlet {
             
             EmailUtils.sendToDedicatedEmail(emailAddress, name, feedback);
             request.setAttribute("FeedbackMessage", "Feedback sent!");
-            request.getRequestDispatcher("ContactUs.jsp").forward(request, response);
+            request.getRequestDispatcher("contactUs.jsp").forward(request, response);
         }
     }
 

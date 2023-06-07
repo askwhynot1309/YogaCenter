@@ -89,19 +89,19 @@ public class AddCourseServlet extends HttpServlet {
                             request.setAttribute("listCourse", listCourse);
                             request.setAttribute("listLevel", listLevel);
                             request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                         } else {
-                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                         }
                     } else {
                         if (listLevel != null && !listLevel.isEmpty()) {
                             request.setAttribute("listLevel", listLevel);
                             request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
                             request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                         } else {
                             request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                            request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                         }
                     }
                 } else {
@@ -114,19 +114,19 @@ public class AddCourseServlet extends HttpServlet {
                                 request.setAttribute("listCourse", listCourse);
                                 request.setAttribute("listLevel", listLevel);
                                 request.setAttribute("success", "Tạo mới khoá học thành công");
-                                request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                                request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                             } else {
-                                request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                                request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                             }
                         } else {
                             if (listLevel != null && !listLevel.isEmpty()) {
                                 request.setAttribute("listLevel", listLevel);
                                 request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
                                 request.setAttribute("success", "Tạo mới khoá học thành công");
-                                request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                                request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                             } else {
                                 request.setAttribute("success", "Tạo mới khoá học thành công");
-                                request.getRequestDispatcher("adminCourseList.jsp").forward(request, response);
+                                request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                             }
                         }
                     }

@@ -40,6 +40,7 @@ public class RegisterServlet extends HttpServlet {
             String cccd = request.getParameter("cccd");
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
+            String newpassword = Utils.HexPassword.HexPassword(password);
             boolean checkValid = true;
             if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
                 request.setAttribute("ErrorMessageEmail", "Wrong email format");
@@ -68,7 +69,7 @@ public class RegisterServlet extends HttpServlet {
             }
 
             if (checkValid) {
-                int registrationSuccess = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, account, password);
+                int registrationSuccess = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, account, newpassword);
                 if (registrationSuccess == 1) {
                     response.sendRedirect("registrationSuccess.jsp");
                 } else {

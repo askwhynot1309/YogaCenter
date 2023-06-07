@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
                             break;
                         case 1:
                             session.setAttribute("Staff", accountLogin.getName());
-                            response.sendRedirect("StaffDashBoardServlet");
+                            response.sendRedirect("staffDashboard.jsp");
                             break;
                         case 2:
                             session.setAttribute("Trainer", accountLogin.getName());

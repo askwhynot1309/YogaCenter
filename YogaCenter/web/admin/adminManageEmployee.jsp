@@ -40,7 +40,6 @@
                     </div>
                     <c:set var="listEmployee" value="${requestScope.listEmployee}"/>
                     <c:set var="nulllist" value="${requestScope.nulllist}"/>
-                    <c:set var="addSuccess" value="${requestScope.addSuccess}"/>
                     <c:if test="${listEmployee == null}">
                         <p style="text-align: center"><c:out value="${nulllist}"/></p>
                     </c:if>
@@ -119,11 +118,6 @@
                 </div>
             </div>
         </div>
-        <c:if test="${addSuccess != null}">
-            <script>
-                alert("Add new employee successfully !");
-            </script>
-        </c:if>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
     </body>
     <script>
