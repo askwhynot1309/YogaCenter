@@ -37,8 +37,8 @@ public class LoginServlet extends HttpServlet {
             String account = request.getParameter("account");
             String password = request.getParameter("password");
             HttpSession session = request.getSession();
-//            String newpassword = Utils.HexPassword.HexPassword(password);
-            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, password);
+            String newpassword = Utils.HexPassword.HexPassword(password);
+            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);
             if (accountLogin != null) {
                 if (accountLogin.getStatus() == 0) {
                     switch (accountLogin.getRole()) {
@@ -55,8 +55,8 @@ public class LoginServlet extends HttpServlet {
                             response.sendRedirect("trainerDashboard.jsp");
                             break;
                         case 3:
-                            session.setAttribute("Trainee", accountLogin.getName());
-                            response.sendRedirect("traineeDashboard.jsp");
+                            session.setAttribute("account", accountLogin);
+                            response.sendRedirect("homepageTrainee.jsp");
                     }
                 } else {
                     request.setAttribute("LoginLimited", "This account has been blocked !");
