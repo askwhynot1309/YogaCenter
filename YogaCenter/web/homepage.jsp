@@ -21,7 +21,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <title>Homepage</title>
     </head>
     <body>
-        <c:import url="header.html"></c:import>
+        <c:import url="headerTrainee.jsp"></c:import>
 
 
         <div id="home" class="back">
