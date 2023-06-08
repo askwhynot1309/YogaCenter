@@ -65,7 +65,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <a href="#">class</a>
                 <a href="#">about</a>
                 <a href="#">gallery</a>
-                <a href="ContactUs.jsp">contact</a>
+                <a href="contactUs.jsp">contact</a>
             </nav>
             <%
                 if (account != null) {
