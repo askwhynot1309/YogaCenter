@@ -97,8 +97,8 @@
         <servlet-class>Controller.TraineeChangeInformationServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ShowCourseListServlet</servlet-name>
-        <servlet-class>Controller.ShowCourseListServlet</servlet-class>
+        <servlet-name>TraineeChangePasswordServlet</servlet-name>
+        <servlet-class>Controller.TraineeChangePasswordServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -197,8 +197,8 @@
         <url-pattern>/TraineeChangeInformationServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ShowCourseListServlet</servlet-name>
-        <url-pattern>/ShowCourseListServlet</url-pattern>
+        <servlet-name>TraineeChangePasswordServlet</servlet-name>
+        <url-pattern>/TraineeChangePasswordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
