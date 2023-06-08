@@ -7,7 +7,6 @@ package Controller;
 import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -56,8 +55,7 @@ public class LoginServlet extends HttpServlet {
                             break;
                         case 3:
                             session.setAttribute("account", accountLogin);
-                            response.sendRedirect("homepage.jsp");
-                            request.getRequestDispatcher("/request?action=DashBoard&option=3").forward(request, response);
+                            request.getRequestDispatcher("home").forward(request, response);
                     }
                 } else {
                     request.setAttribute("LoginLimited", "This account has been blocked !");

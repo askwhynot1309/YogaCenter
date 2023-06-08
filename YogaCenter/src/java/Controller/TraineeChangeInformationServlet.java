@@ -41,10 +41,8 @@ public class TraineeChangeInformationServlet extends HttpServlet {
             String address = request.getParameter("txtAddress");
             HttpSession session = request.getSession();
             int updated = UserDao.updateInformationTrainee(ID_Account, email, fullname, phone, address);
-            if (updated > 0) {
-                Account account = UserDao.getAccountByID(ID_Account);
-                session.setAttribute("account", account);
-                response.sendRedirect("traineeManageInformation.jsp");
+            if (updated == 1) {
+                request.getRequestDispatcher("TraineeManageInformationServlet").forward(request, response);
             }
         }
     }

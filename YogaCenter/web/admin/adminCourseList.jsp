@@ -53,6 +53,7 @@
                     <c:set var="expired" value="${requestScope.expired}"/>
                     <c:set var="success" value="${requestScope.success}"/>
                     <c:set var="errorDate" value="${requestScope.errorDate}"/>
+                    <c:set var="theSameName" value="${requestScope.theSameName}"/>
                     <c:if test="${listCourse == null}">
                         <p style="text-align: center"><c:out value="${nulllist}"/></p>
                     </c:if>
@@ -155,6 +156,19 @@
                 <div class="content">
                     <div class="title">Error</div>
                     <span>Please select a level for the course.</span>
+                </div>
+                <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification');
+                notification.timeOut = setTimeout(() => notification.remove(), 5000);
+            </script>
+        </c:if> 
+            <c:if test="${theSameName != null}">
+            <div class="notification">
+                <div class="content">
+                    <div class="title">Error</div>
+                    <span>Name of course has been existed !</span>
                 </div>
                 <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
             </div>

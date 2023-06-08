@@ -1,10 +1,11 @@
 <%-- 
-    Document   : staffDashboard
-    Created on : May 26, 2023, 8:30:06 AM
-    Author     : ADMIN
+    Document   : courseList
+    Created on : Jun 7, 2023, 3:59:16 PM
+    Author     : CCLaptop
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +13,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <c:import url="header.jsp"/>
     </body>
 </html>

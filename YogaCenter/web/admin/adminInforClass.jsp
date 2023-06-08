@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3">
-                    <c:import url="adminMenu.jsp">
+                    <c:import url="adminMenu.jsp"/>
                 </div>
                 <div class="col-lg-9">
                     <h2 style="display: flex; justify-content: center; margin-bottom: 50px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Class Information</h2>

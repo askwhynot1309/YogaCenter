@@ -1,11 +1,11 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package Controller;
 
-import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class AdminManageEmployeeServlet extends HttpServlet {
+public class ChangePasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,18 +31,7 @@ public class AdminManageEmployeeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Account> listEmployee = Dao.AccountDao.getAllEmployees();
-            if(listEmployee != null && !listEmployee.isEmpty()){
-                request.setAttribute("listEmployee", listEmployee);
-                request.getRequestDispatcher("admin/adminManageEmployee.jsp").forward(request, response);
-            } 
-            else{
-                request.setAttribute("nulllist", "There are no employees in the data.");
-                request.getRequestDispatcher("admin/adminManageEmployee.jsp").forward(request, response);
-            }
-        }catch(Exception e){
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("trainee/traineeManagePassword.jsp").forward(request, response);
         }
     }
 

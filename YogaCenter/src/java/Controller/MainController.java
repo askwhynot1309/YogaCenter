@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import java.io.File;
@@ -92,7 +88,7 @@ public class MainController extends HttpServlet {
                         url = "UpdateInformationCourseServlet";
                         break;
                     case "TraineeManageInformation":
-                        url = "traineeManageInformation.jsp";
+                        url = "TraineeManageInformationServlet";
                         break;
                     case "ManageSchedule":
                         url = "ViewScheduleServlet";
@@ -105,6 +101,21 @@ public class MainController extends HttpServlet {
                         break;
                     case "ChangeInformation":
                         url = "TraineeChangeInformationServlet";
+                        break;
+                    case "ManageTrainee":
+                        url = "StaffManageTraineeServlet";
+                        break;
+                    case "ViewSchedule":
+                        url = "StaffViewScheduleServlet";
+                        break;
+                    case "StaffCourseList":
+                        url = "StaffCourseListServlet";
+                        break;
+                    case "ChangePassword":
+                        url = "ChangePasswordServlet";
+                        break;
+                    case "UpdatePassword":
+                        url = "TraineeChangePasswordServlet";
                         break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);

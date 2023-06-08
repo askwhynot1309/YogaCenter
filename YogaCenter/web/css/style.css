@@ -201,6 +201,7 @@ html{
 }
 .inner-class img{
  width: 90%;
+ object-fit: contain;
 }
 .class-content h2{
     color: white;
