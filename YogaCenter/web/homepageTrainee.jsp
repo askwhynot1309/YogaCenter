@@ -119,7 +119,7 @@ Copy code
 </style>
     
 <body>
-    <div class="container">
+    <div style="margin-top: 100px;" class="container">
         <h1 style="color: #fff; text-align: center;">Danh sách khóa học</h1>
         <div class="course-container">
             <div class="course-card">

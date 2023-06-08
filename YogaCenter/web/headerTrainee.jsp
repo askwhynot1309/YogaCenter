@@ -58,16 +58,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             Account account = (Account) session.getAttribute("account");
         %>
         <header class="header">
-            <a href="#" id="logo">Your logo</a>
+            <a href="homepage.jsp" id="logo"><img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" width="75px" height="75px" alt="logo"/></a>
 
-            <nav class="navbar">
+            <nav class="navbar"style="font-size: 25px; font-weight: 700;">
                 <a href="homepage.jsp">home</a>
                 <a href="#">class</a>
                 <a href="#">about</a>
                 <a href="#">gallery</a>
                 <a href="ContactUs.jsp">contact</a>
             </nav>
-
+            <%
+                if (account != null) {
+            %>
             <div class="iconTrainee">
                 <div>
                     <span class="fa-solid fa-cart-shopping fa-2xl"></span>
@@ -114,6 +116,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </div>
                 </div>
             </div>
+            <%
+            } else {
+            %>
+            <div class="search-form">
+                <div class="navbar" style="font-size: 25px; font-weight: 700">
+                    <span><a href="login.jsp">Login </a></span>
+                    <span><a href="register.jsp">Register</a></span>
+                </div>
+
+            </div>
+            <%
+                }
+            %>
         </header>
     </body>
 </html>
