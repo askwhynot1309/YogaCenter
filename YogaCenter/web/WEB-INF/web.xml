@@ -97,10 +97,12 @@
         <servlet-class>Controller.TraineeChangeInformationServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TraineeChangePasswordServlet</servlet-name>
-        <servlet-class>Controller.TraineeChangePasswordServlet</servlet-class>
         <servlet-name>DashBoardServlet</servlet-name>
         <servlet-class>Controller.DashBoardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TraineeChangePasswordServlet</servlet-name>
+        <servlet-class>Controller.TraineeChangePasswordServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StaffManageTraineeServlet</servlet-name>
