@@ -32,7 +32,7 @@ public class TraineeChangePasswordServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int ID_Account = Integer.parseInt(request.getParameter("txtAccountID"));
             String oldPassword = request.getParameter("txtOldPassword");
@@ -46,16 +46,17 @@ public class TraineeChangePasswordServlet extends HttpServlet {
                     int updated = UserDao.updatePasswordByID(encryptNewConfirmPassword, ID_Account);
                     if (updated > 0) {
                         request.setAttribute("Message", "Change password success");
-                        request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
-                    }else{
+                    } else {
                         request.setAttribute("Message", "Something error");
-                    }                    
+                    }
                 } else {
-                    request.setAttribute("Loginfail", "This password is not correct. Please try again.");
+                    request.setAttribute("Message", "This password is not correct. Please try again.");
                 }
-            }else{
-                request.setAttribute("Fail", "The confirm password and new password are the not same");
+            } else {
+                request.setAttribute("Message", "The confirm password and new password are the not same");
             }
+            request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
+
         }
     }
 

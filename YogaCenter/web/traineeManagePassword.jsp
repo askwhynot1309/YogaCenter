@@ -249,6 +249,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                             <label></label>
                                             <input type="password" name="txtConfirmPassword" placeholder="Re-type new password" required="">
                                         </div>
+                                        <%
+                                            String message = (String) request.getAttribute("Message");
+                                            if (message != null) {
+                                        %>
+                                        <div><%=message%></div>
+                                        <%
+                                            }
+                                        %>
                                     </fieldset>
                                 </div>
                                 <div class="form-btn">
