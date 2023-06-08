@@ -44,8 +44,7 @@ public class HomeServlet extends HttpServlet {
             }
             request.getRequestDispatcher("homepage.jsp").forward(request, response);
         }catch(Exception e){
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+        request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 

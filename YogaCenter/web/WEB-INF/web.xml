@@ -53,10 +53,6 @@
         <servlet-class>Controller.InformationServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminDashBoardServlet</servlet-name>
-        <servlet-class>Controller.AdminDashBoardServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ButtonScheduleServlet</servlet-name>
         <servlet-class>Controller.ButtonScheduleServlet</servlet-class>
     </servlet>
@@ -103,6 +99,20 @@
     <servlet>
         <servlet-name>TraineeChangePasswordServlet</servlet-name>
         <servlet-class>Controller.TraineeChangePasswordServlet</servlet-class>
+        <servlet-name>DashBoardServlet</servlet-name>
+        <servlet-class>Controller.DashBoardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffManageTraineeServlet</servlet-name>
+        <servlet-class>Controller.StaffManageTraineeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffViewScheduleServlet</servlet-name>
+        <servlet-class>Controller.StaffViewScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffCourseListServlet</servlet-name>
+        <servlet-class>Controller.StaffCourseListServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -151,10 +161,6 @@
     <servlet-mapping>
         <servlet-name>InformationServlet</servlet-name>
         <url-pattern>/InformationServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdminDashBoardServlet</servlet-name>
-        <url-pattern>/AdminDashBoardServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ButtonScheduleServlet</servlet-name>
@@ -207,6 +213,18 @@
     <servlet-mapping>
         <servlet-name>TraineeChangePasswordServlet</servlet-name>
         <url-pattern>/TraineeChangePasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffManageTraineeServlet</servlet-name>
+        <url-pattern>/StaffManageTraineeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffViewScheduleServlet</servlet-name>
+        <url-pattern>/StaffViewScheduleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffCourseListServlet</servlet-name>
+        <url-pattern>/StaffCourseListServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -102,7 +102,7 @@ public class UserDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Account\n"
-                    + "where Email = ? And Role = 3";
+                    + "where Email like ? And Role = 3";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, "%" + search + "%");
             ResultSet table = pst.executeQuery();
@@ -129,19 +129,19 @@ public class UserDao {
         return kq;
     }
 
-    public static ArrayList<Account> getAllTraineeInTimeAndRoom(int id_time, int id_room, Date date, int id_course) throws Exception {
+    public static ArrayList<Account> getAllTraineeInTimeAndRoom(int id_time, String id_room, Date date, int id_course) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
                     + "from ClassDetail cd\n"
-                    + "JOIN Account a \n"
-                    + "ON cd.IDAccount = a.ID_Account\n"
-                    + "where a.Role = 3 and cd.IDtime = ? and cd.DateStudy = ? and cd.Class_ID = ? and cd.IDCourse = ?";
+                    + "JOIN Account a ON cd.IDAccount = a.ID_Account\n"
+                    + "JOIN Class c ON cd.Class_ID =c.Class_ID\n"
+                    + "where a.Role = 3 and cd.IDtime = ? and cd.DateStudy = ? and c.Class_Name = ? and cd.IDCourse = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id_time);
             pst.setDate(2, date);
-            pst.setInt(3, id_room);
+            pst.setNString(3, id_room);
             pst.setInt(4, id_course);
             ResultSet table = pst.executeQuery();
             if (table != null) {
