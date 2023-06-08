@@ -1,25 +1,26 @@
+<%-- 
+    Document   : staffManageTrainee
+    Created on : Jun 7, 2023, 3:13:02 PM
+    Author     : ADMIN
+--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
     <head>
-        <title>Admin Dashboard</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="css/admin/admin.css">
-        <link rel="stylesheet" href="css/admin/admin-user.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/staff/staff-user.css"/>
     </head>
-
     <body>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-2">
-                    <c:import url="adminMenu.jsp"></c:import>
+                    <c:import url="staffMenu.jsp"></c:import>
                     </div>
                     <div class="col-lg-10">
                         <h2 style="display: flex; justify-content: center; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">
-                            Manage User
+                            Manage Trainee
                         </h2>
                         <div style="display: flex; margin-left: 30%; margin-bottom: 2rem; margin-top: 2rem">
                             <form action="/YogaCenter/request" method="POST" class="form-search">
@@ -47,6 +48,7 @@
                                         <th>Phone</th>
                                         <th>Address</th>
                                         <th>Status</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody class="font">
@@ -57,6 +59,7 @@
                                             <td>${user.name}</td>
                                             <td>${user.phone}</td>
                                             <td>${user.address}</td>
+                                            <td style="width: 75px;height: 75px">
                                             <td>
                                                 <c:if test="${user.status == 0}">
                                                     <form action="/YogaCenter/request" method="POST">
@@ -170,4 +173,6 @@
             }
         });
     </script>
+
+</body>
 </html>

@@ -1,82 +1,75 @@
+<%-- 
+    Document   : staffCourseList
+    Created on : Jun 7, 2023, 4:28:23 PM
+    Author     : ADMIN
+--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
-
     <head>
-        <title>Admin Dashboard</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="css/admin/admin.css">
-        <link rel="stylesheet" href="css/admin/admin-user.css">
+        <link rel="stylesheet" href="css/staff/staff.css">
+        <link rel="stylesheet" href="css/staff/staff-course.css">
     </head>
-
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-2">
-                    <c:import url="adminMenu.jsp"></c:import>
+                <div class="col-lg-3">
+                    <c:import url="staffMenu.jsp"/>
                     </div>
-                    <div class="col-lg-10">
-                        <h2 style="display: flex; justify-content: center; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">
-                            Manage User
-                        </h2>
+                    <div class="col-lg-9">
+                        <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Yoga Center Course List</h2>
                         <div style="display: flex; margin-left: 30%; margin-bottom: 2rem; margin-top: 2rem">
                             <form action="/YogaCenter/request" method="POST" class="form-search">
                                 <div class="group">
                                     <svg class="icon-search" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-                                    <input placeholder="Search by Name User" type="text" name="txtsearch" value="${param.txtsearch}" class="input">
-                                <input name="option" value="searchUser" hidden="">
+                                    <input placeholder="Search by Name Course" type="text" name="txtsearch" value="${param.txtsearch}" class="input">
+                                <input name="option" value="searchCourse" hidden="">
+                                <c:set var="listLevel" value="${requestScope.listLevel}"/>
+                                <c:if test="${listLevel != null && !listLevel.isEmpty()}">
+                                    <select name="level">
+                                        <c:forEach var="level" items="${listLevel}">
+                                            <option value="${level.getIdLevel()}">${level.getLevel_Name()}</option>
+                                        </c:forEach>
+                                    </select>
+                                </c:if>
+                                <c:if test="${listLevel == null}">
+                                    <select name="level">
+                                        <option value="0"></option>
+                                    </select>
+                                </c:if>
                                 <button name="action" value="search" class="btn-search">Search</button>
                             </div>
                         </form>
                     </div>
-                    <c:set var="listUser" value="${requestScope.listUser}"/>
+                    <c:set var="listCourse" value="${requestScope.listCourse}"/>
                     <c:set var="nulllist" value="${requestScope.nulllist}"/>
-                    <c:if test="${listUser == null}">
+                    <c:if test="${listCourse == null}">
                         <p style="text-align: center"><c:out value="${nulllist}"/></p>
                     </c:if>
-                    <c:if test="${listUser != null && !listUser.isEmpty()}">
-                        <div class="table-responsive" style="height: 550px">
-                            <table class="table table-striped table-bordered" style="text-align: center">
-                                <thead class="thead-dark">
+                    <c:if test="${listCourse != null && !listCourse.isEmpty()}">
+                        <div style="height: 550px">
+                            <table class="table">
+                                <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Email</th>
-                                        <th>Name</th>
-                                        <th>Phone</th>
-                                        <th>Address</th>
-                                        <th>Status</th>
+                                        <th>Name of course</th>
+                                        <th>Fee of course</th>
+                                        <th>Detail of course</th>
                                     </tr>
                                 </thead>
-                                <tbody class="font">
-                                    <c:forEach var="user" items="${listUser}" varStatus="loop">
+                                <tbody>
+                                    <c:forEach var="course" items="${listCourse}" varStatus="loop">
                                         <tr>
                                             <td>${loop.count}</td>
-                                            <td>${user.email}</td>
-                                            <td>${user.name}</td>
-                                            <td>${user.phone}</td>
-                                            <td>${user.address}</td>
-                                            <td>
-                                                <c:if test="${user.status == 0}">
-                                                    <form action="/YogaCenter/request" method="POST">
-                                                        <span>Active</span>&ensp; <input type="radio" name="status" value="0" checked="">
-                                                        <span>Unactive</span>&ensp; <input type="radio" name="status" value="1">
-                                                        <input name="id" value="${user.idaccount}" hidden="">
-                                                        <input name="option" value="userChange" hidden="">
-                                                        <button value="comfirm" name="action" class="btn-search">Change</button>
-                                                    </form>
-                                                </c:if>
-                                                <c:if test="${user.status == 1}">
-                                                    <form action="/YogaCenter/request" method="POST">
-                                                        <span>Active</span>&ensp; <input type="radio" name="status" value="0">
-                                                        <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="">
-                                                        <input name="id" value="${user.idaccount}" hidden="">
-                                                        <input name="option" value="userChange" hidden="">
-                                                        <button value="comfirm" name="action" class="btn-search">Change</button>
-                                                    </form>
-                                                </c:if>
-                                            </td>
+                                            <td>${course.name_course}</td>
+                                            <td>${course.fee_course} VNĐ</td>
+                                            <td><a href="/YogaCenter/request?action=inf&id=${course.idCourse}&option=staffInfCourse" class="btn btn-primary">More information</a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -101,7 +94,7 @@
         const pagination = document.querySelector('.pagination ul');
         const page = document.querySelector('.pagination ul li:nth-child(2)');
 
-        const productsPerPage = 6;
+        const productsPerPage = 8;
         let currentPage = 1;
 
         function displayProducts() {

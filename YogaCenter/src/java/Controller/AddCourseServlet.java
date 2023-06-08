@@ -44,10 +44,8 @@ public class AddCourseServlet extends HttpServlet {
             String fileName = filePart.getSubmittedFileName();
             String imagePath = "D:/YogaCenter/YogaCenter/web/img";
             File file = new File(imagePath + File.separator + fileName);
-            if (!file.exists()) {
-                filePart.write(file.getAbsolutePath());
-            } else {
-                filePart.write(file.getAbsolutePath());
+            if(fileName == ""){
+                fileName = "";
             }
             String description = request.getParameter("course_description");
             BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));

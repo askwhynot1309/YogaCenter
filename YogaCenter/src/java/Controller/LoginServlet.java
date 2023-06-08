@@ -44,19 +44,19 @@ public class LoginServlet extends HttpServlet {
                     switch (accountLogin.getRole()) {
                         case 0:
                             session.setAttribute("Admin", accountLogin.getName());
-                            response.sendRedirect("AdminDashBoardServlet");
+                            request.getRequestDispatcher("/request?action=DashBoard&option=0").forward(request, response);
                             break;
                         case 1:
                             session.setAttribute("Staff", accountLogin.getName());
-                            response.sendRedirect("staffDashboard.jsp");
+                            request.getRequestDispatcher("/request?action=DashBoard&option=1").forward(request, response);
                             break;
                         case 2:
                             session.setAttribute("Trainer", accountLogin.getName());
-                            response.sendRedirect("trainerDashboard.jsp");
+                            request.getRequestDispatcher("/request?action=DashBoard&option=2").forward(request, response);
                             break;
                         case 3:
                             session.setAttribute("account", accountLogin);
-                            response.sendRedirect("homepageTrainee.jsp");
+                            request.getRequestDispatcher("/request?action=DashBoard&option=3").forward(request, response);
                     }
                 } else {
                     request.setAttribute("LoginLimited", "This account has been blocked !");

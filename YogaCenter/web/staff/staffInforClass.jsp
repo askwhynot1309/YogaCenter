@@ -7,19 +7,21 @@
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="css/admin/admin.css">
+        <link rel="stylesheet" href="css/staff/staff.css">
     </head>
 
     <body>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3">
-                    <c:import url="adminMenu.jsp">
+                    <c:import url="staffMenu.jsp"/>
                 </div>
                 <div class="col-lg-9">
                     <h2 style="display: flex; justify-content: center; margin-bottom: 50px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Class Information</h2>
                     <c:set var="ListTrainee" value="${requestScope.ListTrainee}"/>
                     <c:set var="inforClass" value="${requestScope.InforClass}"/>
+                    <c:set var="listAttendence" value="${requestScope.ListAttendence}"/>
+                    <c:set var="currentDate" value="${requestScope.currentDate}"/>
                     <c:if test="${InforClass != null}">
                         <table class="table">
                             <tbody>
@@ -64,28 +66,42 @@
                         <p style="text-align: center; font-weight: 700">Do not have any trainees that learn this course !</p>
                     </c:if>
                     <c:if test="${ListTrainee != null}">
-                        <table class="table">
+                        <table class="table" style="text-align: center">
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Image</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="trainee" items="${ListTrainee}" varStatus="loop">
                                     <tr>
                                         <td>${loop.count}</td>
-                                        <td>
-                                            <c:if test="${not empty trainee.image}">
-                                                <img src="img/${trainee.image}" width="100px" height="100px">
-                                            </c:if>
-                                        </td>
                                         <td>${trainee.name}</td>
                                         <td>${trainee.email}</td>
                                         <td>${trainee.phone}</td>
+                                        <td>
+                                            <c:if test="${currentDate != null}">
+                                                <c:if test="${listAttendence != null}">
+                                                    <c:forEach var="attendence" items="${listAttendence}" >
+                                                                <c:if test="${attendence.dateAttendence.after(currentDate) && trainee.idaccount == attendence.id_trainee}">
+                                                                    <button class="btn btn-primary">Change class</button>
+                                                                </c:if>
+                                                                <c:if test="${attendence.dateAttendence.before(currentDate) && trainee.idaccount == attendence.id_trainee}">
+                                                                    <c:if test="${attendence.status == 0}">
+                                                                        <p style="color: red">Absent</p>
+                                                                    </c:if>
+                                                                    <c:if test="${attendence.status == 1}">
+                                                                        <p style="color: green">Present</p>
+                                                                    </c:if>
+                                                                </c:if>
+                                                    </c:forEach>
+                                                </c:if>
+                                            </c:if>
+                                        </td>
                                     </tr>   
                                 </c:forEach>
                             </tbody>

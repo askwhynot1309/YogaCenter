@@ -12,6 +12,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <c:import url="staffMenu.jsp"/> 
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3">
+                    <c:import url="staffMenu.jsp"/>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

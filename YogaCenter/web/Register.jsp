@@ -90,7 +90,7 @@
                 <div style="color: red" class="error-message">${requestScope.ErrorMessagePassword}</div>
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required value="${param.name}">
+                    <input type="text" class="form-control" name="name" required value="${param.name}">
                 </div>
                 <div class="form-group">
                     <label for="cccd">CCCD</label>

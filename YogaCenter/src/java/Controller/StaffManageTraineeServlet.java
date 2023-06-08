@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class ManageTraineeServlet extends HttpServlet {
+public class StaffManageTraineeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,8 +34,15 @@ public class ManageTraineeServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             ArrayList<Account> listTrainee = Dao.UserDao.getAllTrainee();
-        } catch (Exception e) {
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+            if (listTrainee != null && !listTrainee.isEmpty()) {
+                request.setAttribute("listUser", listTrainee);
+                request.getRequestDispatcher("staff/staffManageTrainee.jsp").forward(request, response);
+            } else {
+                request.setAttribute("nulllist", "There are no users in the data");
+                request.getRequestDispatcher("staff/staffManageTrainee.jsp").forward(request, response);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

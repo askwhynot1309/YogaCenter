@@ -65,8 +65,8 @@ public class MainController extends HttpServlet {
                     case "ManageEmployee":
                         url = "AdminManageEmployeeServlet";
                         break;
-                    case "AdminDashBoard":
-                        url = "AdminDashBoardServlet";
+                    case "DashBoard":
+                        url = "DashBoardServlet";
                         break;
                     case "search":
                         url = "SearchValueServlet";
@@ -105,6 +105,15 @@ public class MainController extends HttpServlet {
                         break;
                     case "ChangeInformation":
                         url = "TraineeChangeInformationServlet";
+                        break;
+                    case "ManageTrainee":
+                        url = "StaffManageTraineeServlet";
+                        break;
+                    case "ViewSchedule":
+                        url = "StaffViewScheduleServlet";
+                        break;
+                    case "StaffCourseList":
+                        url = "StaffCourseListServlet";
                         break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);

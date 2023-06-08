@@ -15,7 +15,7 @@
                         <h3>Admin Dashboard</h3>
                         <ul>
                             <li>
-                                <a href="/YogaCenter/request?action=AdminDashBoard">
+                                <a href="/YogaCenter/request?action=DashBoard&option=0">
                                     <i class="fas fa-user icon"></i>
                                     Admin DashBoard
                                 </a>

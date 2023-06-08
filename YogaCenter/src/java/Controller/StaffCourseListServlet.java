@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class AdminManageCourseServlet extends HttpServlet {
+public class StaffCourseListServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,17 +41,17 @@ public class AdminManageCourseServlet extends HttpServlet {
                 if (listLevel != null && !listLevel.isEmpty()) {
                     request.setAttribute("listCourse", listCourse);
                     request.setAttribute("listLevel", listLevel);
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                    request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
                 } else {
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                    request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
                 }
             } else {
                 if (listLevel != null && !listLevel.isEmpty()) {
                     request.setAttribute("listLevel", listLevel);
                     request.setAttribute("nulllist", "There are no courses in data.");
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                    request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
                 } else {
-                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                    request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
                 }
             }
         } catch (Exception e) {

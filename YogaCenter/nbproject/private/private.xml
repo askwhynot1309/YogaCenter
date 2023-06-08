@@ -3,9 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/src/java/Controller/SendOTP.java</file>
-            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/forgetPassword.jsp</file>
-            <file>file:/C:/Users/CCLaptop/OneDrive/Documents/GitHub/YogaCenter/YogaCenter/web/login.jsp</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Controller/InformationServlet.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Controller/DashBoardServlet.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Controller/MainController.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/web/staff/staffCourseList.jsp</file>
+            <file>file:/D:/YogaCenter/YogaCenter/src/java/Dao/AttendenceDao.java</file>
+            <file>file:/D:/YogaCenter/YogaCenter/web/staff/staffViewSchedule.jsp</file>
+            <file>file:/D:/YogaCenter/YogaCenter/web/staff/staffInforClass.jsp</file>
         </group>
     </open-files>
 </project-private>

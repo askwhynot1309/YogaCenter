@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-2">
-                    <c:import url="adminMenu.jsp"></c:import>
+                    <c:import url="adminMenu.jsp"/>
                     </div>
                     <div class="col-lg-10">
                         <h2 style="display: flex; justify-content: center; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">
