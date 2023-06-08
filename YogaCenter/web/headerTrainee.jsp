@@ -56,8 +56,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <body>
         <%
             Account account = (Account) session.getAttribute("account");
-            int accountID = account.getIdaccount();
-            Account acc = UserDao.getAccountByID(accountID);
         %>
         <header class="header">
             <a href="#" id="logo">Your logo</a>
@@ -82,7 +80,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <div class="dropdown">
                     <span class="fa-solid fa-user fa-2xl"></span>
                     <div class="dropdown-content">
-                        <p><%= acc.getName()%></p>
+                        <p><%= account.getName()%></p>
                         <p>
                             <a href="/YogaCenter/request?action=TraineeManageInformation">
                                 <i class="fas fa-user icon"></i>
