@@ -27,8 +27,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     </head>
     <body>
         <c:import url="headerTrainee.jsp"></c:import>
-
-
             <div id="home" class="back">
                 <div class="mian-home">
                     <div class="inner-home">
@@ -188,7 +186,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <!-- contact us -->
 
     <div class="contact-us">
-        <div class="main-contact">
+<!--        <div class="main-contact">
             <div class="inner-contact">
                 <h1>Contact us</h1>
                 <div class="inner-form-contact">
@@ -201,10 +199,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <div class="inner-contact">
                 <img src="https://th.bing.com/th/id/R.5bc6a94ca0114ea56198bccc0a2b0d98?rik=eDteuVFFJ12iYg&pid=ImgRaw&r=0">
             </div>
-        </div>
+        </div>-->
     </div>
     <script src="js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
 </body>
+<c:import url="footer.jsp"></c:import>
 </html>
