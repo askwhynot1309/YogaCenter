@@ -46,30 +46,31 @@
                             <p>Information about your self</p>
                         </div>
                         <div class="content-body">
-                            <form action="/YogaCenter/request" method="POST">
+                            <form action="/YogaCenter/request">
                                 <div class="form-container">
                                     <div>
-                                        <fieldset class="">
-                                            <div class="">
+                                        <fieldset class="" style="padding: 10px">
+                                            <legend class="" style="padding: 10px">General</legend>
+                                            <input type="text" name="txtAccountID" value="${acc.idaccount}" hidden="">
+                                            <div class="" style="padding: 10px">
                                                 <label>Name :</label>
                                                 <input type="text" name="txtFullname" value="${acc.name}">
                                             </div>
-                                            <div class="">
+                                            <div class="" style="padding: 10px">
                                                 <label>Email :</label>
-                                                <input type="email" name="txtEmail" value="${acc.email}" readonly="">
+                                                <input type="email" name="txtEmail" value="${acc.email}" required="">
                                             </div>
-                                            <div class="">
+                                            <div class="" style="padding: 10px">
                                                 <label>Phone :</label>
                                                 <input type="tel" name="txtPhone" value="${acc.phone}" required="">
                                             </div>
-                                            <div class="">
+                                            <div class="" style="padding: 10px">
                                                 <label>Address :</label>
                                                 <input type="text" name="txtAddress" value="${acc.address}" required=""> 
                                             </div>
                                         </fieldset>
                                     </div>
                                     <div class="form-btn">
-                                        <input name="txtAccountID" value="${acc.idaccount}" hidden="">
                                         <button type="submit" name="action" value="ChangeInformation">Change</button>
                                     </div>
                                 </div>

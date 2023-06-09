@@ -58,7 +58,7 @@
         </style>
     </head>
     <body>
-        <c:import url="header.html"></c:import>
+        <c:import url="headerLogin.jsp"/>
         <c:set var="CourseList" value="${requestScope.CourseList}"></c:set>
         <c:set var="CourseLevel" value="${requestScope.CourseLevel}"></c:set>
         <c:if test="${ErrorMessage != null}">

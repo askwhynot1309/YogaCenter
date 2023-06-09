@@ -47,19 +47,19 @@
                         <form action="/YogaCenter/request" method="POST">
                             <div class="form-container">
                                 <div>
-                                    <fieldset class="">
+                                    <fieldset class="" style="padding: 10px">
                                         <legend class="">Password:</legend>
                                         <input type="text" name="txtAccountID" value="${acc.idaccount}" hidden="">
-                                        <div class="">
-                                            <label></label>
+                                        <div class=""style="padding: 10px">
+                                            <label>Password :</label>
                                             <input type="password" name="txtOldPassword" placeholder="Enter current password" required="">
                                         </div>
-                                        <div class="">
-                                            <label></label>
+                                        <div class="" style="padding: 10px">
+                                            <label>New password :</label>
                                             <input type="password" name="txtNewPassword" placeholder="Enter new password" required="">
                                         </div>
-                                        <div class="">
-                                            <label></label>
+                                        <div class="" style="padding: 10px">
+                                            <label>Comfirm password :</label>
                                             <input type="password" name="txtConfirmPassword" placeholder="Re-type new password" required="">
                                         </div>
                                     </fieldset>

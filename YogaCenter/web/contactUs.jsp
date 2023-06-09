@@ -1,6 +1,6 @@
 <!-- feedback.jsp -->
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,10 +69,10 @@
             }
         </style>
     </head>
-
     <body>
-        <c:import url="header.html" />
-
+        <div>
+            <c:import url="headerLogin.jsp"/>
+        </div>
         <div class="container">
             <h2 class="form-title">Feedback Form</h2>
             <form action="/YogaCenter/request" method="post">

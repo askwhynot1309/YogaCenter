@@ -14,7 +14,7 @@
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-2">
+                <div class="col-lg-2" style="padding: 0">
                     <c:import url="adminMenu.jsp"/>
                     </div>
                     <div class="col-lg-10">

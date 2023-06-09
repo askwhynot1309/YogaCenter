@@ -44,9 +44,9 @@ public class HomeServlet extends HttpServlet {
                 for (Course course : list) {
                     int changeStatus = Dao.CourseDao.changeStatusCourse(1, course.getIdCourse());
                 }
-                Collections.shuffle(list);
+                Collections.shuffle(listramdom);
                 int count = 0;
-                for (Course course : list) {
+                for (Course course : listramdom) {
                     if (count < 3) {
                         randomList.add(course);
                         count++;

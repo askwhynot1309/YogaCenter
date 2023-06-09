@@ -11,13 +11,13 @@
 
 <body>
     <header class="header" style = "z-index: 1; position: sticky;">
-        <a href="homepage.jsp" id="logo"><img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" width="75px" height="75px" alt="logo"/></a>
+        <a href="home" id="logo"><img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" width="75px" height="75px" alt="logo"/></a>
         <nav class="navbar" style="font-size: 25px; font-weight: 700;">
             <a href="home">Home</a>
-            <a href="ShowCourseListServlet">Course</a>
+            <a href="/YogaCenter/course">Course</a>
             <a href="homepage/aboutUs.jsp">About</a>
             <a href="homepage/yogaGallery.jsp">Gallery</a>
-            <a href="homepage/contactUs.jsp">Contact</a>
+            <a href="contactUs.jsp">Contact</a>
         </nav>
         <c:set var="account" value="${sessionScope.account}"/>
         <c:if test="${account != null}">
