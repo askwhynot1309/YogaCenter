@@ -224,4 +224,33 @@ public class CourseDao {
         }
         return kq;
     }
+
+    public static Course checkTheSameCourse(String course) throws Exception {
+        Course kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Course\n"
+                    + "where Course_Name = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setNString(1, course);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int course_id = table.getInt("Course_ID");
+                    String course_name = table.getNString("Course_Name");
+                    String course_img = table.getString("Img");
+                    BigDecimal course_fee = table.getBigDecimal("Course_Fee");
+                    Date course_start = table.getDate("Start_date");
+                    int slot = table.getInt("Slot");
+                    String description = table.getNString("Description");
+                    int level = table.getInt("ID_Level");
+                    int status = table.getInt("Status");
+                    kq = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, level, status);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
 }

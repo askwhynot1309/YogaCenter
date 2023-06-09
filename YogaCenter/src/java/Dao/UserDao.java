@@ -403,4 +403,24 @@ public class UserDao {
         }
         return acc;
     }
+
+    public static int updatePasswordByID(String confirmPassword, int ID_Account) {
+        int updated = 0;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "UPDATE [dbo].[Account]\n"
+                        + "SET [Password] = ?\n"
+                        + "WHERE [ID_Account] = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setString(1, confirmPassword);
+                pst.setInt(2, ID_Account);
+                updated = pst.executeUpdate();
+                cn.close();
+            }
+        } catch (Exception e) {
+        }
+        return updated;
+    }
 }

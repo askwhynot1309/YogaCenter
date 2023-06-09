@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,15 +37,37 @@ public class HomeServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             Date currentdate = new Date(System.currentTimeMillis());
+            ArrayList<Course> randomList = new ArrayList<>();
             ArrayList<Course> list = Dao.CourseDao.getCourseByDateStart(currentdate);
-            if(list != null && !list.isEmpty()){
+            ArrayList<Course> listramdom = Dao.CourseDao.getAllCourse();
+            if (list != null && !list.isEmpty()) {
                 for (Course course : list) {
-                int changeStatus = Dao.CourseDao.changeStatusCourse(1, course.getIdCourse());
+                    int changeStatus = Dao.CourseDao.changeStatusCourse(1, course.getIdCourse());
+                }
+                Collections.shuffle(listramdom);
+                int count = 0;
+                for (Course course : listramdom) {
+                    if (count < 3) {
+                        randomList.add(course);
+                        count++;
+                    }
+                }
+                request.setAttribute("ramdomCourse", randomList);
+                request.getRequestDispatcher("homepage/homepage.jsp").forward(request, response);
+            } else {
+                Collections.shuffle(listramdom);
+                int count = 0;
+                for (Course course : listramdom) {
+                    if (count < 3) {
+                        randomList.add(course);
+                        count++;
+                    }
+                }
+                request.setAttribute("ramdomCourse", randomList);
+                request.getRequestDispatcher("homepage/homepage.jsp").forward(request, response);
             }
-            }
-            request.getRequestDispatcher("homepage.jsp").forward(request, response);
-        }catch(Exception e){
-        request.getRequestDispatcher("error.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

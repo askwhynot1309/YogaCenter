@@ -1,77 +1,70 @@
-<%-- 
-    Document   : Register
-    Created on : Jun 3, 2023, 1:47:43 PM
-    Author     : CCLaptop
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html>
 
     <head>
-            <title>Register</title>
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-            <style>
-                body {
-                    background-color: #f4f4f4;
-                }
+        <title>Register</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <style>
+            body {
+                background-color: #f4f4f4;
+            }
 
-                .container {
-                    max-width: 500px;
-                    margin: 0 auto;
-                    margin-top: 100px;
-                    background-color: #ffffff;
-                    padding: 40px;
-                    border-radius: 5px;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                }
+            .container {
+                max-width: 500px;
+                margin: 0 auto;
+                margin-top: 100px;
+                background-color: #ffffff;
+                padding: 40px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
 
-                h2 {
-                    text-align: center;
-                    color: #008000;
-                    margin-bottom: 30px;
-                    font-size: 28px;
-                    font-weight: 700;
-                }
+            h2 {
+                text-align: center;
+                color: #008000;
+                margin-bottom: 30px;
+                font-size: 28px;
+                font-weight: 700;
+            }
 
-                .form-group label {
-                    font-weight: bold;
-                    font-size: 18px;
-                }
+            .form-group label {
+                font-weight: bold;
+                font-size: 18px;
+            }
 
-                .form-control {
-                    font-size: 16px;
-                }
+            .form-control {
+                font-size: 16px;
+            }
 
-                .btn-register {
-                    background-color: #008000;
-                    color: #ffffff;
-                    border: none;
-                    transition: background-color 0.3s ease;
-                    font-size: 18px;
-                    padding: 10px;
-                }
+            .btn-register {
+                background-color: #008000;
+                color: #ffffff;
+                border: none;
+                transition: background-color 0.3s ease;
+                font-size: 18px;
+                padding: 10px;
+            }
 
-                .btn-register:hover {
-                    background-color: #006600;
-                }
+            .btn-register:hover {
+                background-color: #006600;
+            }
 
-                .text-center {
-                    font-size: 16px;
-                }
+            .text-center {
+                font-size: 16px;
+            }
 
-                .text-center a {
-                    font-weight: bold;
-                }
-            </style>
-        </head>
-<c:import url="header.html"></c:import>
-        <body>
-            <div class="container">
-                <h2>Register </h2>
-                <div style="color: red" class="error-message">${requestScope.ErrorMessage}</div>
+            .text-center a {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <c:import url="headerLogin.jsp"/>
+    <body>
+        <div class="container">
+            <h2>Register </h2>
+            <div style="color: red" class="error-message">${requestScope.ErrorMessage}</div>
             <form action="/YogaCenter/request" method="POST">
                 <div class="form-group">
                     <label for="email">Email</label>
