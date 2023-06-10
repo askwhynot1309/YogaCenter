@@ -1,26 +1,19 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
--->
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/Login.css">
+        <link rel="stylesheet" href="css/login.css">
+        <link rel="stylesheet" href ="css/login-success.css">
         <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.min.css">
         <title>Login</title>
     </head>
-
-
+    <c:import url="headerLogin.jsp"/> 
     <body>
-        <c:import url="header.html" />
-        
         <div class="login">
             <div class="login-form">
                 <h1 class="signin-heading">Sign In</h1>
@@ -47,6 +40,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </form>
                 </div>
                 <c:set var="Loginfail" value="${requestScope.Loginfail}"/>
+                <c:set var="successMessage" value="${requestScope.successMessage}"/>
                 <c:if test="${Loginfail != null}">
                     <div style="text-align: center; margin-top: 50px; font-size: 14px"><p style="color: red"><c:out value="${Loginfail}"/></p></div>
                     </c:if>
@@ -54,9 +48,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <c:if test="${LoginLimited != null}">
                     <div style="text-align: center; margin-top: 50px; font-size: 14px"><p style="color: red"><c:out value="${LoginLimited}"/></p></div>
                     </c:if>
-                    <div style="font-size: 14px; display: flex; justify-content: center; align-items: center; margin-top: 10px">
-                        <a href="forgetPassword.jsp">Forget password ?</a>
-                    </div>
+                <div style="font-size: 14px; display: flex; justify-content: center; align-items: center; margin-top: 10px">
+                    <a href="homepage/forgetPassword.jsp">Forget password ?</a>
+                </div>
 
                 <div class="signin-or"><span>or</span></div>
 
@@ -72,111 +66,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </div>
             </div>
         </div>
-        <style>
-            button {
-                margin-left: 18%;
-                --primary-color: #645bff;
-                --secondary-color: #fff;
-                --hover-color: #111;
-                --arrow-width: 10px;
-                --arrow-stroke: 2px;
-                box-sizing: border-box;
-                border: 0;
-                border-radius: 20px;
-                color: var(--secondary-color);
-                padding: 1em 5em;
-                background: var(--primary-color);
-                display: flex;
-                transition: 0.2s background;
-                align-items: center;
-                gap: 0.6em;
-                font-weight: bold;
-                width: 200px;
-            }
-
-            button .arrow-wrapper {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            button .arrow {
-                margin-top: 1px;
-                width: var(--arrow-width);
-                background: var(--primary-color);
-                height: var(--arrow-stroke);
-                position: relative;
-                transition: 0.2s;
-            }
-
-            button .arrow::before {
-                content: "";
-                box-sizing: border-box;
-                position: absolute;
-                border: solid var(--secondary-color);
-                border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
-                display: inline-block;
-                top: -3px;
-                right: 3px;
-                transition: 0.2s;
-                padding: 3px;
-                transform: rotate(-45deg);
-            }
-
-            button:hover {
-                background-color: var(--hover-color);
-            }
-
-            button:hover .arrow {
-                background: var(--secondary-color);
-            }
-
-            button:hover .arrow:before {
-                right: 0;
-            }
-            .form-control {
-                position: relative;
-                margin: 20px 0 40px;
-                width: 300px;
-            }
-
-            .form-control input {
-                background-color: transparent;
-                border: 0;
-                border-bottom: 2px #111 solid;
-                display: block;
-                width: 100%;
-                padding: 15px 5px;
-                font-size: 15px;
-                color: #111;
-            }
-
-            .form-control input:focus,
-            .form-control input:valid {
-                outline: 0;
-                border-bottom-color: #1669F2;
-            }
-
-            .form-control label {
-                position: absolute;
-                top: 15px;
-                left: 0;
-                pointer-events: none;
-            }
-
-            .form-control label span {
-                display: inline-block;
-                font-size: 15px;
-                min-width: 5px;
-                color: #111;
-                transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            }
-
-            .form-control input:focus+label span,
-            .form-control input:valid+label span {
-                color: #1669F2;
-                transform: translateY(-40px);
-            }
-        </style>
     </body>
+    <c:if test="${successMessage != null}">
+            <div class="notification-success">
+                <div class="content">
+                    <div class="title">Success</div>
+                    <span>Password reset successful!</span>
+                </div>
+                <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification-success');
+                notification.timeOut = setTimeout(() => notification.remove(), 5000);
+            </script>
+        </c:if>
 </html>

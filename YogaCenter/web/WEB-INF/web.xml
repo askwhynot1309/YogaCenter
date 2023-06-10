@@ -49,16 +49,8 @@
         <servlet-class>Controller.InformationServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminDashBoardServlet</servlet-name>
-        <servlet-class>Controller.AdminDashBoardServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ButtonScheduleServlet</servlet-name>
         <servlet-class>Controller.ButtonScheduleServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>HomeServlet</servlet-name>
-        <servlet-class>Controller.HomeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddNewEmployeeServlet</servlet-name>
@@ -97,8 +89,40 @@
         <servlet-class>Controller.TraineeChangeInformationServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DashBoardServlet</servlet-name>
+        <servlet-class>Controller.DashBoardServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffManageTraineeServlet</servlet-name>
+        <servlet-class>Controller.StaffManageTraineeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffViewScheduleServlet</servlet-name>
+        <servlet-class>Controller.StaffViewScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffCourseListServlet</servlet-name>
+        <servlet-class>Controller.StaffCourseListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>Controller.HomeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TraineeManageInformationServlet</servlet-name>
+        <servlet-class>Controller.TraineeManageInformationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <servlet-class>Controller.ChangePasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>TraineeChangePasswordServlet</servlet-name>
         <servlet-class>Controller.TraineeChangePasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowCourseListServlet</servlet-name>
+        <servlet-class>Controller.ShowCourseListServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -149,16 +173,8 @@
         <url-pattern>/InformationServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminDashBoardServlet</servlet-name>
-        <url-pattern>/AdminDashBoardServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ButtonScheduleServlet</servlet-name>
         <url-pattern>/ButtonScheduleServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>HomeServlet</servlet-name>
-        <url-pattern>/HomeServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddNewEmployeeServlet</servlet-name>
@@ -197,8 +213,40 @@
         <url-pattern>/TraineeChangeInformationServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>DashBoardServlet</servlet-name>
+        <url-pattern>/DashBoardServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffManageTraineeServlet</servlet-name>
+        <url-pattern>/StaffManageTraineeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffViewScheduleServlet</servlet-name>
+        <url-pattern>/StaffViewScheduleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffCourseListServlet</servlet-name>
+        <url-pattern>/StaffCourseListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeManageInformationServlet</servlet-name>
+        <url-pattern>/TraineeManageInformationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <url-pattern>/ChangePasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>TraineeChangePasswordServlet</servlet-name>
         <url-pattern>/TraineeChangePasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowCourseListServlet</servlet-name>
+        <url-pattern>/course</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -206,7 +254,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>HomeServlet</welcome-file>
+        <welcome-file>home</welcome-file>
     </welcome-file-list>
     <error-page>
         <exception-type>Exception</exception-type>

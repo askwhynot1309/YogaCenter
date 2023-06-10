@@ -7,14 +7,14 @@
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="css/admin.css">
+        <link rel="stylesheet" href="css/admin/admin.css">
     </head>
 
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3">
-                    <c:import url="adminMenu.jsp"></c:import>
+                <div class="col-lg-3" style="padding: 0">
+                    <c:import url="adminMenu.jsp"/>
                 </div>
                 <div class="col-lg-9">
                     <h2 style="display: flex; justify-content: center; margin-bottom: 50px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Class Information</h2>

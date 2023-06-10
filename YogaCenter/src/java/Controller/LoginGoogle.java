@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import Object.Account;
@@ -46,13 +42,13 @@ public class LoginGoogle extends HttpServlet {
             String email = user.getEmail();
             Account checkEmail = Dao.UserDao.checkEmailTraineeIsExist(email);
             if (checkEmail != null) {
-                session.setAttribute("User", user.getEmail());
-                response.sendRedirect("userDashboard.jsp");
+                session.setAttribute("account", checkEmail);
+                request.getRequestDispatcher("home").forward(request, response);
             } else {
                 int insertNewEmail = Dao.UserDao.insertNewEmailTrainee(email);
                 if (insertNewEmail == 1) {
-                    session.setAttribute("User", user.getEmail());
-                    response.sendRedirect("userDashboard.jsp");
+                    session.setAttribute("account", checkEmail);
+                    request.getRequestDispatcher("home").forward(request, response);
                 } else {
                     response.sendRedirect("error.html");
                 }

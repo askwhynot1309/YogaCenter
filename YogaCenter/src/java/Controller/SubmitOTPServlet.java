@@ -38,11 +38,11 @@ public class SubmitOTPServlet extends HttpServlet {
 
             if (enteredOtp.equals(storedOtp)) {
                 // OTP is correct, redirect to resetpassword.jsp
-                response.sendRedirect("resetPassword.jsp");
+                response.sendRedirect("homepage/resetPassword.jsp");
             } else {
                 // OTP is incorrect, show error message
                 request.setAttribute("ErrorMessageOTP", "Invalid OTP");
-                request.getRequestDispatcher("forgetPassword.jsp").forward(request, response);
+                request.getRequestDispatcher("homepage/forgetPassword.jsp").forward(request, response);
             }
         }
     }

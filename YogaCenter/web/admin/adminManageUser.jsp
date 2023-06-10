@@ -7,14 +7,14 @@
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="css/admin.css">
-        <link rel="stylesheet" href="css/admin-user.css">
+        <link rel="stylesheet" href="css/admin/admin.css">
+        <link rel="stylesheet" href="css/admin/admin-user.css">
     </head>
 
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-2">
+                <div class="col-lg-2" style="padding: 0">
                     <c:import url="adminMenu.jsp"></c:import>
                     </div>
                     <div class="col-lg-10">
@@ -46,7 +46,6 @@
                                         <th>Name</th>
                                         <th>Phone</th>
                                         <th>Address</th>
-                                        <th>Image</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -58,11 +57,6 @@
                                             <td>${user.name}</td>
                                             <td>${user.phone}</td>
                                             <td>${user.address}</td>
-                                            <td style="width: 75px;height: 75px">
-                                                <c:if test="${not empty user.image}">
-                                                    <img src="img/${user.image}" width="75px" height="75px">
-                                                </c:if>
-                                            </td>
                                             <td>
                                                 <c:if test="${user.status == 0}">
                                                     <form action="/YogaCenter/request" method="POST">

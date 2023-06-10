@@ -41,11 +41,11 @@ public class ResetPasswordServlet extends HttpServlet {
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                 } catch (Exception e) {
                     request.setAttribute("errorMessage", "An error occurred while updating the password. Please try again.");
-                    request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
+                    request.getRequestDispatcher("homepage/resetPassword.jsp").forward(request, response);
                 }
             } else {
                 request.setAttribute("errorMessage", "New password and confirm password do not match.");
-                request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
+                request.getRequestDispatcher("homepage/resetPassword.jsp").forward(request, response);
             }
         }
     }

@@ -44,16 +44,21 @@ public class TraineeChangePasswordServlet extends HttpServlet {
                 if (encryptOldPassword.equals(account.getPassword())) { //check if old password is correct with the password inputted
                     String encryptNewConfirmPassword = HexPassword.HexPassword(confirmPassword);
                     int updated = UserDao.updatePasswordByID(encryptNewConfirmPassword, ID_Account);
-                    if (updated > 0) {
+                    if (updated == 1 ) {
                         request.setAttribute("Message", "Change password success");
-                    } else {
+
+                    }else{
                         request.setAttribute("Message", "Something error");
-                    }
+                        request.getRequestDispatcher("trainee/traineeManagePassword.jsp").forward(request, response);
+                    }                    
                 } else {
-                    request.setAttribute("Message", "This password is not correct. Please try again.");
+                    request.setAttribute("Loginfail", "This password is not correct. Please try again.");
+                    request.getRequestDispatcher("trainee/traineeManagePassword.jsp").forward(request, response);
                 }
-            } else {
-                request.setAttribute("Message", "The confirm password and new password are the not same");
+            }else{
+                request.setAttribute("Fail", "The confirm password and new password are the not same");
+                request.getRequestDispatcher("trainee/traineeManagePassword.jsp").forward(request, response);
+
             }
             request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
 
