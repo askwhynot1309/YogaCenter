@@ -124,6 +124,10 @@
         <servlet-name>ShowCourseListServlet</servlet-name>
         <servlet-class>Controller.ShowCourseListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TraineeAddToCartServlet</servlet-name>
+        <servlet-class>Controller.TraineeAddToCartServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -248,12 +252,17 @@
         <servlet-name>ShowCourseListServlet</servlet-name>
         <url-pattern>/course</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeAddToCartServlet</servlet-name>
+        <url-pattern>/TraineeAddToCartServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
+        <welcome-file>homepage.jsp</welcome-file>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
     <error-page>

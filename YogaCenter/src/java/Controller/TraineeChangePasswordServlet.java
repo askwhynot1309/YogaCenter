@@ -49,15 +49,15 @@ public class TraineeChangePasswordServlet extends HttpServlet {
 
                     }else{
                         request.setAttribute("Message", "Something error");
-                        request.getRequestDispatcher("trainee/traineeManagePassword.jsp").forward(request, response);
+                        request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
                     }                    
                 } else {
                     request.setAttribute("Loginfail", "This password is not correct. Please try again.");
-                    request.getRequestDispatcher("trainee/traineeManagePassword.jsp").forward(request, response);
+                    request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
                 }
             }else{
                 request.setAttribute("Fail", "The confirm password and new password are the not same");
-                request.getRequestDispatcher("trainee/traineeManagePassword.jsp").forward(request, response);
+                request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
 
             }
             request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);

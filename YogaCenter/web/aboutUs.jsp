@@ -1,7 +1,7 @@
 <%-- 
-    Document   : courseList
-    Created on : Jun 7, 2023, 3:59:16 PM
-    Author     : CCLaptop
+    Document   : aboutUs
+    Created on : Jun 10, 2023, 4:50:17 PM
+    Author     : ngmin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,6 +13,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <c:import url="header.html"></c:import>
+        <c:import url="header.jsp"></c:import>
     </body>
 </html>

@@ -49,7 +49,7 @@
                     <div style="text-align: center; margin-top: 50px; font-size: 14px"><p style="color: red"><c:out value="${LoginLimited}"/></p></div>
                     </c:if>
                 <div style="font-size: 14px; display: flex; justify-content: center; align-items: center; margin-top: 10px">
-                    <a href="homepage/forgetPassword.jsp">Forget password ?</a>
+                    <a href="forgetPassword.jsp">Forget password ?</a>
                 </div>
 
                 <div class="signin-or"><span>or</span></div>
