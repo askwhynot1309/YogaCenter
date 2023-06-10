@@ -32,7 +32,7 @@ public class TraineeChangePasswordServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int ID_Account = Integer.parseInt(request.getParameter("txtAccountID"));
             String oldPassword = request.getParameter("txtOldPassword");
@@ -46,18 +46,22 @@ public class TraineeChangePasswordServlet extends HttpServlet {
                     int updated = UserDao.updatePasswordByID(encryptNewConfirmPassword, ID_Account);
                     if (updated == 1 ) {
                         request.setAttribute("Message", "Change password success");
+
                     }else{
                         request.setAttribute("Message", "Something error");
-                        request.getRequestDispatcher("trainee/traineeManagePassword.jsp").forward(request, response);
+                        request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
                     }                    
                 } else {
                     request.setAttribute("Loginfail", "This password is not correct. Please try again.");
-                    request.getRequestDispatcher("trainee/traineeManagePassword.jsp").forward(request, response);
+                    request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
                 }
             }else{
                 request.setAttribute("Fail", "The confirm password and new password are the not same");
-                request.getRequestDispatcher("trainee/traineeManagePassword.jsp").forward(request, response);
+                request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
+
             }
+            request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
+
         }
     }
 

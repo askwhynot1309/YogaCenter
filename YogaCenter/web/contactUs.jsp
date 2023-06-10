@@ -71,7 +71,7 @@
     </head>
     <body>
         <div>
-            <c:import url="headerLogin.jsp"/>
+            <c:import url="header.jsp"/>
         </div>
         <div class="container">
             <h2 class="form-title">Feedback Form</h2>

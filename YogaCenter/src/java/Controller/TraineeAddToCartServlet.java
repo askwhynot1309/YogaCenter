@@ -4,9 +4,9 @@
  */
 package Controller;
 
-import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +15,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ADMIN
+ * @author ngmin
  */
-public class LoginServlet extends HttpServlet {
+public class TraineeAddToCartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,42 +31,28 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String account = request.getParameter("account");
-            String password = request.getParameter("password");
-            HttpSession session = request.getSession();
-            String newpassword = Utils.HexPassword.HexPassword(password);
-            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);
-            if (accountLogin != null) {
-                if (accountLogin.getStatus() == 0) {
-                    switch (accountLogin.getRole()) {
-                        case 0:
-                            session.setAttribute("Admin", accountLogin.getName());
-                            request.getRequestDispatcher("/request?action=DashBoard&option=0").forward(request, response);
-                            break;
-                        case 1:
-                            session.setAttribute("Staff", accountLogin.getName());
-                            request.getRequestDispatcher("/request?action=DashBoard&option=1").forward(request, response);
-                            break;
-                        case 2:
-                            session.setAttribute("Trainer", accountLogin.getName());
-                            request.getRequestDispatcher("/request?action=DashBoard&option=2").forward(request, response);
-                            break;
-                        case 3:
-                            session.setAttribute("account", accountLogin);
-                            request.getRequestDispatcher("homepage.jsp").forward(request, response);
-                    }
+            String ID_Course = request.getParameter("cid");
+
+            HttpSession session = request.getSession(true);
+            if (session != null) {
+                HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
+                if (cart == null) {
+                    cart = new HashMap<>();
+                    cart.put(ID_Course, 1);
                 } else {
-                    request.setAttribute("LoginLimited", "This account has been blocked !");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                    Integer tmp = cart.get(ID_Course);
+                    if (tmp == null) {
+                        cart.put(ID_Course, 1);
+                    } else {
+                        tmp++;
+                        cart.put(ID_Course, tmp);
+                    }
                 }
-            } else {
-                request.setAttribute("Loginfail", "This account or password is not correct. Please sign in again.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                session.setAttribute("cart", cart);
+                response.sendRedirect("home");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

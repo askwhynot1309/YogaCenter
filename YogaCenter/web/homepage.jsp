@@ -12,6 +12,7 @@
     </head>
     <body>
         <c:import url="header.jsp"/>
+        <c:set var="account" value="${sessionScope.account}"/>
         <div id="home" class="back">
             <div class="mian-home">
                 <div class="inner-home">
@@ -40,7 +41,15 @@
                             </div>
                             <div class="class-content">
                                 <h2>${ramdom.level}</h2>
-                                <a href="register.jsp">register now</a>
+                                <p>${random.description}</p>
+                                <c:choose>
+                                    <c:when test="${empty account}">
+                                        <a href="register.jsp">register now</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="/YogaCenter/request?action=AddCourseToCart&cid=${course.idCourse}">Add to cart</a>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </c:forEach>

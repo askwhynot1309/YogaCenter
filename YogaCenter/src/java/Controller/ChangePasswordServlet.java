@@ -31,7 +31,7 @@ public class ChangePasswordServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            request.getRequestDispatcher("trainee/traineeManagePassword.jsp").forward(request, response);
+            request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
         }
     }
 
