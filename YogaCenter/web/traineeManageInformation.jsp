@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="css/trainee/trainee-inf.css"/>
         <link rel="stylesheet" href="css/style.css"/>
     </head>
-    <c:import url="headerTrainee.jsp"/>
+    <c:import url="header.jsp"/>
     <body>
         <c:set var="acc" value="${sessionScope.account}"/>
         <c:if test="${acc != null}">

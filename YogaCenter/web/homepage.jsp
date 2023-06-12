@@ -1,4 +1,9 @@
+<%@page import="Object.Account"%>
+<%@page import="Object.Course"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Dao.CourseDao"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.Collections" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,32 +35,46 @@
         </div>
 
         <div class="our-classes">
-            <h1>OUR COURSES</h1>
+            <h1>Our classes</h1>
             <div class="main-class">
-                <c:set var="ramdomCourse" value="${requestScope.ramdomCourse}"/>
-                <c:if test="${ramdomCourse != null}">
-                    <c:forEach items="${ramdomCourse}" var="ramdom">
-                        <div class="inner-class">
-                            <div>
-                                <img src="img/${ramdom.img_course}">
-                            </div>
-                            <div class="class-content">
-                                <h2>${ramdom.level}</h2>
-                                <p>${random.description}</p>
-                                <c:choose>
-                                    <c:when test="${empty account}">
-                                        <a href="register.jsp">register now</a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a href="/YogaCenter/request?action=AddCourseToCart&cid=${course.idCourse}">Add to cart</a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </c:if>
+                <%
+                    Account account = (Account) session.getAttribute("account");
+                    ArrayList<Course> courseList = CourseDao.getAllCourse();
+                    Collections.shuffle(courseList); // Shuffle the courseList randomly
+                    int count = 0; // Counter to track the number of displayed courses
+                    for (Course course : courseList) {
+                        if (count < 3) { // Display only the first three courses
+                            count++;
+                %>
+
+                <div class="inner-class">
+                    <div>
+                        <img style="width: 80%; height: 250px; object-fit: cover" src="<%= course.getImg_course()%>" alt=""/>
+                    </div>
+                    <div class="class-content">
+                        <h2><%= course.getLevel()%></h2>
+                        <p><%= course.getDescription()%></p>
+                        <%
+                            if (account == null) {
+                        %>
+                        <a href="register.jsp">register now</a>
+                        <%
+                        } else {
+                        %>
+                        <a href="/YogaCenter/request?action=AddCourseToCart&cid=<%= course.getIdCourse()%>">Add to cart</a>
+                        <%
+                            }
+                        %>
+
+                    </div>
+                </div>
+                <%
+                        }
+                    }
+                %>
             </div>
         </div>
+
 
         <div class="our-instructor">
             <h1>OUR INSTRUCTOR</h1>

@@ -60,7 +60,7 @@
             }
         </style>
     </head>
-    <c:import url="headerLogin.jsp"/>
+    <c:import url="header.jsp"/>
     <body>
         <div class="container">
             <h2>Register </h2>

@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.min.css">
         <title>Login</title>
     </head>
-    <c:import url="headerLogin.jsp"/> 
+    <c:import url="header.jsp"/> 
     <body>
         <div class="login">
             <div class="login-form">

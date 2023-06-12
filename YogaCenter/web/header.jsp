@@ -44,7 +44,7 @@
                                 </a>
                             </p>
                             <p>
-                                <a href="/YogaCenter/request?action=Booking">
+                                <a href="/YogaCenter/request?action=ClassBooking">
                                     <i class="fas fa-calendar-alt icon"></i>
                                     Class booking
                                 </a>
@@ -52,7 +52,7 @@
                             <p>
                                 <a href="/YogaCenter/request?action=ManageSub">
                                     <i class="fas fa-money-bill"></i>                
-                                    Manage subscription
+                                    Purchase History
                                 </a>
                             </p>
                             <p>
