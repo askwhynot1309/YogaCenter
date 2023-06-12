@@ -128,6 +128,14 @@
         <servlet-name>TraineeAddToCartServlet</servlet-name>
         <servlet-class>Controller.TraineeAddToCartServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TraineeSaveOrderServlet</servlet-name>
+        <servlet-class>Controller.TraineeSaveOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TraineeClassBooked</servlet-name>
+        <servlet-class>Controller.TraineeClassBooked</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -255,6 +263,14 @@
     <servlet-mapping>
         <servlet-name>TraineeAddToCartServlet</servlet-name>
         <url-pattern>/TraineeAddToCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeSaveOrderServlet</servlet-name>
+        <url-pattern>/TraineeSaveOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeClassBooked</servlet-name>
+        <url-pattern>/TraineeClassBooked</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

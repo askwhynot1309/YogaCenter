@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="css/trainee/trainee-inf.css"/>
         <title>Manage Password</title>
     </head>
-    <c:import url="headerTrainee.jsp"/>
+    <c:import url="header.jsp"/>
 
     <body>
        <c:set var="acc" value="${sessionScope.account}"/>
