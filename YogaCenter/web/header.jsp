@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,6 +12,9 @@
     </head>
 
     <body>
+        <%
+            HashMap<String, Integer> cart = (HashMap) session.getAttribute("cart");
+        %>
         <header class="header" style = "z-index: 1; position: sticky;">
             <a href="homepage.jsp" id="logo"><img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" width="75px" height="75px" alt="logo"/></a>
 
@@ -25,8 +29,9 @@
             <c:set var="account" value="${sessionScope.account}"/>
             <c:if test="${account != null}">
                 <div class="iconTrainee">
-                    <div style="cursor: pointer">
-                        <a style="color: black" href="traineeViewCart.jsp"><span class="fa-solid fa-cart-shopping fa-2xl"></span></a>
+                    <div class='custom-cart-wrapper'>
+                        <a href="traineeViewCart.jsp" class="fa-solid fa-cart-shopping fa-2xl"></a>
+                        <div id='cartQuantity' class='custom-cart'><%= cart.size() %></div>
                     </div>
 
                     <div style="cursor: pointer">
@@ -50,7 +55,7 @@
                                 </a>
                             </p>
                             <p>
-                                <a href="/YogaCenter/request?action=ManageSub">
+                                <a href="/YogaCenter/request?action=ManagePurchase">
                                     <i class="fas fa-money-bill"></i>                
                                     Purchase History
                                 </a>
@@ -83,6 +88,9 @@
     </body>
 
     <style>
+        a{
+            color: black;
+        }
         .iconTrainee{
             display: flex;
         }
@@ -111,6 +119,20 @@
         .dropdown-content p{
             margin-bottom: 20px;
             font-size: 150%;
+        }
+
+        .custom-cart-wrapper{
+            position: relative;
+        }
+
+        .custom-cart{
+            position: absolute;
+            background: red;
+            color: white;
+            border-radius: 9999em;
+            padding: 2% 10% !important;
+            top: -100%;
+            right: 0;
         }
     </style>
 </html>
