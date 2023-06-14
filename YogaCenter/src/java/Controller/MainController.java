@@ -58,9 +58,6 @@ public class MainController extends HttpServlet {
                     case "Logout":
                         url = "LogoutServlet";
                         break;
-                    case "ManageEmployee":
-                        url = "AdminManageEmployeeServlet";
-                        break;
                     case "DashBoard":
                         url = "DashBoardServlet";
                         break;
@@ -69,12 +66,6 @@ public class MainController extends HttpServlet {
                         break;
                     case "comfirm":
                         url = "ChangeStatusServlet";
-                        break;
-                    case "ManageUser":
-                        url = "AdminManageUserServlet";
-                        break;
-                    case "adminCourseList":
-                        url = "AdminManageCourseServlet";
                         break;
                     case "Add":
                         response.setContentType("multipart/form-data");
@@ -90,9 +81,6 @@ public class MainController extends HttpServlet {
                     case "TraineeManageInformation":
                         url = "TraineeManageInformationServlet";
                         break;
-                    case "ManageSchedule":
-                        url = "ViewScheduleServlet";
-                        break;
                     case "ButtonSchedule":
                         url = "ButtonScheduleServlet";
                         break;
@@ -102,20 +90,29 @@ public class MainController extends HttpServlet {
                     case "ChangeInformation":
                         url = "TraineeChangeInformationServlet";
                         break;
-                    case "ManageTrainee":
-                        url = "StaffManageTraineeServlet";
-                        break;
-                    case "ViewSchedule":
-                        url = "StaffViewScheduleServlet";
-                        break;
-                    case "StaffCourseList":
-                        url = "StaffCourseListServlet";
-                        break;
                     case "ChangePassword":
                         url = "ChangePasswordServlet";
                         break;
                     case "UpdatePassword":
                         url = "TraineeChangePasswordServlet";
+                        break;
+                    case "ButtonAddTrainee":
+                        url = "ButtonAddTraineeServlet";
+                        break;
+                    case "AddRoom":
+                        url = "AddRoomServlet";
+                        break;
+                    case "resolve":
+                        url = "ResolveServlet";
+                        break;
+                    case "feedback":
+                        url = "GiveFeedbackServlet";
+                        break;
+                    case "ButtonChangeroom":
+                        url = "ButtonChangeroomServlet";
+                        break;
+                    case "ButtonSignCourse":
+                        url = "ButtonSignCourseServlet";
                         break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);

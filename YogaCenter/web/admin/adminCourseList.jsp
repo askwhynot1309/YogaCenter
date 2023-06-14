@@ -61,19 +61,21 @@
 
                     <div id="courseForm" class="hidden">
                         <div id="closeButton" style="display: flex; float: right; cursor: pointer; width: 30px;height: 30px">&#10006;</div>
-                        <div style="display: block; width: 700px">
+                        <div style="display: block; width: 1400px">
                             <h3 style="text-align: center;margin-top: 30px">New course</h3>
                             <form action="/YogaCenter/request" method="POST" enctype="multipart/form-data">
                                 <div style="display: flex; align-items: center; justify-content: space-between">
                                     <p>Name of course : <input type="text" name="course_name" value="${param.course_name}" required="" class="input-course"></p>
                                     <p>Fee of course : <input type="number" name="course_fee" value="${param.course_fee}" required="" class="input-course"></p>
-                                </div>
-                                <div style="display: flex; align-items: center; justify-content: space-between">
                                     <p>Start-date of course : <input type="date" name="course_start" value="${param.course_start}" required="" class="input-course"></p>
                                     <p>Slots : <input type="number" name="slot" value="${param.slot}" required="" class="input-course"></p>
                                 </div>
                                 <p>Image : <input type="file" name="course_img"></p>
-                                <p>Detail of course :</p><textarea name="course_description" value="${param.course_description}" class="input-description"></textarea>
+                                <div style="display: flex; align-items: center; justify-content: space-between">
+                                    <div><p>Detail of course :</p><textarea name="course_description" value="${param.course_description}" class="input-description"></textarea></div>
+                                    <div style="margin-left: 10px"><p>Summary of course : </p><textarea name="course_summary" value="${param.course_description}" class="input-description"></textarea></div>
+                                    <div style="margin-left: 10px"><p>Learn from course : </p><textarea name="course_learnt" value="${param.course_description}" class="input-description"></textarea></div>
+                                </div>
                                 <c:if test="${listLevel != null && !listLevel.isEmpty()}">
                                     <p style="margin-top: 10px">Level : <select name="level" class="input-course">
                                             <option value="0"></option>
@@ -91,7 +93,6 @@
                                 <button name="action" value="Add" class="btn-add">Thêm</button>
                             </form>
                         </div>
-                        <br>
                     </div>
                     <c:if test="${listCourse != null && !listCourse.isEmpty()}">
                         <div style="height: 450px">
@@ -106,36 +107,51 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="course" items="${listCourse}" varStatus="loop">
-                                        <tr>
-                                            <td>${loop.count}</td>
-                                            <td>${course.name_course}</td>
-                                            <td>${course.fee_course} VNĐ</td>
-                                            <td>
-                                                <c:if test="${course.status == 0}">
-                                                    <form action="/YogaCenter/request" method="POST">
-                                                        <span>Active</span>&ensp; <input type="radio" name="status" value="0" checked="">
-                                                        <span>Unactive</span>&ensp; <input type="radio" name="status" value="1">
-                                                        <input name="id" value="${course.idCourse}" hidden="">
-                                                        <input name="date" value="${course.date_start}" hidden="">
-                                                        <input name="option" value="courseChange" hidden="">
-                                                        <button value="comfirm" name="action" class="btn-search">Change</button>
-                                                    </form>
-                                                </c:if>
-                                                <c:if test="${course.status == 1}">
-                                                    <form action="/YogaCenter/request" method="POST">
-                                                        <span>Active</span>&ensp; <input type="radio" name="status" value="0">
-                                                        <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="">
-                                                        <input name="id" value="${course.idCourse}" hidden="">
-                                                        <input name="date" value="${course.date_start}" hidden="">
-                                                        <input name="option" value="courseChange" hidden="">
-                                                        <button value="comfirm" name="action" class="btn-search">Change</button>
-                                                    </form>
-                                                </c:if>
-                                            </td>
-                                            <td><a href="/YogaCenter/request?action=inf&id=${course.idCourse}&option=infCourse" class="btn btn-primary">More information</a></td>
-                                        </tr>
-                                    </c:forEach>
+                                    <c:set var="currentDate" value="${requestScope.currentdate}"/>
+                                    <c:if test="${currentDate != null}">
+                                        <c:forEach var="course" items="${listCourse}" varStatus="loop">
+                                            <tr>
+                                                <td>${loop.count}</td>
+                                                <td>${course.name_course}</td>
+                                                <td>${course.fee_course} VNĐ</td>
+                                                <td>
+                                                    <c:if test="${course.date_start.before(currentDate)}">
+                                                        <form action="/YogaCenter/request" method="POST">
+                                                            <span>Active</span>&ensp; <input type="radio" name="status" value="0" disabled="">
+                                                            <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="">
+                                                            <input name="id" value="${course.idCourse}" hidden="">
+                                                            <input name="date" value="${course.date_start}" hidden="">
+                                                            <input name="option" value="courseChange" hidden="">
+                                                            <button value="comfirm" name="action" class="btn-search">Change</button>
+                                                        </form>
+                                                    </c:if>
+                                                    <c:if test="${course.date_start.after(currentDate)}">
+                                                        <c:if test="${course.status == 0}">
+                                                            <form action="/YogaCenter/request" method="POST">
+                                                                <span>Active</span>&ensp; <input type="radio" name="status" value="0" checked="">
+                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1">
+                                                                <input name="id" value="${course.idCourse}" hidden="">
+                                                                <input name="date" value="${course.date_start}" hidden="">
+                                                                <input name="option" value="courseChange" hidden="">
+                                                                <button value="comfirm" name="action" class="btn-search">Change</button>
+                                                            </form>
+                                                        </c:if>
+                                                        <c:if test="${course.status == 1}">
+                                                            <form action="/YogaCenter/request" method="POST">
+                                                                <span>Active</span>&ensp; <input type="radio" name="status" value="0">
+                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="">
+                                                                <input name="id" value="${course.idCourse}" hidden="">
+                                                                <input name="date" value="${course.date_start}" hidden="">
+                                                                <input name="option" value="courseChange" hidden="">
+                                                                <button value="comfirm" name="action" class="btn-search">Change</button>
+                                                            </form>
+                                                        </c:if>
+                                                    </c:if>
+                                                </td>
+                                                <td><a href="/YogaCenter/request?action=inf&id=${course.idCourse}&option=infCourse" class="btn btn-primary">More information</a></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </c:if>
                                 </tbody>
                             </table>
                         </div>
@@ -164,7 +180,7 @@
                 notification.timeOut = setTimeout(() => notification.remove(), 5000);
             </script>
         </c:if> 
-            <c:if test="${theSameName != null}">
+        <c:if test="${theSameName != null}">
             <div class="notification">
                 <div class="content">
                     <div class="title">Error</div>
@@ -224,6 +240,8 @@
         <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
         <script>
                 CKEDITOR.replace('course_description');
+                CKEDITOR.replace('course_summary');
+                CKEDITOR.replace('course_learnt');
         </script>
     </body>
     <script>
