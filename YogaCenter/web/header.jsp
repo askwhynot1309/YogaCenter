@@ -12,9 +12,7 @@
     </head>
 
     <body>
-        <%
-            HashMap<String, Integer> cart = (HashMap) session.getAttribute("cart");
-        %>
+        <c:set var="cart" value="${sessionScope.cart}"/>
         <header class="header" style = "z-index: 1; position: sticky;">
             <a href="homepage.jsp" id="logo"><img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" width="75px" height="75px" alt="logo"/></a>
 
@@ -31,7 +29,7 @@
                 <div class="iconTrainee">
                     <div class='custom-cart-wrapper'>
                         <a href="traineeViewCart.jsp" class="fa-solid fa-cart-shopping fa-2xl"></a>
-                        <div id='cartQuantity' class='custom-cart'><%= cart.size() %></div>
+                        <div id='cartQuantity' class='custom-cart'>${cart.size()}</div>
                     </div>
 
                     <div style="cursor: pointer">
