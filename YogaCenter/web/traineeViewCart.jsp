@@ -164,7 +164,7 @@
             int totalMoney = 0;
             ArrayList<Course> courseList = CourseDao.getAllCourse();
         %>
-        <div style="padding-top: 0;" id="home" class="back">
+        <div id="home" class="back">
             <div class="mian-home">
                 <div class="card">
                     <div class="row">
@@ -196,7 +196,7 @@
                                     <div class="row border-top border-bottom">
                                     <div class="row main align-items-center">
                                         <div class="col-2">
-                                            <img class="img-fluid" src="<%=imgPath%>">
+                                            <img style="width: auto;" class="img-fluid" src="<%=imgPath%>">
                                         </div>
                                         <div class="col">
                                             <div class="row"><%= courseName%></div>    
