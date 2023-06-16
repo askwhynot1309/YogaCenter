@@ -5,6 +5,7 @@ import Object.AccountAttendence;
 import Object.ClassDetail;
 import Object.Course;
 import Object.Level;
+import Object.OrderCourse;
 import Object.Room;
 import Object.Time;
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class InformationServlet extends HttpServlet {
             String option = request.getParameter("option");
             Course info = Dao.CourseDao.getInformationOfCourse(id);
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+            ArrayList<OrderCourse> listinf = Dao.OrderDao.getInformationOrder(id);
             switch (option) {
                 case "infCourse":
                     request.setAttribute("informationCourse", info);
@@ -80,6 +82,7 @@ public class InformationServlet extends HttpServlet {
                         request.setAttribute("InforClass", infor);
                         request.getRequestDispatcher("staff/staffInforClass.jsp").forward(request, response);
                     }
+                    break;
                 case "staffChangeClass":
                     ClassDetail in = Dao.ClassDetailDao.getClassDetailById(id);
                     ArrayList<Room> room = Dao.RoomDao.getAllRoomActive();
@@ -88,6 +91,15 @@ public class InformationServlet extends HttpServlet {
                     request.setAttribute("timelist", time);
                     request.setAttribute("InforClass", in);
                         request.getRequestDispatcher("staff/staffChangeClass.jsp").forward(request, response);
+                        break;
+                case "infOrder":
+                    request.setAttribute("listinf", listinf);
+                    request.getRequestDispatcher("admin/adminViewInfOrder.jsp").forward(request, response);
+                    break;
+                case "staffinfOrder":
+                    request.setAttribute("listinf", listinf);
+                    request.getRequestDispatcher("staff/staffViewInfOrder.jsp").forward(request, response);
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

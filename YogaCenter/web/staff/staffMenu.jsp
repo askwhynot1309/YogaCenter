@@ -44,6 +44,12 @@
                         Course List
                     </a>
                 </li>
+                <li>
+                    <a href="/YogaCenter/viewbooking" style="margin-right: 17px">
+                        <i class="fas fa-book icon"></i>
+                        Manage Booking
+                    </a>
+                </li>
             </ul>
             <div class="divider"></div>
             <h4>Settings</h4>

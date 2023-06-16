@@ -164,6 +164,14 @@
         <servlet-name>ButtonSignCourseServlet</servlet-name>
         <servlet-class>Controller.ButtonSignCourseServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminViewBookingServlet</servlet-name>
+        <servlet-class>Controller.AdminViewBookingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffViewBooking</servlet-name>
+        <servlet-class>Controller.StaffViewBooking</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -327,6 +335,14 @@
     <servlet-mapping>
         <servlet-name>ButtonSignCourseServlet</servlet-name>
         <url-pattern>/ButtonSignCourseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminViewBookingServlet</servlet-name>
+        <url-pattern>/booking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffViewBooking</servlet-name>
+        <url-pattern>/viewbooking</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

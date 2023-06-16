@@ -64,6 +64,12 @@ public class ChangeStatusServlet extends HttpServlet {
                         request.getRequestDispatcher("managecourse").forward(request, response);
                     }
                     break;
+                case "orderChange":
+                    int changeStatusOrder = Dao.OrderDao.changeStatusBooking(id, status);
+                    if (changeStatusOrder == 1) {
+                        request.getRequestDispatcher("viewbooking").forward(request, response);
+                    }
+                    break;      
             }
         } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");

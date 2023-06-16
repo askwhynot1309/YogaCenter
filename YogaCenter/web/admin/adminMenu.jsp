@@ -50,6 +50,12 @@
                         Manage Class
                     </a>
                 </li>
+                 <li>
+                    <a href="/YogaCenter/booking">
+                        <i class="fas fa-door-open icon"></i>
+                        Manage Booking
+                    </a>
+                </li>
             </ul>
             <div class="divider"></div>
             <h4>Settings</h4>
