@@ -1,12 +1,5 @@
-<%-- 
-    Document   : traineeManagePurchase
-    Created on : Jun 12, 2023, 3:33:20 PM
-    Author     : ngmin
---%>
-
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="Dao.OrderCourseDao"%>
 <%@page import="Object.OrderCourse"%>
 <%@page import="Object.Account"%>
 <%@page import="Dao.CourseDao"%>
@@ -61,8 +54,9 @@
         }
     </style>
     <body>
-        <c:import url="header.jsp"></c:import>
-        <div class="container" style="padding-top: 200px;">
+        <c:import url="headerTrainee.jsp"></c:import>
+
+            <div class="container" style="padding-top: 200px;">
                 <h2>Purchase history</h2>
                 <div class="container mt-5">
                     <div class="d-flex justify-content-center row">
@@ -96,74 +90,60 @@
                         </div>
                     </div>
                 </div>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-            <div class="container" style="margin-top: 150px;">
-                <h2 style="text-align: center">Purchase history</h2>
-                <div class="row">
-                    <table class="col">
-                        <thead>
-                            <tr>
-                                <th style="border-right: solid 0.5px;" class="col-lg-2">Order ID</th>
-                                <th class="col-lg-2">Course name</th>
-                                <th class="col-lg-2">Date</th>
-                                <th class="col-lg-2">Total price</th>
-                                <th class="col-lg-2">Payment method</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <%
-                            Account account = (Account) session.getAttribute("account");
-
-                            HashMap<Integer, ArrayList<OrderCourse>> purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
-                            if (purchase != null) {
-                                boolean isFirstRow = true;
-                                for (Map.Entry<Integer, ArrayList<OrderCourse>> entry : purchase.entrySet()) {
-                                    int OrderID = entry.getKey();
-                                    ArrayList<OrderCourse> orderDetail = entry.getValue();
-
-                                    for (OrderCourse order : orderDetail) {
-                        %>
-                        <tr style="border-top: solid 0.5px">
-
-                            <% if (isFirstRow) {%>
-                            <th style="border-right: solid 0.5px; vertical-align: top;" class="col-lg-2" rowspan="<%= orderDetail.size()%>"><%= OrderID%></td>
-                                <% isFirstRow = false; %>
-                                <% }%>
-                            <th class="col-lg-2"><%= order.getCourseName()%></th>
-                            <th class="col-lg-2"><%= order.getDateorder()%></th>
-                            <th class="col-lg-2"><%= order.getTotalPrice()%></th>
-                            <th class="col-lg-2"><%= order.getPaymentMethod()%></th>
-
-                        </tr>
-                        <%
+                <!--                <script>
+                                    function refreshOrders() {
+                                        if (localStorage.getItem('orders') !== null && localStorage.getItem('orders') !== {} ) {
+                                            let orders = JSON.parse(localStorage.getItem('orders'));
+                                            let items = "";
+                                            for (const [k, c] of Object.entries(orders)) {
+                                                console.log(c);
+                                                items += '<tr class="cell-1">'
+                                                        + '<td>' + k + '</td>'
+                                                        + '<td>' + c.item.name + '</td>'
+                                                        + '<td><span class="badge badge-success">Success</span></td>'
+                                                        + '<td>' + c.item.price + '</td>'
+                                                        + '<td>' + c.datetime + '</td>'
+                                                        + '<td><i class="fa fa-ellipsis-h text-black-50"></i></td>'
+                                                        + '</tr>';
+                                            }
+                                            document.getElementById('orderItems').innerHTML = items;
+                                        }
                                     }
-                                    isFirstRow = true;
-                                }
-                            }
-                        %>
+                                    refreshOrders();
+                                </script>-->
+                <!--                <div class="row">
+                                    <table class="col">
+                                        <thead>
+                                            <tr>
+                                                <th style="border-right: solid 0.5px;" class="col-lg-2">Order ID</th>
+                                                <th class="col-lg-2">Course name</th>
+                                                <th class="col-lg-2">Date</th>
+                                                <th class="col-lg-2">Total price</th>
+                                                <th class="col-lg-2">Payment method</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+            <%
 
-                    </tbody>
-                </table>
-            </div>
+            %>
+            <tr style="border-top: solid 0.5px">
+
+
+                <th style="border-right: solid 0.5px;" class="col-lg-2" rowspan="">2</th>
+
+                <th class="col-lg-2">1</th>
+                <th class="col-lg-2">2</th>
+                <th class="col-lg-2">3</th>
+                <th class="col-lg-2">4</th>
+
+            </tr>
+
+
+        </tbody>
+    </table>
+</div>-->
         </div>
 
     </body>
+    <c:import url="footer.html"></c:import>
 </html>
