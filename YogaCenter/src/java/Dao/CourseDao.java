@@ -275,6 +275,7 @@ public class CourseDao {
                 pst.setDate(2, d);
                 pst.setInt(3, method);
                 pst.executeUpdate();
+                
                 sql = "SELECT TOP 1 [OrderID]\n"
                         + "FROM [dbo].[BookingCourse]\n"
                         + "ORDER BY [OrderID] DESC";

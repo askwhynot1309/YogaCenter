@@ -5,12 +5,14 @@
 package Dao;
 
 import Object.ClassDetail;
+import Utils.DBUtils;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  *
@@ -169,4 +171,33 @@ public class ClassDetailDao {
         return kq;
     }
 
+    public static HashMap<String, ArrayList<Integer>> getChoiceWithAllTrainerInCourseID(int Course_ID) {
+        HashMap<String, ArrayList<Integer>> hashChoise = new HashMap<>();
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "SELECT DISTINCT A.Name, C.Choice\n"
+                        + "FROM [dbo].[ClassDetail] C\n"
+                        + "JOIN [dbo].[Account] A ON C.IDAccount = A.ID_Account\n"
+                        + "WHERE IDCourse = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, Course_ID);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {                        
+                        String trainerName = rs.getString("Name");
+                        int choice = rs.getInt("Choice");
+                        if (!hashChoise.containsKey(trainerName)) {
+                            hashChoise.put(trainerName, new ArrayList<>());
+                        }
+                        hashChoise.get(trainerName).add(choice);
+                    }
+                }
+                cn.close();
+            }
+        } catch (Exception e) {
+        }
+        return hashChoise;
+    }
 }

@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Course List</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css"/>
         <style>
             .container {
                 margin-top: 1.5rem;
@@ -52,8 +53,8 @@
 
             .course-description {
                 font-size: 14px;
-/*                overflow: hidden;
-                white-space: nowrap;*/
+                /*                overflow: hidden;
+                                white-space: nowrap;*/
             }
         </style>
     </head>
@@ -70,7 +71,7 @@
                     <div class="col-md-4">
                         <div class="course-card-container">
                             <div class="course-card">
-                                <img src="https://i.pinimg.com/originals/56/b3/3f/56b33f65326afe02aedf24361452a3db.jpg" alt="Course Image" class="course-image">
+                                <img src="${course.img_course}" alt="Course Image" class="course-image">
                                 <div class="course-details">
                                     <h4 class="course-title">${course.name_course}</h4>
                                     <p><strong>Fee:</strong> ${course.fee_course}</p>
@@ -78,6 +79,14 @@
                                     <p><strong>Slots:</strong> ${course.slot}</p>
                                     <p><strong>Level:</strong> ${course.level}</p>
                                     <p class="course-description"><strong>Description:</strong> ${course.description}</p>
+                                    <c:if test="${account != null}">
+                                        <div style="text-align: center">
+                                            <button>
+                                                <a href="/YogaCenter/request?action=AddCourseToCart&cid=${course.idCourse}">Add To Cart</a>
+                                            </button>
+                                        </div>
+
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

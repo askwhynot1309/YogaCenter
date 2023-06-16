@@ -15,7 +15,7 @@
     <body>
         <c:set var="acc" value="${sessionScope.account}"/>
         <c:if test="${acc != null}">
-            <div class="inforTable">
+            <div style="margin-top: 150px;" class="inforTable">
                 <div class="container">
                     <div class="side-menu">
                         <div class="imageTrainee">

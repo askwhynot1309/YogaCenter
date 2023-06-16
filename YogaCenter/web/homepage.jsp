@@ -13,12 +13,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <title>Homepage</title>
     </head>
     <body>
         <c:import url="header.jsp"/>
         <c:set var="account" value="${sessionScope.account}"/>
-        <div id="home" class="back">
+        <div style="padding-top: 0px;" id="home" class="back">
             <div class="mian-home">
                 <div class="inner-home">
                     <img src="https://i.pinimg.com/originals/56/b3/3f/56b33f65326afe02aedf24361452a3db.jpg" alt="">

@@ -4,6 +4,7 @@
  */
 package Object;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -13,20 +14,22 @@ import java.sql.Date;
 public class OrderCourse {
 
     private int id_order;
-    private int id_account;
+    private String courseName;
     private Date dateorder;
+    private BigDecimal totalPrice;
+    private int paymentMethod;
     private int status;
-    private int quantity;
 
     public OrderCourse() {
     }
 
-    public OrderCourse(int id_order, int id_account, Date dateorder, int status, int quantity) {
+    public OrderCourse(int id_order, String courseName, Date dateorder, BigDecimal totalPrice, int paymentMethod, int status) {
         this.id_order = id_order;
-        this.id_account = id_account;
+        this.courseName = courseName;
         this.dateorder = dateorder;
+        this.totalPrice = totalPrice;
+        this.paymentMethod = paymentMethod;
         this.status = status;
-        this.quantity = quantity;
     }
 
     public int getId_order() {
@@ -37,12 +40,12 @@ public class OrderCourse {
         this.id_order = id_order;
     }
 
-    public int getId_account() {
-        return id_account;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setId_account(int id_account) {
-        this.id_account = id_account;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public Date getDateorder() {
@@ -53,6 +56,22 @@ public class OrderCourse {
         this.dateorder = dateorder;
     }
 
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public int getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(int paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -60,13 +79,4 @@ public class OrderCourse {
     public void setStatus(int status) {
         this.status = status;
     }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
 }
