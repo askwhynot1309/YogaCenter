@@ -19,7 +19,7 @@
     <body>
         <c:import url="header.jsp"/>
         <c:set var="account" value="${sessionScope.account}"/>
-        <div id="home" class="back">
+        <div style="padding-top: 0px;" id="home" class="back">
             <div class="mian-home">
                 <div class="inner-home">
                     <img src="https://i.pinimg.com/originals/56/b3/3f/56b33f65326afe02aedf24361452a3db.jpg" alt="">

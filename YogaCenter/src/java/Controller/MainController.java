@@ -126,6 +126,18 @@ public class MainController extends HttpServlet {
                     case "ClassBooking":
                         url = "TraineeClassBooked";
                         break;
+                    case "ManagePurchase":
+                        url = "traineeManagePurchase.jsp";
+                        break;
+                    case "EditSchedule":
+                        url = "traineeEditSchedule.jsp";
+                        break;
+                    case "DeleteCartItems":
+                        url = "TraineeDeleteCartItemsServlet";
+                        break;
+                    case "Home":
+                        url = "homepage.jsp";
+                        break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);
             }

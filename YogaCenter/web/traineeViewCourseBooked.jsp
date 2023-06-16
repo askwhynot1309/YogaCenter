@@ -4,6 +4,7 @@
     Author     : ngmin
 --%>
 
+<%@page import="Dao.CourseDao"%>
 <%@page import="Object.Account"%>
 <%@page import="Object.Course"%>
 <%@page import="java.util.ArrayList"%>
@@ -21,30 +22,38 @@
     <body>
         <c:import url="header.jsp"></c:import>
         <%
-            ArrayList<Course> courseList = (ArrayList<Course>) request.getAttribute("courseList");
+
+            Account account = (Account) session.getAttribute("account");
+            ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
         %>
-        <div class="our-classes">
-            <h1>Our classes</h1>
-            <div class="main-class">
-                <%
-                    Account account = (Account) session.getAttribute("account");
+        <div class="container">
+            <h2 style="text-align: center">My Learning</h2>
+            <div class="row">
+                <table style="border: solid 0.5px;" class="col">
+                    <thead>
+                        <tr style="border: solid 0.5px;">
+                            <th class="col-lg-3">Course Name</th>
+                            <th class="col-lg-3">Start Date</th>
+                            <th class="col-lg-3">Slot</th>
+                            <th class="col-lg-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            for (Course course : courseList) {
+                        %>
+                        <tr style="border: solid 0.5px;">
+                            <th class="col-lg-3"><%= course.getName_course()%></th>
+                            <th class="col-lg-3"><%= course.getDate_start()%></th>
+                            <th class="col-lg-3"><%= course.getSlot() %></th>
+                            <th class="col-lg-3"><a href="/YogaCenter/request?action=EditSchedule&courseID=<%=course.getIdCourse()%>">Edit Schedule</a></th>
+                        </tr>
+                        <%
+                            }
+                        %>
 
-                    for (Course course : courseList) {
-
-                %>
-
-                <div class="inner-class">
-                    <div>
-                        <img style="width: 80%; height: 250px; object-fit: cover" src="<%= course.getImg_course()%>" alt=""/>
-                    </div>
-                    <div class="class-content">
-                        <h2><%= course.getLevel()%></h2>
-                        <p><%= course.getDescription()%></p>
-                    </div>
-                </div>
-                <%
-                    }
-                %>
+                    </tbody>
+                </table>
             </div>
         </div>
     </body>
