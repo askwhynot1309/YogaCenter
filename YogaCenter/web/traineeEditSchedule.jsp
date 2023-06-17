@@ -4,6 +4,10 @@
     Author     : ngmin
 --%>
 
+<%@page import="Object.Time"%>
+<%@page import="Dao.TimeDao"%>
+<%@page import="Dao.AccountDao"%>
+<%@page import="Object.Account"%>
 <%@page import="java.util.Map"%>
 <%@page import="Dao.ClassDetailDao"%>
 <%@page import="java.util.ArrayList"%>
@@ -21,40 +25,52 @@
     </head>
     <body>
         <c:import url="header.jsp"></c:import>
-        <%
-            int Course_ID = Integer.parseInt(request.getParameter("courseID"));
-
-
-        %>
-        <div style="padding-top: 30px;" class="container">
-            <div class="row">
-                <table class="col-6">
-                    <thead>
-                        <tr>
-                            <th class="col-lg-2">Trainer</th>
-                            <th class="col-lg-2">Day</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%                            
-                            HashMap<String, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(Course_ID);
+            <div style="padding-top: 30px;" class="container">
+                <h2 style="text-align: center">Class Schedule</h2>
+                <div style="display: flex; justify-content: center" class="row">
+                    <table class="col-12">
+                        <thead>
+                            <tr>
+                                <th class="col-lg-3">Trainer</th>
+                                <th class="col-lg-3">Day</th>
+                                <th class="col-lg-3">Time</th>
+                                <th class="col-lg-3">Room</th>
+                                <th class="col-lg-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            int Course_ID = Integer.parseInt(request.getParameter("courseID"));
+                            HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(Course_ID);
+                            Account trainee = (Account)session.getAttribute("account");
                             if (hashChoise != null) {
                                 boolean isFirstRow = true;
-                                for (Map.Entry<String, ArrayList<Integer>> entry : hashChoise.entrySet()) {
-                                    String key = entry.getKey();
+                                for (Map.Entry<Integer, ArrayList<Integer>> entry : hashChoise.entrySet()) {
+                                    Integer key = entry.getKey();
                                     ArrayList<Integer> listChoice = entry.getValue();
 
                                     for (Integer choice : listChoice) {
+                                        String trainerName = "";
+                                        Time time_class = null;
+                                        int ID_Class = 0;
+                                        ArrayList<Account> accountList = AccountDao.getAllTrainer();
+                                        for (Account account : accountList) {
+                                            if (key == account.getIdaccount()) {
+                                                trainerName = account.getName();
+                                                time_class = TimeDao.getTimeByTrainerAndChoice(Course_ID, key, choice);
+                                                ID_Class = ClassDetailDao.getIDClassByTrainerCourseChoiseTime(key, Course_ID, choice, time_class.getId_time());
+                                            }
+                                        }
                         %>
                         <tr style="border-top: solid 0.5px">
                             <%if (isFirstRow) {
                             %>
-                            <th style="border-right: solid 0.5px; vertical-align: top;" class="col-lg-2" rowspan="<%= listChoice.size()%>"><%= key%></th>
+                            <th style="border-right: solid 0.5px; vertical-align: top;" class="col-lg-3" rowspan="<%= listChoice.size()%>"><%= trainerName%></th>
                                 <%
                                         isFirstRow = false;
                                     }
                                 %>
-                            <th class="col-lg-2">
+                            <th class="col-lg-3">
                                 <%
                                     if (choice == 1) {
                                 %>Monday - Wednesday - Friday<%
@@ -62,11 +78,27 @@
                                 %>Tuesday - Thursday - Saturday<%
                                 } else {
                                 %>Sunday<%
+                                    }
                                 %>
                             </th>
+                            <%
+
+                            %>
+                            <th class="col-lg-3"><%=time_class.getTime()%></th>
+                            <th class="col-lg-3">Room <%= ID_Class %></th>
+                            <th class="col-lg-3">
+                                <form action="/YogaCenter/request" method="post">
+                                    <input type="hidden" name="trainee" value="<%=trainee.getIdaccount()%>">
+                                    <input type="hidden" name="id_course" value="<%=Course_ID%>">
+                                    <input type="hidden" name="id_room" value="<%=ID_Class%>">
+                                    <input type="hidden" name="option" value="<%=choice%>">
+                                    <input type="hidden" name="id_time" value="<%=time_class.getId_time()%>">
+                                    <button type="submit" name="action" value="traineeChooseClass">Choose</button>
+                                </form>
+                            </th>
                         </tr>
-                        <%                                    
-                                        }
+                        <%
+
                                     }
                                     isFirstRow = true;
                                 }

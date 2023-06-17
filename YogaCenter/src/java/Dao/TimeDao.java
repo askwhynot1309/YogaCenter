@@ -5,6 +5,7 @@
 package Dao;
 
 import Object.Time;
+import Utils.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,5 +36,34 @@ public class TimeDao {
             cn.close();
         }
         return kq;
+    }
+
+    public static Time getTimeByTrainerAndChoice(int Course_ID, int Account_ID, int Choice) {
+        Time timeClass = null;        
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "SELECT distinct T.Time_Choose, T.Time_ID\n"
+                        + "FROM [dbo].[ClassDetail] C \n"
+                        + "JOIN [dbo].[Time] T ON C.IDtime = T.Time_ID\n"
+                        + "JOIN [dbo].[Account] A ON C.IDAccount = A.ID_Account\n"
+                        + "WHERE IDCourse = ? AND A.ID_Account = ? AND C.Choice = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, Course_ID);
+                pst.setInt(2, Account_ID);
+                pst.setInt(3, Choice);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        String time_choose = rs.getString("Time_Choose");
+                        int Time_ID = rs.getInt("Time_ID");
+                        timeClass = new Time(Time_ID, time_choose);
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }
+        return timeClass;
     }
 }

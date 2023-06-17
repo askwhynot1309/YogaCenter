@@ -53,9 +53,8 @@
             margin-left: 19px;
         }
     </style>
-    <body>
-        <c:import url="headerTrainee.jsp"></c:import>
-
+    <c:import url="header.jsp"/>
+        <body>
             <div class="container" style="padding-top: 200px;">
                 <h2>Purchase history</h2>
                 <div class="container mt-5">

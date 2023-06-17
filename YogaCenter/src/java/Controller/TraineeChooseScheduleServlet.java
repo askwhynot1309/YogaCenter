@@ -5,12 +5,13 @@
 
 package Controller;
 
-import Dao.ClassDetailDao;
-import Dao.OrderCourseDao;
+import Object.Course;
+import Utils.Get30SlotsByCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ngmin
  */
-public class traineeEditScheduleServlet extends HttpServlet {
+public class TraineeChooseScheduleServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,14 +31,20 @@ public class traineeEditScheduleServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int Course_ID = Integer.parseInt(request.getParameter("courseID"));
-            out.print(Course_ID);
-            HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(Course_ID);
-            
+            int idaccount = Integer.parseInt(request.getParameter("trainee"));
+            int id_course = Integer.parseInt(request.getParameter("id_course"));
+            int id_room = Integer.parseInt(request.getParameter("id_room"));
+            int option = Integer.parseInt(request.getParameter("option"));
+            int id_time = Integer.parseInt(request.getParameter("id_time"));
+            Course course = Dao.CourseDao.getInformationOfCourse(id_course);
+            ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), option);
+            for (Get30SlotsByCourse dateForSlot : list) {
+                    int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(id_room, id_time, idaccount, id_course, dateForSlot.getDay(), option);
+                }
         }
     } 
 
@@ -52,7 +59,11 @@ public class traineeEditScheduleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeChooseScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     } 
 
     /** 
@@ -65,7 +76,11 @@ public class traineeEditScheduleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeChooseScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /** 
