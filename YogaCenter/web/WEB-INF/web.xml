@@ -148,6 +148,10 @@
         <servlet-name>TraineeDeleteCartItemsServlet</servlet-name>
         <servlet-class>Controller.TraineeDeleteCartItemsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TraineeChooseScheduleServlet</servlet-name>
+        <servlet-class>Controller.TraineeChooseScheduleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -295,6 +299,10 @@
     <servlet-mapping>
         <servlet-name>TraineeDeleteCartItemsServlet</servlet-name>
         <url-pattern>/TraineeDeleteCartItemsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeChooseScheduleServlet</servlet-name>
+        <url-pattern>/TraineeChooseScheduleServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

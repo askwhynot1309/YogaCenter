@@ -171,13 +171,13 @@ public class ClassDetailDao {
         return kq;
     }
 
-    public static HashMap<String, ArrayList<Integer>> getChoiceWithAllTrainerInCourseID(int Course_ID) {
-        HashMap<String, ArrayList<Integer>> hashChoise = new HashMap<>();
+    public static HashMap<Integer, ArrayList<Integer>> getChoiceWithAllTrainerInCourseID(int Course_ID) {
+        HashMap<Integer, ArrayList<Integer>> hashChoise = new HashMap<>();
         Connection cn = null;
         try {
             cn = DBUtils.getConnection();
             if (cn != null) {
-                String sql = "SELECT DISTINCT A.Name, C.Choice\n"
+                String sql = "SELECT DISTINCT A.ID_Account, C.Choice\n"
                         + "FROM [dbo].[ClassDetail] C\n"
                         + "JOIN [dbo].[Account] A ON C.IDAccount = A.ID_Account\n"
                         + "WHERE IDCourse = ?";
@@ -185,8 +185,8 @@ public class ClassDetailDao {
                 pst.setInt(1, Course_ID);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null) {
-                    while (rs.next()) {                        
-                        String trainerName = rs.getString("Name");
+                    while (rs.next()) {
+                        int trainerName = rs.getInt("ID_Account");
                         int choice = rs.getInt("Choice");
                         if (!hashChoise.containsKey(trainerName)) {
                             hashChoise.put(trainerName, new ArrayList<>());
@@ -199,5 +199,31 @@ public class ClassDetailDao {
         } catch (Exception e) {
         }
         return hashChoise;
+    }
+
+    public static int getIDClassByTrainerCourseChoiseTime(int ID_Trainer, int ID_Course, int choice, int ID_Time) {
+        int ID_Class = 0;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "SELECT DISTINCT Class_ID\n"
+                        + "FROM [dbo].[ClassDetail]\n"
+                        + "WHERE IDAccount = ? AND IDCourse = ? AND Choice = ? AND IDtime = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, ID_Trainer);
+                pst.setInt(2, ID_Course);
+                pst.setInt(3, choice);
+                pst.setInt(4, ID_Time);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {                        
+                        ID_Class = rs.getInt("Class_ID");
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }
+        return ID_Class;
     }
 }
