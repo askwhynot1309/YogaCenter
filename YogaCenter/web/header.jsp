@@ -29,7 +29,12 @@
                 <div class="iconTrainee">
                     <div class='custom-cart-wrapper'>
                         <a href="traineeViewCart.jsp" class="fa-solid fa-cart-shopping fa-2xl"></a>
-                        <div id='cartQuantity' class='custom-cart'>${cart.size()}</div>
+                        <c:choose>
+                            <c:when test="${cart != null}">
+                                <div id='cartQuantity' class='custom-cart'>${cart.size()}</div>
+                            </c:when>
+                        </c:choose>
+                        
                     </div>
 
                     <div style="cursor: pointer">
