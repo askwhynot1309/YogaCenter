@@ -146,6 +146,11 @@ public class MainController extends HttpServlet {
                         break;
                     case "ClassDetail":
                         url = "TraineeViewClassDetail";
+                    case "TrainerManageTrainee":
+                        url = "TrainerManageTrainee";
+                        break;
+                    case "TrainerViewSchedule":
+                        url = "TrainerViewScheduleServlet";
                         break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);
