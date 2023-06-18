@@ -92,7 +92,6 @@
                                         <%
                                             Account account = (Account) session.getAttribute("account");
                                             HashMap<Integer, ArrayList<OrderCourse>> purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
-                                            ArrayList<Course> courseList = CourseDao.getAllCourse();
                                             if (purchase != null) {
                                                 TreeMap<Integer, ArrayList<OrderCourse>> sortedPurchase = new TreeMap<>(purchase);
                                                 boolean isFirstRow = true;
@@ -137,17 +136,17 @@
                                                     switch (order.getStatus()) {
                                                         case 0:
                                                             if (isFirstRow) {%>
-                                            <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-success">Success</span></th>
+                                            <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-primary">Pending</span></th>
                                                 <% }
                                                         break;
                                                     case 1:
                                                         if (isFirstRow) {%>
-                                            <th rowspan="<%= orderDetail.size()%>"><a class="badge badge-primary" href="#">Pending</a></th>
+                                            <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-success">Success</span></th>
                                                 <% }
                                                         break;
                                                     case 2:
                                                         if (isFirstRow) {%>
-                                            <th rowspan="<%= orderDetail.size()%>"><a class="badge badge-danger" href="/YogaCenter/request?action=TraineeReoder">Cancel</a></th>
+                                            <th rowspan="<%= orderDetail.size()%>"><a class="badge badge-danger" href="/YogaCenter/request?action=TraineeReoder&oID=<%=OrderID%>">Cancel</a></th>
                                                 <% }
                                                             break;
                                                     }

@@ -148,6 +148,14 @@
         <servlet-name>TraineeChooseScheduleServlet</servlet-name>
         <servlet-class>Controller.TraineeChooseScheduleServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TraineeReoderServlet</servlet-name>
+        <servlet-class>Controller.TraineeReoderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TraineeViewClassDetail</servlet-name>
+        <servlet-class>Controller.TraineeViewClassDetail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -295,6 +303,14 @@
     <servlet-mapping>
         <servlet-name>TraineeChooseScheduleServlet</servlet-name>
         <url-pattern>/TraineeChooseScheduleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeReoderServlet</servlet-name>
+        <url-pattern>/TraineeReoderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeViewClassDetail</servlet-name>
+        <url-pattern>/TraineeViewClassDetail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
