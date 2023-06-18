@@ -29,7 +29,7 @@ public class OrderCourseDao {
             cn = DBUtils.getConnection();
             if (cn != null) {
 
-                String sql = "SELECT BC.OrderID, BC.DateOrder, BC.Method, C.Course_Name, C.Course_Fee, SP.Status\n"
+                String sql = "SELECT BC.OrderID, BC.DateOrder, BC.Method, C.Course_Name, C.Course_Fee, SP.Status, BD.ID_Course\n"
                         + "FROM [dbo].[BookingCourse] BC \n"
                         + "JOIN  [dbo].[BookingDetail] BD ON BC.OrderID = BD.Order_ID\n"
                         + "JOIN  [dbo].[Course] C ON BD.ID_Course = C.Course_ID\n"
@@ -47,7 +47,8 @@ public class OrderCourseDao {
                         int method = rs.getInt("Method");
                         BigDecimal CourseFee = rs.getBigDecimal("Course_Fee");
                         int Status = rs.getInt("Status");
-                        OrderCourse order = new OrderCourse(OrderID, courseName, DateOrder, CourseFee, method, Status);
+                        int courseID = rs.getInt("ID_Course");
+                        OrderCourse order = new OrderCourse(OrderID, courseName, DateOrder, CourseFee, method, Status, courseID);
                         if (!purchase.containsKey(OrderID)) {
                             purchase.put(OrderID, new ArrayList<>());
                         }

@@ -4,6 +4,7 @@
  */
 package Dao;
 
+import Object.Account;
 import Object.ClassDetail;
 import Utils.DBUtils;
 import java.sql.Connection;
@@ -169,6 +170,64 @@ public class ClassDetailDao {
             cn.close();
         }
         return kq;
+    }
+
+    public static ClassDetail getTrainerByClassDetailID(int ClassDetail_ID) {
+        ClassDetail trainer = null;
+        Connection cn = null;
+        int Class_ID = 0;
+        int IDTime = 0;
+        Date DateStudy = null;
+        int IDCourse = 0;
+        int Choice = 0;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "SELECT *\n"
+                        + "FROM ClassDetail\n"
+                        + "WHERE ClassDetail_ID = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, ClassDetail_ID);
+                ResultSet rs = pst.executeQuery();
+
+                if (rs != null && rs.next()) {
+                    Class_ID = rs.getInt("Class_ID");
+                    IDTime = rs.getInt("IDtime");
+                    DateStudy = rs.getDate("DateStudy");
+                    IDCourse = rs.getInt("IDCourse");
+                    Choice = rs.getInt("Choice");
+                }
+                trainer = new ClassDetail(Class_ID, "minh", IDTime, IDTime, DateStudy, sql, IDCourse, sql);
+                sql = "SELECT *\n"
+                        + "FROM [dbo].[ClassDetail] CD\n"
+                        + "JOIN [dbo].[Account] A ON CD.IDAccount = A.ID_Account\n"
+                        +"JOIN [dbo].[Course] C ON CD.IDCourse = C.Course_ID\n"
+                        + "JOIN [dbo].[Class] CL ON CL.Class_ID = CD.Class_ID\n"
+                        + "WHERE A.Role = 2 AND CD.Class_ID = ? AND CD.IDtime = ? AND CD.DateStudy = ? AND CD.IDCourse = ? AND CD.Choice = ?";
+                pst = cn.prepareStatement(sql);
+                pst.setInt(1, Class_ID);
+                pst.setInt(2, IDTime);
+                pst.setDate(3, DateStudy);
+                pst.setInt(4, IDCourse);
+                pst.setInt(5, Choice);
+                rs = pst.executeQuery();
+                if (rs != null && rs.next()) {
+                    int classdetail = rs.getInt("ClassDetail_ID");
+                    String class_name = rs.getString("Class_Name");
+                    int id_time = rs.getInt("IDtime");
+                    Date datestudy = rs.getDate("DateStudy");
+                    int idaccount = rs.getInt("IDAccount");
+                    String account = rs.getNString("Name");
+                    int id_course = rs.getInt("IDCourse");
+                    String course = rs.getNString("Course_Name");
+                    trainer = new ClassDetail(classdetail, class_name, id_time, idaccount, datestudy, account, id_course, course);
+                }
+                cn.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return trainer;
     }
 
     public static HashMap<Integer, ArrayList<Integer>> getChoiceWithAllTrainerInCourseID(int Course_ID) {

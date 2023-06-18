@@ -19,17 +19,19 @@ public class OrderCourse {
     private BigDecimal totalPrice;
     private int paymentMethod;
     private int status;
+    private int courseID;
 
     public OrderCourse() {
     }
 
-    public OrderCourse(int id_order, String courseName, Date dateorder, BigDecimal totalPrice, int paymentMethod, int status) {
+    public OrderCourse(int id_order, String courseName, Date dateorder, BigDecimal totalPrice, int paymentMethod, int status, int courseID) {
         this.id_order = id_order;
         this.courseName = courseName;
         this.dateorder = dateorder;
         this.totalPrice = totalPrice;
         this.paymentMethod = paymentMethod;
         this.status = status;
+        this.courseID = courseID;
     }
 
     public int getId_order() {
@@ -78,5 +80,13 @@ public class OrderCourse {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
     }
 }

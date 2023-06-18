@@ -150,7 +150,7 @@
                                                     <input type="hidden" name="id_room" value="<%=ID_Class%>">
                                                     <input type="hidden" name="option" value="<%=choice%>">
                                                     <input type="hidden" name="id_time" value="<%=time_class.getId_time()%>">
-                                                    <button type="submit" name="action" value="traineeChooseClass">Choose</button>
+                                                    <button type="submit" name="action" value="traineeChooseClass">Change</button>
                                                 </form>
                                                 <%
                                                     }
