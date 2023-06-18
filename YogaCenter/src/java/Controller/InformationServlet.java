@@ -34,6 +34,7 @@ public class InformationServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            System.out.println("id: " + request.getParameter("id"));
             int id = Integer.parseInt(request.getParameter("id"));
             String option = request.getParameter("option");
             ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id);
@@ -51,6 +52,7 @@ public class InformationServlet extends HttpServlet {
                     Account inf = Dao.AccountDao.getInformationOfEmployee(id);
                     request.setAttribute("informationEmployee", inf);
                     request.getRequestDispatcher("admin/adminInforEmployee.jsp").forward(request, response);
+                    break;
                 case "classDetail":
                     if (listTrainee.isEmpty()) {
                         request.setAttribute("InforClass", information);
@@ -60,6 +62,7 @@ public class InformationServlet extends HttpServlet {
                         request.setAttribute("InforClass", information);
                         request.getRequestDispatcher("admin/adminInforClass.jsp").forward(request, response);
                     }
+                    break;
                 case "staffInfCourse":
                     request.setAttribute("informationCourse", info);
                     request.getRequestDispatcher("staff/staffInforCourse.jsp").forward(request, response);
@@ -76,6 +79,32 @@ public class InformationServlet extends HttpServlet {
                         request.setAttribute("InforClass", information);
                         request.getRequestDispatcher("staff/staffInforClass.jsp").forward(request, response);
                     }
+                    break;
+                case "trainerClassDetail":
+                    if (listTrainee.isEmpty()) {
+                        request.setAttribute("InforClass", information);
+                        request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
+                    } else {
+                        Date currentdate = new Date(System.currentTimeMillis());
+                        request.setAttribute("currentDate", currentdate);
+                        request.setAttribute("ListTrainee", listTrainee);
+                        request.setAttribute("ListAttendence", listAttendence);
+                        request.setAttribute("InforClass", information);
+                        request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
+                    }
+                    break;
+                case "trainerUserDetail":
+                    Account user = Dao.UserDao.getAccountByID(id);
+                    if (user != null) {
+                        request.setAttribute("user", user);
+                        request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("nullUser", "User not found");
+                        request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
+                    }
+                    break;
+                default:
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

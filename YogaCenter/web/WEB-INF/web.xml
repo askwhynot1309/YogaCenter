@@ -128,6 +128,14 @@
         <servlet-name>TraineeAddToCartServlet</servlet-name>
         <servlet-class>Controller.TraineeAddToCartServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TrainerManageTrainee</servlet-name>
+        <servlet-class>Controller.TrainerManageTrainee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrainerViewScheduleServlet</servlet-name>
+        <servlet-class>Controller.TrainerViewScheduleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -255,6 +263,14 @@
     <servlet-mapping>
         <servlet-name>TraineeAddToCartServlet</servlet-name>
         <url-pattern>/TraineeAddToCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerManageTrainee</servlet-name>
+        <url-pattern>/TrainerManageTrainee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerViewScheduleServlet</servlet-name>
+        <url-pattern>/TrainerViewScheduleServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
