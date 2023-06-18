@@ -217,7 +217,7 @@ public class ClassDetailDao {
                 pst.setInt(4, ID_Time);
                 ResultSet rs = pst.executeQuery();
                 if (rs != null) {
-                    while (rs.next()) {                        
+                    while (rs.next()) {
                         ID_Class = rs.getInt("Class_ID");
                     }
                 }
@@ -225,5 +225,92 @@ public class ClassDetailDao {
         } catch (Exception e) {
         }
         return ID_Class;
+    }
+
+    public static ArrayList<ClassDetail> getAllClassDetailsByTrainee() throws Exception {
+        ArrayList<ClassDetail> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from ClassDetail cd \n"
+                    + "JOIN Account a ON cd.IDAccount =a.ID_Account \n"
+                    + "JOIN Class c ON c.Class_ID=cd.Class_ID\n"
+                    + "JOIN Course cou ON cou.Course_ID =cd.IDCourse\n"
+                    + "Where a.Role = 3";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int classdetail = table.getInt("ClassDetail_ID");
+                    String class_name = table.getString("Class_Name");
+                    int id_time = table.getInt("IDtime");
+                    Date datestudy = table.getDate("DateStudy");
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(datestudy);
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH) + 1;
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    String date = year + "-" + month + "-" + day;
+                    int idaccount = table.getInt("IDAccount");
+                    String account = table.getNString("Name");
+                    int id_course = table.getInt("IDCourse");
+                    String course = table.getNString("Course_Name");
+                    ClassDetail classdetails = new ClassDetail(classdetail, class_name, id_time, date, idaccount, account, id_course, course);
+                    kq.add(classdetails);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static int checkTraineeIDInClass(int Course_ID, int Trainee_ID, int ID_Time, int ID_Room) {
+        int AccountID = 0;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "SELECT DISTINCT A.ID_Account\n"
+                        + "FROM [dbo].[ClassDetail] CD\n"
+                        + "JOIN [dbo].[Account] A ON CD.IDAccount = A.ID_Account\n"
+                        + "JOIN [dbo].[Time] T ON CD.IDtime = T.Time_ID\n"
+                        + "JOIN [dbo].[Class] C ON CD.Class_ID = C.Class_ID\n"
+                        + "WHERE CD.IDCourse = ? AND A.ID_Account = ? AND T.Time_ID = ? AND C.Class_ID = ? AND A.Role = 3";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, Course_ID);
+                pst.setInt(2, Trainee_ID);
+                pst.setInt(3, ID_Time);
+                pst.setInt(4, ID_Room);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        AccountID = rs.getInt("ID_Account");
+                    }
+                }
+            }
+            cn.close();
+        } catch (Exception e) {
+        }
+        return AccountID;
+    }
+
+    public static boolean deleteTraineeInClass(int Trainee_ID, int id_course) {
+        boolean isDelete = false;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "delete [dbo].[ClassDetail]\n"
+                        + "where IDAccount = ? AND IDCourse = ? ";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, Trainee_ID);
+                pst.setInt(2, id_course);
+                pst.execute();
+                isDelete = true;
+            }
+            cn.close();
+        } catch (Exception e) {
+        }
+        return isDelete;
     }
 }

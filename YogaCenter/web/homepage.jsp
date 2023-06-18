@@ -34,7 +34,7 @@
         </div>
 
         <div class="our-classes">
-            <h1>Our classes</h1>
+            <a href="/YogaCenter/course"><h1>Our class</h1></a>
             <div class="main-class">
                 <%
                     Account account = (Account) session.getAttribute("account");
@@ -45,7 +45,6 @@
                         if (count < 3) { // Display only the first three courses
                             count++;
                 %>
-
                 <div class="inner-class">
                     <div>
                         <img style="width: 80%; height: 250px; object-fit: cover" src="<%= course.getImg_course()%>" alt=""/>
@@ -56,11 +55,11 @@
                         <%
                             if (account == null) {
                         %>
-                        <a href="register.jsp">register now</a>
+                        <a class="button" href="register.jsp">register now</a>
                         <%
                         } else {
                         %>
-                        <a href="/YogaCenter/request?action=AddCourseToCart&cid=<%= course.getIdCourse()%>">Add to cart</a>
+                        <a class="button" href="/YogaCenter/request?action=AddCourseToCart&cid=<%= course.getIdCourse()%>">Add to cart</a>
                         <%
                             }
                         %>

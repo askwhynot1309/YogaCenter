@@ -164,7 +164,7 @@
             int totalMoney = 0;
             ArrayList<Course> courseList = CourseDao.getAllCourse();
         %>
-        <div id="home" class="back">
+        <div style="padding: 3rem 7%;" id="home" class="back">
             <div class="mian-home">
                 <div class="card">
                     <div class="row">

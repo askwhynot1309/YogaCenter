@@ -23,89 +23,154 @@
         <link rel="stylesheet" href="css/style.css"/>
         <title>Schedule Editing</title>
     </head>
+    <style>
+        thead {
+            background: #dddcdc;
+        }
+
+        .toggle-btn {
+            width: 40px;
+            height: 21px;
+            background: grey;
+            border-radius: 50px;
+            padding: 3px;
+            cursor: pointer;
+            -webkit-transition: all 0.3s 0.1s ease-in-out;
+            -moz-transition: all 0.3s 0.1s ease-in-out;
+            -o-transition: all 0.3s 0.1s ease-in-out;
+            transition: all 0.3s 0.1s ease-in-out;
+        }
+
+        .toggle-btn > .inner-circle {
+            width: 15px;
+            height: 15px;
+            background: #fff;
+            border-radius: 50%;
+            -webkit-transition: all 0.3s 0.1s ease-in-out;
+            -moz-transition: all 0.3s 0.1s ease-in-out;
+            -o-transition: all 0.3s 0.1s ease-in-out;
+            transition: all 0.3s 0.1s ease-in-out;
+        }
+
+        .toggle-btn.active {
+            background: blue !important;
+        }
+
+        .toggle-btn.active > .inner-circle {
+            margin-left: 19px;
+        }
+        .cell-1 th{
+            vertical-align: middle;
+        }
+
+        .container{
+            margin: 50px auto;
+        }
+
+        .alternate-row{
+            background-color: #f1f3f4;
+        }
+    </style>
     <body>
         <c:import url="header.jsp"></c:import>
-            <div style="padding-top: 30px;" class="container">
+            <div class="container">
                 <h2 style="text-align: center">Class Schedule</h2>
-                <div style="display: flex; justify-content: center" class="row">
-                    <table class="col-12">
-                        <thead>
-                            <tr>
-                                <th class="col-lg-3">Trainer</th>
-                                <th class="col-lg-3">Day</th>
-                                <th class="col-lg-3">Time</th>
-                                <th class="col-lg-3">Room</th>
-                                <th class="col-lg-3">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <%
-                            int Course_ID = Integer.parseInt(request.getParameter("courseID"));
-                            HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(Course_ID);
-                            Account trainee = (Account)session.getAttribute("account");
-                            if (hashChoise != null) {
-                                boolean isFirstRow = true;
-                                for (Map.Entry<Integer, ArrayList<Integer>> entry : hashChoise.entrySet()) {
-                                    Integer key = entry.getKey();
-                                    ArrayList<Integer> listChoice = entry.getValue();
+                <div class="container mt-5">
+                    <div class="d-flex justify-content-center row">
+                        <div class="col-md-10">
+                            <div class="rounded">
+                                <div class="table-responsive table-borderless">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Trainer</th>
+                                                <th>Day</th>
+                                                <th>Time</th>
+                                                <th>Room</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-body">
+                                        <%
+                                            int Course_ID = Integer.parseInt(request.getParameter("courseID"));
+                                            HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(Course_ID);
+                                            Account trainee = (Account) session.getAttribute("account");
+                                            if (hashChoise != null) {
+                                                boolean isFirstRow = true;
+                                                int rowNumber = 0;
+                                                for (Map.Entry<Integer, ArrayList<Integer>> entry : hashChoise.entrySet()) {
+                                                    Integer key = entry.getKey();
+                                                    ArrayList<Integer> listChoice = entry.getValue();
+                                                    for (Integer choice : listChoice) {
+                                                        String trainerName = "";
+                                                        int ID_Class = 0;
+                                                        Time time_class = TimeDao.getTimeByTrainerAndChoice(Course_ID, key, choice);
+                                                        String time = time_class.getTime();
+                                                        ID_Class = ClassDetailDao.getIDClassByTrainerCourseChoiseTime(key, Course_ID, choice, time_class.getId_time());
+                                                        ArrayList<Account> accountList = AccountDao.getAllTrainer();
+                                                        for (Account account : accountList) {
+                                                            if (key == account.getIdaccount()) {
+                                                                trainerName = account.getName();
+                                                            }
+                                                        }
+                                                        if (!trainerName.isEmpty()) {
+                                        %>
+                                        <tr class="cell-1 <%= rowNumber % 2 == 0 ? "alternate-row" : ""%>">
+                                            <%if (isFirstRow) {
+                                            %>
+                                            <th style="vertical-align: middle;" class="col-lg-3" rowspan="<%= listChoice.size()%>"><%= trainerName%></th>
+                                                <%
+                                                        isFirstRow = false;
+                                                    }
+                                                %>
+                                            <th class="col-lg-3">
+                                                <%
+                                                    if (choice == 1) {
+                                                %>Monday - Wednesday - Friday<%
+                                                } else if (choice == 2) {
+                                                %>Tuesday - Thursday - Saturday<%
+                                                } else {
+                                                %>Sunday<%
+                                                    }
+                                                %>
+                                            </th>
+                                            <%
 
-                                    for (Integer choice : listChoice) {
-                                        String trainerName = "";
-                                        Time time_class = null;
-                                        int ID_Class = 0;
-                                        ArrayList<Account> accountList = AccountDao.getAllTrainer();
-                                        for (Account account : accountList) {
-                                            if (key == account.getIdaccount()) {
-                                                trainerName = account.getName();
-                                                time_class = TimeDao.getTimeByTrainerAndChoice(Course_ID, key, choice);
-                                                ID_Class = ClassDetailDao.getIDClassByTrainerCourseChoiseTime(key, Course_ID, choice, time_class.getId_time());
+                                            %>
+                                            <th class="col-lg-3"><%= time%></th>
+                                            <th class="col-lg-3">Room <%= ID_Class%></th>
+                                            <th class="col-lg-3">
+                                                <%
+                                                    int AccountID = ClassDetailDao.checkTraineeIDInClass(Course_ID, trainee.getIdaccount(), time_class.getId_time(), ID_Class);
+                                                    if (AccountID == 0) {
+                                                %>
+                                                <form action="/YogaCenter/request" method="post">
+                                                    <input type="hidden" name="trainee" value="<%=trainee.getIdaccount()%>">
+                                                    <input type="hidden" name="id_course" value="<%=Course_ID%>">
+                                                    <input type="hidden" name="id_room" value="<%=ID_Class%>">
+                                                    <input type="hidden" name="option" value="<%=choice%>">
+                                                    <input type="hidden" name="id_time" value="<%=time_class.getId_time()%>">
+                                                    <button type="submit" name="action" value="traineeChooseClass">Choose</button>
+                                                </form>
+                                                <%
+                                                    }
+                                                %>
+                                            </th>
+                                        </tr>
+                                        <%
+                                                        }
+                                                    }
+                                                    isFirstRow = true;
+                                                    rowNumber++;
+                                                }
                                             }
-                                        }
-                        %>
-                        <tr style="border-top: solid 0.5px">
-                            <%if (isFirstRow) {
-                            %>
-                            <th style="border-right: solid 0.5px; vertical-align: top;" class="col-lg-3" rowspan="<%= listChoice.size()%>"><%= trainerName%></th>
-                                <%
-                                        isFirstRow = false;
-                                    }
-                                %>
-                            <th class="col-lg-3">
-                                <%
-                                    if (choice == 1) {
-                                %>Monday - Wednesday - Friday<%
-                                } else if (choice == 2) {
-                                %>Tuesday - Thursday - Saturday<%
-                                } else {
-                                %>Sunday<%
-                                    }
-                                %>
-                            </th>
-                            <%
-
-                            %>
-                            <th class="col-lg-3"><%=time_class.getTime()%></th>
-                            <th class="col-lg-3">Room <%= ID_Class %></th>
-                            <th class="col-lg-3">
-                                <form action="/YogaCenter/request" method="post">
-                                    <input type="hidden" name="trainee" value="<%=trainee.getIdaccount()%>">
-                                    <input type="hidden" name="id_course" value="<%=Course_ID%>">
-                                    <input type="hidden" name="id_room" value="<%=ID_Class%>">
-                                    <input type="hidden" name="option" value="<%=choice%>">
-                                    <input type="hidden" name="id_time" value="<%=time_class.getId_time()%>">
-                                    <button type="submit" name="action" value="traineeChooseClass">Choose</button>
-                                </form>
-                            </th>
-                        </tr>
-                        <%
-
-                                    }
-                                    isFirstRow = true;
-                                }
-                            }
-                        %>
-                    </tbody>
-                </table>
+                                        %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

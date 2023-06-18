@@ -1,3 +1,7 @@
+<%@page import="java.util.TreeMap"%>
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="Dao.OrderCourseDao"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="Object.OrderCourse"%>
@@ -52,95 +56,118 @@
         .toggle-btn.active > .inner-circle {
             margin-left: 19px;
         }
+        .cell-1 th{
+            vertical-align: middle;
+        }
+
+        .container{
+            margin: 50px auto;
+        }
+
+        .alternate-row{
+            background-color: #f1f3f4;
+        }
     </style>
     <c:import url="header.jsp"/>
-        <body>
-            <div class="container" style="padding-top: 200px;">
-                <h2>Purchase history</h2>
-                <div class="container mt-5">
-                    <div class="d-flex justify-content-center row">
-                        <div class="col-md-10">
-                            <div class="rounded">
-                                <div class="table-responsive table-borderless">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Order #</th>
-                                                <th>Company name</th>
-                                                <th>status</th>
-                                                <th>Total</th>
-                                                <th>Created</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-body">
-                                            <tr class="cell-1">
-                                                <td></td>
-                                                <td></td>
-                                                <td><span class="badge badge-success">Success</span></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+    <body>
+        <div class="container">
+            <h2>Purchase history</h2>
+            <div class="container mt-5">
+                <div class="d-flex justify-content-center row">
+                    <div class="col-md-10">
+                        <div class="rounded">
+                            <div class="table-responsive table-borderless">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order #</th>
+                                            <th>Course name</th>
+                                            <th>Date</th>
+                                            <th>Total</th>
+                                            <th>Payment method</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-body">
+                                        <%
+                                            Account account = (Account) session.getAttribute("account");
+                                            HashMap<Integer, ArrayList<OrderCourse>> purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
+                                            ArrayList<Course> courseList = CourseDao.getAllCourse();
+                                            if (purchase != null) {
+                                                TreeMap<Integer, ArrayList<OrderCourse>> sortedPurchase = new TreeMap<>(purchase);
+                                                boolean isFirstRow = true;
+                                                int rowNumber = 0;
+                                                for (Map.Entry<Integer, ArrayList<OrderCourse>> entry : sortedPurchase.entrySet()) {
+                                                    int OrderID = entry.getKey();
+                                                    ArrayList<OrderCourse> orderDetail = entry.getValue();
+                                                    int totalPrice = 0;
+                                                    for (OrderCourse order : orderDetail) {
+                                                        totalPrice += order.getTotalPrice().intValue();
+                                                    }
+                                                    NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
+
+                                                    for (OrderCourse order : orderDetail) {
+
+                                        %>
+                                        <tr class="cell-1 <%= rowNumber % 2 == 0 ? "alternate-row" : ""%>">
+
+                                            <% if (isFirstRow) {%>
+                                            <th rowspan="<%= orderDetail.size()%>"><%= rowNumber + 1%></td>
+                                                <% }%>
+                                            <th><%= order.getCourseName()%></th>
+                                                <% if (isFirstRow) {%>
+                                            <th rowspan="<%= orderDetail.size()%>"><%= order.getDateorder()%></td>
+                                                <% }
+                                                    if (isFirstRow) {%>
+                                            <th rowspan="<%= orderDetail.size()%>"><%= nf.format(totalPrice)%>.000 VNĐ</td>
+                                                <% }
+                                                    switch (order.getPaymentMethod()) {
+                                                        case 0:
+                                                            if (isFirstRow) {%>
+                                            <th rowspan="<%= orderDetail.size()%>">Cash</td>
+                                                <% }
+                                                        break;
+                                                    case 1:
+                                                        if (isFirstRow) {%>
+                                            <th rowspan="<%= orderDetail.size()%>">Bank Transfer</td>
+                                                <% }
+                                                            break;
+                                                    }
+
+                                                    switch (order.getStatus()) {
+                                                        case 0:
+                                                            if (isFirstRow) {%>
+                                            <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-success">Success</span></th>
+                                                <% }
+                                                        break;
+                                                    case 1:
+                                                        if (isFirstRow) {%>
+                                            <th rowspan="<%= orderDetail.size()%>"><a class="badge badge-primary" href="#">Pending</a></th>
+                                                <% }
+                                                        break;
+                                                    case 2:
+                                                        if (isFirstRow) {%>
+                                            <th rowspan="<%= orderDetail.size()%>"><a class="badge badge-danger" href="/YogaCenter/request?action=TraineeReoder">Cancel</a></th>
+                                                <% }
+                                                            break;
+                                                    }
+                                                    isFirstRow = false;
+                                                %>
+                                        </tr>
+                                        <%
+                                                    }
+                                                    isFirstRow = true;
+                                                    rowNumber++;
+                                                }
+                                            }
+                                        %>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--                <script>
-                                    function refreshOrders() {
-                                        if (localStorage.getItem('orders') !== null && localStorage.getItem('orders') !== {} ) {
-                                            let orders = JSON.parse(localStorage.getItem('orders'));
-                                            let items = "";
-                                            for (const [k, c] of Object.entries(orders)) {
-                                                console.log(c);
-                                                items += '<tr class="cell-1">'
-                                                        + '<td>' + k + '</td>'
-                                                        + '<td>' + c.item.name + '</td>'
-                                                        + '<td><span class="badge badge-success">Success</span></td>'
-                                                        + '<td>' + c.item.price + '</td>'
-                                                        + '<td>' + c.datetime + '</td>'
-                                                        + '<td><i class="fa fa-ellipsis-h text-black-50"></i></td>'
-                                                        + '</tr>';
-                                            }
-                                            document.getElementById('orderItems').innerHTML = items;
-                                        }
-                                    }
-                                    refreshOrders();
-                                </script>-->
-                <!--                <div class="row">
-                                    <table class="col">
-                                        <thead>
-                                            <tr>
-                                                <th style="border-right: solid 0.5px;" class="col-lg-2">Order ID</th>
-                                                <th class="col-lg-2">Course name</th>
-                                                <th class="col-lg-2">Date</th>
-                                                <th class="col-lg-2">Total price</th>
-                                                <th class="col-lg-2">Payment method</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-            <%
-
-            %>
-            <tr style="border-top: solid 0.5px">
-
-
-                <th style="border-right: solid 0.5px;" class="col-lg-2" rowspan="">2</th>
-
-                <th class="col-lg-2">1</th>
-                <th class="col-lg-2">2</th>
-                <th class="col-lg-2">3</th>
-                <th class="col-lg-2">4</th>
-
-            </tr>
-
-
-        </tbody>
-    </table>
-</div>-->
+            </div>
         </div>
 
     </body>

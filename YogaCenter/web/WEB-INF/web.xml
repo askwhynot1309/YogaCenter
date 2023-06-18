@@ -141,10 +141,6 @@
         <servlet-class>Controller.TraineeManagePurchaseServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>traineeEditScheduleServlet</servlet-name>
-        <servlet-class>Controller.traineeEditScheduleServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>TraineeDeleteCartItemsServlet</servlet-name>
         <servlet-class>Controller.TraineeDeleteCartItemsServlet</servlet-class>
     </servlet>
@@ -291,10 +287,6 @@
     <servlet-mapping>
         <servlet-name>TraineeManagePurchaseServlet</servlet-name>
         <url-pattern>/TraineeManagePurchaseServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>traineeEditScheduleServlet</servlet-name>
-        <url-pattern>/traineeEditScheduleServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeDeleteCartItemsServlet</servlet-name>

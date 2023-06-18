@@ -36,7 +36,7 @@ public class ClassDetail {
         this.id_course = id_course;
         this.course = course;
     }
-    
+
     public ClassDetail(int id_detail, String class_name, int time, int idaccount, Date date, String account, int id_course, String course) {
         this.id_detail = id_detail;
         this.class_name = class_name;
@@ -48,7 +48,7 @@ public class ClassDetail {
         this.course = course;
     }
 
-
+    
     public ClassDetail(int id_detail, String class_name, int time, String datestudy, int idaccount, String account, int id_course, String course) {
         this.id_detail = id_detail;
         this.class_name = class_name;
