@@ -14,24 +14,88 @@ import java.sql.Date;
 public class OrderCourse {
 
     private int id_order;
-    private String courseName;
+    private int id_account;
+    private String name_account;
+    private int id_course;
+    private String name_course;
     private Date dateorder;
-    private BigDecimal totalPrice;
-    private int paymentMethod;
     private int status;
-    private int courseID;
+    private int method;
+    private int quantity;
+    private BigDecimal fee_course;
 
     public OrderCourse() {
     }
 
-    public OrderCourse(int id_order, String courseName, Date dateorder, BigDecimal totalPrice, int paymentMethod, int status, int courseID) {
+    public OrderCourse(int id_order, String name_account, Date dateorder, int status, int method) {
         this.id_order = id_order;
-        this.courseName = courseName;
+        this.name_account = name_account;
         this.dateorder = dateorder;
-        this.totalPrice = totalPrice;
-        this.paymentMethod = paymentMethod;
         this.status = status;
-        this.courseID = courseID;
+        this.method = method;
+    }
+
+    public OrderCourse(int id_order, int id_account, String name_account, int id_course, String name_course, Date dateorder, int status, int method, int quantity, BigDecimal fee_course) {
+        this.id_order = id_order;
+        this.id_account = id_account;
+        this.name_account = name_account;
+        this.id_course = id_course;
+        this.name_course = name_course;
+        this.dateorder = dateorder;
+        this.status = status;
+        this.method = method;
+        this.quantity = quantity;
+        this.fee_course = fee_course;
+    }
+
+    
+
+    public OrderCourse(int id_order, int id_account, Date dateorder, int status, int quantity) {
+        this.id_order = id_order;
+        this.id_account = id_account;
+        this.dateorder = dateorder;
+        this.status = status;
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getFee_course() {
+        return fee_course;
+    }
+
+    public void setFee_course(BigDecimal fee_course) {
+        this.fee_course = fee_course;
+    }
+
+    public int getMethod() {
+        return method;
+    }
+
+    public void setMethod(int method) {
+        this.method = method;
+    }
+
+    public String getName_account() {
+        return name_account;
+    }
+
+    public void setName_account(String name_account) {
+        this.name_account = name_account;
+    }
+
+    public int getId_course() {
+        return id_course;
+    }
+
+    public void setId_course(int id_course) {
+        this.id_course = id_course;
+    }
+
+    public String getName_course() {
+        return name_course;
+    }
+
+    public void setName_course(String name_course) {
+        this.name_course = name_course;
     }
 
     public int getId_order() {
@@ -42,12 +106,12 @@ public class OrderCourse {
         this.id_order = id_order;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public int getId_account() {
+        return id_account;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setId_account(int id_account) {
+        this.id_account = id_account;
     }
 
     public Date getDateorder() {
@@ -58,22 +122,6 @@ public class OrderCourse {
         this.dateorder = dateorder;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public int getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(int paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
     public int getStatus() {
         return status;
     }
@@ -82,11 +130,12 @@ public class OrderCourse {
         this.status = status;
     }
 
-    public int getCourseID() {
-        return courseID;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setCourseID(int courseID) {
-        this.courseID = courseID;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
+
 }

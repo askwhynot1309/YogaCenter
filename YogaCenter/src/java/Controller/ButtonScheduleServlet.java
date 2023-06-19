@@ -42,8 +42,15 @@ public class ButtonScheduleServlet extends HttpServlet {
             int id_time = Integer.parseInt(request.getParameter("time"));
 
             if (idaccount == 0 || id_course == 0 || id_room == 0 || id_time == 0) {
-                request.setAttribute("arrangeFail", "Fill all fields before arranging!");
-                request.getRequestDispatcher("ViewScheduleServlet").forward(request, response);
+                request.setAttribute("arrangeFail", "Fill all fields before arrange !");
+                request.getRequestDispatcher("schedule").forward(request, response);
+            }
+            if (Dao.ClassDetailDao.checkTrainerHasTheSameClassInSameTime(id_room, id_time, course.getDate_start(), option) != null) {
+                request.setAttribute("arrangeSameTime", "This room has been have a course in this time !");
+                request.getRequestDispatcher("schedule").forward(request, response);
+            } else if (Dao.ClassDetailDao.checkTrainerSameTimeToTeach(id_time, course.getDate_start(), option, idaccount) != null) {
+                request.setAttribute("arrangeSameTrainerInTime", "This trainer has had class in this time !");
+                request.getRequestDispatcher("schedule").forward(request, response);
             } else {
                 Course course = Dao.CourseDao.getInformationOfCourse(id_course);
 
@@ -59,12 +66,11 @@ public class ButtonScheduleServlet extends HttpServlet {
                     for (Get30SlotsByCourse dateForSlot : list) {
                         int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(id_room, id_time, idaccount, id_course, dateForSlot.getDay(), option);
                     }
-
-                    request.setAttribute("arrangesuccess", "Setup successfully!");
-                    request.getRequestDispatcher("ViewScheduleServlet").forward(request, response);
-                }
+                request.setAttribute("arrangesuccess", "Settup successfully !");
+                request.getRequestDispatcher("schedule").forward(request, response);
             }
-        } catch (Exception e) {
+        }
+     } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
             dispatcher.forward(request, response);
         }

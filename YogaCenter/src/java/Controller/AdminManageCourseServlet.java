@@ -8,6 +8,7 @@ import Object.Course;
 import Object.Level;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,9 +38,11 @@ public class AdminManageCourseServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+            Date date = new Date(System.currentTimeMillis());
             if (listCourse != null && !listCourse.isEmpty()) {
                 if (listLevel != null && !listLevel.isEmpty()) {
                     request.setAttribute("listCourse", listCourse);
+                    request.setAttribute("currentdate", date);
                     request.setAttribute("listLevel", listLevel);
                     request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                 } else {

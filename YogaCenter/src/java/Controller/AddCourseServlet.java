@@ -114,7 +114,7 @@ public class AddCourseServlet extends HttpServlet {
                                     request.setAttribute("listCourse", listCourse);
                                     request.setAttribute("listLevel", listLevel);
                                     request.setAttribute("success", "Tạo mới khoá học thành công");
-                                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                    request.getRequestDispatcher("managecourse").forward(request, response);
                                 } else {
                                     request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                                 }
@@ -123,7 +123,7 @@ public class AddCourseServlet extends HttpServlet {
                                     request.setAttribute("listLevel", listLevel);
                                     request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
                                     request.setAttribute("success", "Tạo mới khoá học thành công");
-                                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                    request.getRequestDispatcher("managecourse").forward(request, response);
                                 } else {
                                     request.setAttribute("success", "Tạo mới khoá học thành công");
                                     request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);

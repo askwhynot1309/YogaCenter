@@ -8,6 +8,7 @@ import Object.ClassDetail;
 import Utils.DisplayAllDaysByWeek;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -39,8 +40,15 @@ public class StaffViewScheduleServlet extends HttpServlet {
             List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
             request.setAttribute("currentweek", currentweek);
             ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetails();
+            Date currentDate = new Date(System.currentTimeMillis());
+            ArrayList<ClassDetail> listClassWithNotRoom = Dao.ClassDetailDao.getAllClassDetailsWithRoomNotActive(currentDate);
             if (listClass != null && !listClass.isEmpty()) {
-                request.setAttribute("listClass", listClass);
+                if(listClassWithNotRoom != null && !listClassWithNotRoom.isEmpty()){
+                    request.setAttribute("listClass", listClass);
+                    request.setAttribute("currentDate", listClassWithNotRoom);
+                }else{
+                    request.setAttribute("listClass", listClass);
+                }
             }
             request.setAttribute("listDay", list);
             request.getRequestDispatcher("staff/staffViewSchedule.jsp").forward(request, response);

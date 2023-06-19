@@ -4,12 +4,10 @@
  */
 package Controller;
 
-import Object.Course;
-import Object.Level;
+import Object.Room;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class StaffCourseListServlet extends HttpServlet {
+public class ClassManageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,28 +33,17 @@ public class StaffCourseListServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Course> listCourse = Dao.CourseDao.staffGetAllCourse();
-            ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            if (listCourse != null && !listCourse.isEmpty()) {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listCourse", listCourse);
-                    request.setAttribute("listLevel", listLevel);
-                    request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
-                }
-            } else {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listLevel", listLevel);
-                    request.setAttribute("nulllist", "There are no courses in data.");
-                    request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
-                }
+            ArrayList<Room> listRoomStatus = Dao.RoomDao.getAllManageRoom();
+            ArrayList<Room> listRoom = Dao.RoomDao.getAllRoom();
+            if(listRoom == null){
+                request.setAttribute("noneRoom", "There are any rooms in Yoga Center.");
+            }else{
+                request.setAttribute("listRoom", listRoom);
+                request.setAttribute("listRoomStatus", listRoomStatus);
             }
-        } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("admin/adminManageClass.jsp").forward(request, response);
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 
