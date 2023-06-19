@@ -4,7 +4,6 @@
  */
 package Dao;
 
-import Object.Course;
 import Object.OrderCourse;
 import Utils.DBUtils;
 import java.math.BigDecimal;
@@ -48,7 +47,7 @@ public class OrderCourseDao {
                         BigDecimal CourseFee = rs.getBigDecimal("Course_Fee");
                         int Status = rs.getInt("Status");
                         int courseID = rs.getInt("ID_Course");
-                        OrderCourse order = new OrderCourse(OrderID, courseName, DateOrder, CourseFee, method, Status, courseID);
+                        OrderCourse order = new OrderCourse(OrderID, courseID, courseName, DateOrder, Status, method, CourseFee);
                         if (!purchase.containsKey(OrderID)) {
                             purchase.put(OrderID, new ArrayList<>());
                         }

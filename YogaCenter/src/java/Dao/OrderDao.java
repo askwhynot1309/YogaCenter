@@ -44,6 +44,13 @@ public class OrderDao {
                         pst3.setInt(2, idcourse);
                         pst3.setInt(3, quantity);
                         kq = pst3.executeUpdate();
+                        if(kq == 1){
+                            s = "insert into StatusPayment(ID_Order, Status) values (?,?)";
+                            PreparedStatement pst4 = cn.prepareStatement(s);
+                            pst4.setInt(1, orderid);
+                            pst4.setInt(2, 2);
+                            kq = pst4.executeUpdate();
+                        }
                     }
                 }
             }
@@ -83,7 +90,7 @@ public class OrderDao {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "update BookingCourse\n"
+            String s = "update StatusPayment\n"
                     + "set Status = ?\n"
                     + "where OrderID = ?";
             PreparedStatement pst = cn.prepareStatement(s);

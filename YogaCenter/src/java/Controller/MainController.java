@@ -78,9 +78,6 @@ public class MainController extends HttpServlet {
                         response.setContentType("multipart/form-data");
                         url = "UpdateInformationCourseServlet";
                         break;
-                    case "TraineeManageInformation":
-                        url = "TraineeManageInformationServlet";
-                        break;
                     case "ButtonSchedule":
                         url = "ButtonScheduleServlet";
                         break;
@@ -102,12 +99,6 @@ public class MainController extends HttpServlet {
                     case "saveOrder":
                         url = "TraineeSaveOrderServlet";
                         break;
-                    case "ClassBooking":
-                        url = "TraineeClassBooked";
-                        break;
-                    case "ManagePurchase":
-                        url = "traineeManagePurchase.jsp";
-                        break;
                     case "EditSchedule":
                         url = "traineeEditSchedule.jsp";
                         break;
@@ -125,11 +116,13 @@ public class MainController extends HttpServlet {
                         break;
                     case "ClassDetail":
                         url = "TraineeViewClassDetail";
+                        break;
                     case "TrainerManageTrainee":
                         url = "TrainerManageTrainee";
                         break;
                     case "TrainerViewSchedule":
                         url = "TrainerViewScheduleServlet";
+                        break;
                     case "ButtonAddTrainee":
                         url = "ButtonAddTraineeServlet";
                         break;

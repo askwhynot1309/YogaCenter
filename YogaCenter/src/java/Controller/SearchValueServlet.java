@@ -9,12 +9,14 @@ import Object.Course;
 import Object.Level;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -61,11 +63,13 @@ public class SearchValueServlet extends HttpServlet {
                     break;
                 case "searchCourse":
                     int level = Integer.parseInt(request.getParameter("level"));
+                    Date date = new Date(System.currentTimeMillis());
                     if (level == 0) {
-                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
+                        ArrayList<Course> listCourse = Dao.CourseDao.adminGetAllCourseBySearch(search);
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                         if (listCourse != null && !listCourse.isEmpty()) {
                             request.setAttribute("listCourse", listCourse);
+                            request.setAttribute("currentdate", date);
                             request.setAttribute("listLevel", listLevel);
                             request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                         } else {
@@ -74,9 +78,10 @@ public class SearchValueServlet extends HttpServlet {
                         }
                     } else {
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevel(search, level);
+                        ArrayList<Course> listCourse = Dao.CourseDao.adminGetAllCourseBySearchWithLevel(search, level);
                         if (listCourse != null && !listCourse.isEmpty()) {
                             request.setAttribute("listCourse", listCourse);
+                            request.setAttribute("currentdate", date);
                             request.setAttribute("listLevel", listLevel);
                             request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                         } else {
@@ -125,14 +130,17 @@ public class SearchValueServlet extends HttpServlet {
                     break;
                 case "staffSearchCourseToSign":
                     level = Integer.parseInt(request.getParameter("level"));
+                    int key = Integer.parseInt(request.getParameter("key"));
                     if (level == 0) {
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                         if (listCourse != null && !listCourse.isEmpty()) {
                             request.setAttribute("listcourse", listCourse);
                             request.setAttribute("listlevel", listLevel);
+                            request.setAttribute("key", key);
                             request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);
                         } else {
+                            request.setAttribute("key", key);
                             request.setAttribute("nonelist", "There are no courses in the data that match the data you searched for.");
                             request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);
                         }
@@ -141,18 +149,19 @@ public class SearchValueServlet extends HttpServlet {
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevel(search, level);
                         if (listCourse != null && !listCourse.isEmpty()) {
                             request.setAttribute("listcourse", listCourse);
+                            request.setAttribute("key", key);
                             request.setAttribute("listlevel", listLevel);
                             request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);
                         } else {
                             request.setAttribute("listlevel", listLevel);
+                            request.setAttribute("key", key);
                             request.setAttribute("nonelist", "There are no courses in the data that match the data you searched for.");
                             request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);
                         }
                     }
             }
         } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            e.printStackTrace();
         }
     }
 

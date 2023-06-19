@@ -48,7 +48,8 @@ public class TraineeAddToCartServlet extends HttpServlet {
                     }
                 }
                 session.setAttribute("cart", cart);
-                response.sendRedirect("homepage.jsp");
+                request.setAttribute("addsuccess", "message");
+                request.getRequestDispatcher("course").forward(request, response);
             }
         }
     }

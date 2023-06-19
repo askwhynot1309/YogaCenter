@@ -100,7 +100,7 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <a href="/YogaCenter/request?action=inf&id=${employee.idaccount}&option=infEmployee" class="btn btn-primary">Thông tin chi tiết</a>
+                                                <a href="/YogaCenter/request?action=inf&id=${employee.idaccount}&option=infEmployee" class="btn btn-primary">More information</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

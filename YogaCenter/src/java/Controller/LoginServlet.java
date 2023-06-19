@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
                             break;
                         case 3:
                             session.setAttribute("account", accountLogin);
-                            request.getRequestDispatcher("homepage.jsp").forward(request, response);
+                            response.sendRedirect("home");
                     }
                 } else {
                     request.setAttribute("LoginLimited", "This account has been blocked !");

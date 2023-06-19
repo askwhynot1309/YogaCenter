@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,6 +44,7 @@ public class StaffListCourseToSign extends HttpServlet {
                 request.setAttribute("listlevel", listlevel);
             }else{
                 request.setAttribute("listlevel", listlevel);
+                request.setAttribute("key", idaccount);
                 request.setAttribute("nonelist", "There are any courses in data.");
             }
             request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);

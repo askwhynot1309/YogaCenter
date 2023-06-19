@@ -153,14 +153,6 @@
         <servlet-class>Controller.TraineeViewClassDetail</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TrainerManageTrainee</servlet-name>
-        <servlet-class>Controller.TrainerManageTrainee</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>TrainerViewScheduleServlet</servlet-name>
-        <servlet-class>Controller.TrainerViewScheduleServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AddTraineeServlet</servlet-name>
         <servlet-class>Controller.AddTraineeServlet</servlet-class>
     </servlet>
@@ -211,6 +203,22 @@
     <servlet>
         <servlet-name>StaffViewBooking</servlet-name>
         <servlet-class>Controller.StaffViewBooking</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrainerManageUser</servlet-name>
+        <servlet-class>Controller.TrainerManageUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrainerViewScheduleServlet</servlet-name>
+        <servlet-class>Controller.TrainerViewScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TraineeViewCartServlet</servlet-name>
+        <servlet-class>Controller.TraineeViewCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewPreviousServlet</servlet-name>
+        <servlet-class>Controller.ViewPreviousServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -318,7 +326,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeManageInformationServlet</servlet-name>
-        <url-pattern>/TraineeManageInformationServlet</url-pattern>
+        <url-pattern>/information</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChangePasswordServlet</servlet-name>
@@ -342,11 +350,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeClassBooked</servlet-name>
-        <url-pattern>/TraineeClassBooked</url-pattern>
+        <url-pattern>/classbooking</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeManagePurchaseServlet</servlet-name>
-        <url-pattern>/TraineeManagePurchaseServlet</url-pattern>
+        <url-pattern>/purchase</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeDeleteCartItemsServlet</servlet-name>
@@ -365,14 +373,6 @@
         <url-pattern>/TraineeViewClassDetail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>TrainerManageTrainee</servlet-name>
-        <url-pattern>/TrainerManageTrainee</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TrainerViewScheduleServlet</servlet-name>
-        <url-pattern>/TrainerViewScheduleServlet</url-pattern>
-        </servlet-mapping>
-        <servlet-mapping>
         <servlet-name>AddTraineeServlet</servlet-name>
         <url-pattern>/add</url-pattern>
     </servlet-mapping>
@@ -423,6 +423,22 @@
     <servlet-mapping>
         <servlet-name>StaffViewBooking</servlet-name>
         <url-pattern>/viewbooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerManageUser</servlet-name>
+        <url-pattern>/manageuser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerViewScheduleServlet</servlet-name>
+        <url-pattern>/trainerviewschedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeViewCartServlet</servlet-name>
+        <url-pattern>/viewcart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewPreviousServlet</servlet-name>
+        <url-pattern>/viewprevious</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

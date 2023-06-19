@@ -53,6 +53,7 @@ public class InformationServlet extends HttpServlet {
                     Account inf = Dao.AccountDao.getInformationOfEmployee(id);
                     request.setAttribute("informationEmployee", inf);
                     request.getRequestDispatcher("admin/adminInforEmployee.jsp").forward(request, response);
+                    break;
                 case "classDetail":
                     ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id);
                     ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(information.getTime(), information.getClass_name(), information.getDate(), information.getId_course());
@@ -64,6 +65,7 @@ public class InformationServlet extends HttpServlet {
                         request.setAttribute("InforClass", information);
                         request.getRequestDispatcher("admin/adminInforClass.jsp").forward(request, response);
                     }
+                    break;
                 case "staffInfCourse":
                     request.setAttribute("informationCourse", info);
                     request.getRequestDispatcher("staff/staffInforCourse.jsp").forward(request, response);
@@ -101,6 +103,29 @@ public class InformationServlet extends HttpServlet {
                     request.setAttribute("listinf", listinf);
                     request.getRequestDispatcher("staff/staffViewInfOrder.jsp").forward(request, response);
                     break;
+                 case "trainerClassDetail":
+                    ClassDetail trainerinformation = Dao.ClassDetailDao.getClassDetailById(id);
+                    ArrayList<Account> trainerlistTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformation.getTime(), trainerinformation.getClass_name(), trainerinformation.getDate(), trainerinformation.getId_course());
+                    if (trainerlistTrainee.isEmpty()) {
+                        request.setAttribute("InforClass", trainerinformation);
+                        request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("ListTrainee", trainerlistTrainee);
+                        request.setAttribute("InforClass", trainerinformation);
+                        request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
+                    }
+                    break;
+                 case "trainerUserDetail":
+                     Account trainee = Dao.UserDao.getAccountByID(id);
+                     request.setAttribute("user", trainee);
+                     request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
+                     break;
+                 case "viewmore":
+                     Course viewcoure = Dao.CourseDao.getInformationOfCourse(id);
+                     ArrayList<Course> top3Course = Dao.CourseDao.getTop3InformationOfCourse(viewcoure.getLevel());
+                     request.setAttribute("information", viewcoure);
+                     request.setAttribute("top3Course", top3Course);
+                     request.getRequestDispatcher("viewMoreCourse.jsp").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();

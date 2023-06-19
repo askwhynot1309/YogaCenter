@@ -50,11 +50,11 @@ public class TraineeReoderServlet extends HttpServlet {
                         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
                         if (cart == null) {
                             cart = new HashMap<>();
-                            cart.put(Integer.toString(orderCourse.getCourseID()), 1);
+                            cart.put(Integer.toString(orderCourse.getId_course()), 1);
                         } else {
-                            Integer tmp = cart.get(Integer.toString(orderCourse.getCourseID()));
+                            Integer tmp = cart.get(Integer.toString(orderCourse.getId_course()));
                             if (tmp == null) {
-                                cart.put(Integer.toString(orderCourse.getCourseID()), 1);
+                                cart.put(Integer.toString(orderCourse.getId_course()), 1);
                             }
                         }
                         session.setAttribute("cart", cart);

@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="css/admin/admin-course-add.css">
         <title>Purchase History</title>
     </head>
     <style>
@@ -72,23 +73,24 @@
     <body>
         <div class="container">
             <h2>Purchase history</h2>
-            <div class="container mt-5">
-                <div class="d-flex justify-content-center row">
-                    <div class="col-md-10">
-                        <div class="rounded">
-                            <div class="table-responsive table-borderless">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Order #</th>
-                                            <th>Course name</th>
-                                            <th>Date</th>
-                                            <th>Total</th>
-                                            <th>Payment method</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-body">
+            <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
+                <div class="container mt-5">
+                    <div class="d-flex justify-content-center row">
+                        <div class="col-md-10">
+                            <div class="rounded">
+                                <div class="table-responsive table-borderless">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Order #</th>
+                                                <th>Course name</th>
+                                                <th>Date</th>
+                                                <th>Total</th>
+                                                <th>Payment method</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-body">
                                         <%
                                             Account account = (Account) session.getAttribute("account");
                                             HashMap<Integer, ArrayList<OrderCourse>> purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
@@ -101,7 +103,7 @@
                                                     ArrayList<OrderCourse> orderDetail = entry.getValue();
                                                     int totalPrice = 0;
                                                     for (OrderCourse order : orderDetail) {
-                                                        totalPrice += order.getTotalPrice().intValue();
+                                                        totalPrice += order.getFee_course().intValue();
                                                     }
                                                     NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
 
@@ -113,14 +115,14 @@
                                             <% if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>"><%= rowNumber + 1%></td>
                                                 <% }%>
-                                            <th><%= order.getCourseName()%></th>
+                                            <th><%= order.getName_course()%></th>
                                                 <% if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>"><%= order.getDateorder()%></td>
                                                 <% }
                                                     if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>"><%= nf.format(totalPrice)%>.000 VNĐ</td>
                                                 <% }
-                                                    switch (order.getPaymentMethod()) {
+                                                    switch (order.getMethod()) {
                                                         case 0:
                                                             if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>">Cash</td>
@@ -134,17 +136,17 @@
                                                     }
 
                                                     switch (order.getStatus()) {
-                                                        case 0:
+                                                        case 1:
                                                             if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-primary">Pending</span></th>
                                                 <% }
                                                         break;
-                                                    case 1:
+                                                    case 2:
                                                         if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-success">Success</span></th>
                                                 <% }
                                                         break;
-                                                    case 2:
+                                                    case 0:
                                                         if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>"><a class="badge badge-danger" href="/YogaCenter/request?action=TraineeReoder&oID=<%=OrderID%>">Cancel</a></th>
                                                 <% }
@@ -168,7 +170,18 @@
                 </div>
             </div>
         </div>
-
+        <c:if test="${addsuccess != null}">
+            <div class="notification-success" style="z-index: 1000">
+                <div class="content">
+                    <div class="title">Success</div>
+                    <span>Buy courses successfully.</span>
+                </div>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification-success');
+                notification.timeOut = setTimeout(() => notification.remove(), 3000);
+            </script>
+        </c:if>
     </body>
     <c:import url="footer.html"></c:import>
 </html>

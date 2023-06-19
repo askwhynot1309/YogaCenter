@@ -13,7 +13,7 @@ html{
 }
 .input-course {
     font-family: monospace;
-    max-width: 190px;
+    width: 190px;
     outline: none;
     border: 1px solid #dadada;
     padding: 10px;

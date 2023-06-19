@@ -52,6 +52,8 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                 filePart.write(file.getAbsolutePath());
             }
             String description = request.getParameter("course_description");
+            String objective = request.getParameter("course_object");
+            String summary = request.getParameter("course_summary");
             BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
             int level = Integer.parseInt(request.getParameter("level"));
             String datestart = request.getParameter("course_start");
@@ -63,7 +65,7 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                     request.setAttribute("expired", "Ngày bắt đầu đã qua");
                     request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
                 } else {
-                    int updateCourse = Dao.CourseDao.updateCourse(id, name, oldimg, fee, description, start, slot, level);
+                    int updateCourse = Dao.CourseDao.updateCourse(id, name, oldimg, fee, description, objective, summary, start, slot, level);
                     if (updateCourse == 1) {
                             request.setAttribute("success", "Update mới khoá học thành công");
                             request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
@@ -74,7 +76,7 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                         request.setAttribute("expired", "Ngày bắt đầu đã qua");
                         request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
                 } else {
-                    int updateCourse = Dao.CourseDao.updateCourse(id, name, fileName, fee, description, start, slot, level);
+                    int updateCourse = Dao.CourseDao.updateCourse(id, name, fileName, fee, description, objective, summary, start, slot, level);
                     if (updateCourse == 1) {
                             request.setAttribute("success", "Update mới khoá học thành công");
                             request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);

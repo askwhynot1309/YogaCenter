@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,14 +33,15 @@ public class ButtonSignCourseServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int idaccount = Integer.parseInt(request.getParameter("key"));
+            HttpSession session = request.getSession();
             int idcourse = Integer.parseInt(request.getParameter("id"));
+            int idaccount = Integer.parseInt(request.getParameter("key"));
             int quantity = 1;
             Date dateorder = new Date(System.currentTimeMillis());
             int insertOrder = Dao.OrderDao.insertOrderInOffline(quantity, idcourse, idaccount, dateorder);
             if(insertOrder == 1){
                 request.setAttribute("success", "message");
-                request.getRequestDispatcher("signcourse").forward(request, response);
+                request.getRequestDispatcher("trainee").forward(request, response);
             }
         }catch(Exception e){
             e.printStackTrace();

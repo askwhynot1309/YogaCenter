@@ -27,6 +27,16 @@ public class OrderCourse {
     public OrderCourse() {
     }
 
+    public OrderCourse(int id_order, int id_course, String name_course, Date dateorder, int status, int method, BigDecimal fee_course) {
+        this.id_order = id_order;
+        this.id_course = id_course;
+        this.name_course = name_course;
+        this.dateorder = dateorder;
+        this.status = status;
+        this.method = method;
+        this.fee_course = fee_course;
+    }
+
     public OrderCourse(int id_order, String name_account, Date dateorder, int status, int method) {
         this.id_order = id_order;
         this.name_account = name_account;

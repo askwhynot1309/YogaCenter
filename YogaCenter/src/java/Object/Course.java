@@ -20,13 +20,16 @@ public class Course implements Serializable{
     private Date date_start;
     private int slot;
     private String description;
+    private String learnt;
+    private String summary;
     private int level;
+    private String name_level;
     private int status;
 
     public Course() {
     }
 
-    public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, int slot, String description, int level, int status) {
+    public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, int slot, String description, int level, String name_level, int status) {
         this.idCourse = idCourse;
         this.name_course = name_course;
         this.img_course = img_course;
@@ -35,7 +38,47 @@ public class Course implements Serializable{
         this.slot = slot;
         this.description = description;
         this.level = level;
+        this.name_level = name_level;
         this.status = status;
+    }
+
+    public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, int slot, String description, String learnt, String summary, int level, String name_level, int status) {
+        this.idCourse = idCourse;
+        this.name_course = name_course;
+        this.img_course = img_course;
+        this.fee_course = fee_course;
+        this.date_start = date_start;
+        this.slot = slot;
+        this.description = description;
+        this.learnt = learnt;
+        this.summary = summary;
+        this.level = level;
+        this.name_level = name_level;
+        this.status = status;
+    }
+
+    public String getLearnt() {
+        return learnt;
+    }
+
+    public void setLearnt(String learnt) {
+        this.learnt = learnt;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public String getName_level() {
+        return name_level;
+    }
+
+    public void setName_level(String name_level) {
+        this.name_level = name_level;
     }
 
     public int getIdCourse() {
