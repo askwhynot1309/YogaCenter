@@ -223,6 +223,7 @@ public class ClassDetailDao {
         int Choice = 0;
         try {
             cn = DBUtils.getConnection();
+            cn.setAutoCommit(false);
             if (cn != null) {
                 String sql = "SELECT *\n"
                         + "FROM ClassDetail\n"
@@ -263,6 +264,8 @@ public class ClassDetailDao {
                     String course = rs.getNString("Course_Name");
                     trainer = new ClassDetail(classdetail, class_name, id_time, idaccount, datestudy, account, id_course, course);
                 }
+                cn.commit();
+                cn.setAutoCommit(true);
                 cn.close();
             }
         } catch (Exception e) {
