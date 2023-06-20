@@ -14,10 +14,10 @@
     <body>
         <c:set var="cart" value="${sessionScope.cart}"/>
         <header class="header" style = "z-index: 1; position: sticky;">
-            <a href="homepage.jsp" id="logo"><img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" width="75px" height="75px" alt="logo"/></a>
+            <a href="/YogaCenter/home" id="logo"><img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" width="75px" height="75px" alt="logo"/></a>
 
             <nav class="navbar" style="font-size: 25px; font-weight: 700;">
-                <a href="homepage.jsp">Home</a>
+                <a href="/YogaCenter/home">Home</a>
                 <a href="/YogaCenter/course">Course</a>
                 <a href="aboutUs.jsp">About</a>
                 <a href="yogaGallery.jsp">Gallery</a>
@@ -28,7 +28,7 @@
             <c:if test="${account != null}">
                 <div class="iconTrainee">
                     <div class='custom-cart-wrapper'>
-                        <a href="traineeViewCart.jsp" class="fa-solid fa-cart-shopping fa-2xl"></a>
+                        <a href="/YogaCenter/viewcart" class="fa-solid fa-cart-shopping fa-2xl"></a>
                         <c:choose>
                             <c:when test="${cart != null}">
                                 <div id='cartQuantity' class='custom-cart'>${cart.size()}</div>
@@ -46,19 +46,19 @@
                         <div class="dropdown-content">
                             <p>${account.name}</p>
                             <p>
-                                <a href="/YogaCenter/request?action=TraineeManageInformation">
+                                <a href="/YogaCenter/information">
                                     <i class="fas fa-user icon"></i>
                                     Manage Account
                                 </a>
                             </p>
                             <p>
-                                <a href="/YogaCenter/request?action=ClassBooking">
+                                <a href="/YogaCenter/classbooking">
                                     <i class="fas fa-calendar-alt icon"></i>
                                     Class booking
                                 </a>
                             </p>
                             <p>
-                                <a href="/YogaCenter/request?action=ManagePurchase">
+                                <a href="/YogaCenter/purchase">
                                     <i class="fas fa-money-bill"></i>                
                                     Purchase History
                                 </a>

@@ -35,7 +35,7 @@ public class StaffCourseListServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
+            ArrayList<Course> listCourse = Dao.CourseDao.staffGetAllCourse();
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
             if (listCourse != null && !listCourse.isEmpty()) {
                 if (listLevel != null && !listLevel.isEmpty()) {

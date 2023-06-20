@@ -41,16 +41,17 @@ public class TraineeSaveOrderServlet extends HttpServlet {
                 int method = Integer.parseInt(request.getParameter("method"));
                 int status;
                 if (method == 0) {
-                    status = 0;
-                }else{
                     status = 1;
+                }else{
+                    status = 2;
                 }
                 HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
                 boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
                 cart.clear();
                 if (inserted == true) {
                     session.removeAttribute("cart");
-                    response.sendRedirect("traineeViewCart.jsp");
+                    request.setAttribute("addsuccess", "message");
+                    request.getRequestDispatcher("traineeManagePurchase.jsp").forward(request, response);
                 }else{
                     response.sendRedirect("error.html");
                 }

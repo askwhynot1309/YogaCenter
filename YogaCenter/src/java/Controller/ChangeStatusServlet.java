@@ -40,13 +40,13 @@ public class ChangeStatusServlet extends HttpServlet {
                 case "employeeChange":
                     int changeStatusEmployee = Dao.AccountDao.changeStatus(status, id);
                     if (changeStatusEmployee == 1) {
-                        request.getRequestDispatcher("AdminManageEmployeeServlet").forward(request, response);
+                        request.getRequestDispatcher("employee").forward(request, response);
                     }
                     break;
                 case "userChange":
                     int changeStatusUser = Dao.AccountDao.changeStatus(status, id);
                     if (changeStatusUser == 1) {
-                        request.getRequestDispatcher("AdminManageUserServlet").forward(request, response);
+                        request.getRequestDispatcher("user").forward(request, response);
                     }
                     break;
                 case "courseChange":
@@ -56,14 +56,20 @@ public class ChangeStatusServlet extends HttpServlet {
                         Date currentdate = new Date(System.currentTimeMillis());
                         if(newdate.equals(currentdate)){
                             request.setAttribute("errorDate", "message");
-                            request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
+                            request.getRequestDispatcher("managecourse").forward(request, response);
                         }
                     }
                     int changeStatusCourse = Dao.CourseDao.changeStatusCourse(status, id);
                     if (changeStatusCourse == 1) {
-                        request.getRequestDispatcher("AdminManageCourseServlet").forward(request, response);
+                        request.getRequestDispatcher("managecourse").forward(request, response);
                     }
                     break;
+                case "orderChange":
+                    int changeStatusOrder = Dao.OrderDao.changeStatusBooking(id, status);
+                    if (changeStatusOrder == 1) {
+                        request.getRequestDispatcher("viewbooking").forward(request, response);
+                    }
+                    break;      
             }
         } catch (Exception e) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");

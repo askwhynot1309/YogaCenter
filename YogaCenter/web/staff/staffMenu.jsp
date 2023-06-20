@@ -16,32 +16,38 @@
             <ul>
                 <li>
                     <a href="/YogaCenter/request?action=DashBoard&option=1">
-                        <i class="fas fa-user icon"></i>
+                        <i class="fas fa-user icon" style="margin-right: 17px"></i>
                         Staff DashBoard
                     </a>
                 </li>
                 <li>
-                    <a href="/YogaCenter/request?action=ManageTrainee">
-                        <i class="fas fa-user icon"></i>
+                    <a href="/YogaCenter/trainee">
+                        <i class="fas fa-user icon" style="margin-right: 17px"></i>
                         Manage Trainee
                     </a>
                 </li>
                 <li>
-                    <a href="/YogaCenter/request?action=ViewSchedule">
-                        <i class="fas fa-calendar-alt icon"></i>
+                    <a href="/YogaCenter/viewschedule">
+                        <i class="fas fa-calendar-alt icon" style="margin-right: 17px"></i>
                         View Schedule
                     </a>
                 </li>
                 <li>
-                    <a href="/YogaCenter/request?action=ManageClass">
+                    <a href="/YogaCenter/class">
                         <i class="fas fa-door-open icon"></i>
                         Manage Class
                     </a>
                 </li>
                 <li>
-                    <a href="/YogaCenter/request?action=StaffCourseList">
+                    <a href="/YogaCenter/listcourse" style="margin-right: 17px">
                         <i class="fas fa-book icon"></i>
                         Course List
+                    </a>
+                </li>
+                <li>
+                    <a href="/YogaCenter/viewbooking" style="margin-right: 17px">
+                        <i class="fas fa-book icon"></i>
+                        Manage Booking
                     </a>
                 </li>
             </ul>

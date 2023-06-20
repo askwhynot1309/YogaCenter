@@ -48,6 +48,8 @@ public class AddCourseServlet extends HttpServlet {
                 fileName = "";
             }
             String description = request.getParameter("course_description");
+            String objective = request.getParameter("course_object");
+            String summary = request.getParameter("course_summary");
             BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
             int course_status = Integer.parseInt(request.getParameter("course_status"));
             int level = Integer.parseInt(request.getParameter("level"));
@@ -107,14 +109,14 @@ public class AddCourseServlet extends HttpServlet {
                             }
                         }
                     } else {
-                        int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, start, slot, level, course_status);
+                        int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, objective, summary, start, slot, level, course_status);
                         if (insertCourse == 1) {
                             if (listCourse != null && !listCourse.isEmpty()) {
                                 if (listLevel != null && !listLevel.isEmpty()) {
                                     request.setAttribute("listCourse", listCourse);
                                     request.setAttribute("listLevel", listLevel);
                                     request.setAttribute("success", "Tạo mới khoá học thành công");
-                                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                    request.getRequestDispatcher("managecourse").forward(request, response);
                                 } else {
                                     request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                                 }
@@ -123,7 +125,7 @@ public class AddCourseServlet extends HttpServlet {
                                     request.setAttribute("listLevel", listLevel);
                                     request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
                                     request.setAttribute("success", "Tạo mới khoá học thành công");
-                                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                    request.getRequestDispatcher("managecourse").forward(request, response);
                                 } else {
                                     request.setAttribute("success", "Tạo mới khoá học thành công");
                                     request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
