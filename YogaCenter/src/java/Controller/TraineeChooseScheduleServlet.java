@@ -49,7 +49,7 @@ public class TraineeChooseScheduleServlet extends HttpServlet {
                 for (Get30SlotsByCourse dateForSlot : list) {
                     int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(id_room, id_time, idaccount, id_course, dateForSlot.getDay(), option);
                 }
-                request.getRequestDispatcher("request?action=ClassBooking").forward(request, response);
+                request.getRequestDispatcher("classbooking").forward(request, response);
             }
         }
     }

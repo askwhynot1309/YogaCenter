@@ -494,7 +494,7 @@ public class CourseDao {
                 String sql = "SELECT DISTINCT C.Course_ID, C.Course_Name, C.Img, C.Course_Fee, C.Start_date, C.Slot, C.Description, C.ID_Level, C.Status, l.Level_Name\n"
                         + "FROM [dbo].[Course] C \n"
                         + "JOIN [dbo].[BookingDetail] BD ON C.Course_ID = BD.ID_Course\n"
-                        + "JOIN [dbo].[BookingCourse] BC ON BD.Order_ID = BC.OrderID C JOIN Level l ON C.ID_Level = l.Level_ID\n"
+                        + "JOIN [dbo].[BookingCourse] BC ON BD.Order_ID = BC.OrderID JOIN Level l ON C.ID_Level = l.Level_ID\n"
                         + "WHERE BC.ID_Trainee = ?";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setInt(1, Trainee_ID);

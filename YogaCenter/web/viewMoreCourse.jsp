@@ -103,7 +103,7 @@
                 }
             }
             .cssbuttons-io-button {
-                background: #A370F0;
+                background: #000;
                 color: white;
                 font-family: inherit;
                 padding: 0.35em;

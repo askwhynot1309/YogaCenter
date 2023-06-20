@@ -153,7 +153,7 @@
                         if (count < 3) { // Display only the first three courses
                             count++;
                 %>
-                <div class="inner-class">
+                <div class="inner-class" style="height: 450px; position: relative">
                     <div>
                         <img style="width: 80%; height: 250px; object-fit: cover" src="img/<%= course.getImg_course()%>" alt=""/>
                     </div>
@@ -163,21 +163,25 @@
                         <%
                             if (account == null && course.getLevel() == 1) {
                         %>
+                        <div style="position: absolute; bottom: 0; width: 100%">
                         <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=<%= course.getIdCourse()%>">
                             <span class="top-key"></span>
                             <span class="text">View more</span>
                             <span class="bottom-key-1"></span>
                             <span class="bottom-key-2"></span>
                         </a>
+                        </div>
                         <%
                         } else {
                         %>
+                        <div style="position: absolute; bottom: 0; width: 100%">
                         <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=<%= course.getIdCourse()%>">
                             <span class="top-key"></span>
                             <span class="text">View more</span>
                             <span class="bottom-key-1"></span>
                             <span class="bottom-key-2"></span>
                         </a>
+                        </div>
                         <%
                             }
                         %>
