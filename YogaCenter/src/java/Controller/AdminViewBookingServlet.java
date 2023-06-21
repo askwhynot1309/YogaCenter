@@ -4,11 +4,10 @@
  */
 package Controller;
 
-import Object.Account;
+import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author CCLaptop
+ * @author ADMIN
  */
-public class TrainerManageTrainee extends HttpServlet {
+public class AdminViewBookingServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,17 +33,15 @@ public class TrainerManageTrainee extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<Account> listUser = Dao.UserDao.getAllTrainee();
-            if (listUser != null && !listUser.isEmpty()) {
-                request.setAttribute("listUser", listUser);
-                request.getRequestDispatcher("trainer/trainerManageUser.jsp").forward(request, response);
-            } else {
-                request.setAttribute("nulllist", "There are no users in the data");
-                request.getRequestDispatcher("trainer/trainerManageUser.jsp").forward(request, response);
+            ArrayList<OrderCourse> listorder = Dao.OrderDao.getAllOrder();
+            if(listorder == null){
+                request.setAttribute("nulllist", "There are any order of trainee.");
+            }else{
+                request.setAttribute("listOrder", listorder);
             }
-        } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("admin/adminviewBooking.jsp").forward(request, response);
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

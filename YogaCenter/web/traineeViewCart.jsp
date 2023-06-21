@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="css/style.css"/>
+        <title>View cart</title>
     </head>
     <style>
         .title{
@@ -86,9 +87,6 @@
             margin-left: auto;
             font-size: 0.7rem;
         }
-        img{
-            width: 3.5rem;
-        }
         .back-to-shop{
             margin-top: 4.5rem;
         }
@@ -157,8 +155,8 @@
             background-position-y: center;
         }
     </style>
-    <c:import url="header.jsp"/>
     <body>
+        <c:import url="header.jsp"/>
         <%
             HashMap<String, Integer> cart = (HashMap) session.getAttribute("cart");
             int totalMoney = 0;
@@ -196,7 +194,7 @@
                                     <div class="row border-top border-bottom">
                                     <div class="row main align-items-center">
                                         <div class="col-2">
-                                            <img style="width: auto;" class="img-fluid" src="<%=imgPath%>">
+                                            <img style="width: 50px; height: " class="img-fluid" src="img/<%=imgPath%>">
                                         </div>
                                         <div class="col">
                                             <div class="row"><%= courseName%></div>    
@@ -215,7 +213,7 @@
                                 %>
 
                             </div>
-                            <div class="back-to-shop"><a href="homepage.jsp">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                            <div class="back-to-shop"><a href="/YogaCenter/course">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
                         </div>
                         <div class="col-md-4 summary">
                             <div><h5><b>Summary</b></h5></div>

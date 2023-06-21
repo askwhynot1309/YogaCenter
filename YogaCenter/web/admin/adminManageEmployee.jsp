@@ -16,23 +16,23 @@
             <div class="row">
                 <div class="col-lg-2" style="padding: 0">
                     <c:import url="adminMenu.jsp"/>
-                    </div>
-                    <div class="col-lg-10">
-                        <h2 style="display: flex; justify-content: center; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">
-                            Manage Employee
-                        </h2>
-                        <div>
-                            <div style="display: flex; margin-left: 30%; margin-bottom: 2rem; margin-top: 2rem">
-                                <form action="/YogaCenter/request" method="POST" class="form-search">
-                                    <div class="group">
-                                        <svg class="icon-search" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-                                        <input placeholder="Search by Name Employee" type="text" name="txtsearch" value="${param.txtsearch}" class="input">
+                </div>
+                <div class="col-lg-10">
+                    <h2 style="display: flex; justify-content: center; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">
+                        Manage Employee
+                    </h2>
+                    <div style="height: 150px">
+                        <div style="display: flex; margin-left: 30%; margin-bottom: 2rem; margin-top: 2rem">
+                            <form action="/YogaCenter/request" method="POST" class="form-search">
+                                <div class="group">
+                                    <svg class="icon-search" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+                                    <input placeholder="Search by Name Employee" type="text" name="txtsearch" value="${param.txtsearch}" class="input">
                                     <input name="option" value="searchEmployee" hidden="">
                                     <button name="action" value="search" class="btn-search">Search</button>
                                 </div>
                             </form>
                         </div>
-                        <button class="btn-add">
+                        <button class="btn-add" style="float: right">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg><a href="/YogaCenter/AddNewEmployeeServlet">Create New Employee</a>
                             </span>
@@ -100,7 +100,7 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <a href="/YogaCenter/request?action=inf&id=${employee.idaccount}&option=infEmployee" class="btn btn-primary">Thông tin chi tiết</a>
+                                                <a href="/YogaCenter/request?action=inf&id=${employee.idaccount}&option=infEmployee" class="btn btn-primary">More information</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -121,77 +121,77 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
     </body>
     <script>
-                const productTable = document.querySelector('.table');
-                const pagination = document.querySelector('.pagination ul');
-                const page = document.querySelector('.pagination ul li:nth-child(2)');
+        const productTable = document.querySelector('.table');
+        const pagination = document.querySelector('.pagination ul');
+        const page = document.querySelector('.pagination ul li:nth-child(2)');
 
-                const productsPerPage = 6;
-                let currentPage = 1;
+        const productsPerPage = 6;
+        let currentPage = 1;
 
-                function displayProducts() {
-                    const startIndex = (currentPage - 1) * productsPerPage;
-                    const endIndex = startIndex + productsPerPage;
-                    const products = Array.from(productTable.tBodies[0].rows);
+        function displayProducts() {
+            const startIndex = (currentPage - 1) * productsPerPage;
+            const endIndex = startIndex + productsPerPage;
+            const products = Array.from(productTable.tBodies[0].rows);
 
-                    products.forEach((product, index) => {
-                        if (index >= startIndex && index < endIndex) {
-                            product.style.display = 'table-row';
-                        } else {
-                            product.style.display = 'none';
-                        }
-                    });
+            products.forEach((product, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    product.style.display = 'table-row';
+                } else {
+                    product.style.display = 'none';
                 }
+            });
+        }
 
-                function createPagination() {
-                    const products = Array.from(productTable.tBodies[0].rows);
-                    const pageCount = Math.ceil(products.length / productsPerPage);
+        function createPagination() {
+            const products = Array.from(productTable.tBodies[0].rows);
+            const pageCount = Math.ceil(products.length / productsPerPage);
 
-                    for (let i = 2; i <= pageCount; i++) {
-                        const li = document.createElement('li');
-                        const link = document.createElement('a');
-                        link.href = '#';
-                        link.textContent = i;
-                        link.classList.add('page');
-                        if (i === currentPage) {
-                            link.classList.add('active');
-                        }
-                        li.appendChild(link);
-                        pagination.insertBefore(li, pagination.lastElementChild);
-                    }
+            for (let i = 2; i <= pageCount; i++) {
+                const li = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = i;
+                link.classList.add('page');
+                if (i === currentPage) {
+                    link.classList.add('active');
                 }
+                li.appendChild(link);
+                pagination.insertBefore(li, pagination.lastElementChild);
+            }
+        }
 
-                createPagination();
+        createPagination();
+        displayProducts();
+
+        pagination.addEventListener('click', e => {
+            e.preventDefault();
+            if (e.target.classList.contains('page')) {
+                currentPage = parseInt(e.target.textContent);
                 displayProducts();
-
-                pagination.addEventListener('click', e => {
-                    e.preventDefault();
-                    if (e.target.classList.contains('page')) {
-                        currentPage = parseInt(e.target.textContent);
-                        displayProducts();
-                        const currentLink = pagination.querySelector('.active');
-                        currentLink.classList.remove('active');
-                        e.target.classList.add('active');
-                    } else if (e.target.classList.contains('prev')) {
-                        if (currentPage > 1) {
-                            currentPage--;
-                            displayProducts();
-                            const currentLink = pagination.querySelector('.active');
-                            currentLink.classList.remove('active');
-                            const prevLink = currentLink.parentNode.previousElementSibling.querySelector('a');
-                            prevLink.classList.add('active');
-                        }
-                    } else if (e.target.classList.contains('next')) {
-                        const products = Array.from(productTable.tBodies[0].rows);
-                        const pageCount = Math.ceil(products.length / productsPerPage);
-                        if (currentPage < pageCount) {
-                            currentPage++;
-                            displayProducts();
-                            const currentLink = pagination.querySelector('.active');
-                            currentLink.classList.remove('active');
-                            const nextLink = currentLink.parentNode.nextElementSibling.querySelector('a');
-                            nextLink.classList.add('active');
-                        }
-                    }
-                });
+                const currentLink = pagination.querySelector('.active');
+                currentLink.classList.remove('active');
+                e.target.classList.add('active');
+            } else if (e.target.classList.contains('prev')) {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayProducts();
+                    const currentLink = pagination.querySelector('.active');
+                    currentLink.classList.remove('active');
+                    const prevLink = currentLink.parentNode.previousElementSibling.querySelector('a');
+                    prevLink.classList.add('active');
+                }
+            } else if (e.target.classList.contains('next')) {
+                const products = Array.from(productTable.tBodies[0].rows);
+                const pageCount = Math.ceil(products.length / productsPerPage);
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    displayProducts();
+                    const currentLink = pagination.querySelector('.active');
+                    currentLink.classList.remove('active');
+                    const nextLink = currentLink.parentNode.nextElementSibling.querySelector('a');
+                    nextLink.classList.add('active');
+                }
+            }
+        });
     </script>
 </html>

@@ -131,7 +131,7 @@
                                                             <c:forEach var="day" items="${listDay}">
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
-                                                                        <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'TuesDay'}">
+                                                                        <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Tuesday'}">
                                                                             <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>

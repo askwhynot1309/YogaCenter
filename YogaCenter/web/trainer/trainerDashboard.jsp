@@ -21,13 +21,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/YogaCenter/request?action=TrainerManageTrainee">
+                    <a href="/YogaCenter/manageuser">
                         <i class="fas fa-user icon"></i>
                         Manage Trainee
                     </a>
                 </li>
                 <li>
-                    <a href="/YogaCenter/request?action=TrainerViewSchedule">
+                    <a href="/YogaCenter/trainerviewschedule">
                         <i class="fas fa-calendar-alt icon"></i>
                         View Schedule
                     </a>

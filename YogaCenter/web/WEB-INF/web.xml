@@ -101,10 +101,6 @@
         <servlet-class>Controller.StaffViewScheduleServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>StaffCourseListServlet</servlet-name>
-        <servlet-class>Controller.StaffCourseListServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>Controller.HomeServlet</servlet-class>
     </servlet>
@@ -157,12 +153,72 @@
         <servlet-class>Controller.TraineeViewClassDetail</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TrainerManageTrainee</servlet-name>
-        <servlet-class>Controller.TrainerManageTrainee</servlet-class>
+        <servlet-name>AddTraineeServlet</servlet-name>
+        <servlet-class>Controller.AddTraineeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ButtonAddTraineeServlet</servlet-name>
+        <servlet-class>Controller.ButtonAddTraineeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClassManageServlet</servlet-name>
+        <servlet-class>Controller.ClassManageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffCourseListServlet</servlet-name>
+        <servlet-class>Controller.StaffCourseListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddRoomServlet</servlet-name>
+        <servlet-class>Controller.AddRoomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResolveServlet</servlet-name>
+        <servlet-class>Controller.ResolveServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffManageClass</servlet-name>
+        <servlet-class>Controller.StaffManageClass</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GiveFeedbackServlet</servlet-name>
+        <servlet-class>Controller.GiveFeedbackServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ButtonChangeroomServlet</servlet-name>
+        <servlet-class>Controller.ButtonChangeroomServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffListCourseToSign</servlet-name>
+        <servlet-class>Controller.StaffListCourseToSign</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ButtonSignCourseServlet</servlet-name>
+        <servlet-class>Controller.ButtonSignCourseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminViewBookingServlet</servlet-name>
+        <servlet-class>Controller.AdminViewBookingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffViewBooking</servlet-name>
+        <servlet-class>Controller.StaffViewBooking</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrainerManageUser</servlet-name>
+        <servlet-class>Controller.TrainerManageUser</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TrainerViewScheduleServlet</servlet-name>
         <servlet-class>Controller.TrainerViewScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TraineeViewCartServlet</servlet-name>
+        <servlet-class>Controller.TraineeViewCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewPreviousServlet</servlet-name>
+        <servlet-class>Controller.ViewPreviousServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -186,11 +242,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminManageUserServlet</servlet-name>
-        <url-pattern>/AdminManageUserServlet</url-pattern>
+        <url-pattern>/user</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminManageCourseServlet</servlet-name>
-        <url-pattern>/AdminManageCourseServlet</url-pattern>
+        <url-pattern>/managecourse</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateInformationCourseServlet</servlet-name>
@@ -202,11 +258,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewScheduleServlet</servlet-name>
-        <url-pattern>/ViewScheduleServlet</url-pattern>
+        <url-pattern>/schedule</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminManageEmployeeServlet</servlet-name>
-        <url-pattern>/AdminManageEmployeeServlet</url-pattern>
+        <url-pattern>/employee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>InformationServlet</servlet-name>
@@ -258,15 +314,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StaffManageTraineeServlet</servlet-name>
-        <url-pattern>/StaffManageTraineeServlet</url-pattern>
+        <url-pattern>/trainee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StaffViewScheduleServlet</servlet-name>
-        <url-pattern>/StaffViewScheduleServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>StaffCourseListServlet</servlet-name>
-        <url-pattern>/StaffCourseListServlet</url-pattern>
+        <url-pattern>/viewschedule</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -274,7 +326,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeManageInformationServlet</servlet-name>
-        <url-pattern>/TraineeManageInformationServlet</url-pattern>
+        <url-pattern>/information</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChangePasswordServlet</servlet-name>
@@ -298,11 +350,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeClassBooked</servlet-name>
-        <url-pattern>/TraineeClassBooked</url-pattern>
+        <url-pattern>/classbooking</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeManagePurchaseServlet</servlet-name>
-        <url-pattern>/TraineeManagePurchaseServlet</url-pattern>
+        <url-pattern>/purchase</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeDeleteCartItemsServlet</servlet-name>
@@ -321,12 +373,72 @@
         <url-pattern>/TraineeViewClassDetail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>TrainerManageTrainee</servlet-name>
-        <url-pattern>/TrainerManageTrainee</url-pattern>
+        <servlet-name>AddTraineeServlet</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ButtonAddTraineeServlet</servlet-name>
+        <url-pattern>/ButtonAddTraineeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClassManageServlet</servlet-name>
+        <url-pattern>/manageclass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffCourseListServlet</servlet-name>
+        <url-pattern>/listcourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddRoomServlet</servlet-name>
+        <url-pattern>/AddRoomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResolveServlet</servlet-name>
+        <url-pattern>/ResolveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffManageClass</servlet-name>
+        <url-pattern>/class</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GiveFeedbackServlet</servlet-name>
+        <url-pattern>/GiveFeedbackServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ButtonChangeroomServlet</servlet-name>
+        <url-pattern>/ButtonChangeroomServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffListCourseToSign</servlet-name>
+        <url-pattern>/signcourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ButtonSignCourseServlet</servlet-name>
+        <url-pattern>/ButtonSignCourseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminViewBookingServlet</servlet-name>
+        <url-pattern>/booking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffViewBooking</servlet-name>
+        <url-pattern>/viewbooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerManageUser</servlet-name>
+        <url-pattern>/manageuser</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TrainerViewScheduleServlet</servlet-name>
-        <url-pattern>/TrainerViewScheduleServlet</url-pattern>
+        <url-pattern>/trainerviewschedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeViewCartServlet</servlet-name>
+        <url-pattern>/viewcart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewPreviousServlet</servlet-name>
+        <url-pattern>/viewprevious</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
