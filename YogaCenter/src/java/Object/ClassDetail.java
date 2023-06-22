@@ -27,6 +27,16 @@ public class ClassDetail {
     public ClassDetail() {
     }
 
+    public ClassDetail(int id_detail, int id_room, int time, int idaccount, Date date, int id_course, int status) {
+        this.id_detail = id_detail;
+        this.id_room = id_room;
+        this.time = time;
+        this.idaccount = idaccount;
+        this.date = date;
+        this.id_course = id_course;
+        this.status = status;
+    }
+
     public ClassDetail(int id_detail, String class_name, int time, Date date) {
         this.id_detail = id_detail;
         this.class_name = class_name;

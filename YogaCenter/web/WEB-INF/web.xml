@@ -220,6 +220,14 @@
         <servlet-name>ViewPreviousServlet</servlet-name>
         <servlet-class>Controller.ViewPreviousServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TraineeShowYourCourse</servlet-name>
+        <servlet-class>Controller.TraineeShowYourCourse</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelCourseOrderServlet</servlet-name>
+        <servlet-class>Controller.CancelCourseOrderServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -439,6 +447,14 @@
     <servlet-mapping>
         <servlet-name>ViewPreviousServlet</servlet-name>
         <url-pattern>/viewprevious</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeShowYourCourse</servlet-name>
+        <url-pattern>/yourcourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelCourseOrderServlet</servlet-name>
+        <url-pattern>/CancelCourseOrderServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

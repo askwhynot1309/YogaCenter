@@ -91,7 +91,7 @@
                                         </select></p>
                                     </c:if>
                                 <input name="course_status" value="0" hidden="">
-                                <button name="action" value="Add" class="btn-add">Thêm</button>
+                                <button name="action" value="Add" class="btn-add">Add new course</button>
                             </form>
                         </div>
                     </div>
@@ -245,7 +245,7 @@
         <script>
                 CKEDITOR.replace('course_description');
                 CKEDITOR.replace('course_summary');
-                CKEDITOR.replace('course_learnt');
+                CKEDITOR.replace('course_object');
         </script>
     </body>
     <script>
