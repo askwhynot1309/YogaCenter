@@ -49,7 +49,7 @@
                                     <p>Fee of course : <input type="number" name="course_fee" value="${informationCourse.fee_course}" class="input-course"></p>
                                 </div>
                                 <div style="display: flex; align-items: center; justify-content: space-between">
-                                    <p>Start-date of course : <input type="date" name="course_start" value="${informationCourse.date_start}" class="input-course"></p>
+                                    <p>Start-date of course : <input value="${informationCourse.date_start}" class="input-course" readonly=""></p>
                                     <input name="id" value="${informationCourse.idCourse}" hidden="">
                                     <p>Slots : <input type="number" name="slot" value="${informationCourse.slot}" class="input-course"></p>
                                 </div>

@@ -23,8 +23,23 @@ public class OrderCourse {
     private int method;
     private int quantity;
     private BigDecimal fee_course;
+    private String level;
+    private Date course_start;
+    private String img;
+    private int slot;
 
     public OrderCourse() {
+    }
+
+    public OrderCourse(int id_course, String name_course, Date dateorder, BigDecimal fee_course, String level, Date course_start, String img, int slot) {
+        this.id_course = id_course;
+        this.name_course = name_course;
+        this.dateorder = dateorder;
+        this.fee_course = fee_course;
+        this.level = level;
+        this.course_start = course_start;
+        this.img = img;
+        this.slot = slot;
     }
 
     public OrderCourse(int id_order, int id_course, String name_course, Date dateorder, int status, int method, BigDecimal fee_course) {
@@ -58,14 +73,44 @@ public class OrderCourse {
         this.fee_course = fee_course;
     }
 
-    
-
     public OrderCourse(int id_order, int id_account, Date dateorder, int status, int quantity) {
         this.id_order = id_order;
         this.id_account = id_account;
         this.dateorder = dateorder;
         this.status = status;
         this.quantity = quantity;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public int getSlot() {
+        return slot;
+    }
+
+    public void setSlot(int slot) {
+        this.slot = slot;
+    }
+
+    public Date getCourse_start() {
+        return course_start;
+    }
+
+    public void setCourse_start(Date course_start) {
+        this.course_start = course_start;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 
     public BigDecimal getFee_course() {

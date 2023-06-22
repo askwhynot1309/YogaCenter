@@ -47,7 +47,7 @@ public class TraineeClassBooked extends HttpServlet {
             List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
             List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
             request.setAttribute("currentweek", currentweek);
-            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsByTrainee();
+            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsByTrainee(account.getIdaccount());
             if (listClass != null && !listClass.isEmpty()) {
                 request.setAttribute("listClass", listClass);
             }

@@ -54,6 +54,38 @@ public class CourseDao {
         return kq;
     }
 
+    public static ArrayList<Course> get4Course() throws Exception {
+        ArrayList<Course> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select top 4 *\n"
+                    + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
+                    + "Order by Course_ID desc";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int course_id = table.getInt("Course_ID");
+                    String course_name = table.getNString("Course_Name");
+                    String course_img = table.getString("Img");
+                    BigDecimal course_fee = table.getBigDecimal("Course_Fee");
+                    Date course_start = table.getDate("Start_date");
+                    int slot = table.getInt("Slot");
+                    String description = table.getNString("Description");
+                    String learnt = table.getNString("Objective");
+                    String summary = table.getNString("Summary");
+                    int level = table.getInt("ID_Level");
+                    String name_level = table.getNString("Level_Name");
+                    int status = table.getInt("Status");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, learnt, summary, level, name_level, status);
+                    kq.add(course);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
     public static ArrayList<Course> staffGetAllCourse() throws Exception {
         ArrayList<Course> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -309,18 +341,17 @@ public class CourseDao {
         return kq;
     }
 
-    public static int updateCourse(int id, String name, String img, BigDecimal fee, String description, String objective, String summary, Date start, int slot, int level) throws Exception {
+    public static int updateCourse(int id, String name, String img, BigDecimal fee, String description, String objective, String summary, int slot, int level) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "update Course\n"
-                    + "set Course_Name = ?, Course_Fee = ?, Img = ?, Start_date = ?, Slot = ?, Description = ?, Objective = ?, Summary = ?, ID_Level = ?\n"
+                    + "set Course_Name = ?, Course_Fee = ?, Img = ?, Slot = ?, Description = ?, Objective = ?, Summary = ?, ID_Level = ?\n"
                     + "where Course_ID = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, name);
             pst.setBigDecimal(2, fee);
             pst.setString(3, img);
-            pst.setDate(4, start);
             pst.setInt(5, slot);
             pst.setNString(6, description);
             pst.setNString(7, objective);
@@ -382,15 +413,16 @@ public class CourseDao {
         return kq;
     }
 
-    public static Course checkTheSameCourse(String course) throws Exception {
+    public static Course checkTheSameCourse(String course, int id_level) throws Exception {
         Course kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Course_Name = ?";
+                    + "where Course_Name = ? and c.ID_Level = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, course);
+            pst.setInt(2, id_level);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
