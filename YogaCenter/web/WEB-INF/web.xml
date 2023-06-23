@@ -220,6 +220,10 @@
         <servlet-name>ViewPreviousServlet</servlet-name>
         <servlet-class>Controller.ViewPreviousServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TraineeBookScheduleServlet</servlet-name>
+        <servlet-class>Controller.TraineeBookScheduleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -439,6 +443,10 @@
     <servlet-mapping>
         <servlet-name>ViewPreviousServlet</servlet-name>
         <url-pattern>/viewprevious</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeBookScheduleServlet</servlet-name>
+        <url-pattern>/ChooseClass</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

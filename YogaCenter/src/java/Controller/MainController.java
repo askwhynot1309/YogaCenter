@@ -100,7 +100,7 @@ public class MainController extends HttpServlet {
                         url = "TraineeSaveOrderServlet";
                         break;
                     case "EditSchedule":
-                        url = "traineeEditSchedule.jsp";
+                        url = "ChooseClass";
                         break;
                     case "DeleteCartItems":
                         url = "TraineeDeleteCartItemsServlet";

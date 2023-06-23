@@ -60,4 +60,23 @@ public class OrderCourseDao {
         }
         return purchase;
     }
+
+    public static boolean cancelStatus(int Order_ID) {
+        boolean isUpdated = false;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "  UPDATE [dbo].[StatusPayment]\n"
+                        + "  SET [Status] = 2\n"
+                        + "  WHERE [ID_Order] = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, Order_ID);
+                isUpdated = pst.execute();
+                
+            }
+        } catch (Exception e) {
+        }
+        return isUpdated;
+    }
 }

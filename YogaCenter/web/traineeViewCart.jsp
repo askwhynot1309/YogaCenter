@@ -1,3 +1,5 @@
+<%@page import="java.util.Locale"%>
+<%@page import="java.text.NumberFormat"%>
 <%@page import="Object.Account"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.util.Set"%>
@@ -161,6 +163,7 @@
             HashMap<String, Integer> cart = (HashMap) session.getAttribute("cart");
             int totalMoney = 0;
             ArrayList<Course> courseList = CourseDao.getAllCourse();
+            NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
         %>
         <div style="padding: 3rem 7%;" id="home" class="back">
             <div class="mian-home">
@@ -200,7 +203,7 @@
                                             <div class="row"><%= courseName%></div>    
                                         </div>
                                         <div class="col">
-                                            <%= price%> VNÐ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <%= nf.format(price)%>.000 VNÐ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <a href="/YogaCenter/request?action=DeleteCartItems&courseID=<%=cID%>" style="cursor: pointer" class="close">✕</a>
                                         </div>
                                     </div>
@@ -220,7 +223,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col" style="padding-left:1px;"> ITEMS <span id="checkoutQuantity"></span></div>
-                                <div class="col text-right"><span id="checkoutPrice"><%= totalMoney%>.000</span> VNĐ</div>
+                                <div class="col text-right"><span id="checkoutPrice"><%= nf.format(totalMoney) %>.000</span> VNĐ</div>
                             </div>
                             <form action="/YogaCenter/request" method="POST">
                                 <p>PAYMENT METHOD</p>
@@ -231,7 +234,7 @@
 
                                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                                     <div class="col">TOTAL PRICE</div>
-                                    <div class="col text-right"><span id="checkoutPriceMore"><%= totalMoney%>.000</span> VNĐ</div>
+                                    <div class="col text-right"><span id="checkoutPriceMore"><%= nf.format(totalMoney) %>.000</span> VNĐ</div>
                                 </div>
                                 <button type="submit" value="saveOrder" name="action" class="btn">CHECKOUT</button>
                             </form>

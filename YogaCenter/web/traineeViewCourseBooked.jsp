@@ -26,9 +26,6 @@
         thead {
             background: #dddcdc;
         }
-        thead th{
-            text-align: center;
-        }
         .toggle-btn {
             width: 40px;
             height: 21px;
@@ -62,14 +59,13 @@
         }
         .cell-1 th{
             vertical-align: middle;
-            text-align: center;
         }
     </style>
     <body>
         <c:import url="header.jsp"></c:import>
         <%
             Account account = (Account) session.getAttribute("account");
-            ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
+            ArrayList<Course> courseList = (ArrayList<Course>)request.getAttribute("courseList");
         %>
         <div class="container">
             <h2 style="text-align: center">My Learning</h2>
@@ -92,7 +88,7 @@
                                             for (Course course : courseList) {
                                         %>
                                         <tr class="cell-1">
-                                            <th><%= course.getName_course()%></th>
+                                            <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=<%=course.getIdCourse()%>"><%= course.getName_course()%></a></th>
                                             <th><%= course.getDate_start()%></th>
                                             <th><%= course.getSlot()%></th>
                                             <th><a href="/YogaCenter/request?action=EditSchedule&courseID=<%=course.getIdCourse()%>">Edit Schedule</a></th>
@@ -743,5 +739,12 @@
             }
 
         </script>
+        
+        <c:set var="ChangeFail" value="${requestScope.ChangeFail}"/>
+        <c:if test="${ChangeFail != null}">
+            <script>
+                window.alert("${ChangeFail}");
+            </script>
+        </c:if>
     </body>
 </html>
