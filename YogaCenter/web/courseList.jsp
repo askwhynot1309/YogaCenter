@@ -349,7 +349,7 @@
             </div>
             <script>
                 let notification = document.querySelector('.notification-success');
-                notification.timeOut = setTimeout(() => notification.remove(), 3000);
+                notification.timeOut = setTimeout(() => notification.remove(), 2000);
             </script>
         </c:if>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>

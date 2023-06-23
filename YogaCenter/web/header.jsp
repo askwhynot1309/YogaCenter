@@ -27,6 +27,51 @@
             <c:set var="account" value="${sessionScope.account}"/>
             <c:if test="${account != null}">
                 <div class="iconTrainee">
+                    <div class="dropdown" style="cursor: pointer">
+                        <span class="fa-solid fa-user fa-2xl"></span>
+                        <div class="dropdown-content" style="width: 200px; z-index: -1; background: #d0efe1">
+                            <p style="text-align: center; margin-top: 50px">${account.name}</p>
+                            <p style="font-weight: 900">
+                                <a href="/YogaCenter/information">
+                                    <i class="fas fa-user icon"></i>
+                                    Manage account
+                                </a>
+                            </p>
+                            <p style="font-weight: 900">
+                                <a href="/YogaCenter/yourcourse">
+                                    <i class="fa-solid fa-book icon"></i>
+                                    Your course
+                                </a>
+                            </p>
+                            <p style="font-weight: 900">
+                                <a href="/YogaCenter/classbooking">
+                                    <i class="fas fa-calendar-alt icon"></i>
+                                    Class booking
+                                </a>
+                            </p>
+                            <p style="font-weight: 900">
+                                <a href="/YogaCenter/purchase">
+                                    <i class="fas fa-money-bill"></i>                
+                                    Purchase history
+                                </a>
+                            </p>
+                            <p style="font-weight: 900">
+                                <a href="/YogaCenter/request?action=ChangePassword">
+                                    <i class="fas fa-lock"></i>
+                                    Change password
+                                </a>
+                            </p>
+                            <p style="font-weight: 900">
+                                <a href="/YogaCenter/request?action=Logout">
+                                    <i class="fas fa-sign-out-alt icon"></i>
+                                    Logout
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div style="cursor: pointer">
+                        <span class="fa-solid fa-bell fa-2xl"></span>
+                    </div>
                     <div class='custom-cart-wrapper'>
                         <a href="/YogaCenter/viewcart" class="fa-solid fa-cart-shopping fa-2xl"></a>
                         <c:choose>
@@ -34,48 +79,7 @@
                                 <div id='cartQuantity' class='custom-cart'>${cart.size()}</div>
                             </c:when>
                         </c:choose>
-                        
-                    </div>
 
-                    <div style="cursor: pointer">
-                        <span class="fa-solid fa-bell fa-2xl"></span>
-                    </div>
-
-                    <div class="dropdown" style="cursor: pointer">
-                        <span class="fa-solid fa-user fa-2xl"></span>
-                        <div class="dropdown-content">
-                            <p>${account.name}</p>
-                            <p>
-                                <a href="/YogaCenter/information">
-                                    <i class="fas fa-user icon"></i>
-                                    Manage Account
-                                </a>
-                            </p>
-                            <p>
-                                <a href="/YogaCenter/classbooking">
-                                    <i class="fas fa-calendar-alt icon"></i>
-                                    Class booking
-                                </a>
-                            </p>
-                            <p>
-                                <a href="/YogaCenter/purchase">
-                                    <i class="fas fa-money-bill"></i>                
-                                    Purchase History
-                                </a>
-                            </p>
-                            <p>
-                                <a href="/YogaCenter/request?action=ChangePassword">
-                                    <i class="fas fa-lock"></i>
-                                    Change password
-                                </a>
-                            </p>
-                            <p>
-                                <a href="/YogaCenter/request?action=Logout">
-                                    <i class="fas fa-sign-out-alt icon"></i>
-                                    Logout
-                                </a>
-                            </p>
-                        </div>
                     </div>
                 </div>
             </c:if>

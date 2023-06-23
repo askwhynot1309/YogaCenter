@@ -71,7 +71,7 @@ public class RegisterServlet extends HttpServlet {
             if (checkValid) {
                 int registrationSuccess = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, account, newpassword);
                 if (registrationSuccess == 1) {
-                    response.sendRedirect("registrationSuccess.jsp");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 } else {
                     response.sendRedirect("registrationFailure.jsp");
                 }

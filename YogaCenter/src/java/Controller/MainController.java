@@ -141,6 +141,9 @@ public class MainController extends HttpServlet {
                     case "ButtonSignCourse":
                         url = "ButtonSignCourseServlet";
                         break;
+                    case "Cancel":
+                        url = "CancelCourseOrderServlet";
+                        break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);
             }

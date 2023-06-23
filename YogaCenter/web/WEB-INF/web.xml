@@ -223,6 +223,12 @@
     <servlet>
         <servlet-name>TraineeBookScheduleServlet</servlet-name>
         <servlet-class>Controller.TraineeBookScheduleServlet</servlet-class>
+        <servlet-name>TraineeShowYourCourse</servlet-name>
+        <servlet-class>Controller.TraineeShowYourCourse</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelCourseOrderServlet</servlet-name>
+        <servlet-class>Controller.CancelCourseOrderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -447,6 +453,12 @@
     <servlet-mapping>
         <servlet-name>TraineeBookScheduleServlet</servlet-name>
         <url-pattern>/ChooseClass</url-pattern>
+        <servlet-name>TraineeShowYourCourse</servlet-name>
+        <url-pattern>/yourcourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelCourseOrderServlet</servlet-name>
+        <url-pattern>/CancelCourseOrderServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

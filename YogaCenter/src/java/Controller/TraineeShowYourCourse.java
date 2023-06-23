@@ -4,23 +4,25 @@
  */
 package Controller;
 
-import Object.Course;
+import Object.Account;
+import Object.ClassDetail;
+import Object.OrderCourse;
+import Object.SlotsTrainee;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Collections;
-import javax.servlet.RequestDispatcher;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ADMIN
  */
-public class HomeServlet extends HttpServlet {
+public class TraineeShowYourCourse extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,40 +38,34 @@ public class HomeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            Date currentdate = new Date(System.currentTimeMillis());
-            ArrayList<Course> randomList = new ArrayList<>();
-            ArrayList<Course> list = Dao.CourseDao.getCourseByDateStart(currentdate);
-            ArrayList<Course> listramdom = Dao.CourseDao.getAllCourse();
-            ArrayList<Course> list4Course = Dao.CourseDao.get4Course();
-            if (list != null && !list.isEmpty()) {
-                for (Course course : list) {
-                    int changeStatus = Dao.CourseDao.changeStatusCourse(1, course.getIdCourse());
+            HttpSession session = request.getSession();
+            ArrayList<SlotsTrainee> slotPresent = new ArrayList<>();
+            ArrayList<SlotsTrainee> slotAbsent = new ArrayList<>();
+            Date current_date = new Date(System.currentTimeMillis());
+            int statusPresent = 1;
+            int statusAbsent = 0;
+            Account trainee = (Account)session.getAttribute("account");
+            ArrayList<OrderCourse> listCourseTrainee = Dao.OrderCourseDao.getAllCourseTraineeLearn(trainee.getIdaccount());
+            ArrayList<ClassDetail> listCoursebyTrainee = Dao.ClassDetailDao.getAllSlotInClassWhenBuyCourses(trainee.getIdaccount());
+            for (OrderCourse orderCoursePresent : listCourseTrainee) {
+                SlotsTrainee countPresent = Dao.OrderCourseDao.getSlotTraineeLearn(trainee.getIdaccount(), current_date, statusPresent, orderCoursePresent.getId_course());
+                if(countPresent != null){
+                    slotPresent.add(countPresent);
                 }
-                Collections.shuffle(listramdom);
-                int count = 0;
-                for (Course course : listramdom) {
-                    if (count < 3) {
-                        randomList.add(course);
-                        count++;
-                    }
-                }
-                request.setAttribute("ramdomCourse", randomList);
-                request.setAttribute("list4Course", list4Course);
-                request.getRequestDispatcher("homepage.jsp").forward(request, response);
-            } else {
-                Collections.shuffle(listramdom);
-                int count = 0;
-                for (Course course : listramdom) {
-                    if (count < 3) {
-                        randomList.add(course);
-                        count++;
-                    }
-                }
-                request.setAttribute("ramdomCourse", randomList);
-                request.setAttribute("list4Course", list4Course);
-                request.getRequestDispatcher("homepage.jsp").forward(request, response);
             }
-        } catch (Exception e) {
+            for (OrderCourse orderCourseAbsent : listCourseTrainee) {
+                SlotsTrainee countAbsent = Dao.OrderCourseDao.getSlotTraineeLearn(trainee.getIdaccount(), current_date, statusAbsent, orderCourseAbsent.getId_course());
+                if(countAbsent != null){
+                    slotAbsent.add(countAbsent);
+                }
+            }
+            request.setAttribute("listCourseTrainee", listCourseTrainee);
+            request.setAttribute("current_date", current_date);
+            request.setAttribute("slotPresent", slotPresent);
+            request.setAttribute("listCoursebyTrainee", listCoursebyTrainee);
+            request.setAttribute("slotAbsent", slotAbsent);
+            request.getRequestDispatcher("traineeViewYourCourse.jsp").forward(request, response);
+        }catch(Exception e){
             e.printStackTrace();
         }
     }

@@ -82,9 +82,6 @@
         .col-2, .col{
             padding: 0 1vh;
         }
-        a{
-            padding: 0 1vh;
-        }
         .close{
             margin-left: auto;
             font-size: 0.7rem;
@@ -216,7 +213,7 @@
                                 %>
 
                             </div>
-                            <div class="back-to-shop"><a href="/YogaCenter/course">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                                <div class="back-to-shop"><a href="/YogaCenter/course" style="padding: 0 1vh">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
                         </div>
                         <div class="col-md-4 summary">
                             <div><h5><b>Summary</b></h5></div>

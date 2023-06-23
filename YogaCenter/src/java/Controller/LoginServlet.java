@@ -42,15 +42,15 @@ public class LoginServlet extends HttpServlet {
                 if (accountLogin.getStatus() == 0) {
                     switch (accountLogin.getRole()) {
                         case 0:
-                            session.setAttribute("Admin", accountLogin.getName());
+                            session.setAttribute("Admin", accountLogin);
                             request.getRequestDispatcher("/request?action=DashBoard&option=0").forward(request, response);
                             break;
                         case 1:
-                            session.setAttribute("Staff", accountLogin.getName());
+                            session.setAttribute("Staff", accountLogin);
                             request.getRequestDispatcher("/request?action=DashBoard&option=1").forward(request, response);
                             break;
                         case 2:
-                            session.setAttribute("Trainer", accountLogin.getName());
+                            session.setAttribute("Trainer", accountLogin);
                             request.getRequestDispatcher("/request?action=DashBoard&option=2").forward(request, response);
                             break;
                         case 3:
