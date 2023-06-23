@@ -57,22 +57,21 @@ public class UpdateInformationCourseServlet extends HttpServlet {
             BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
             int level = Integer.parseInt(request.getParameter("level"));
             int slot = Integer.parseInt(request.getParameter("slot"));
-            if ("".equals(fileName)) { 
+                if ("".equals(fileName)) {
                     int updateCourse = Dao.CourseDao.updateCourse(id, name, oldimg, fee, description, objective, summary, slot, level);
                     if (updateCourse == 1) {
-                            request.setAttribute("success", "Update mới khoá học thành công");
-                            request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
+                        request.setAttribute("success", "Update mới khoá học thành công");
+                        request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
                     }
-            } else {    
+                } else {
                     int updateCourse = Dao.CourseDao.updateCourse(id, name, fileName, fee, description, objective, summary, slot, level);
                     if (updateCourse == 1) {
-                            request.setAttribute("success", "Update mới khoá học thành công");
-                            request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
+                        request.setAttribute("success", "Update mới khoá học thành công");
+                        request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
+                    }
                 }
-            }
         } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            e.printStackTrace();
         }
     }
 

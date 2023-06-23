@@ -399,7 +399,6 @@ public class ClassDetailDao {
         return ID_Class;
     }
 
-
     public static ArrayList<ClassDetail> getAllClassDetailsByTrainee(int ID_Account) throws Exception {
 
         ArrayList<ClassDetail> kq = new ArrayList<>();
@@ -535,7 +534,6 @@ public class ClassDetailDao {
         return kq;
     }
 
-
     public static int checkNumTraineeInAClass(int Class_ID, int IDtime, int Choice) {
         int num = 0;
         Connection cn = null;
@@ -560,29 +558,6 @@ public class ClassDetailDao {
             e.printStackTrace();
         }
         return num;
-
-    public static int checkNumberofClass(int id_class, int id_time, int choice) throws Exception {
-        int kq = 0;
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "select COUNT(ClassDetail_ID) as Count\n"
-                    + "from ClassDetail \n"
-                    + "Group by Class_ID,IDtime,Choice\n"
-                    + "Having Class_ID = ? AND IDtime = ? AND Choice = ?";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, id_class);
-            pst.setInt(2, id_time);
-            pst.setInt(3, choice);
-            ResultSet table = pst.executeQuery();
-            if (table != null) {
-                while (table.next()) {
-                    int count = table.getInt("Count");
-                    kq = count;
-                }
-            }
-            cn.close();
-        }
-        return kq;
     }
 
     public static ArrayList<ClassDetail> getAllSlotInClassWhenBuyCourses(int id_account) throws Exception {

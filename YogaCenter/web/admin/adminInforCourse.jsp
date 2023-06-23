@@ -53,20 +53,11 @@
                                     <input name="id" value="${informationCourse.idCourse}" hidden="">
                                     <p>Slots : <input type="number" name="slot" value="${informationCourse.slot}" class="input-course"></p>
                                 </div>
+                                <p>Level : ${informationCourse.name_level}</p>
                                 <p>Detail of course : </p><textarea name="course_description">${informationCourse.description}</textarea>
                                 <p>Summary of course : </p><textarea name="course_summary">${informationCourse.summary}</textarea>
                                 <p>Objective of course : </p><textarea name="course_object">${informationCourse.learnt}</textarea>
-                                <c:set var="listLevel" value="${requestScope.listLevel}"/>
-                                <c:if test="${listLevel != null && !listLevel.isEmpty()}">
-                                    <p style="margin-top: 10px">Level : <select name="level" class="input-course">
-                                            <option value="0"></option>
-                                            <c:forEach var="level" items="${listLevel}">
-                                                <c:set var="isSelected" value="${informationCourse.level == level.getIdLevel()}"/>
-                                                <option value="${level.getIdLevel()}" <c:if test="${isSelected}">selected="selected"</c:if>>${level.getLevel_Name()}</option>
-                                            </c:forEach>
-                                        </select></p>
-                                    </c:if>
-                                <button name="action" value="ButtonChange" class="btn-update">Change information</button>
+                                <button name="action" value="ButtonChange" class="btn-update" style="margin-top: 20px; margin-bottom: 20px">Change information</button>
                             </div>
                             <div style="float: right; height: 540px">
                                 <div style="width: 350px; border: 5px solid black; padding: 10px">
@@ -75,7 +66,7 @@
                                     <input name="oldimg" value="${informationCourse.img_course}" hidden="">
                                 </div>
                             </div>
-                        </form>  
+                        </form> 
                         <c:if test="${expired != null}">
                             <div class="notification">
                                 <div class="content">

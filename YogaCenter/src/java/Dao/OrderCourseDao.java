@@ -80,7 +80,7 @@ public class OrderCourseDao {
         } catch (Exception e) {
         }
         return isUpdated;
-
+}
     public static ArrayList<OrderCourse> getAllCourseTraineeLearn(int id) throws Exception {
         ArrayList<OrderCourse> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
