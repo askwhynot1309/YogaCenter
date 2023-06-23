@@ -4,28 +4,27 @@
  */
 package Controller;
 
-import Dao.OrderCourseDao;
-import Object.Account;
-import Object.OrderCourse;
+import Dao.ClassDetailDao;
+import Dao.CourseDao;
+import Object.Course;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ngmin
  */
-public class TraineeManagePurchaseServlet extends HttpServlet {
+public class TraineeBookScheduleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,32 +36,33 @@ public class TraineeManagePurchaseServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(true);
-            Account account = (Account) session.getAttribute("account");
-            HashMap<Integer, ArrayList<OrderCourse>> purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
-            for (Map.Entry<Integer, ArrayList<OrderCourse>> entry : purchase.entrySet()) {
-                int orderID = entry.getKey();
-                ArrayList<OrderCourse> orderDetail = entry.getValue();
-                LocalDate overduaDate;
-                for (OrderCourse orderCourse : orderDetail) {
-                    if (orderCourse.getStatus() == 0) {
-                        LocalDate orderDate = orderCourse.getDateorder().toLocalDate();
-                        overduaDate = orderDate.plusDays(10);
-                        LocalDate currentDate = LocalDate.now();
-                        if (overduaDate.isBefore(currentDate)) {
-                            boolean isUpdated = OrderCourseDao.cancelStatus(orderID);
-                            boolean isDeleted = Dao.ClassDetailDao.deleteTraineeInClass(account.getIdaccount(), orderCourse.getId_course());
-                        }
-                    }
+            int Course_ID = Integer.parseInt(request.getParameter("courseID"));
+            Course course = CourseDao.getInformationOfCourse(Course_ID);
+            HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(Course_ID);
+
+            Date courseDate = course.getDate_start();
+            LocalDate courseDateStart = courseDate.toLocalDate();
+            LocalDate startDate = courseDateStart.minusDays(10);
+            LocalDate endDate = courseDateStart.minusDays(7);
+            
+            LocalDate currentDate = LocalDate.now();
+            if (!hashChoise.isEmpty()) {
+                request.setAttribute("hashChoise", hashChoise);
+                request.setAttribute("Course_ID", Course_ID);
+                request.setAttribute("startDate", startDate);
+                request.setAttribute("endDate", endDate);
+                if (currentDate.isAfter(endDate)) {
+                    request.setAttribute("overdue", "Overdue for form application and registration");    
+                    request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
+                }else if (currentDate.isBefore(startDate)) {
+                    request.setAttribute("overdue", "It's not time to registration");
                 }
             }
-            purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
-            request.setAttribute("purchase", purchase);
-            request.getRequestDispatcher("traineeManagePurchase.jsp").forward(request, response);
+            request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
         }
     }
 
@@ -78,7 +78,11 @@ public class TraineeManagePurchaseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeBookScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -92,7 +96,11 @@ public class TraineeManagePurchaseServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeBookScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

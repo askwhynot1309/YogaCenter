@@ -42,15 +42,21 @@ public class TraineeChooseScheduleServlet extends HttpServlet {
             int id_room = Integer.parseInt(request.getParameter("id_room"));
             int option = Integer.parseInt(request.getParameter("option"));
             int id_time = Integer.parseInt(request.getParameter("id_time"));
-            boolean isDelete = Dao.ClassDetailDao.deleteTraineeInClass(idaccount, id_course);
-            if (isDelete) {
-                Course course = Dao.CourseDao.getInformationOfCourse(id_course);
-                ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), option);
-                for (Get30SlotsByCourse dateForSlot : list) {
-                    int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(id_room, id_time, idaccount, id_course, dateForSlot.getDay(), option);
+            if (Dao.ClassDetailDao.checkNumTraineeInAClass(id_room, id_time, option) >= 16) {
+                request.setAttribute("ChangeFail", "This class is full of trainees");
+            } else if (Dao.ClassDetailDao.checkTraineeHasTheSameClassInSameTime(id_time, option, idaccount) != null) {
+                request.setAttribute("ChangeFail", "You are currently has another class in this time");
+            } else {
+                boolean isDelete = Dao.ClassDetailDao.deleteTraineeInClass(idaccount, id_course);
+                if (isDelete) {
+                    Course course = Dao.CourseDao.getInformationOfCourse(id_course);
+                    ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), option);
+                    for (Get30SlotsByCourse dateForSlot : list) {
+                        int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(id_room, id_time, idaccount, id_course, dateForSlot.getDay(), option);
+                    }
                 }
-                request.getRequestDispatcher("classbooking").forward(request, response);
             }
+            request.getRequestDispatcher("classbooking").forward(request, response);
         }
     }
 

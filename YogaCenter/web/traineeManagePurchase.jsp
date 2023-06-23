@@ -76,7 +76,7 @@
             <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
                 <div class="container mt-5">
                     <div class="d-flex justify-content-center row">
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <div class="rounded">
                                 <div class="table-responsive table-borderless">
                                     <table class="table">
@@ -88,12 +88,13 @@
                                                 <th>Total</th>
                                                 <th>Payment method</th>
                                                 <th>Status</th>
+                                                <th>Note</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-body">
                                         <%
                                             Account account = (Account) session.getAttribute("account");
-                                            HashMap<Integer, ArrayList<OrderCourse>> purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
+                                            HashMap<Integer, ArrayList<OrderCourse>> purchase = (HashMap<Integer, ArrayList<OrderCourse>>) request.getAttribute("purchase");
                                             if (purchase != null) {
                                                 TreeMap<Integer, ArrayList<OrderCourse>> sortedPurchase = new TreeMap<>(purchase);
                                                 boolean isFirstRow = true;
@@ -115,7 +116,7 @@
                                             <% if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>"><%= rowNumber + 1%></td>
                                                 <% }%>
-                                            <th><%= order.getName_course()%></th>
+                                            <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=<%=order.getId_course()%>"><%= order.getName_course()%></a> </th>
                                                 <% if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>"><%= order.getDateorder()%></td>
                                                 <% }
@@ -136,24 +137,37 @@
                                                     }
 
                                                     switch (order.getStatus()) {
-                                                        case 1:
+                                                        case 0:
                                                             if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-primary">Pending</span></th>
                                                 <% }
                                                         break;
-                                                    case 2:
+                                                    case 1:
                                                         if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-success">Success</span></th>
                                                 <% }
                                                         break;
-                                                    case 0:
+                                                    case 2:
                                                         if (isFirstRow) {%>
                                             <th rowspan="<%= orderDetail.size()%>"><a class="badge badge-danger" href="/YogaCenter/request?action=TraineeReoder&oID=<%=OrderID%>">Cancel</a></th>
                                                 <% }
                                                             break;
                                                     }
-                                                    isFirstRow = false;
+                                                    if (isFirstRow) {
+
                                                 %>
+                                            <th style="color: red; font-weight: 900;" rowspan="<%= orderDetail.size()%>">
+                                                <%
+                                                    if (order.getStatus() == 0) {
+                                                %>Please complete order in 10 days<%
+                                                                }
+                                                %>
+                                            </th>
+                                            <%
+                                                }
+                                            %>
+
+                                            <%isFirstRow = false;%>
                                         </tr>
                                         <%
                                                     }
