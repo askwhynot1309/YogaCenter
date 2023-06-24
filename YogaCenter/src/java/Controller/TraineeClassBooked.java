@@ -7,10 +7,15 @@ package Controller;
 
 import Dao.CourseDao;
 import Object.Account;
+import Object.ClassDetail;
 import Object.Course;
+import Utils.DisplayAllDaysByWeek;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,13 +36,22 @@ public class TraineeClassBooked extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(false);
+            HttpSession session = request.getSession(true);
             Account account = (Account)session.getAttribute("account");
             ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
+            request.setAttribute("courseList", courseList);
+            List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
+            List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
+            request.setAttribute("currentweek", currentweek);
+            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsByTrainee(account.getIdaccount());
+            if (listClass != null && !listClass.isEmpty()) {
+                request.setAttribute("listClass", listClass);
+            }
+            request.setAttribute("listDay", list);
             request.setAttribute("courseList", courseList);
             request.getRequestDispatcher("traineeViewCourseBooked.jsp").forward(request, response);
         }
@@ -54,7 +68,11 @@ public class TraineeClassBooked extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeClassBooked.class.getName()).log(Level.SEVERE, null, ex);
+        }
     } 
 
     /** 
@@ -67,7 +85,11 @@ public class TraineeClassBooked extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeClassBooked.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /** 

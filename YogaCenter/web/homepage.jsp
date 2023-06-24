@@ -9,15 +9,169 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
+        <link rel="stylesheet" href="css/style.css"/>
         <title>Homepage</title>
+        <style>
+            .fancy {
+                background-color: transparent;
+                border: 2px solid #000;
+                border-radius: 20px;
+                box-sizing: border-box;
+                color: #fff;
+                cursor: pointer;
+                display: inline-block;
+                float: right;
+                font-weight: 700;
+                letter-spacing: 0.05em;
+                margin: 0;
+                outline: none;
+                overflow: visible;
+                padding: 1.25em 2em;
+                position: relative;
+                text-align: center;
+                text-decoration: none;
+                text-transform: none;
+                transition: all 0.3s ease-in-out;
+                user-select: none;
+                font-size: 13px;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .fancy::before {
+                content: " ";
+                width: 1.5625rem;
+                height: 2px;
+                background: #0071e2;
+                top: 50%;
+                left: 1.5em;
+                position: absolute;
+                transform: translateY(-50%);
+                transform-origin: center;
+                transition: background 0.3s linear, width 0.3s linear;
+            }
+
+            .fancy .text {
+                font-size: 1.125em;
+                line-height: 1.33333em;
+                padding-left: 2em;
+                display: block;
+                text-align: left;
+                transition: all 0.3s ease-in-out;
+                text-transform: uppercase;
+                text-decoration: none;
+                color: black;
+            }
+
+            .fancy .top-key {
+                height: 2px;
+                width: 1.5625rem;
+                top: -2px;
+                left: 0.625rem;
+                position: absolute;
+                background: #e8e8e8;
+                transition: width 0.5s ease-out, left 0.3s ease-out;
+            }
+
+            .fancy .bottom-key-1 {
+                height: 2px;
+                width: 1.5625rem;
+                right: 1.875rem;
+                bottom: -2px;
+                position: absolute;
+                background: #e8e8e8;
+                transition: width 0.5s ease-out, right 0.3s ease-out;
+            }
+
+            .fancy .bottom-key-2 {
+                height: 2px;
+                width: 0.625rem;
+                right: 0.625rem;
+                bottom: -2px;
+                position: absolute;
+                background: #e8e8e8;
+                transition: width 0.5s ease-out, right 0.3s ease-out;
+            }
+
+            .fancy:hover {
+                color: white;
+                background: #00FF00;
+            }
+
+            .fancy:hover::before {
+                width: 0.9375rem;
+                background: white;
+            }
+
+            .fancy:hover .text {
+                color: white;
+                padding-left: 1.5em;
+            }
+
+            .fancy:hover .top-key {
+                left: -2px;
+                width: 0px;
+            }
+
+            .fancy:hover .bottom-key-1,
+            .fancy:hover .bottom-key-2 {
+                right: 0;
+                width: 0;
+            }
+            .slider{
+                width: 1300px;
+                max-width: 100vw;
+                height: 650px;
+                position: relative;
+                margin: auto;
+                overflow: hidden;
+                margin-bottom: 50px;
+            }
+            .slider .list{
+                position: absolute;
+                width: max-content;
+                height: 100%;
+                left: 0;
+                top: 0;
+                display: flex;
+                transition: 1s;
+            }
+            .slider .list .item{
+                width: 1300px;
+                max-width: 100vw;
+                height: 100%;
+                object-fit: cover;
+            }
+            .slider .buttons{
+                position: absolute;
+                top: 45%;
+                left: 1%;
+                width: 98%;
+                display: flex;
+                justify-content: space-between;
+            }
+            .slider .buttons button{
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background-color: #fff5;
+                color: black;
+                border: none;
+                font-family: monospace;
+                font-weight: bold;
+            }
+            @media screen and (max-width: 768px){
+                .slider{
+                    height: 400px;
+                }
+            }
+        </style>
     </head>
+    <c:import url="header.jsp"/>
     <body>
-        <c:import url="header.jsp"/>
         <c:set var="account" value="${sessionScope.account}"/>
         <div style="padding-top: 0px;" id="home" class="back">
             <div class="mian-home">
@@ -34,9 +188,33 @@
                 </div>
             </div>
         </div>
-
+        <c:set var="list4Course" value="${requestScope.list4Course}"/>
+        <c:if test="${list4Course != null}">
+            <div class="slider">
+                <div class="list">
+                    <c:forEach var="course" items="${list4Course}">
+                        <div style="background-image: url('img/${course.img_course}'); background-size: cover; opacity: 0.8" class="item">
+                            <div style="margin-top: 350px; color: white; padding: 20px; width: 500px; background-color: rgba(0, 0, 0, 0.61); backdrop-filter: blur(5px); height: 270px">
+                                <h5><strong>${course.name_course}</strong></h5>
+                                <p>${course.summary}</p>
+                                <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}" style="width: 200px; float: left" >
+                                    <span class="top-key"></span>
+                                    <span class="text">View more</span>
+                                    <span class="bottom-key-1"></span>
+                                    <span class="bottom-key-2"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+                <div class="buttons">
+                    <button id="prev"><</button>
+                    <button id="next">></button>
+                </div>
+            </div>
+        </c:if>
         <div class="our-classes">
-            <h1>Our classes</h1>
+            <h1 style="font-weight: 700; text-transform: uppercase">Our class</h1>
             <div class="main-class">
                 <%
                     Account account = (Account) session.getAttribute("account");
@@ -47,26 +225,38 @@
                         if (count < 3) { // Display only the first three courses
                             count++;
                 %>
-
-                <div class="inner-class">
+                <div class="inner-class" style="height: 450px; position: relative">
                     <div>
-                        <img style="width: 80%; height: 250px; object-fit: cover" src="<%= course.getImg_course()%>" alt=""/>
+                        <img style="width: 80%; height: 250px; object-fit: cover" src="img/<%= course.getImg_course()%>" alt=""/>
                     </div>
-                    <div class="class-content">
-                        <h2><%= course.getLevel()%></h2>
-                        <p><%= course.getDescription()%></p>
+                    <div class="class-content" style="margin-top: 20px; text-align: left">
+                        <h4 style="margin-left: 30px">Name of course : <%= course.getName_course()%></h4>
+                        <h4 style="margin-bottom: 20px; margin-left: 30px">Level : <%= course.getName_level()%></h4>
                         <%
-                            if (account == null) {
+                            if (account == null && course.getLevel() == 1) {
                         %>
-                        <a href="register.jsp">register now</a>
+                        <div style="position: absolute; bottom: 0; width: 100%">
+                            <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=<%= course.getIdCourse()%>">
+                                <span class="top-key"></span>
+                                <span class="text">View more</span>
+                                <span class="bottom-key-1"></span>
+                                <span class="bottom-key-2"></span>
+                            </a>
+                        </div>
                         <%
                         } else {
                         %>
-                        <a href="/YogaCenter/request?action=AddCourseToCart&cid=<%= course.getIdCourse()%>">Add to cart</a>
+                        <div style="position: absolute; bottom: 0; width: 100%">
+                            <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=<%= course.getIdCourse()%>">
+                                <span class="top-key"></span>
+                                <span class="text">View more</span>
+                                <span class="bottom-key-1"></span>
+                                <span class="bottom-key-2"></span>
+                            </a>
+                        </div>
                         <%
                             }
                         %>
-
                     </div>
                 </div>
                 <%
@@ -124,60 +314,55 @@
             </div>
         </div>
 
-
-        <div class="our-prices">
-            <h1>PRICES</h1>
-            <div class="main-prices">
-                <div class="inner-prices">
-                    <h2>Newbie classes</h2>
-                    <h3>Prices : $00.00/</h3>
-                    <div class="price-icon">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <a href="register.jsp">Register now</a>
-                </div>
-
-                <div class="inner-prices">
-                    <h2>Newbie classes</h2>
-                    <h3>Prices : $00.00/</h3>
-                    <div class="price-icon">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <a href="register.jsp">Register now</a>
-                </div>
-
-                <div class="inner-prices">
-                    <h2>Newbie classes</h2>
-                    <h3>Prices : $00.00/</h3>
-                    <div class="price-icon">
-                        <i class="fas fa-award"></i>
-                    </div>
-                    <a href="register.jsp">Register now</a>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="contact-us">
-            <!--        <div class="main-contact">
-                        <div class="inner-contact">
-                            <h1>Contact us</h1>
-                            <div class="inner-form-contact">
-                                <input type="text" placeholder="your name">
-                                <input type="tel" placeholder="your phone">
-                                <textarea name="" id="" cols="30" rows="10"></textarea>
-                            </div>
-                        </div>
-            
-                        <div class="inner-contact">
-                            <img src="https://th.bing.com/th/id/R.5bc6a94ca0114ea56198bccc0a2b0d98?rik=eDteuVFFJ12iYg&pid=ImgRaw&r=0">
-                        </div>
-                    </div>-->
-        </div>
-
         <script src="js/script.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>    
     </body>
     <c:import url="footer.html"/>
+    <script>
+        let slider = document.querySelector('.slider .list');
+        let items = document.querySelectorAll('.slider .list .item');
+        let next = document.getElementById('next');
+        let prev = document.getElementById('prev');
+        let dots = document.querySelectorAll('.slider .dots li');
+
+        let lengthItems = items.length - 1;
+        let active = 0;
+        next.onclick = function () {
+            active = active + 1 <= lengthItems ? active + 1 : 0;
+            reloadSlider();
+        }
+        prev.onclick = function () {
+            active = active - 1 >= 0 ? active - 1 : lengthItems;
+            reloadSlider();
+        }
+        let refreshInterval = setInterval(() => {
+            next.click()
+        }, 8000);
+        function reloadSlider() {
+            slider.style.left = -items[active].offsetLeft + 'px';
+            // 
+            let last_active_dot = document.querySelector('.slider .dots li.active');
+            last_active_dot.classList.remove('active');
+            dots[active].classList.add('active');
+
+            clearInterval(refreshInterval);
+            refreshInterval = setInterval(() => {
+                next.click()
+            }, 8000);
+
+
+        }
+
+        dots.forEach((li, key) => {
+            li.addEventListener('click', () => {
+                active = key;
+                reloadSlider();
+            })
+        })
+        window.onresize = function (event) {
+            reloadSlider();
+        };
+
+    </script>
 </html>

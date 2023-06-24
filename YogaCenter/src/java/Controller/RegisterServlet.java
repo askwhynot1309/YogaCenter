@@ -42,16 +42,21 @@ public class RegisterServlet extends HttpServlet {
             String address = request.getParameter("address");
             String newpassword = Utils.HexPassword.HexPassword(password);
             boolean checkValid = true;
-            if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-                request.setAttribute("ErrorMessageEmail", "Wrong email format");
+            if (Utils.CheckEmailExist.isAddressValid(email) == false) {
+                request.setAttribute("ErrorMessageEmail", "Email is invalid");
                 checkValid = false;
             } else if (password.length() < 6 || password.length() > 16) {
                 request.setAttribute("ErrorMessagePassword", "Password length must be between 6 and 16 ");
                 checkValid = false;
-            } else if (!phone.matches("^\\d{10}$")) {
-                request.setAttribute("ErrorMessagePhone", "Wrong phone format");
+            } else if (Utils.CheckValidation.checkPhone(phone)== false) {
+                request.setAttribute("ErrorMessagePhone", "Phone is invalid");
                 checkValid = false;
-            } else if (email.isEmpty() || account.isEmpty() || password.isEmpty() || name.isEmpty() || cccd.isEmpty() || phone.isEmpty() || address.isEmpty()) {
+            }
+            else if(Utils.CheckValidation.isValidCCCD(cccd) == false){
+                request.setAttribute("ErrorMessageCCCD", "Citizen identity card is invalid");
+                checkValid = false;
+            }
+            else if (email.isEmpty() || account.isEmpty() || password.isEmpty() || name.isEmpty() || cccd.isEmpty() || phone.isEmpty() || address.isEmpty()) {
                 request.setAttribute("ErrorMessage", "Fill in all the fields");
                 checkValid = false;
             } else if (Dao.UserDao.isEmailExist(email)) {
@@ -71,7 +76,7 @@ public class RegisterServlet extends HttpServlet {
             if (checkValid) {
                 int registrationSuccess = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, account, newpassword);
                 if (registrationSuccess == 1) {
-                    response.sendRedirect("registrationSuccess.jsp");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 } else {
                     response.sendRedirect("registrationFailure.jsp");
                 }

@@ -8,6 +8,7 @@
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/admin/admin.css">
         <link rel="stylesheet" href="css/admin/admin-schedule.css">
         <link rel="stylesheet" href="css/admin/admin-schedule-setup.css">
@@ -131,7 +132,7 @@
                                                             <c:forEach var="day" items="${listDay}">
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
-                                                                        <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'TuesDay'}">
+                                                                        <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Tuesday'}">
                                                                             <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>

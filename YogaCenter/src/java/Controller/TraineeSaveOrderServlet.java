@@ -49,7 +49,9 @@ public class TraineeSaveOrderServlet extends HttpServlet {
                 boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
                 cart.clear();
                 if (inserted == true) {
-                    response.sendRedirect("traineeViewCart.jsp");
+                    session.removeAttribute("cart");
+                    request.setAttribute("addsuccess", "message");
+                    request.getRequestDispatcher("purchase").forward(request, response);
                 }else{
                     response.sendRedirect("error.html");
                 }

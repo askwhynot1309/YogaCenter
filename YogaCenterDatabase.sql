@@ -9,6 +9,7 @@ Account varchar(50),
 Password varchar(50),
 Phone varchar(10),
 Img varchar(max),
+Money Decimal(10,3),
 CV varchar(max),
 Address Nvarchar(100),
 Role int check(Role = 0 or Role = 1 or Role = 2 or Role = 3 or Role = 4), --admin:0, staff:1, trainer:2, trainee:3, guest:4
@@ -28,6 +29,8 @@ Course_Fee DECIMAL(10,3),
 Start_date date,
 Slot int,
 Description Nvarchar(MAX),
+Objective Nvarchar(MAX),
+Summary Nvarchar(MAX),
 ID_Level int FOREIGN KEY REFERENCES Level(Level_ID),
 Status int CHECK(Status = 0 or Status = 1) --active:1,unactive:0
 )
@@ -42,6 +45,7 @@ CREATE TABLE ClassStatus(
 ClassDetail_ID int IDENTITY(1,1) PRIMARY KEY,
 Class_ID int FOREIGN KEY REFERENCES Class(Class_ID),
 Feedback nvarchar(max),
+DateFeedback date,
 Status int CHECK(Status = 0 or Status = 1) --0:good,1:not good
 )
 
@@ -65,6 +69,7 @@ CREATE TABLE BookingCourse(
 OrderID int IDENTITY(1,1) PRIMARY KEY,
 ID_Trainee int FOREIGN KEY REFERENCES Account(ID_Account),
 DateOrder DATE,
+Status_Account int CHECK(Status_Account = 0 OR Status_Account = 1 OR Status_Account = 2), --0:cancel, 1:active, 2: refund
 Method int CHECK(Method = 0 or Method = 1) --0:cash,1:onlinebanking
 )
 
@@ -86,18 +91,25 @@ Attendance_ID int IDENTITY(1,1) PRIMARY KEY,
 ID_Trainee int FOREIGN KEY REFERENCES Account(ID_Account),
 ID_Course int FOREIGN KEY REFERENCES Course(Course_ID),
 AttendanceDate date,
-Status int check(Status = 0 or Status = 1) --0:absent,1:present
+Status int check(Status = 0 or Status = 1 or Status = 2) --0:not yet,1:present, 2: absent
+)
+
+CREATE TABLE Message(
+ID_Message int IDENTITY(1,1) PRIMARY KEY,
+ID_sendMessage int FOREIGN KEY REFERENCES Account(ID_Account),
+Message nvarchar(max),
+ID_recieveMessage int FOREIGN KEY REFERENCES Account(ID_Account),
+Status int CHECK(Status = 0 or Status = 1 or Status = 2)--0:default, 1:not yet , 2: read
 )
 
 insert into Account(Account,Password,Role,Status) values ('admin','202CB962AC59075B964B07152D234B70',0,0)
 
-insert into Level(Level_Name) values (N'Cơ bản')
+insert into Level(Level_Name) values (N'Basic')
 
-insert into Level(Level_Name) values (N'Trung bình')
+insert into Level(Level_Name) values (N'Medium')
 
-insert into Level(Level_Name) values (N'Nâng cao')
+insert into Level(Level_Name) values (N'Advance')
 
-insert into Level(Level_Name) values (N'Chuyên nghiệp')
 
 insert into Time(Time_Choose) values (N'9h - 11h')
 
@@ -114,3 +126,4 @@ insert into Class(Class_Name, Status) values (N'Room 2', 0)
 insert into Class(Class_Name, Status) values (N'Room 3', 0)
 
 insert into Class(Class_Name, Status) values (N'Room 4', 0)
+

@@ -21,9 +21,38 @@ public class ClassDetail {
     private Date date;
     private String account;
     private int id_course;
+    private int status;
     private String course;
 
     public ClassDetail() {
+    }
+
+    public ClassDetail(int id_detail, int id_room, int time, int idaccount, Date date, int id_course) {
+        this.id_detail = id_detail;
+        this.id_room = id_room;
+        this.time = time;
+        this.idaccount = idaccount;
+        this.date = date;
+        this.id_course = id_course;
+    }
+
+    public ClassDetail(int id_detail, String class_name, int time, Date date) {
+        this.id_detail = id_detail;
+        this.class_name = class_name;
+        this.time = time;
+        this.date = date;
+    }
+
+    public ClassDetail(int id_detail, String class_name, int time, String datestudy, int idaccount, String account, int id_course, int status, String course) {
+        this.id_detail = id_detail;
+        this.class_name = class_name;
+        this.time = time;
+        this.datestudy = datestudy;
+        this.idaccount = idaccount;
+        this.account = account;
+        this.id_course = id_course;
+        this.status = status;
+        this.course = course;
     }
 
     public ClassDetail(int id_detail, int id_room, int time, int idaccount, Date date, String account, int id_course, String course) {
@@ -48,7 +77,7 @@ public class ClassDetail {
         this.course = course;
     }
 
-
+    
     public ClassDetail(int id_detail, String class_name, int time, String datestudy, int idaccount, String account, int id_course, String course) {
         this.id_detail = id_detail;
         this.class_name = class_name;
@@ -58,6 +87,14 @@ public class ClassDetail {
         this.account = account;
         this.id_course = id_course;
         this.course = course;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getId_room() {

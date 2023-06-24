@@ -5,6 +5,7 @@
 package Dao;
 
 import Object.Account;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -198,9 +199,11 @@ public class AccountDao {
 
     public static int insertNewEmployee(String name, String email, String phone, String cccd, String address, String account, String password, int role) throws Exception {
         int kq = 0;
+        double money = 0.00;
+        BigDecimal amout = BigDecimal.valueOf(money);
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "insert into Account(Name, Email, Phone, CCCD, Address, Account, Password, Role, Status) values (?,?,?,?,?,?,?,?,?)";
+            String s = "insert into Account(Name, Email, Phone, CCCD, Address, Account, Password, Role, Status, Money) values (?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, name);
             pst.setString(2, email);
@@ -211,21 +214,23 @@ public class AccountDao {
             pst.setString(7, password);
             pst.setInt(8, role);
             pst.setInt(9, 0);
+            pst.setBigDecimal(10, amout);
             kq = pst.executeUpdate();
             cn.close();
         }
         return kq;
     }
 
-    public static Account checkAccountToInsertNewEmployee(String account) throws Exception {
+    public static Account checkAccountToInsertNewEmployee(String account, int txtrole) throws Exception {
         Account kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
                     + "from Account\n"
-                    + "where Account = ?";
+                    + "where Account = ? and Role = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, account);
+            pst.setInt(2, txtrole);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
@@ -248,5 +253,103 @@ public class AccountDao {
         }
         return kq;
     }
-
+     
+    public static Account checkTheSameEmail(int role, String email) throws Exception{
+        Account kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Role = ? and Email = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, role);
+            pst.setString(2, email);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String mail = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role_id = table.getInt("Role");
+                    kq = new Account(idTrainer, mail, acc, password, name, cccd, cv, phone, address, img, role_id, status);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
+    public static Account checkTheSameCCCD(int role, String txt_cccd) throws Exception{
+        Account kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Role = ? and CCCD = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, role);
+            pst.setString(2, txt_cccd);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String mail = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role_id = table.getInt("Role");
+                    kq = new Account(idTrainer, mail, acc, password, name, cccd, cv, phone, address, img, role_id, status);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
+    public static Account checkTheSamePhone(int role, String txt_phone) throws Exception{
+        Account kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Role = ? and Phone = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, role);
+            pst.setString(2, txt_phone);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String mail = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role_id = table.getInt("Role");
+                    kq = new Account(idTrainer, mail, acc, password, name, cccd, cv, phone, address, img, role_id, status);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
 }

@@ -1,3 +1,5 @@
+<%@page import="java.util.Locale"%>
+<%@page import="java.text.NumberFormat"%>
 <%@page import="Object.Account"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.util.Set"%>
@@ -13,7 +15,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/style.css"/>
+        <title>View cart</title>
     </head>
     <style>
         .title{
@@ -79,15 +83,9 @@
         .col-2, .col{
             padding: 0 1vh;
         }
-        a{
-            padding: 0 1vh;
-        }
         .close{
             margin-left: auto;
             font-size: 0.7rem;
-        }
-        img{
-            width: 3.5rem;
         }
         .back-to-shop{
             margin-top: 4.5rem;
@@ -157,14 +155,15 @@
             background-position-y: center;
         }
     </style>
-    <c:import url="header.jsp"/>
     <body>
+        <c:import url="header.jsp"/>
         <%
             HashMap<String, Integer> cart = (HashMap) session.getAttribute("cart");
             int totalMoney = 0;
             ArrayList<Course> courseList = CourseDao.getAllCourse();
+            NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
         %>
-        <div id="home" class="back">
+        <div style="padding: 3rem 7%;" id="home" class="back">
             <div class="mian-home">
                 <div class="card">
                     <div class="row">
@@ -196,13 +195,13 @@
                                     <div class="row border-top border-bottom">
                                     <div class="row main align-items-center">
                                         <div class="col-2">
-                                            <img style="width: auto;" class="img-fluid" src="<%=imgPath%>">
+                                            <img style="width: 50px; height: " class="img-fluid" src="img/<%=imgPath%>">
                                         </div>
                                         <div class="col">
                                             <div class="row"><%= courseName%></div>    
                                         </div>
                                         <div class="col">
-                                            <%= price%> VNÐ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <%= nf.format(price)%>.000 VNÐ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <a href="/YogaCenter/request?action=DeleteCartItems&courseID=<%=cID%>" style="cursor: pointer" class="close">✕</a>
                                         </div>
                                     </div>
@@ -215,14 +214,14 @@
                                 %>
 
                             </div>
-                            <div class="back-to-shop"><a href="homepage.jsp">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                                <div class="back-to-shop"><a href="/YogaCenter/course" style="padding: 0 1vh">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
                         </div>
                         <div class="col-md-4 summary">
                             <div><h5><b>Summary</b></h5></div>
                             <hr>
                             <div class="row">
                                 <div class="col" style="padding-left:1px;"> ITEMS <span id="checkoutQuantity"></span></div>
-                                <div class="col text-right"><span id="checkoutPrice"><%= totalMoney%>.000</span> VNĐ</div>
+                                <div class="col text-right"><span id="checkoutPrice"><%= nf.format(totalMoney) %>.000</span> VNĐ</div>
                             </div>
                             <form action="/YogaCenter/request" method="POST">
                                 <p>PAYMENT METHOD</p>
@@ -233,7 +232,7 @@
 
                                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                                     <div class="col">TOTAL PRICE</div>
-                                    <div class="col text-right"><span id="checkoutPriceMore"><%= totalMoney%>.000</span> VNĐ</div>
+                                    <div class="col text-right"><span id="checkoutPriceMore"><%= nf.format(totalMoney) %>.000</span> VNĐ</div>
                                 </div>
                                 <button type="submit" value="saveOrder" name="action" class="btn">CHECKOUT</button>
                             </form>
@@ -250,4 +249,5 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     </body>
+    <c:import url="footer.html"/>
 </html>

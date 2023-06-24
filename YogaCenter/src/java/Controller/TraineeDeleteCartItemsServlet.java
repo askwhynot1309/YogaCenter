@@ -42,12 +42,11 @@ public class TraineeDeleteCartItemsServlet extends HttpServlet {
                     if (found) {
                         cart.remove(courseID);
                         session.setAttribute("cart", cart);
+                        if (cart.size() == 0) {
+                            session.removeAttribute("cart");
+                        }
                         response.sendRedirect("traineeViewCart.jsp");
-                    }else{
-                        out.print("not found :))");
                     }
-                }else{
-                    out.print("out");
                 }
             }
         }

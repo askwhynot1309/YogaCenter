@@ -48,7 +48,7 @@ public class ViewScheduleServlet extends HttpServlet {
                 request.setAttribute("listClass", listClass);
             }
             ArrayList<Account> listTrainer = Dao.AccountDao.getAllTrainer();
-            ArrayList<Room> listRoom = Dao.RoomDao.getAllRoom();
+            ArrayList<Room> listRoom = Dao.RoomDao.getAllRoomActive();
             ArrayList<Time> listTime = Dao.TimeDao.getAllTime();
             ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
             request.setAttribute("listCourse", listCourse);

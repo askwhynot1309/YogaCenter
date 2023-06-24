@@ -14,10 +14,10 @@
     <body>
         <c:set var="cart" value="${sessionScope.cart}"/>
         <header class="header" style = "z-index: 1; position: sticky;">
-            <a href="homepage.jsp" id="logo"><img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" width="75px" height="75px" alt="logo"/></a>
+            <a href="/YogaCenter/home" id="logo"><img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" width="75px" height="75px" alt="logo"/></a>
 
             <nav class="navbar" style="font-size: 25px; font-weight: 700;">
-                <a href="homepage.jsp">Home</a>
+                <a href="/YogaCenter/home">Home</a>
                 <a href="/YogaCenter/course">Course</a>
                 <a href="aboutUs.jsp">About</a>
                 <a href="yogaGallery.jsp">Gallery</a>
@@ -27,50 +27,59 @@
             <c:set var="account" value="${sessionScope.account}"/>
             <c:if test="${account != null}">
                 <div class="iconTrainee">
-                    <div class='custom-cart-wrapper'>
-                        <a href="traineeViewCart.jsp" class="fa-solid fa-cart-shopping fa-2xl"></a>
-                        <div id='cartQuantity' class='custom-cart'>${cart.size()}</div>
-                    </div>
-
-                    <div style="cursor: pointer">
-                        <span class="fa-solid fa-bell fa-2xl"></span>
-                    </div>
-
                     <div class="dropdown" style="cursor: pointer">
                         <span class="fa-solid fa-user fa-2xl"></span>
-                        <div class="dropdown-content">
-                            <p>${account.name}</p>
-                            <p>
-                                <a href="/YogaCenter/request?action=TraineeManageInformation">
+                        <div class="dropdown-content" style="width: 200px; z-index: -1; background: #d0efe1">
+                            <p style="text-align: center; margin-top: 50px">${account.name}</p>
+                            <p style="font-weight: 900">
+                                <a href="/YogaCenter/information">
                                     <i class="fas fa-user icon"></i>
-                                    Manage Account
+                                    Manage account
                                 </a>
                             </p>
-                            <p>
-                                <a href="/YogaCenter/request?action=ClassBooking">
+                            <p style="font-weight: 900">
+                                <a href="/YogaCenter/yourcourse">
+                                    <i class="fa-solid fa-book icon"></i>
+                                    Your course
+                                </a>
+                            </p>
+                            <p style="font-weight: 900">
+                                <a href="/YogaCenter/classbooking">
                                     <i class="fas fa-calendar-alt icon"></i>
                                     Class booking
                                 </a>
                             </p>
-                            <p>
-                                <a href="/YogaCenter/request?action=ManagePurchase">
+                            <p style="font-weight: 900">
+                                <a href="/YogaCenter/purchase">
                                     <i class="fas fa-money-bill"></i>                
-                                    Purchase History
+                                    Purchase history
                                 </a>
                             </p>
-                            <p>
+                            <p style="font-weight: 900">
                                 <a href="/YogaCenter/request?action=ChangePassword">
                                     <i class="fas fa-lock"></i>
                                     Change password
                                 </a>
                             </p>
-                            <p>
+                            <p style="font-weight: 900">
                                 <a href="/YogaCenter/request?action=Logout">
                                     <i class="fas fa-sign-out-alt icon"></i>
                                     Logout
                                 </a>
                             </p>
                         </div>
+                    </div>
+                    <div style="cursor: pointer">
+                        <span class="fa-solid fa-bell fa-2xl"></span>
+                    </div>
+                    <div class='custom-cart-wrapper'>
+                        <a href="/YogaCenter/viewcart" class="fa-solid fa-cart-shopping fa-2xl"></a>
+                        <c:choose>
+                            <c:when test="${cart != null}">
+                                <div id='cartQuantity' class='custom-cart'>${cart.size()}</div>
+                            </c:when>
+                        </c:choose>
+
                     </div>
                 </div>
             </c:if>

@@ -40,6 +40,7 @@ public class HomeServlet extends HttpServlet {
             ArrayList<Course> randomList = new ArrayList<>();
             ArrayList<Course> list = Dao.CourseDao.getCourseByDateStart(currentdate);
             ArrayList<Course> listramdom = Dao.CourseDao.getAllCourse();
+            ArrayList<Course> list4Course = Dao.CourseDao.get4Course();
             if (list != null && !list.isEmpty()) {
                 for (Course course : list) {
                     int changeStatus = Dao.CourseDao.changeStatusCourse(1, course.getIdCourse());
@@ -53,6 +54,7 @@ public class HomeServlet extends HttpServlet {
                     }
                 }
                 request.setAttribute("ramdomCourse", randomList);
+                request.setAttribute("list4Course", list4Course);
                 request.getRequestDispatcher("homepage.jsp").forward(request, response);
             } else {
                 Collections.shuffle(listramdom);
@@ -64,6 +66,7 @@ public class HomeServlet extends HttpServlet {
                     }
                 }
                 request.setAttribute("ramdomCourse", randomList);
+                request.setAttribute("list4Course", list4Course);
                 request.getRequestDispatcher("homepage.jsp").forward(request, response);
             }
         } catch (Exception e) {

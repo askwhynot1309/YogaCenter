@@ -9,12 +9,14 @@ import Object.Course;
 import Object.Level;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -45,7 +47,7 @@ public class SearchValueServlet extends HttpServlet {
                         request.setAttribute("listEmployee", listEmployee);
                         request.getRequestDispatcher("admin/adminManageEmployee.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("nulllist", "Không có nhân viên nào trong dữ liệu data trùng khớp với dữ liệu bạn tìm kiếm");
+                        request.setAttribute("nulllist", "There are no employees in the data that match the data you searched for.");
                         request.getRequestDispatcher("admin/adminManageEmployee.jsp").forward(request, response);
                     }
                     break;
@@ -55,41 +57,111 @@ public class SearchValueServlet extends HttpServlet {
                         request.setAttribute("listUser", listUser);
                         request.getRequestDispatcher("admin/adminManageUser.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("nulllist", "Không có users nào trong dữ liệu data trùng khớp với dữ liệu bạn tìm kiếm");
+                        request.setAttribute("nulllist", "There are no users in the data that match the data you searched for.");
                         request.getRequestDispatcher("admin/adminManageUser.jsp").forward(request, response);
                     }
                     break;
                 case "searchCourse":
                     int level = Integer.parseInt(request.getParameter("level"));
+                    Date date = new Date(System.currentTimeMillis());
+                    if (level == 0) {
+                        ArrayList<Course> listCourse = Dao.CourseDao.adminGetAllCourseBySearch(search);
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("listCourse", listCourse);
+                            request.setAttribute("currentdate", date);
+                            request.setAttribute("listLevel", listLevel);
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                        }
+                    } else {
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        ArrayList<Course> listCourse = Dao.CourseDao.adminGetAllCourseBySearchWithLevel(search, level);
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("listCourse", listCourse);
+                            request.setAttribute("currentdate", date);
+                            request.setAttribute("listLevel", listLevel);
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("listLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                        }
+                    }
+                    break;
+                case "staffSearchCourse":
+                    level = Integer.parseInt(request.getParameter("level"));
                     if (level == 0) {
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                         if (listCourse != null && !listCourse.isEmpty()) {
                             request.setAttribute("listCourse", listCourse);
                             request.setAttribute("listLevel", listLevel);
-                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
                         } else {
-                            request.setAttribute("nulllist", "Không có khoá học nào nào trong dữ liệu data trùng khớp với dữ liệu bạn tìm kiếm");
-                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
                         }
-                    }else{
+                    } else {
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevel(search, level);
                         if (listCourse != null && !listCourse.isEmpty()) {
                             request.setAttribute("listCourse", listCourse);
                             request.setAttribute("listLevel", listLevel);
-                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
                         } else {
                             request.setAttribute("listLevel", listLevel);
-                            request.setAttribute("nulllist", "Không có khoá học nào nào trong dữ liệu data trùng khớp với dữ liệu bạn tìm kiếm");
-                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("staff/staffCourseList.jsp").forward(request, response);
                         }
                     }
                     break;
+                case "staffSearchUser":
+                    listUser = Dao.UserDao.getAllTraineeBySearch(search);
+                    if (listUser != null && !listUser.isEmpty()) {
+                        request.setAttribute("listUser", listUser);
+                        request.getRequestDispatcher("staff/staffManageTrainee.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("nulllist", "There are no users in the data that match the data you searched for.");
+                        request.getRequestDispatcher("staff/staffManageTrainee.jsp").forward(request, response);
+                    }
+                    break;
+                case "staffSearchCourseToSign":
+                    level = Integer.parseInt(request.getParameter("level"));
+                    int key = Integer.parseInt(request.getParameter("key"));
+                    if (level == 0) {
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("listcourse", listCourse);
+                            request.setAttribute("listlevel", listLevel);
+                            request.setAttribute("key", key);
+                            request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("key", key);
+                            request.setAttribute("nonelist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);
+                        }
+                    } else {
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevel(search, level);
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("listcourse", listCourse);
+                            request.setAttribute("key", key);
+                            request.setAttribute("listlevel", listLevel);
+                            request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("listlevel", listLevel);
+                            request.setAttribute("key", key);
+                            request.setAttribute("nonelist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);
+                        }
+                    }
             }
         } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            e.printStackTrace();
         }
     }
 

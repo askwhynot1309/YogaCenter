@@ -21,14 +21,15 @@ public class AttendenceDao {
         ArrayList<AccountAttendence> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select *\n"
-                    + "from ClassDetail cd JOIN CheckAttendance ca ON cd.IDCourse = ca.ID_Course \n"
-                    + "JOIN Class c ON cd.Class_ID = c.Class_ID\n"
-                    + "JOIN Time t ON cd.IDtime = t.Time_ID\n"
-                    + "JOIN Account a ON cd.IDAccount = a.ID_Account\n"
-                    + "where cd.DateStudy = ? AND a.Role = 3";
+            String s = "select *\n" +
+"from ClassDetail cd JOIN CheckAttendance ca ON cd.IDCourse = ca.ID_Course\n" +
+"JOIN Class c ON cd.Class_ID = c.Class_ID\n" +
+"JOIN Time t ON cd.IDtime = t.Time_ID\n" +
+"JOIN Account a ON cd.IDAccount = a.ID_Account\n" +
+"where cd.DateStudy = ? AND a.Role = 3 AND ca.AttendanceDate = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
+            pst.setDate(2, date);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {

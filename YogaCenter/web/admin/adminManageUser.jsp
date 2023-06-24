@@ -7,8 +7,10 @@
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/admin/admin.css">
         <link rel="stylesheet" href="css/admin/admin-user.css">
+        <link rel="stylesheet" href="css/admin/admin-table.css">
     </head>
 
     <body>
@@ -37,27 +39,31 @@
                         <p style="text-align: center"><c:out value="${nulllist}"/></p>
                     </c:if>
                     <c:if test="${listUser != null && !listUser.isEmpty()}">
-                        <div class="table-responsive" style="height: 550px">
-                            <table class="table table-striped table-bordered" style="text-align: center">
-                                <thead class="thead-dark">
+                        <div class="tbl-header">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <thead>
                                     <tr>
-                                        <th>No.</th>
+                                        <th style="width: 50px">No.</th>
                                         <th>Email</th>
                                         <th>Name</th>
-                                        <th>Phone</th>
+                                        <th style="width: 100px">Phone</th>
                                         <th>Address</th>
-                                        <th>Status</th>
+                                        <th style="width: 300px">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody class="font">
+                            </table>
+                        </div>
+                        <div class="tbl-content" style="height: 400px">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tbody>
                                     <c:forEach var="user" items="${listUser}" varStatus="loop">
                                         <tr>
-                                            <td>${loop.count}</td>
+                                            <td style="width: 50px">${loop.count}</td>
                                             <td>${user.email}</td>
                                             <td>${user.name}</td>
-                                            <td>${user.phone}</td>
+                                            <td style="width: 100px">${user.phone}</td>
                                             <td>${user.address}</td>
-                                            <td>
+                                            <td style="width: 300px">
                                                 <c:if test="${user.status == 0}">
                                                     <form action="/YogaCenter/request" method="POST">
                                                         <span>Active</span>&ensp; <input type="radio" name="status" value="0" checked="">
@@ -82,13 +88,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="pagination">
-                            <ul>
-                                <li><a href="#" class="prev">Trước</a></li>
-                                <li><a href="#" class="page active">1</a></li>
-                                <li><a href="#" class="next">Sau</a></li>
-                            </ul>
-                        </div>
                     </c:if>
                 </div>
             </div>
@@ -97,77 +96,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
     </body>
     <script>
-        const productTable = document.querySelector('.table');
-        const pagination = document.querySelector('.pagination ul');
-        const page = document.querySelector('.pagination ul li:nth-child(2)');
-
-        const productsPerPage = 6;
-        let currentPage = 1;
-
-        function displayProducts() {
-            const startIndex = (currentPage - 1) * productsPerPage;
-            const endIndex = startIndex + productsPerPage;
-            const products = Array.from(productTable.tBodies[0].rows);
-
-            products.forEach((product, index) => {
-                if (index >= startIndex && index < endIndex) {
-                    product.style.display = 'table-row';
-                } else {
-                    product.style.display = 'none';
-                }
-            });
-        }
-
-        function createPagination() {
-            const products = Array.from(productTable.tBodies[0].rows);
-            const pageCount = Math.ceil(products.length / productsPerPage);
-
-            for (let i = 2; i <= pageCount; i++) {
-                const li = document.createElement('li');
-                const link = document.createElement('a');
-                link.href = '#';
-                link.textContent = i;
-                link.classList.add('page');
-                if (i === currentPage) {
-                    link.classList.add('active');
-                }
-                li.appendChild(link);
-                pagination.insertBefore(li, pagination.lastElementChild);
-            }
-        }
-
-        createPagination();
-        displayProducts();
-
-        pagination.addEventListener('click', e => {
-            e.preventDefault();
-            if (e.target.classList.contains('page')) {
-                currentPage = parseInt(e.target.textContent);
-                displayProducts();
-                const currentLink = pagination.querySelector('.active');
-                currentLink.classList.remove('active');
-                e.target.classList.add('active');
-            } else if (e.target.classList.contains('prev')) {
-                if (currentPage > 1) {
-                    currentPage--;
-                    displayProducts();
-                    const currentLink = pagination.querySelector('.active');
-                    currentLink.classList.remove('active');
-                    const prevLink = currentLink.parentNode.previousElementSibling.querySelector('a');
-                    prevLink.classList.add('active');
-                }
-            } else if (e.target.classList.contains('next')) {
-                const products = Array.from(productTable.tBodies[0].rows);
-                const pageCount = Math.ceil(products.length / productsPerPage);
-                if (currentPage < pageCount) {
-                    currentPage++;
-                    displayProducts();
-                    const currentLink = pagination.querySelector('.active');
-                    currentLink.classList.remove('active');
-                    const nextLink = currentLink.parentNode.nextElementSibling.querySelector('a');
-                    nextLink.classList.add('active');
-                }
-            }
-        });
+        $(window).on("load resize ", function () {
+            var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+            $('.tbl-header').css({'padding-right': scrollWidth});
+        }).resize();
     </script>
 </html>

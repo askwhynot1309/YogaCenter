@@ -42,7 +42,6 @@ public class UpdateInformationCourseServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.parseInt(request.getParameter("id"));
-            String name = request.getParameter("course_name");
             String oldimg = request.getParameter("oldimg");
             Part filePart = request.getPart("img");
             String fileName = filePart.getSubmittedFileName();
@@ -52,38 +51,25 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                 filePart.write(file.getAbsolutePath());
             }
             String description = request.getParameter("course_description");
+            String objective = request.getParameter("course_object");
+            String summary = request.getParameter("course_summary");
             BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
-            int level = Integer.parseInt(request.getParameter("level"));
-            String datestart = request.getParameter("course_start");
             int slot = Integer.parseInt(request.getParameter("slot"));
-            Date start = Date.valueOf(datestart);
-            Date currentDate = new Date(System.currentTimeMillis());
-            if ("".equals(fileName)) {
-                if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
-                    request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                    request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
-                } else {
-                    int updateCourse = Dao.CourseDao.updateCourse(id, name, oldimg, fee, description, start, slot, level);
+                if ("".equals(fileName)) {
+                    int updateCourse = Dao.CourseDao.updateCourse(id, oldimg, fee, description, objective, summary, slot);
                     if (updateCourse == 1) {
-                            request.setAttribute("success", "Update mới khoá học thành công");
-                            request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
-                    }
-                }
-            } else {
-                if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
-                        request.setAttribute("expired", "Ngày bắt đầu đã qua");
+                        request.setAttribute("success", "Update mới khoá học thành công");
                         request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
+                    }
                 } else {
-                    int updateCourse = Dao.CourseDao.updateCourse(id, name, fileName, fee, description, start, slot, level);
+                    int updateCourse = Dao.CourseDao.updateCourse(id, fileName, fee, description, objective, summary, slot);
                     if (updateCourse == 1) {
-                            request.setAttribute("success", "Update mới khoá học thành công");
-                            request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
+                        request.setAttribute("success", "Update mới khoá học thành công");
+                        request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
                     }
                 }
-            }
         } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            e.printStackTrace();
         }
     }
 
