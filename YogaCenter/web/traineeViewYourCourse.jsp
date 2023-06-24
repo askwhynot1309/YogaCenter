@@ -12,6 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/trainee/trainee-viewyourcourse.css"/>
         <title>View Your Course</title>
@@ -28,6 +29,10 @@
             <div style="padding: 10px; color: white; background: #00FF00; margin-top: 50px; margin-bottom: 20px">
                 <h2 style="text-transform: uppercase; font-size: 700">Your course</h2>
             </div>
+            <c:if test="${listCourseTrainee.size() == 0}">
+                <h3 style="text-align: center; margin-bottom: 400px">You don't have any course.</h3>
+                
+            </c:if>
             <c:if test="${listCourseTrainee != null}">
                 <c:forEach var="course" items="${listCourseTrainee}">
                     <div style="width: 100%; height: 220px; padding: 10px;  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px">
@@ -80,89 +85,86 @@
                                             </c:if>
                                         </c:forEach>
                                     </c:if>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-8">
-                                                    <a href="/YogaCenter/classbooking" class="btn btn-primary">View schedule</a>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div style="display: flex; align-items: center; justify-content: space-between">
-                                                        <a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.id_course}" class="btn btn-primary">View detail course</a>
-                                                        <c:if test="${listCoursebyTrainee != null}">
-                                                            <c:forEach var="coursebyTrainee" items="${listCoursebyTrainee}">
-                                                                <c:if test="${coursebyTrainee.id_course == course.id_course && coursebyTrainee.status == 1}">
-                                                                    <c:if test="${current_date.before(course.course_start)}">
-                                                                        <button class="btn btn-primary open">Cancel</button>
-                                                                        <dialog class="message" id="message">
-                                                                            <h3 style="text-align: center; color: red">Warning</h3>
-                                                                            <p>If you cancel the course now, we will save the amount you paid in your account.</p>
-                                                                            <div style="display: flex; align-items: center; justify-content: space-between">
-                                                                                <form method="POST" action="/YogaCenter/request">
-                                                                                    <input name="id_course" value="${course.id_course}" hidden="">
-                                                                                    <input name="status" value="2" hidden="">
-                                                                                    <button class="btn btn-primary" name="action" value="Cancel">Cancel</button>
-                                                                                </form>
-                                                                                <button class="btn btn-primary btn-close">Close</button>
-                                                                            </div>
-                                                                        </dialog>
-                                                                    </c:if>
-                                                                    <c:if test="${current_date.after(course.course_start)}">
-                                                                        <button class="btn btn-primary open">Cancel</button>
-                                                                        <dialog class="message" id="message">
-                                                                            <h3 style="text-align: center; color: red">Warning</h3>
-                                                                            <p>You are currently studying, if you cancel this course there will be no refund. Are you sure you want to cancel ?</p>
-                                                                            <div style="display: flex; align-items: center; justify-content: space-between">
-                                                                                <form method="POST" action="/YogaCenter/request">
-                                                                                    <input name="id_course" value="${course.id_course}" hidden="">
-                                                                                    <input name="status" value="0" hidden="">
-                                                                                    <button class="btn btn-primary" name="action" value="Cancel">Cancel</button>
-                                                                                </form>
-                                                                                <button class="btn btn-primary btn-close">Close</button>
-                                                                            </div>
-                                                                        </dialog>
-                                                                    </c:if>
-                                                                </c:if>
-                                                                <c:if test="${coursebyTrainee.id_course == course.id_course && (coursebyTrainee.status == 0 || coursebyTrainee.status == 2)}">
-                                                                    <p style="color: red; width: 75px"><i class="fa-solid fa-ban" style="color: #ea0606;"></i> Cancel</p>
-                                                                </c:if>
-                                                            </c:forEach>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <a href="/YogaCenter/classbooking" class="btn btn-primary">View schedule</a>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div style="display: flex; align-items: center; justify-content: space-between">
+                                            <a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.id_course}" class="btn btn-primary">View detail course</a>
+                                                    <c:if test="${course.status == 1}">
+                                                        <c:if test="${current_date.before(course.course_start)}">
+                                                            <button class="btn btn-primary open">Cancel</button>
+                                                            <dialog class="message" id="message">
+                                                                <h3 style="text-align: center; color: red">Warning</h3>
+                                                                <p>If you cancel the course now, we will save the amount you paid in your account.</p>
+                                                                <div style="display: flex; align-items: center; justify-content: space-between">
+                                                                    <form method="POST" action="/YogaCenter/request">
+                                                                        <input name="id_course" value="${course.id_course}" hidden="">
+                                                                        <input name="id_order" value="${course.id_order}" hidden="">
+                                                                        <input name="status" value="2" hidden="">
+                                                                        <button class="btn btn-primary" name="action" value="Cancel">Cancel</button>
+                                                                    </form>
+                                                                    <button class="btn btn-primary btn-close">Close</button>
+                                                                </div>
+                                                            </dialog>
                                                         </c:if>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                        <c:if test="${current_date.after(course.course_start)}">
+                                                            <button class="btn btn-primary open">Cancel</button>
+                                                            <dialog class="message" id="message">
+                                                                <h3 style="text-align: center; color: red">Warning</h3>
+                                                                <p>You are currently studying, if you cancel this course there will be no refund. Are you sure you want to cancel ?</p>
+                                                                <div style="display: flex; align-items: center; justify-content: space-between">
+                                                                    <form method="POST" action="/YogaCenter/request">
+                                                                        <input name="id_course" value="${course.id_course}" hidden="">
+                                                                        <input name="id_order" value="${course.id_order}" hidden="">
+                                                                        <input name="status" value="0" hidden="">
+                                                                        <button class="btn btn-primary" name="action" value="Cancel">Cancel</button>
+                                                                    </form>
+                                                                    <button class="btn btn-primary btn-close">Close</button>
+                                                                </div>
+                                                            </dialog>
+                                                        </c:if>
+                                                    </c:if>
+                                                    <c:if test="${course.status == 0 || course.status == 2}">
+                                                        <p style="color: red; width: 75px"><i class="fa-solid fa-ban" style="color: #ea0606;"></i> Cancel</p>
+                                                    </c:if>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                    </c:forEach>
-                </c:if>
-            </div>
-        </body>
-        <c:import url="footer.html"/>
-        <script>
-            const message = document.querySelector("#message");
-            const open = document.querySelector(".open");
-            const close = document.querySelector(".btn-close");
-            var overlay = document.getElementById("overlay");
+                        </div>
+                    </div>
+            </c:forEach>
+        </c:if>
+    </div>
+</body>
+<c:import url="footer.html"/>
+<script>
+    const message = document.querySelector("#message");
+    const open = document.querySelector(".open");
+    const close = document.querySelector(".btn-close");
+    var overlay = document.getElementById("overlay");
 
-            open.addEventListener("click", () => {
-                message.showModal();
-                overlay.classList.remove("hidden");
-            });
+    open.addEventListener("click", () => {
+        message.showModal();
+        overlay.classList.remove("hidden");
+    });
 
-            close.addEventListener("click", () => {
-                message.setAttribute("closing", "");
+    close.addEventListener("click", () => {
+        message.setAttribute("closing", "");
 
-                message.addEventListener(
-                        "animationend",
-                        () => {
-                    message.removeAttribute("closing");
-                    message.close();
-                },
-                        {once: true}
-                );
-                overlay.classList.add("hidden");
-            });
+        message.addEventListener(
+                "animationend",
+                () => {
+            message.removeAttribute("closing");
+            message.close();
+        },
+                {once: true}
+        );
+        overlay.classList.add("hidden");
+    });
 
-        </script>
-    </html>
+</script>
+</html>

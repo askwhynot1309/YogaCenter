@@ -31,7 +31,17 @@ public class OrderCourse {
     public OrderCourse() {
     }
 
-    public OrderCourse(int id_course, String name_course, Date dateorder, BigDecimal fee_course, String level, Date course_start, String img, int slot) {
+    public OrderCourse(int id_course, String name_course, int status, BigDecimal fee_course, Date course_start, String img) {
+        this.id_course = id_course;
+        this.name_course = name_course;
+        this.status = status;
+        this.fee_course = fee_course;
+        this.course_start = course_start;
+        this.img = img;
+    }
+
+    public OrderCourse(int id_order, int id_course, String name_course, Date dateorder, BigDecimal fee_course, String level, Date course_start, String img, int slot, int status) {
+        this.id_order = id_order;
         this.id_course = id_course;
         this.name_course = name_course;
         this.dateorder = dateorder;
@@ -40,6 +50,7 @@ public class OrderCourse {
         this.course_start = course_start;
         this.img = img;
         this.slot = slot;
+        this.status = status;
     }
 
     public OrderCourse(int id_order, int id_course, String name_course, Date dateorder, int status, int method, BigDecimal fee_course) {

@@ -6,6 +6,7 @@ package Controller;
 
 import Object.Course;
 import Object.Level;
+import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -34,12 +35,14 @@ public class StaffListCourseToSign extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            ArrayList<Course> listcourse = Dao.CourseDao.staffGetAllCourse();
-            ArrayList<Level> listlevel = Dao.LevelDao.getAllLevel();
+            /* TODO output your page here. You may use following sample code. */  
             int idaccount = Integer.parseInt(request.getParameter("key"));
+            ArrayList<Course> listcourse = Dao.CourseDao.staffGetAllCourse();
+            ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(idaccount);
+            ArrayList<Level> listlevel = Dao.LevelDao.getAllLevel();
             if(listcourse != null && !listcourse.isEmpty()){
                 request.setAttribute("listcourse", listcourse);
+                request.setAttribute("listCourseAccountActive", listCourseAccountActive);
                 request.setAttribute("key", idaccount);
                 request.setAttribute("listlevel", listlevel);
             }else{

@@ -45,7 +45,8 @@ public class AddCourseServlet extends HttpServlet {
             String imagePath = "D:/YogaCenter/YogaCenter/web/img";
             File file = new File(imagePath + File.separator + fileName);
             if (fileName == "") {
-                fileName = "";
+                request.setAttribute("noimage", "message");
+                request.getRequestDispatcher("managecourse").forward(request, response);
             }
             String description = request.getParameter("course_description");
             String objective = request.getParameter("course_object");
@@ -59,7 +60,7 @@ public class AddCourseServlet extends HttpServlet {
             Date currentDate = new Date(System.currentTimeMillis());
             ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            if (Dao.CourseDao.checkTheSameCourse(name , level) != null) {
+            if (Dao.CourseDao.checkTheSameCourse(name, level) != null) {
                 request.setAttribute("listCourse", listCourse);
                 request.setAttribute("listLevel", listLevel);
                 request.setAttribute("theSameName", "message");

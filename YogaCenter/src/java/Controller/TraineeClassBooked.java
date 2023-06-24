@@ -40,7 +40,7 @@ public class TraineeClassBooked extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(false);
+            HttpSession session = request.getSession(true);
             Account account = (Account)session.getAttribute("account");
             ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
             request.setAttribute("courseList", courseList);
@@ -52,6 +52,7 @@ public class TraineeClassBooked extends HttpServlet {
                 request.setAttribute("listClass", listClass);
             }
             request.setAttribute("listDay", list);
+            request.setAttribute("courseList", courseList);
             request.getRequestDispatcher("traineeViewCourseBooked.jsp").forward(request, response);
         }
     } 

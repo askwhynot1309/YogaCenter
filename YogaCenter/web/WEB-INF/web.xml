@@ -221,6 +221,10 @@
         <servlet-class>Controller.ViewPreviousServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>TraineeBookScheduleServlet</servlet-name>
+        <servlet-class>Controller.TraineeBookScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>    
         <servlet-name>TraineeShowYourCourse</servlet-name>
         <servlet-class>Controller.TraineeShowYourCourse</servlet-class>
     </servlet>
@@ -449,6 +453,10 @@
         <url-pattern>/viewprevious</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>TraineeBookScheduleServlet</servlet-name>
+        <url-pattern>/ChooseClass</url-pattern>
+     </servlet-mapping>
+    <servlet-mapping>    
         <servlet-name>TraineeShowYourCourse</servlet-name>
         <url-pattern>/yourcourse</url-pattern>
     </servlet-mapping>
