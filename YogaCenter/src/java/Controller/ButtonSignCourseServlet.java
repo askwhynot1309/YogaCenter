@@ -36,6 +36,7 @@ public class ButtonSignCourseServlet extends HttpServlet {
             HttpSession session = request.getSession();
             int idcourse = Integer.parseInt(request.getParameter("id"));
             int idaccount = Integer.parseInt(request.getParameter("key"));
+            int method = Integer.parseInt(request.getParameter("method"));
             int quantity = 1;
             Date dateorder = new Date(System.currentTimeMillis());
             int insertOrder = Dao.OrderDao.insertOrderInOffline(quantity, idcourse, idaccount, dateorder);

@@ -4,8 +4,10 @@
 <html style="overflow-y: scroll">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/admin/admin-employee-add.css">
         <link rel="stylesheet" href="css/staff/staff-user.css"/>
+        <link rel="stylesheet" href="css/staff/staff-viewbanking.css"/>
         <title>Staff Dashboard</title>
     </head>
     <body>
@@ -15,6 +17,11 @@
                     <c:import url="staffMenu.jsp"/>
                 </div>
                 <div class="col-lg-9" style="margin-left: 300px">
+                    <div id="overlay" class="overlay hidden"></div>
+                    <a href="/YogaCenter/trainee" class="btn">
+                        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
+                        <span>Back</span>
+                    </a>
                     <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Yoga Center Course List</h2>
                     <div style="display: flex; margin-left: 30%; margin-bottom: 2rem; margin-top: 2rem ">
                         <c:set var="idaccount" value="${requestScope.key}"/>
@@ -29,6 +36,7 @@
                                 <c:set var="listLevel" value="${requestScope.listlevel}"/>
                                 <c:if test="${listLevel != null && !listLevel.isEmpty()}">
                                     <select name="level" style="margin-left: 10px">
+                                        <option value="0"></option>
                                         <c:forEach var="level" items="${listLevel}">
                                             <option value="${level.getIdLevel()}">${level.getLevel_Name()}</option>
                                         </c:forEach>
@@ -45,24 +53,48 @@
                     </div>
                     <c:set var="listcourse" value="${requestScope.listcourse}"/>
                     <c:set var="nulllist" value="${requestScope.nonelist}"/>
+                    <c:set var="listCourseAccountActive" value="${requestScope.listCourseAccountActive}"/>
                     <c:if test="${listcourse == null}">
                         <p style="text-align: center"><c:out value="${nulllist}"/></p>
                     </c:if>
                     <c:if test="${listcourse != null}">
                         <div class="course">
                             <c:forEach var="course" items="${listcourse}">
-                                <div style="border: 2px solid black; float: left; margin-left: 10px; padding: 10px; border-radius: 10px; width: 260px;height: 350px; margin-bottom: 10px">
-                                    <img src="img/${course.img_course}" width="100px" height="100px" style="margin-left: 30%">
+                                <div style="border: 2px solid black; float: left; margin-left: 10px; padding: 10px; border-radius: 10px; width: 355px;height: 300px; margin-bottom: 10px; position: relative">
                                     <div>
                                         <form action="/YogaCenter/request" method="POST">
-                                            <p>Name of course : ${course.name_course}</p>
-                                            <p>Fee of course : ${course.fee_course} đồng</p>
+                                            <p style="font-size: 15px">${course.name_course}</p>
+                                            <p>Fee of course : ${course.fee_course} VNĐ</p>
+                                            <p>Level : ${course.name_level}</p>
                                             <p>Date-start : ${course.date_start}</p>
                                             <input name="id" value="${course.idCourse}" hidden="">
                                             <c:if test="${idaccount != null}">
                                                 <input name="key" value="${idaccount}" hidden="">
                                             </c:if>
-                                            <button value="ButtonSignCourse" name="action" class="btn-search" style="margin-left: 25%">Sign in</button>
+                                            <c:if test="${listCourseAccountActive != null}">
+                                                <c:forEach var="coureactive" items="${listCourseAccountActive}">
+                                                    <c:if test="${course.idCourse == coureactive.id_course}">
+                                                        <p style="text-align: center; color: red">You bought course</p>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="${listCourseAccountActive == null}">
+                                                <a class="btn-search open" style="left: 35%; position: absolute; bottom: 10px">Sign up</a>
+                                                <dialog class="message" id="message">
+                                                    <h3 style="text-align: center; color: red">Payment</h3>
+                                                    <p>Bank account number : 9775030435</p>
+                                                    <p>Bank : Vietcombank</p>
+                                                    <p>Name of account bank : Nguyễn Minh Nguyên</p>
+                                                    <p>Method : <select name="method">
+                                                            <option value="0">Cash</option>
+                                                            <option value="1">Banking</option>
+                                                        </select></p>
+                                                    <div style="display: flex; align-items: center; justify-content: space-between">
+                                                        <button class="btn btn-primary" name="action" value="ButtonSignCourse">Comfirm</button>
+                                                        <a class="btn btn-primary btn-close">Close</a>
+                                                    </div>
+                                                </dialog>
+                                            </c:if>
                                         </form>
                                     </div>
                                 </div>
@@ -73,4 +105,30 @@
             </div>
         </div>
     </body>
+    <script>
+        const message = document.querySelector("#message");
+        const open = document.querySelector(".open");
+        const close = document.querySelector(".btn-close");
+        var overlay = document.getElementById("overlay");
+
+        open.addEventListener("click", () => {
+            message.showModal();
+            overlay.classList.remove("hidden");
+        });
+
+        close.addEventListener("click", () => {
+            message.setAttribute("closing", "");
+
+            message.addEventListener(
+                    "animationend",
+                    () => {
+                message.removeAttribute("closing");
+                message.close();
+            },
+                    {once: true}
+            );
+            overlay.classList.add("hidden");
+        });
+
+    </script>
 </html>

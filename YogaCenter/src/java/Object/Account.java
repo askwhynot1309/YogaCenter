@@ -5,6 +5,7 @@
 package Object;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.io.Serializable;
 public class Account implements Serializable{
     private int idaccount;
     private String email;
+    private BigDecimal amount;
     private String account;
     private String password;
     private String name;
@@ -40,6 +42,14 @@ public class Account implements Serializable{
         this.image = image;
         this.role = role;
         this.status = status;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
     public String getCv() {

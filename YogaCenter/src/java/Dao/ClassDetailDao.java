@@ -578,28 +578,10 @@ public class ClassDetailDao {
                     Date datestudy = table.getDate("DateStudy");
                     int idacc = table.getInt("IDAccount");
                     int id_course = table.getInt("IDCourse");
-                    int status = table.getInt("Status_ClassDetail");
-                    ClassDetail cd = new ClassDetail(classdetail, class_id, id_time, idacc, datestudy, id_course, status);
+                    ClassDetail cd = new ClassDetail(classdetail, class_id, id_time, idacc, datestudy, id_course);
                     kq.add(cd);
                 }
             }
-            cn.close();
-        }
-        return kq;
-    }
-
-    public static int updateStatusClassDetailForTrainee(int id_account, int id_course, int status) throws Exception {
-        int kq = 0;
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "update ClassDetail\n"
-                    + "set Status_ClassDetail = ?\n"
-                    + "Where IDAccount = ? and IDCourse = ?";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(2, id_account);
-            pst.setInt(3, id_course);
-            pst.setInt(1, status);
-            kq = pst.executeUpdate();
             cn.close();
         }
         return kq;

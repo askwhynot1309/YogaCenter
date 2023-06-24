@@ -24,7 +24,7 @@ public class UserDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Account\n"
-                    + "where Email = ?";
+                    + "where Email = ? and Role = 3";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, input);
             ResultSet table = pst.executeQuery();
@@ -226,7 +226,7 @@ public class UserDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Account\n"
-                    + "Where CCCD = ?";
+                    + "Where CCCD = ? and Role = 3";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, input);
             ResultSet table = pst.executeQuery();
@@ -262,7 +262,7 @@ public class UserDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Account\n"
-                    + "Where Phone = ?";
+                    + "Where Phone = ? and Role = 3";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, input);
             ResultSet table = pst.executeQuery();

@@ -62,7 +62,6 @@ public class OrderCourseDao {
         return purchase;
     }
 
-
     public static boolean cancelStatus(int Order_ID) {
         boolean isUpdated = false;
         Connection cn = null;
@@ -75,18 +74,19 @@ public class OrderCourseDao {
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setInt(1, Order_ID);
                 isUpdated = pst.execute();
-                
+
             }
         } catch (Exception e) {
         }
         return isUpdated;
-}
+    }
+
     public static ArrayList<OrderCourse> getAllCourseTraineeLearn(int id) throws Exception {
         ArrayList<OrderCourse> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select bc.DateOrder, c.Course_Name, l.Level_Name, c.Img, c.Course_Fee, c.Slot, c.Start_date, bd.ID_Course\n"
-                    + "from BookingCourse bc JOIN BookingDetail bd ON bc.OrderID = bd.Order_ID\n"
+            String s = "select bc.OrderID, bc.DateOrder, c.Course_Name, l.Level_Name, c.Img, c.Course_Fee, c.Slot, c.Start_date, bd.ID_Course, bd.Status_Account\n"
+                    + "from BookingCourse bc JOIN BookingDetail bd ON bc.OrderID = bd.Order_ID JOIN StatusPayment sp ON sp.ID_Order = bc.OrderID\n"
                     + "JOIN Course c ON c.Course_ID = bd.ID_Course\n"
                     + "JOIN Level l ON c.ID_Level = l.Level_ID\n"
                     + "Where bc.ID_Trainee = ?";
@@ -96,6 +96,7 @@ public class OrderCourseDao {
             if (table != null) {
                 while (table.next()) {
                     int id_course = table.getInt("ID_Course");
+                    int id_order = table.getInt("OrderID");
                     int slot = table.getInt("Slot");
                     String course_name = table.getNString("Course_Name");
                     String level = table.getNString("Level_Name");
@@ -103,7 +104,8 @@ public class OrderCourseDao {
                     Date date_start = table.getDate("Start_date");
                     BigDecimal fee = table.getBigDecimal("Course_Fee");
                     String img = table.getString("Img");
-                    OrderCourse coursedetail = new OrderCourse(id_course, course_name, date_order, fee, level, date_start, img, slot);
+                    int status = table.getInt("Status_Account");
+                    OrderCourse coursedetail = new OrderCourse(id_order, id_course, course_name, date_order, fee, level, date_start, img, slot, status);
                     kq.add(coursedetail);
                 }
             }
@@ -126,8 +128,8 @@ public class OrderCourseDao {
             pst.setInt(3, status);
             pst.setInt(4, id_course);
             ResultSet table = pst.executeQuery();
-            if(table != null){
-                while (table.next()) {                    
+            if (table != null) {
+                while (table.next()) {
                     int count = table.getInt("Count");
                     int idcourse = table.getInt("IDCourse");
                     kq = new SlotsTrainee(idcourse, count);

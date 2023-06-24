@@ -341,23 +341,21 @@ public class CourseDao {
         return kq;
     }
 
-    public static int updateCourse(int id, String name, String img, BigDecimal fee, String description, String objective, String summary, int slot, int level) throws Exception {
+    public static int updateCourse(int id, String img, BigDecimal fee, String description, String objective, String summary, int slot) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "update Course\n"
-                    + "set Course_Name = ?, Course_Fee = ?, Img = ?, Slot = ?, Description = ?, Objective = ?, Summary = ?, ID_Level = ?\n"
+                    + "set Course_Fee = ?, Img = ?, Slot = ?, Description = ?, Objective = ?, Summary = ?\n"
                     + "where Course_ID = ?";
             PreparedStatement pst = cn.prepareStatement(s);
-            pst.setNString(1, name);
-            pst.setBigDecimal(2, fee);
-            pst.setString(3, img);
-            pst.setInt(5, slot);
-            pst.setNString(6, description);
-            pst.setNString(7, objective);
-            pst.setNString(8, summary);
-            pst.setInt(9, level);
-            pst.setInt(10, id);
+            pst.setBigDecimal(1, fee);
+            pst.setString(2, img);
+            pst.setInt(3, slot);
+            pst.setNString(4, description);
+            pst.setNString(5, objective);
+            pst.setNString(6, summary);
+            pst.setInt(7, id);
             kq = pst.executeUpdate();
             cn.close();
         }
