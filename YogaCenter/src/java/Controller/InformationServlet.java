@@ -114,6 +114,7 @@ public class InformationServlet extends HttpServlet {
 //                  for (AccountAttendence attendance : listAttend) {
 //                        System.out.println(attendance.getStatus());
 //                    }
+                    
                     if (trainerlistTrainee.isEmpty()) {
                         session.setAttribute("InforClass", trainerinformation);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
