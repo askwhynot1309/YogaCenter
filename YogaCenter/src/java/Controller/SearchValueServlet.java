@@ -159,6 +159,16 @@ public class SearchValueServlet extends HttpServlet {
                             request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);
                         }
                     }
+                case "TrainerSearchTrainee":
+                    listUser = Dao.UserDao.getTraineeByNameSearch(search);
+                    if (listUser != null && !listUser.isEmpty()) {
+                        request.setAttribute("listUser", listUser);
+                        request.getRequestDispatcher("trainer/trainerManageUser.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("nulllist", "There are no users in the data that match the data you searched for.");
+                        request.getRequestDispatcher("trainer/trainerManageUser.jsp").forward(request, response);
+                    }
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -19,6 +19,7 @@
                 padding: 40px;
                 border-radius: 5px;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                margin-bottom: 100px;
             }
 
             h2 {
@@ -60,7 +61,7 @@
             }
         </style>
     </head>
-    <c:import url="headerLogin.jsp"/>
+    <c:import url="header.jsp"/>
     <body>
         <div class="container">
             <h2>Register </h2>

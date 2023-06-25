@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -39,8 +40,9 @@ public class TrainerViewScheduleServlet extends HttpServlet {
             List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
             request.setAttribute("currentweek", currentweek);
             ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetails();
+            HttpSession session = request.getSession();
             if (listClass != null && !listClass.isEmpty()) {
-                request.setAttribute("listClass", listClass);
+                session.setAttribute("listClass", listClass);
             }
             request.setAttribute("listDay", list);
             request.getRequestDispatcher("trainer/trainerManageSchedule.jsp").forward(request, response);

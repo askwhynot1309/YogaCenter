@@ -1,6 +1,6 @@
-
 package Controller;
 
+import Dao.AttendenceDao;
 import Object.Account;
 import Object.AccountAttendence;
 import Object.ClassDetail;
@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -93,8 +94,8 @@ public class InformationServlet extends HttpServlet {
                     request.setAttribute("roomlist", room);
                     request.setAttribute("timelist", time);
                     request.setAttribute("InforClass", in);
-                        request.getRequestDispatcher("staff/staffChangeClass.jsp").forward(request, response);
-                        break;
+                    request.getRequestDispatcher("staff/staffChangeClass.jsp").forward(request, response);
+                    break;
                 case "infOrder":
                     request.setAttribute("listinf", listinf);
                     request.getRequestDispatcher("admin/adminViewInfOrder.jsp").forward(request, response);
@@ -103,29 +104,37 @@ public class InformationServlet extends HttpServlet {
                     request.setAttribute("listinf", listinf);
                     request.getRequestDispatcher("staff/staffViewInfOrder.jsp").forward(request, response);
                     break;
-                 case "trainerClassDetail":
+                case "trainerClassDetail":
+                    HttpSession session = request.getSession(true);
+
                     ClassDetail trainerinformation = Dao.ClassDetailDao.getClassDetailById(id);
                     ArrayList<Account> trainerlistTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformation.getTime(), trainerinformation.getClass_name(), trainerinformation.getDate(), trainerinformation.getId_course());
+                    ArrayList<AccountAttendence> listAttend = Dao.AttendenceDao.getAccountToAttendence(trainerinformation.getDate());
+
+//                  for (AccountAttendence attendance : listAttend) {
+//                        System.out.println(attendance.getStatus());
+//                    }
                     if (trainerlistTrainee.isEmpty()) {
-                        request.setAttribute("InforClass", trainerinformation);
+                        session.setAttribute("InforClass", trainerinformation);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("ListTrainee", trainerlistTrainee);
-                        request.setAttribute("InforClass", trainerinformation);
+                        session.setAttribute("ListTrainee", trainerlistTrainee);
+                        session.setAttribute("InforClass", trainerinformation);
+                        session.setAttribute("listAttend", listAttend);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
                     }
                     break;
-                 case "trainerUserDetail":
-                     Account trainee = Dao.UserDao.getAccountByID(id);
-                     request.setAttribute("user", trainee);
-                     request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
-                     break;
-                 case "viewmore":
-                     Course viewcoure = Dao.CourseDao.getInformationOfCourse(id);
-                     ArrayList<Course> top3Course = Dao.CourseDao.getTop3InformationOfCourse(viewcoure.getLevel());
-                     request.setAttribute("information", viewcoure);
-                     request.setAttribute("top3Course", top3Course);
-                     request.getRequestDispatcher("viewMoreCourse.jsp").forward(request, response);
+                case "trainerUserDetail":
+                    Account trainee = Dao.UserDao.getAccountByID(id);
+                    request.setAttribute("user", trainee);
+                    request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
+                    break;
+                case "viewmore":
+                    Course viewcoure = Dao.CourseDao.getInformationOfCourse(id);
+                    ArrayList<Course> top3Course = Dao.CourseDao.getTop3InformationOfCourse(viewcoure.getLevel());
+                    request.setAttribute("information", viewcoure);
+                    request.setAttribute("top3Course", top3Course);
+                    request.getRequestDispatcher("viewMoreCourse.jsp").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -172,4 +181,3 @@ public class InformationServlet extends HttpServlet {
     }// </editor-fold>
 
 }
-

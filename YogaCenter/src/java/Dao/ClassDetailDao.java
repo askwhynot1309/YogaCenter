@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -212,7 +213,6 @@ public class ClassDetailDao {
         return kq;
     }
 
-
     public static ClassDetail getTrainerByClassDetailID(int ClassDetail_ID) {
         ClassDetail trainer = null;
         Connection cn = null;
@@ -243,7 +243,7 @@ public class ClassDetailDao {
                 sql = "SELECT *\n"
                         + "FROM [dbo].[ClassDetail] CD\n"
                         + "JOIN [dbo].[Account] A ON CD.IDAccount = A.ID_Account\n"
-                        +"JOIN [dbo].[Course] C ON CD.IDCourse = C.Course_ID\n"
+                        + "JOIN [dbo].[Course] C ON CD.IDCourse = C.Course_ID\n"
                         + "JOIN [dbo].[Class] CL ON CL.Class_ID = CD.Class_ID\n"
                         + "WHERE A.Role = 2 AND CD.Class_ID = ? AND CD.IDtime = ? AND CD.DateStudy = ? AND CD.IDCourse = ? AND CD.Choice = ?";
                 pst = cn.prepareStatement(sql);
@@ -341,7 +341,7 @@ public class ClassDetailDao {
                     + "JOIN Course cou ON cou.Course_ID =cd.IDCourse\n"
                     + "Where a.Role = 3";
             PreparedStatement pst = cn.prepareStatement(s);
-             ResultSet table = pst.executeQuery();
+            ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
                     int classdetail = table.getInt("ClassDetail_ID");
@@ -460,4 +460,63 @@ public class ClassDetailDao {
         }
         return kq;
     }
+
+    public boolean checkAttendance(int traineeId, int courseId, Date date, int status) throws Exception {
+        boolean updated = false;
+        Connection con = DBUtils.getConnection();
+
+        String query = "INSERT INTO dbo.CheckAttendance (ID_Trainee, ID_Course, AttendanceDate, Status) VALUES (?, ?, ?, ?)";
+
+        try ( PreparedStatement statement = con.prepareStatement(query)) {
+            statement.setInt(1, traineeId);
+            statement.setInt(2, courseId);
+            statement.setDate(3, date);
+            statement.setInt(4, status);
+
+            statement.executeUpdate();
+            updated = true;
+        }
+        return updated;
+    }
+
+    public boolean updateAttendanceStatus(int traineeId, int courseId, Date date, int status) throws Exception {
+        boolean check = false;
+        String query = "UPDATE dbo.CheckAttendance SET Status = ? WHERE ID_Trainee = ? AND ID_Course = ? AND AttendanceDate = ?";
+        Connection con = DBUtils.getConnection();
+
+        try ( PreparedStatement statement = con.prepareStatement(query)) {
+            statement.setInt(1, status);
+            statement.setInt(2, traineeId);
+            statement.setInt(3, courseId);
+            statement.setDate(4, date);
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                check = true;
+            }
+        }
+        return check;
+    }
+
+    public boolean checkAttendanceExistence(int traineeId, int courseId, Date attendanceDate) throws Exception {
+        String query = "SELECT COUNT(*) FROM dbo.CheckAttendance WHERE ID_Trainee = ? AND ID_Course = ? AND AttendanceDate = ?";
+        Connection con = DBUtils.getConnection();
+        
+        try ( PreparedStatement statement = con.prepareStatement(query)) {
+            statement.setInt(1, traineeId);
+            statement.setInt(2, courseId);
+            statement.setDate(3, attendanceDate);
+
+            try ( ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+
+        return false;
+    }
+    
+    
 }
