@@ -45,7 +45,8 @@ public class AddCourseServlet extends HttpServlet {
             String imagePath = "D:/YogaCenter/YogaCenter/web/img";
             File file = new File(imagePath + File.separator + fileName);
             if (fileName == "") {
-                fileName = "";
+                request.setAttribute("noimage", "message");
+                request.getRequestDispatcher("managecourse").forward(request, response);
             }
             String description = request.getParameter("course_description");
             String objective = request.getParameter("course_object");
@@ -59,11 +60,11 @@ public class AddCourseServlet extends HttpServlet {
             Date currentDate = new Date(System.currentTimeMillis());
             ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            if (Dao.CourseDao.checkTheSameCourse(name) != null) {
+            if (Dao.CourseDao.checkTheSameCourse(name, level) != null) {
                 request.setAttribute("listCourse", listCourse);
                 request.setAttribute("listLevel", listLevel);
                 request.setAttribute("theSameName", "message");
-                request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                request.getRequestDispatcher("managecourse").forward(request, response);
             } else {
                 if (level == 0) {
                     if (listCourse != null && !listCourse.isEmpty()) {
@@ -71,19 +72,19 @@ public class AddCourseServlet extends HttpServlet {
                             request.setAttribute("listCourse", listCourse);
                             request.setAttribute("listLevel", listLevel);
                             request.setAttribute("blank", "Điền đầy đủ các thông tin.");
-                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("managecourse").forward(request, response);
                         } else {
-                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("managecourse").forward(request, response);
                         }
                     } else {
                         if (listLevel != null && !listLevel.isEmpty()) {
                             request.setAttribute("listLevel", listLevel);
                             request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
                             request.setAttribute("blank", "Điền đầy đủ các thông tin.");
-                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("managecourse").forward(request, response);
                         } else {
                             request.setAttribute("blank", "Điền đầy đủ các thông tin.");
-                            request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                            request.getRequestDispatcher("managecourse").forward(request, response);
                         }
                     }
                 } else {
@@ -93,19 +94,19 @@ public class AddCourseServlet extends HttpServlet {
                                 request.setAttribute("listCourse", listCourse);
                                 request.setAttribute("listLevel", listLevel);
                                 request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                                request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                request.getRequestDispatcher("managecourse").forward(request, response);
                             } else {
-                                request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                request.getRequestDispatcher("managecourse").forward(request, response);
                             }
                         } else {
                             if (listLevel != null && !listLevel.isEmpty()) {
                                 request.setAttribute("listLevel", listLevel);
                                 request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
                                 request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                                request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                request.getRequestDispatcher("managecourse").forward(request, response);
                             } else {
                                 request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                                request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                request.getRequestDispatcher("managecourse").forward(request, response);
                             }
                         }
                     } else {

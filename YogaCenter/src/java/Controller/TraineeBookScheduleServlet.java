@@ -4,13 +4,17 @@
  */
 package Controller;
 
+import Dao.ClassDetailDao;
+import Dao.CourseDao;
 import Object.Course;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import javax.servlet.RequestDispatcher;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ADMIN
+ * @author ngmin
  */
-public class HomeServlet extends HttpServlet {
+public class TraineeBookScheduleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,45 +36,33 @@ public class HomeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            Date currentdate = new Date(System.currentTimeMillis());
-            ArrayList<Course> randomList = new ArrayList<>();
-            ArrayList<Course> list = Dao.CourseDao.getCourseByDateStart(currentdate);
-            ArrayList<Course> listramdom = Dao.CourseDao.getAllCourse();
-            ArrayList<Course> list4Course = Dao.CourseDao.get4Course();
-            if (list != null && !list.isEmpty()) {
-                for (Course course : list) {
-                    int changeStatus = Dao.CourseDao.changeStatusCourse(1, course.getIdCourse());
+            int Course_ID = Integer.parseInt(request.getParameter("courseID"));
+            Course course = CourseDao.getInformationOfCourse(Course_ID);
+            HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(Course_ID);
+
+            Date courseDate = course.getDate_start();
+            LocalDate courseDateStart = courseDate.toLocalDate();
+            LocalDate startDate = courseDateStart.minusDays(10);
+            LocalDate endDate = courseDateStart.minusDays(7);
+            
+            LocalDate currentDate = LocalDate.now();
+            if (!hashChoise.isEmpty()) {
+                request.setAttribute("hashChoise", hashChoise);
+                request.setAttribute("Course_ID", Course_ID);
+                request.setAttribute("startDate", startDate);
+                request.setAttribute("endDate", endDate);
+                if (currentDate.isAfter(endDate)) {
+                    request.setAttribute("overdue", "Overdue for form application and registration");    
+                    request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
+                }else if (currentDate.isBefore(startDate)) {
+                    request.setAttribute("overdue", "It's not time to registration");
                 }
-                Collections.shuffle(listramdom);
-                int count = 0;
-                for (Course course : listramdom) {
-                    if (count < 3) {
-                        randomList.add(course);
-                        count++;
-                    }
-                }
-                request.setAttribute("ramdomCourse", randomList);
-                request.setAttribute("list4Course", list4Course);
-                request.getRequestDispatcher("homepage.jsp").forward(request, response);
-            } else {
-                Collections.shuffle(listramdom);
-                int count = 0;
-                for (Course course : listramdom) {
-                    if (count < 3) {
-                        randomList.add(course);
-                        count++;
-                    }
-                }
-                request.setAttribute("ramdomCourse", randomList);
-                request.setAttribute("list4Course", list4Course);
-                request.getRequestDispatcher("homepage.jsp").forward(request, response);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
         }
     }
 
@@ -86,7 +78,11 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeBookScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -100,7 +96,11 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeBookScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

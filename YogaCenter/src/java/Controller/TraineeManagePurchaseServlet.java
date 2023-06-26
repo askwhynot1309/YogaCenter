@@ -2,41 +2,74 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller;
 
+import Dao.OrderCourseDao;
+import Object.Account;
+import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ngmin
  */
 public class TraineeManagePurchaseServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession(true);
+            Account account = (Account) session.getAttribute("account");
+            HashMap<Integer, ArrayList<OrderCourse>> purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
+            for (Map.Entry<Integer, ArrayList<OrderCourse>> entry : purchase.entrySet()) {
+                int orderID = entry.getKey();
+                ArrayList<OrderCourse> orderDetail = entry.getValue();
+                LocalDate overduaDate;
+                for (OrderCourse orderCourse : orderDetail) {
+                    if (orderCourse.getStatus() == 0) {
+                        LocalDate orderDate = orderCourse.getDateorder().toLocalDate();
+                        overduaDate = orderDate.plusDays(10);
+                        LocalDate currentDate = LocalDate.now();
+                        if (overduaDate.isBefore(currentDate)) {
+                            boolean isUpdated = OrderCourseDao.cancelStatus(orderID);
+                            boolean isDeleted = Dao.ClassDetailDao.deleteTraineeInClass(account.getIdaccount(), orderCourse.getId_course());
+                        }
+                    }
+                }
+            }
+            purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
+            request.setAttribute("purchase", purchase);
             request.getRequestDispatcher("traineeManagePurchase.jsp").forward(request, response);
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -44,12 +77,13 @@ public class TraineeManagePurchaseServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -57,12 +91,13 @@ public class TraineeManagePurchaseServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

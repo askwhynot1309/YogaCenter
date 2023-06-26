@@ -36,6 +36,18 @@ public class ButtonAddTraineeServlet extends HttpServlet {
             String phone = request.getParameter("phone");
             String cccd = request.getParameter("cccd");
             String address = request.getParameter("address");
+             if(Utils.CheckEmailExist.isAddressValid(email) == false){
+                request.setAttribute("Invalid", "Invalid");
+                request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
+            }
+            if(Utils.CheckValidation.isValidCCCD(cccd) == false){
+                request.setAttribute("InvalidCCCD", "Invalid");
+                request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
+            }
+            if(Utils.CheckValidation.checkPhone(phone) == false){
+                request.setAttribute("InvalidPhone", "Invalid");
+                request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
+            }
             if (Dao.UserDao.checkEmailTraineeIsExist(email) == null) {
                 if (Dao.UserDao.isCccdExists(cccd) == false) {
                     if (Dao.UserDao.isPhoneExists(phone) == false) {

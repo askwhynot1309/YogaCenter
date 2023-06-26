@@ -4,23 +4,21 @@
  */
 package Controller;
 
-import Object.Course;
+import Object.Account;
+import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collections;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ADMIN
  */
-public class HomeServlet extends HttpServlet {
+public class CancelCourseOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,40 +34,19 @@ public class HomeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            Date currentdate = new Date(System.currentTimeMillis());
-            ArrayList<Course> randomList = new ArrayList<>();
-            ArrayList<Course> list = Dao.CourseDao.getCourseByDateStart(currentdate);
-            ArrayList<Course> listramdom = Dao.CourseDao.getAllCourse();
-            ArrayList<Course> list4Course = Dao.CourseDao.get4Course();
-            if (list != null && !list.isEmpty()) {
-                for (Course course : list) {
-                    int changeStatus = Dao.CourseDao.changeStatusCourse(1, course.getIdCourse());
-                }
-                Collections.shuffle(listramdom);
-                int count = 0;
-                for (Course course : listramdom) {
-                    if (count < 3) {
-                        randomList.add(course);
-                        count++;
-                    }
-                }
-                request.setAttribute("ramdomCourse", randomList);
-                request.setAttribute("list4Course", list4Course);
-                request.getRequestDispatcher("homepage.jsp").forward(request, response);
-            } else {
-                Collections.shuffle(listramdom);
-                int count = 0;
-                for (Course course : listramdom) {
-                    if (count < 3) {
-                        randomList.add(course);
-                        count++;
-                    }
-                }
-                request.setAttribute("ramdomCourse", randomList);
-                request.setAttribute("list4Course", list4Course);
-                request.getRequestDispatcher("homepage.jsp").forward(request, response);
+            int id_course = Integer.parseInt(request.getParameter("id_course"));
+            int id_order = Integer.parseInt(request.getParameter("id_order"));
+            int status = Integer.parseInt(request.getParameter("status"));
+            switch (status) {
+                case 0:
+                    int changeStatusRefund = Dao.OrderDao.changeStatusAccountOrder(id_order, id_course, status);
+                    break;
+                case 2:
+                    int changeStatusCancel = Dao.OrderDao.changeStatusAccountOrder(id_order, id_course, status);
+                    break;
             }
-        } catch (Exception e) {
+            request.getRequestDispatcher("yourcourse").forward(request, response);
+        }catch(Exception e){
             e.printStackTrace();
         }
     }

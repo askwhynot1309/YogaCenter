@@ -41,9 +41,9 @@ public class TraineeSaveOrderServlet extends HttpServlet {
                 int method = Integer.parseInt(request.getParameter("method"));
                 int status;
                 if (method == 0) {
-                    status = 1;
+                    status = 0;
                 }else{
-                    status = 2;
+                    status = 1;
                 }
                 HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
                 boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
@@ -51,7 +51,7 @@ public class TraineeSaveOrderServlet extends HttpServlet {
                 if (inserted == true) {
                     session.removeAttribute("cart");
                     request.setAttribute("addsuccess", "message");
-                    request.getRequestDispatcher("traineeManagePurchase.jsp").forward(request, response);
+                    request.getRequestDispatcher("purchase").forward(request, response);
                 }else{
                     response.sendRedirect("error.html");
                 }

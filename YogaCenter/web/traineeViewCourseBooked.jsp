@@ -16,6 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/admin/admin.css">
         <link rel="stylesheet" href="css/admin/admin-schedule.css">
@@ -25,9 +26,6 @@
     <style>
         thead {
             background: #dddcdc;
-        }
-        thead th{
-            text-align: center;
         }
         .toggle-btn {
             width: 40px;
@@ -62,14 +60,13 @@
         }
         .cell-1 th{
             vertical-align: middle;
-            text-align: center;
         }
     </style>
     <body>
         <c:import url="header.jsp"></c:import>
         <%
             Account account = (Account) session.getAttribute("account");
-            ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
+            ArrayList<Course> courseList = (ArrayList<Course>)request.getAttribute("courseList");
         %>
         <div class="container">
             <h2 style="text-align: center">My Learning</h2>
@@ -92,7 +89,7 @@
                                             for (Course course : courseList) {
                                         %>
                                         <tr class="cell-1">
-                                            <th><%= course.getName_course()%></th>
+                                            <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=<%=course.getIdCourse()%>"><%= course.getName_course()%></a></th>
                                             <th><%= course.getDate_start()%></th>
                                             <th><%= course.getSlot()%></th>
                                             <th><a href="/YogaCenter/request?action=EditSchedule&courseID=<%=course.getIdCourse()%>">Edit Schedule</a></th>
@@ -743,5 +740,13 @@
             }
 
         </script>
+        
+        <c:set var="ChangeFail" value="${requestScope.ChangeFail}"/>
+        <c:if test="${ChangeFail != null}">
+            <script>
+                window.alert("${ChangeFail}");
+            </script>
+        </c:if>
     </body>
+    <c:import url="footer.html"/>
 </html>

@@ -40,18 +40,19 @@ public class TraineeClassBooked extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(false);
+            HttpSession session = request.getSession(true);
             Account account = (Account)session.getAttribute("account");
             ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
             request.setAttribute("courseList", courseList);
             List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
             List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
             request.setAttribute("currentweek", currentweek);
-            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsByTrainee();
+            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsByTrainee(account.getIdaccount());
             if (listClass != null && !listClass.isEmpty()) {
                 request.setAttribute("listClass", listClass);
             }
             request.setAttribute("listDay", list);
+            request.setAttribute("courseList", courseList);
             request.getRequestDispatcher("traineeViewCourseBooked.jsp").forward(request, response);
         }
     } 

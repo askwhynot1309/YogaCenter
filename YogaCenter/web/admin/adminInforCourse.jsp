@@ -7,6 +7,7 @@
         <title>Admin Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/admin/admin.css">
         <link rel="stylesheet" href="css/admin/admin-course-add.css">
         <link rel="stylesheet" href="css/admin/admin-inf-course.css">
@@ -49,24 +50,15 @@
                                     <p>Fee of course : <input type="number" name="course_fee" value="${informationCourse.fee_course}" class="input-course"></p>
                                 </div>
                                 <div style="display: flex; align-items: center; justify-content: space-between">
-                                    <p>Start-date of course : <input type="date" name="course_start" value="${informationCourse.date_start}" class="input-course"></p>
+                                    <p>Start-date of course : <input value="${informationCourse.date_start}" class="input-course" readonly=""></p>
                                     <input name="id" value="${informationCourse.idCourse}" hidden="">
                                     <p>Slots : <input type="number" name="slot" value="${informationCourse.slot}" class="input-course"></p>
                                 </div>
+                                <p>Level : ${informationCourse.name_level}</p>
                                 <p>Detail of course : </p><textarea name="course_description">${informationCourse.description}</textarea>
                                 <p>Summary of course : </p><textarea name="course_summary">${informationCourse.summary}</textarea>
                                 <p>Objective of course : </p><textarea name="course_object">${informationCourse.learnt}</textarea>
-                                <c:set var="listLevel" value="${requestScope.listLevel}"/>
-                                <c:if test="${listLevel != null && !listLevel.isEmpty()}">
-                                    <p style="margin-top: 10px">Level : <select name="level" class="input-course">
-                                            <option value="0"></option>
-                                            <c:forEach var="level" items="${listLevel}">
-                                                <c:set var="isSelected" value="${informationCourse.level == level.getIdLevel()}"/>
-                                                <option value="${level.getIdLevel()}" <c:if test="${isSelected}">selected="selected"</c:if>>${level.getLevel_Name()}</option>
-                                            </c:forEach>
-                                        </select></p>
-                                    </c:if>
-                                <button name="action" value="ButtonChange" class="btn-update">Change information</button>
+                                <button name="action" value="ButtonChange" class="btn-update" style="margin-top: 20px; margin-bottom: 20px">Change information</button>
                             </div>
                             <div style="float: right; height: 540px">
                                 <div style="width: 350px; border: 5px solid black; padding: 10px">
@@ -75,7 +67,7 @@
                                     <input name="oldimg" value="${informationCourse.img_course}" hidden="">
                                 </div>
                             </div>
-                        </form>  
+                        </form> 
                         <c:if test="${expired != null}">
                             <div class="notification">
                                 <div class="content">

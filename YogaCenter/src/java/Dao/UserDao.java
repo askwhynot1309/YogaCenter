@@ -24,7 +24,7 @@ public class UserDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Account\n"
-                    + "where Email = ?";
+                    + "where Email = ? and Role = 3";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, input);
             ResultSet table = pst.executeQuery();
@@ -170,7 +170,7 @@ public class UserDao {
                     + "from ClassDetail cd\n"
                     + "JOIN Account a ON cd.IDAccount = a.ID_Account\n"
                     + "JOIN Class c ON cd.Class_ID =c.Class_ID\n"
-                    + "where a.Role = 3 and cd.IDtime = ? and cd.DateStudy = ? and c.Class_Name = ? and cd.IDCourse = ?";
+                    + "where a.Role = 3 and cd.IDtime = ? and cd.DateStudy = ? and c.Class_Name = ? and cd.IDCourse = ? cd.Status_ClassDetail = 1";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id_time);
             pst.setDate(2, date);
@@ -259,7 +259,7 @@ public class UserDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Account\n"
-                    + "Where CCCD = ?";
+                    + "Where CCCD = ? and Role = 3";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, input);
             ResultSet table = pst.executeQuery();
@@ -295,7 +295,7 @@ public class UserDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Account\n"
-                    + "Where Phone = ?";
+                    + "Where Phone = ? and Role = 3";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, input);
             ResultSet table = pst.executeQuery();

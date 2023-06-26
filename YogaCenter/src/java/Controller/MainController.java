@@ -100,7 +100,7 @@ public class MainController extends HttpServlet {
                         url = "TraineeSaveOrderServlet";
                         break;
                     case "EditSchedule":
-                        url = "traineeEditSchedule.jsp";
+                        url = "ChooseClass";
                         break;
                     case "DeleteCartItems":
                         url = "TraineeDeleteCartItemsServlet";
@@ -143,6 +143,8 @@ public class MainController extends HttpServlet {
                         break;
                     case "SubmitAttendance":
                         url = "CheckAttendance";
+                    case "Cancel":
+                        url = "CancelCourseOrderServlet";
                         break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);

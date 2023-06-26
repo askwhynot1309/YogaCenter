@@ -7,6 +7,7 @@
         <title>Staff Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/admin/admin.css">
         <link rel="stylesheet" href="css/admin/admin-employee-add.css">
     </head>
@@ -24,6 +25,9 @@
                     <c:set var="addSuccess" value="${requestScope.addSuccess}"/>
                     <c:set var="cccdUnsuccess" value="${requestScope.cccdUnsuccess}"/>
                     <c:set var="emailUnsuccess" value="${requestScope.emailUnsuccess}"/>
+                    <c:set var="Invalid" value="${requestScope.Invalid}"/>
+                    <c:set var="InvalidCCCD" value="${requestScope.InvalidCCCD}"/>
+                    <c:set var="InvalidPhone" value="${requestScope.InvalidPhone}"/>
                     <form action="/YogaCenter/request" method="POST">
                         <div style="margin-top: 15%;border: 2px solid gray; padding: 10px">
                             <h3 style="display: flex; justify-content: center; margin-bottom: 20px; text-transform: uppercase">Information of trainee</h3>
@@ -35,12 +39,50 @@
                                 <p>Phone : &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input type="text" name="phone" class="input-course" value="${param.phone}" required=""></p>
                                 <p>Citizen Identity Card : <input type="number" name="cccd" class="input-course" value="${param.cccd}" required=""></p>
                             </div>
-                                <p>Address : &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&emsp;<input type="text" name="address" class="input-course" value="${param.address}" required=""></p><br>
+                            <p>Address : &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&emsp;<input type="text" name="address" class="input-course" value="${param.address}" required=""></p><br>
                             <button name="action" value="ButtonAddTrainee" class="btn-add">Add new Trainee</button>
                         </div>
                     </form>
                 </div>
-
+                <c:if test="${InvalidPhone != null}">
+                    <div class="notification">
+                        <div class="content">
+                            <div class="title">Error</div>
+                            <span>Phone is invalid. Please fill again!</span>
+                        </div>
+                        <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+                    </div>
+                    <script>
+                        let notification = document.querySelector('.notification');
+                        notification.timeOut = setTimeout(() => notification.remove(), 5000);
+                    </script>
+                </c:if>
+                <c:if test="${InvalidCCCD != null}">
+                    <div class="notification">
+                        <div class="content">
+                            <div class="title">Error</div>
+                            <span>CCCD is invalid. Please fill again!</span>
+                        </div>
+                        <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+                    </div>
+                    <script>
+                        let notification = document.querySelector('.notification');
+                        notification.timeOut = setTimeout(() => notification.remove(), 5000);
+                    </script>
+                </c:if>
+                <c:if test="${Invalid != null}">
+                    <div class="notification">
+                        <div class="content">
+                            <div class="title">Error</div>
+                            <span>Email is invalid. Please fill again!</span>
+                        </div>
+                        <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+                    </div>
+                    <script>
+                        let notification = document.querySelector('.notification');
+                        notification.timeOut = setTimeout(() => notification.remove(), 5000);
+                    </script>
+                </c:if>
                 <c:if test="${phoneUnsuccess != null}">
                     <div class="notification">
                         <div class="content">
@@ -54,7 +96,7 @@
                         notification.timeOut = setTimeout(() => notification.remove(), 5000);
                     </script>
                 </c:if>
-                    <c:if test="${cccdUnsuccess != null}">
+                <c:if test="${cccdUnsuccess != null}">
                     <div class="notification">
                         <div class="content">
                             <div class="title">Error</div>
@@ -67,7 +109,7 @@
                         notification.timeOut = setTimeout(() => notification.remove(), 5000);
                     </script>
                 </c:if>
-                    <c:if test="${emailUnsuccess != null}">
+                <c:if test="${emailUnsuccess != null}">
                     <div class="notification">
                         <div class="content">
                             <div class="title">Error</div>
@@ -80,7 +122,7 @@
                         notification.timeOut = setTimeout(() => notification.remove(), 5000);
                     </script>
                 </c:if>
-                   
+
                 <c:if test="${addSuccess != null}">
                     <div class="notification-success">
                         <div class="content">
