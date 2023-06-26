@@ -131,6 +131,7 @@ public class InformationServlet extends HttpServlet {
                     request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
                     break;
                 case "viewmore":
+                    session = request.getSession();
                     Course viewcoure = Dao.CourseDao.getInformationOfCourse(id);
                     ArrayList<Course> top3Course = Dao.CourseDao.getTop3InformationOfCourse(viewcoure.getLevel());
                     Account account = (Account) session.getAttribute("account");

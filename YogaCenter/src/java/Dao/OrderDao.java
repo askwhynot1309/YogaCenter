@@ -182,7 +182,7 @@ public class OrderDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int id_course = table.getInt("ID_Course");
+                    int id_course = table.getInt("Course_ID");
                     String course_name = table.getNString("Course_Name");
                     Date date_start = table.getDate("Start_date");
                     BigDecimal fee = table.getBigDecimal("Course_Fee");
