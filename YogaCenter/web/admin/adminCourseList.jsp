@@ -57,6 +57,7 @@
                     <c:set var="errorDate" value="${requestScope.errorDate}"/>
                     <c:set var="theSameName" value="${requestScope.theSameName}"/>
                     <c:set var="noimage" value="${requestScope.noimage}"/>
+                    <c:set var="wrong" value="${requestScope.wrong}"/>
                     <c:if test="${listCourse == null}">
                         <p style="text-align: center"><c:out value="${nulllist}"/></p>
                     </c:if>
@@ -176,6 +177,19 @@
                 <div class="content">
                     <div class="title">Error</div>
                     <span>Please select a level for the course.</span>
+                </div>
+                <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification');
+                notification.timeOut = setTimeout(() => notification.remove(), 5000);
+            </script>
+        </c:if> 
+            <c:if test="${wrong != null}">
+            <div class="notification">
+                <div class="content">
+                    <div class="title">Error</div>
+                    <span>The course must start before three weeks.</span>
                 </div>
                 <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
             </div>

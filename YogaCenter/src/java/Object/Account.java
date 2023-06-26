@@ -44,6 +44,22 @@ public class Account implements Serializable{
         this.status = status;
     }
 
+    public Account(int idaccount, String email, String account, String password, String name, String cccd, String cv, String phone, String address, String image, int role, int status, BigDecimal amout) {
+        this.idaccount = idaccount;
+        this.email = email;
+        this.account = account;
+        this.password = password;
+        this.name = name;
+        this.cccd = cccd;
+        this.cv = cv;
+        this.phone = phone;
+        this.address = address;
+        this.image = image;
+        this.role = role;
+        this.status = status;
+        this.amount = amout;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }

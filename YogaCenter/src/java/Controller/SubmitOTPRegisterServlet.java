@@ -4,17 +4,8 @@
  */
 package Controller;
 
-import Object.Account;
-import Object.ClassDetail;
-import Object.Course;
-import Object.Room;
-import Object.Time;
-import Utils.DisplayAllDaysByWeek;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class ViewScheduleServlet extends HttpServlet {
+public class SubmitOTPRegisterServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,28 +30,18 @@ public class ViewScheduleServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
-            List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
-            request.setAttribute("currentweek", currentweek);
-            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetails();
-            if (listClass != null && !listClass.isEmpty()) {
-                request.setAttribute("listClass", listClass);
-            }
-            ArrayList<Account> listTrainer = Dao.AccountDao.getAllTrainer();
-            ArrayList<Room> listRoom = Dao.RoomDao.getAllRoomActive();
-            ArrayList<Time> listTime = Dao.TimeDao.getAllTime();
-            ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseThatTraineeOrder();
-            request.setAttribute("listCourse", listCourse);
-            request.setAttribute("listTrainer", listTrainer);
-            request.setAttribute("listRoom", listRoom);
-            request.setAttribute("listTime", listTime);
-            request.setAttribute("listDay", list);
-            request.getRequestDispatcher("admin/adminManageSchedule.jsp").forward(request, response);
-        } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.html");
-            dispatcher.forward(request, response);
-        }
+            String enteredOtp = request.getParameter("otp");
+
+            // Get the stored OTP from session
+            String storedOtp = (String) request.getSession().getAttribute("otp");
+
+            if (enteredOtp.equals(storedOtp)) {
+                request.setAttribute("message", "message");
+                response.sendRedirect("login.jsp");
+            } else {
+                request.setAttribute("ErrorMessageOTP", "Invalid OTP");
+                request.getRequestDispatcher("confirmOTPtologin.jsp").forward(request, response);
+            }        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

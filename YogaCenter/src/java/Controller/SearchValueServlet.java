@@ -7,6 +7,7 @@ package Controller;
 import Object.Account;
 import Object.Course;
 import Object.Level;
+import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -131,11 +132,13 @@ public class SearchValueServlet extends HttpServlet {
                 case "staffSearchCourseToSign":
                     level = Integer.parseInt(request.getParameter("level"));
                     int key = Integer.parseInt(request.getParameter("key"));
+                    ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(key);
                     if (level == 0) {
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                         if (listCourse != null && !listCourse.isEmpty()) {
                             request.setAttribute("listcourse", listCourse);
+                            request.setAttribute("listCourseAccountActive", listCourseAccountActive);
                             request.setAttribute("listlevel", listLevel);
                             request.setAttribute("key", key);
                             request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);
@@ -149,6 +152,7 @@ public class SearchValueServlet extends HttpServlet {
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevel(search, level);
                         if (listCourse != null && !listCourse.isEmpty()) {
                             request.setAttribute("listcourse", listCourse);
+                            request.setAttribute("listCourseAccountActive", listCourseAccountActive);
                             request.setAttribute("key", key);
                             request.setAttribute("listlevel", listLevel);
                             request.getRequestDispatcher("staff/staffListCourseSign.jsp").forward(request, response);

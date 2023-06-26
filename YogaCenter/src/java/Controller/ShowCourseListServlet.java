@@ -6,8 +6,10 @@ package Controller;
 
 import Dao.CourseDao;
 import Dao.LevelDao;
+import Object.Account;
 import Object.Course;
 import Object.Level;
+import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,21 +40,28 @@ public class ShowCourseListServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("account");
             ArrayList<Course> CourseList = new ArrayList<>();
             ArrayList<Level> CourseLevel = new ArrayList<>();
             CourseDao dao = new CourseDao();
             LevelDao ldao = new LevelDao();
             CourseList = dao.getAllCourse();
             CourseLevel = ldao.getAllLevel();
-            if (!CourseList.isEmpty() && !CourseLevel.isEmpty()) {
+            if (account != null) {
+                ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(account.getIdaccount());
+                request.setAttribute("listCourseAccountActive", listCourseAccountActive);
+            }
+            if (!CourseList.isEmpty()) {
                 request.setAttribute("CourseList", CourseList);
                 request.setAttribute("CourseLevel", CourseLevel);
                 request.getRequestDispatcher("courseList.jsp").forward(request, response);
-            } else if (CourseList.isEmpty() && CourseLevel.isEmpty()) {
+            } else if (CourseList.isEmpty()) {
                 request.setAttribute("ErrorMessage", "No course available!");
                 request.getRequestDispatcher("courseList.jsp").forward(request, response);
             }
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
