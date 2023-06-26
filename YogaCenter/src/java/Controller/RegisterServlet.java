@@ -4,14 +4,17 @@
  */
 package Controller;
 
+import Utils.EmailUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,6 +43,7 @@ public class RegisterServlet extends HttpServlet {
             String cccd = request.getParameter("cccd");
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
+            String img = "images.png";
             String newpassword = Utils.HexPassword.HexPassword(password);
             boolean checkValid = true;
             if (Utils.CheckEmailExist.isAddressValid(email) == false) {
@@ -74,9 +78,13 @@ public class RegisterServlet extends HttpServlet {
             }
 
             if (checkValid) {
-                int registrationSuccess = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, account, newpassword);
+                int registrationSuccess = Dao.UserDao.insertNewUserWithoutLoginByEmail(name, email, phone, cccd, address, account, password, img, BigDecimal.valueOf(0));
                 if (registrationSuccess == 1) {
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                    String otp = EmailUtils.generateOtp();
+                    Utils.EmailUtils.sendOtpEmail(email, otp);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("otp", otp);
+                    request.getRequestDispatcher("confirmOTPtoregister.jsp").forward(request, response);
                 } else {
                     response.sendRedirect("registrationFailure.jsp");
                 }

@@ -6,6 +6,7 @@ package Dao;
 
 import Object.Account;
 import Utils.DBUtils;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -38,26 +39,14 @@ public class UserDao {
                     String password = table.getString("Password");
                     String name = table.getNString("Name");
                     String phone = table.getString("Phone");
+                    BigDecimal amount = table.getBigDecimal("Money");
                     String address = table.getNString("Address");
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    kq = new Account(idTrainee, email, account, password, name, cccd, cv, phone, address, img, role, status);
+                    kq = new Account(idTrainee, email, account, password, name, cccd, cv, phone, address, img, role, status, amount);
                 }
             }
-            cn.close();
-        }
-        return kq;
-    }
-
-    public static int insertNewEmailTrainee(String email) throws Exception {
-        int kq = 0;
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "insert into Account(Email, Role, Status) values (?,3,0)";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setString(1, email);
-            kq = pst.executeUpdate();
             cn.close();
         }
         return kq;
@@ -87,7 +76,8 @@ public class UserDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    Account account = new Account(idTrainee, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    BigDecimal amount = table.getBigDecimal("Money");
+                    Account account = new Account(idTrainee, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
                     kq.add(account);
                 }
             }
@@ -120,7 +110,8 @@ public class UserDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    Account account = new Account(idTrainee, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    BigDecimal amount = table.getBigDecimal("Money");
+                    Account account = new Account(idTrainee, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
                     kq.add(account);
                 }
             }
@@ -158,7 +149,8 @@ public class UserDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    Account classdetails = new Account(idTrainee, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    BigDecimal amount = table.getBigDecimal("Money");
+                    Account classdetails = new Account(idTrainee, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
                     kq.add(classdetails);
                 }
             }
@@ -192,7 +184,8 @@ public class UserDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    BigDecimal amount = table.getBigDecimal("Money");
+                    account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
                     if (account != null) {
                         check = true;
                     }
@@ -244,7 +237,8 @@ public class UserDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    BigDecimal amount = table.getBigDecimal("Money");
+                    account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
                     if (account != null) {
                         check = true;
                     }
@@ -280,7 +274,8 @@ public class UserDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    BigDecimal amount = table.getBigDecimal("Money");
+                    account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
                     if (account != null) {
                         check = true;
                     }
@@ -315,7 +310,8 @@ public class UserDao {
                     String img = table.getString("Img");
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
-                    kq = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    BigDecimal amount = table.getBigDecimal("Money");
+                    kq = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
                 }
             }
             cn.close();
@@ -323,11 +319,32 @@ public class UserDao {
         return kq;
     }
 
-    public static int insertNewUser(String name, String email, String phone, String cccd, String address, String account, String password) throws Exception {
+    public static int insertNewUser(String name, String email, String phone, String cccd, String address, BigDecimal amount, String img) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "insert into Account(Name, Email, Phone, CCCD, Address, Account, Password, Role, Status) values (?,?,?,?,?,?,?,?,?)";
+            String s = "insert into Account(Name, Email, Phone, CCCD, Address, Role, Status, Money, Img) values (?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, name);
+            pst.setString(2, email);
+            pst.setString(3, phone);
+            pst.setString(4, cccd);
+            pst.setString(5, address);
+            pst.setInt(6, 3);
+            pst.setInt(7, 0);
+            pst.setBigDecimal(8, amount);
+            pst.setString(9, img);
+            kq = pst.executeUpdate();
+            cn.close();
+        }
+        return kq;
+    }
+    
+    public static int insertNewUserWithoutLoginByEmail(String name, String email, String phone, String cccd, String address, String account, String pwd, String img, BigDecimal money) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "insert into Account(Name, Email, Phone, CCCD, Address, Account, Password, Role, Status, Img, Money) values (?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, name);
             pst.setString(2, email);
@@ -335,9 +352,11 @@ public class UserDao {
             pst.setString(4, cccd);
             pst.setString(5, address);
             pst.setString(6, account);
-            pst.setString(7, password);
+            pst.setString(7, pwd);
             pst.setInt(8, 3);
             pst.setInt(9, 0);
+            pst.setString(10, img);
+            pst.setBigDecimal(11, money);
             kq = pst.executeUpdate();
             cn.close();
         }
@@ -394,7 +413,8 @@ public class UserDao {
                         String img = table.getString("Img");
                         int status = table.getInt("Status");
                         int role = table.getInt("Role");
-                        acc = new Account(idTrainee, email, account, password, name, cccd, cv, phone, address, img, role, status);
+                        BigDecimal amount = table.getBigDecimal("Money");
+                        acc = new Account(idTrainee, email, account, password, name, cccd, cv, phone, address, img, role, status, amount);
                     }
                 }
                 cn.close();

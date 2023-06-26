@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import Object.Account;
+import Utils.EmailUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -11,12 +13,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ADMIN
  */
-public class ButtonAddTraineeServlet extends HttpServlet {
+public class FillInformationServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,42 +35,43 @@ public class ButtonAddTraineeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String name = request.getParameter("name");
             String email = request.getParameter("email");
-            String phone = request.getParameter("phone");
+            String name = request.getParameter("name");
             String cccd = request.getParameter("cccd");
+            String phone = request.getParameter("phone");
             String address = request.getParameter("address");
-            BigDecimal amount = BigDecimal.valueOf(0);
             String img = "images.png";
-             if(Utils.CheckEmailExist.isAddressValid(email) == false){
-                request.setAttribute("Invalid", "Invalid");
-                request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
+            BigDecimal amount = BigDecimal.valueOf(0);
+            boolean checkValid = true;
+            if (Utils.CheckValidation.checkPhone(phone) == false) {
+                request.setAttribute("ErrorMessagePhone", "Phone is invalid");
+                checkValid = false;
+            } else if (Utils.CheckValidation.isValidCCCD(cccd) == false) {
+                request.setAttribute("ErrorMessageCCCD", "Citizen identity card is invalid");
+                checkValid = false;
+            } else if (Dao.UserDao.isCccdExists(cccd)) {
+                request.setAttribute("ErrorMessageCccd", "CCCD already exists");
+                checkValid = false;
+            } else if (Dao.UserDao.isPhoneExists(phone)) {
+                request.setAttribute("ErrorMessagePhone", "Phone already exists");
+                checkValid = false;
             }
-            if(Utils.CheckValidation.isValidCCCD(cccd) == false){
-                request.setAttribute("InvalidCCCD", "Invalid");
-                request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
-            }
-            if(Utils.CheckValidation.checkPhone(phone) == false){
-                request.setAttribute("InvalidPhone", "Invalid");
-                request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
-            }
-            if (Dao.UserDao.checkEmailTraineeIsExist(email) == null) {
-                if (Dao.UserDao.isCccdExists(cccd) == false) {
-                    if (Dao.UserDao.isPhoneExists(phone) == false) {
-                        int insertTrainee = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, amount, img);
-                        request.setAttribute("addSuccess", "message");
-                        request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
-                    } else {
-                        request.setAttribute("phoneUnsuccess", "addUnsuccess");
-                        request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
-                    }
+
+            if (checkValid) {
+                int registrationSuccess = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, amount, img);
+                if (registrationSuccess == 1) {
+                    String otp = EmailUtils.generateOtp();
+                    Utils.EmailUtils.sendOtpEmail(email, otp);
+                    HttpSession session = request.getSession();
+                    Account account = Dao.UserDao.checkEmailTraineeIsExist(email);
+                    session.setAttribute("account", account);
+                    session.setAttribute("otp", otp);
+                    request.getRequestDispatcher("confirmOTPtologin.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("cccdUnsuccess", "addUnsuccess");
-                    request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
+                    response.sendRedirect("registrationFailure.jsp");
                 }
             } else {
-                request.setAttribute("emailUnsuccess", "addUnsuccess");
-                request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
+                request.getRequestDispatcher("fillInformation.jsp").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,9 +4,11 @@
  */
 package Controller;
 
+import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -67,6 +69,10 @@ public class ChangeStatusServlet extends HttpServlet {
                 case "orderChange":
                     int changeStatusOrder = Dao.OrderDao.changeStatusBooking(id, status);
                     if (changeStatusOrder == 1) {
+                        ArrayList<OrderCourse> listCourseInOrder = Dao.OrderDao.getInformationOrder(id);
+                        for (OrderCourse orderCourse : listCourseInOrder) {
+                            int changeStatusAccount = Dao.OrderDao.changeStatusAccount(orderCourse.getId_course());
+                        }
                         request.getRequestDispatcher("viewbooking").forward(request, response);
                     }
                     break;      

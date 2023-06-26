@@ -38,18 +38,18 @@ public class OrderDao {
                 if (table != null) {
                     while (table.next()) {
                         int orderid = table.getInt("OrderID");
-                        s = "insert into BookingDetail(Order_ID, ID_Course, Quantity) values (?,?,?)";
+                        s = "insert into BookingDetail(Order_ID, ID_Course, Quantity, Status_Account) values (?,?,?,?)";
                         PreparedStatement pst3 = cn.prepareStatement(s);
                         pst3.setInt(1, orderid);
                         pst3.setInt(2, idcourse);
                         pst3.setInt(3, quantity);
+                        pst3.setInt(4, 1);
                         kq = pst3.executeUpdate();
                         if (kq == 1) {
-                            s = "insert into StatusPayment(ID_Order, Status, Status_Account) values (?,?,?)";
+                            s = "insert into StatusPayment(ID_Order, Status) values (?,?)";
                             PreparedStatement pst4 = cn.prepareStatement(s);
                             pst4.setInt(1, orderid);
                             pst4.setInt(2, 2);
-                            pst4.setInt(3, 1);
                             kq = pst4.executeUpdate();
                         }
                     }
@@ -97,6 +97,22 @@ public class OrderDao {
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, status);
             pst.setInt(2, id);
+            kq = pst.executeUpdate();
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static int changeStatusAccount(int id_course) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "update BookingDetail\n"
+                    + "Set Status_Account = ?\n"
+                    + "Where ID_Course = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, 1);
+            pst.setInt(2, id_course);
             kq = pst.executeUpdate();
             cn.close();
         }
@@ -165,7 +181,7 @@ public class OrderDao {
             pst.setInt(1, acc);
             ResultSet table = pst.executeQuery();
             if (table != null) {
-                while (table.next()) {                    
+                while (table.next()) {
                     int id_course = table.getInt("ID_Course");
                     String course_name = table.getNString("Course_Name");
                     Date date_start = table.getDate("Start_date");

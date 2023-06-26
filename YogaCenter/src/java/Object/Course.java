@@ -12,12 +12,14 @@ import java.sql.Date;
  *
  * @author ADMIN
  */
-public class Course implements Serializable{
+public class Course implements Serializable {
+
     private int idCourse;
     private String name_course;
     private String img_course;
     private BigDecimal fee_course;
     private Date date_start;
+    private Date date_close;
     private int slot;
     private String description;
     private String learnt;
@@ -29,12 +31,18 @@ public class Course implements Serializable{
     public Course() {
     }
 
-    public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, int slot, String description, int level, String name_level, int status) {
+    public Course(int idCourse, String name_course) {
+        this.idCourse = idCourse;
+        this.name_course = name_course;
+    }
+
+    public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, Date date_end, int slot, String description, int level, String name_level, int status) {
         this.idCourse = idCourse;
         this.name_course = name_course;
         this.img_course = img_course;
         this.fee_course = fee_course;
         this.date_start = date_start;
+        this.date_close = date_end;
         this.slot = slot;
         this.description = description;
         this.level = level;
@@ -42,12 +50,13 @@ public class Course implements Serializable{
         this.status = status;
     }
 
-    public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, int slot, String description, String learnt, String summary, int level, String name_level, int status) {
+    public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, Date date_end, int slot, String description, String learnt, String summary, int level, String name_level, int status) {
         this.idCourse = idCourse;
         this.name_course = name_course;
         this.img_course = img_course;
         this.fee_course = fee_course;
         this.date_start = date_start;
+        this.date_close = date_end;
         this.slot = slot;
         this.description = description;
         this.learnt = learnt;
@@ -55,6 +64,14 @@ public class Course implements Serializable{
         this.level = level;
         this.name_level = name_level;
         this.status = status;
+    }
+
+    public Date getDate_close() {
+        return date_close;
+    }
+
+    public void setDate_close(Date date_close) {
+        this.date_close = date_close;
     }
 
     public String getLearnt() {
@@ -153,6 +170,4 @@ public class Course implements Serializable{
         this.status = status;
     }
 
-    
-    
 }

@@ -19,7 +19,8 @@
             <div class="inforTable">
                 <div class="container">
                     <div class="side-menu">
-                        <div class="imageTrainee">
+                        <div>
+                            <img src="img/${acc.image}" width="200px" height="30px" alt="avatar"/>
                             <div class="imageContent">Trainee</div>
                         </div>
                         <div class="fullnameTrainee">${acc.name}</div>
@@ -52,6 +53,7 @@
                                     <div>
                                         <fieldset class="" style="padding: 10px">
                                             <legend class="" style="padding: 10px">General</legend>
+                                            <p>Amount : ${acc.amount} VNĐ</p>
                                             <input type="text" name="txtAccountID" value="${acc.idaccount}" hidden="">
                                             <div class="" style="padding: 10px">
                                                 <label>Name :</label>

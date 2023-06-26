@@ -57,6 +57,8 @@ public class AddCourseServlet extends HttpServlet {
             String datestart = request.getParameter("course_start");
             int slot = Integer.parseInt(request.getParameter("slot"));
             Date start = Date.valueOf(datestart);
+            Date close = Utils.CheckDayBeforeOneWeek.getDateBeforeOneWeek(start);
+            Date create = Utils.CheckDayBeforeThreeWeek.getDateBeforeThreeWeek(start);
             Date currentDate = new Date(System.currentTimeMillis());
             ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
@@ -109,8 +111,31 @@ public class AddCourseServlet extends HttpServlet {
                                 request.getRequestDispatcher("managecourse").forward(request, response);
                             }
                         }
-                    } else {
-                        int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, objective, summary, start, slot, level, course_status);
+                    }
+                    else if(create == currentDate){
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            if (listLevel != null && !listLevel.isEmpty()) {
+                                request.setAttribute("listCourse", listCourse);
+                                request.setAttribute("listLevel", listLevel);
+                                request.setAttribute("wrong", "Ngày bắt đầu đã qua");
+                                request.getRequestDispatcher("managecourse").forward(request, response);
+                            } else {
+                                request.getRequestDispatcher("managecourse").forward(request, response);
+                            }
+                        } else {
+                            if (listLevel != null && !listLevel.isEmpty()) {
+                                request.setAttribute("listLevel", listLevel);
+                                request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
+                                request.setAttribute("expired", "Ngày bắt đầu đã qua");
+                                request.getRequestDispatcher("managecourse").forward(request, response);
+                            } else {
+                                request.setAttribute("expired", "Ngày bắt đầu đã qua");
+                                request.getRequestDispatcher("managecourse").forward(request, response);
+                            }
+                        }
+                    }
+                    else {
+                        int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, objective, summary, start, close, slot, level, course_status);
                         if (insertCourse == 1) {
                             if (listCourse != null && !listCourse.isEmpty()) {
                                 if (listLevel != null && !listLevel.isEmpty()) {

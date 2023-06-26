@@ -224,13 +224,25 @@
         <servlet-name>TraineeBookScheduleServlet</servlet-name>
         <servlet-class>Controller.TraineeBookScheduleServlet</servlet-class>
     </servlet>
-    <servlet>    
+    <servlet>
         <servlet-name>TraineeShowYourCourse</servlet-name>
         <servlet-class>Controller.TraineeShowYourCourse</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CancelCourseOrderServlet</servlet-name>
         <servlet-class>Controller.CancelCourseOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FillInformationServlet</servlet-name>
+        <servlet-class>Controller.FillInformationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitOTPFillInformationServlet</servlet-name>
+        <servlet-class>Controller.SubmitOTPFillInformationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitOTPRegisterServlet</servlet-name>
+        <servlet-class>Controller.SubmitOTPRegisterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -455,14 +467,26 @@
     <servlet-mapping>
         <servlet-name>TraineeBookScheduleServlet</servlet-name>
         <url-pattern>/ChooseClass</url-pattern>
-     </servlet-mapping>
-    <servlet-mapping>    
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>TraineeShowYourCourse</servlet-name>
         <url-pattern>/yourcourse</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CancelCourseOrderServlet</servlet-name>
         <url-pattern>/CancelCourseOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FillInformationServlet</servlet-name>
+        <url-pattern>/FillInformationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitOTPFillInformationServlet</servlet-name>
+        <url-pattern>/SubmitOTPFillInformationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitOTPRegisterServlet</servlet-name>
+        <url-pattern>/SubmitOTPRegisterServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
