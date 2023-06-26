@@ -19,23 +19,20 @@
             <div class="inforTable">
                 <div class="container">
                     <div class="side-menu">
-                        <div class="imageTrainee">
-                            <div class="imageContent">Trainee</div>
+                        <div style="display: flex;flex-direction: column; justify-items: center; align-content: center">
+                            <img src="img/${acc.image}" width="100%" height="300px" alt="avatar"/>
+                            <div class="fullnameTrainee">${acc.name}</div>
                         </div>
-                        <div class="fullnameTrainee">${acc.name}</div>
                         <div class="sidebar">
                             <ul class="unstyle-list">
                                 <li>
-                                    <a href="/YogaCenter/request?action=TraineeManageInformation">Information</a>
+                                    <a href="/YogaCenter/information">Information</a>
                                 </li>
                                 <li>
-                                    <a href="#" onclick="selectMenuItem(event, this)">Item 2</a>
+                                    <a href="/YogaCenter/yourcourse">Your course</a>
                                 </li>
                                 <li>
-                                    <a href="#" onclick="selectMenuItem(event, this)">Item 3</a>
-                                </li>
-                                <li>
-                                    <a href="#" onclick="selectMenuItem(event, this)">Item 4</a>
+                                    <a href="/YogaCenter/classbooking">View schedule</a>
                                 </li>
                             </ul>
                         </div>
@@ -52,6 +49,7 @@
                                     <div>
                                         <fieldset class="" style="padding: 10px">
                                             <legend class="" style="padding: 10px">General</legend>
+                                            <p>Amount : ${acc.amount} VNĐ</p>
                                             <input type="text" name="txtAccountID" value="${acc.idaccount}" hidden="">
                                             <div class="" style="padding: 10px">
                                                 <label>Name :</label>

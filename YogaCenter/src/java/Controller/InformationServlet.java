@@ -133,6 +133,11 @@ public class InformationServlet extends HttpServlet {
                 case "viewmore":
                     Course viewcoure = Dao.CourseDao.getInformationOfCourse(id);
                     ArrayList<Course> top3Course = Dao.CourseDao.getTop3InformationOfCourse(viewcoure.getLevel());
+                    Account account = (Account) session.getAttribute("account");
+                    if (account != null) {
+                        ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(account.getIdaccount());
+                        request.setAttribute("listCourseAccountActive", listCourseAccountActive);
+                    }
                     request.setAttribute("information", viewcoure);
                     request.setAttribute("top3Course", top3Course);
                     request.getRequestDispatcher("viewMoreCourse.jsp").forward(request, response);

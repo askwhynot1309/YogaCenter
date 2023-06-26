@@ -1,9 +1,10 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package Controller;
 
 import Object.Account;
-import Object.Constant;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -11,15 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.fluent.Form;
 
 /**
  *
  * @author ADMIN
  */
-public class LoginGoogle extends HttpServlet {
+public class SubmitOTPFillInformationServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,46 +32,20 @@ public class LoginGoogle extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String code = request.getParameter("code");
+            String enteredOtp = request.getParameter("otp");
             HttpSession session = request.getSession();
-            String accessToken = getToken(code);
-            Account user = getUserInfo(accessToken);
-            String email = user.getEmail();
-            Account checkEmail = Dao.UserDao.checkEmailTraineeIsExist(email);
-            if (checkEmail != null) {
-                session.setAttribute("account", checkEmail);
-                request.getRequestDispatcher("home").forward(request, response);
+            Account account = (Account) session.getAttribute("account");
+
+            // Get the stored OTP from session
+            String storedOtp = (String) request.getSession().getAttribute("otp");
+
+            if (enteredOtp.equals(storedOtp)) {
+                session.setAttribute("account", account);
+                response.sendRedirect("home");
             } else {
-                request.setAttribute("email", email);
-                request.getRequestDispatcher("fillInformation.jsp").forward(request, response);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static String getToken(String code) throws ClientProtocolException, IOException {
-        // call api to get token
-        String response = Request.Post(Constant.GOOGLE_LINK_GET_TOKEN)
-                .bodyForm(Form.form().add("client_id", Constant.GOOGLE_CLIENT_ID)
-                        .add("client_secret", Constant.GOOGLE_CLIENT_SECRET)
-                        .add("redirect_uri", Constant.GOOGLE_REDIRECT_URI).add("code", code)
-                        .add("grant_type", Constant.GOOGLE_GRANT_TYPE).build())
-                .execute().returnContent().asString();
-
-        JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
-        String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
-        return accessToken;
-    }
-
-    public static Account getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
-        String link = Constant.GOOGLE_LINK_GET_USER_INFO + accessToken;
-        String response = Request.Get(link).execute().returnContent().asString();
-
-        Account googlePojo = new Gson().fromJson(response, Account.class);
-
-        return googlePojo;
+                request.setAttribute("ErrorMessageOTP", "Invalid OTP");
+                request.getRequestDispatcher("confirmOTPtologin.jsp").forward(request, response);
+            }        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

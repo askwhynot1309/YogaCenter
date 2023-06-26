@@ -306,10 +306,11 @@
                 <span>View all course</span>
             </a>
         </div>
-            <div class="container">
-                <c:set var="information" value="${requestScope.information}"/>
-                <c:set var="top3Course" value="${requestScope.top3Course}"/>
-                <c:set var="user" value="${sessionScope.account}"/>
+        <div class="container">
+            <c:set var="information" value="${requestScope.information}"/>
+            <c:set var="top3Course" value="${requestScope.top3Course}"/>
+            <c:set var="user" value="${sessionScope.account}"/>
+            <c:set var="listCourseAccountActive" value="${requestScope.listCourseAccountActive}"/>
             <article class="product">
                 <h2 style="margin-bottom: 20px">${information.name_course}</h2>
                 <div class="row">
@@ -321,11 +322,23 @@
                         <h5><strong>Start-date of course :</strong> ${information.date_start}</h5>
                         <h5><strong>Slots of course :</strong> ${information.slot}</h5>
                         <h5><strong>Level of course :</strong> ${information.name_level}</h5>
-                        <c:if test="${user != null}">
+                        <c:if test="${user != null && information.status == 0}">
                             <a class="cartBtn" href="/YogaCenter/request?action=AddCourseToCart&cid=${information.idCourse}">
                                 <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
                                 Buy now
                             </a>
+                        </c:if>
+                        <c:if test="${user != null && course.status == 1}">
+                            <div style="text-align: center">
+                                <p style="color: red">The course has been closed.</p>
+                            </div>
+                        </c:if>
+                        <c:if test="${listCourseAccountActive != null && user != null}">
+                                <c:forEach var="coureactive" items="${listCourseAccountActive}">
+                                    <c:if test="${information.idCourse == coureactive.id_course}">
+                                        <p style="text-align: center; color: red">You bought course</p>
+                                    </c:if>
+                                </c:forEach>
                         </c:if>
                         <c:if test="${user == null}">
                             <button class="cssbuttons-io-button">Register now
@@ -366,51 +379,51 @@
                                             <p><strong>Start Date:</strong> ${course.date_start}</p>
                                             <p><strong>Level:</strong> ${course.name_level}</p>
                                             <c:if test="${user != null && course.status == 0}">
-                                        <div style="position: absolute; bottom: 10px; width: 90%">
-                                            <div style="margin-bottom: 10px">
-                                                <a class="cartBtn" href="/YogaCenter/request?action=AddCourseToCart&cid=${course.idCourse}" style="width: 100%">
-                                                    <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-                                                    ADD TO CART
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
-                                                    <span class="top-key"></span>
-                                                    <span class="text">View more</span>
-                                                    <span class="bottom-key-1"></span>
-                                                    <span class="bottom-key-2"></span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${user != null && course.status == 1}">
-                                        <div style="position: absolute; bottom: 10px; width: 90%">
-                                            <div style="text-align: center">
-                                                <p style="color: red">The course has been over.</p>
-                                            </div>
-                                            <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
-                                                <span class="top-key"></span>
-                                                <span class="text">View more</span>
-                                                <span class="bottom-key-1"></span>
-                                                <span class="bottom-key-2"></span>
-                                            </a>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${user == null}">
-                                        <div style="position: absolute; bottom: 10px; width: 90%">
-                                            <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
-                                                <span class="top-key"></span>
-                                                <span class="text">View more</span>
-                                                <span class="bottom-key-1"></span>
-                                                <span class="bottom-key-2"></span>
-                                            </a>
-                                                <button class="cssbuttons-io-button" style="width: 100%">Register now
-                                                <a  href="register.jsp" class="icon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
-                                                </a>
-                                            </button>
-                                        </div>
-                                    </c:if>
+                                                <div style="position: absolute; bottom: 10px; width: 90%">
+                                                    <div style="margin-bottom: 10px">
+                                                        <a class="cartBtn" href="/YogaCenter/request?action=AddCourseToCart&cid=${course.idCourse}" style="width: 100%">
+                                                            <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+                                                            ADD TO CART
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
+                                                            <span class="top-key"></span>
+                                                            <span class="text">View more</span>
+                                                            <span class="bottom-key-1"></span>
+                                                            <span class="bottom-key-2"></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${user != null && course.status == 1}">
+                                                <div style="position: absolute; bottom: 10px; width: 90%">
+                                                    <div style="text-align: center">
+                                                        <p style="color: red">The course has been over.</p>
+                                                    </div>
+                                                    <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
+                                                        <span class="top-key"></span>
+                                                        <span class="text">View more</span>
+                                                        <span class="bottom-key-1"></span>
+                                                        <span class="bottom-key-2"></span>
+                                                    </a>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${user == null}">
+                                                <div style="position: absolute; bottom: 10px; width: 90%">
+                                                    <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
+                                                        <span class="top-key"></span>
+                                                        <span class="text">View more</span>
+                                                        <span class="bottom-key-1"></span>
+                                                        <span class="bottom-key-2"></span>
+                                                    </a>
+                                                    <button class="cssbuttons-io-button" style="width: 100%">Register now
+                                                        <a  href="register.jsp" class="icon">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
+                                                        </a>
+                                                    </button>
+                                                </div>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>

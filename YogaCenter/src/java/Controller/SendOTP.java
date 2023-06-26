@@ -57,9 +57,9 @@ public class SendOTP extends HttpServlet {
                 request.setAttribute("SuccessMessage", "Sent OTP to " + email);
 
                 // Redirect to ResetPassword.jsp
-                request.getRequestDispatcher("homepage/forgetPassword.jsp").forward(request, response);
+                request.getRequestDispatcher("forgetPassword.jsp").forward(request, response);
             } else {
-                request.getRequestDispatcher("homepage/forgetPassword.jsp").forward(request, response);
+                request.getRequestDispatcher("forgetPassword.jsp").forward(request, response);
             }
         }
     }

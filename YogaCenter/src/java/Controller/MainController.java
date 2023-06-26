@@ -29,7 +29,7 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String action = request.getParameter("action");
             if (action == null) {
@@ -49,8 +49,17 @@ public class MainController extends HttpServlet {
                     case "OTP":
                         url = "SubmitOTPServlet";
                         break;
+                    case "OTPLogin":
+                        url = "SubmitOTPFillInformationServlet";
+                        break;
+                    case "OTPRegister":
+                        url = "SubmitOTPRegisterServlet";
+                        break;
                     case "Reset":
                         url = "ResetPasswordServlet";
+                        break;
+                    case "Information":
+                        url = "FillInformationServlet";
                         break;
                     case "Feedback":
                         url = "SubmitFeedbackServlet";
