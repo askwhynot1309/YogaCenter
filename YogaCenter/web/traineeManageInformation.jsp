@@ -19,24 +19,20 @@
             <div class="inforTable">
                 <div class="container">
                     <div class="side-menu">
-                        <div>
-                            <img src="img/${acc.image}" width="200px" height="30px" alt="avatar"/>
-                            <div class="imageContent">Trainee</div>
+                        <div style="display: flex;flex-direction: column; justify-items: center; align-content: center">
+                            <img src="img/${acc.image}" width="100%" height="300px" alt="avatar"/>
+                            <div class="fullnameTrainee">${acc.name}</div>
                         </div>
-                        <div class="fullnameTrainee">${acc.name}</div>
                         <div class="sidebar">
                             <ul class="unstyle-list">
                                 <li>
-                                    <a href="/YogaCenter/request?action=TraineeManageInformation">Information</a>
+                                    <a href="/YogaCenter/information">Information</a>
                                 </li>
                                 <li>
-                                    <a href="#" onclick="selectMenuItem(event, this)">Item 2</a>
+                                    <a href="/YogaCenter/yourcourse">Your course</a>
                                 </li>
                                 <li>
-                                    <a href="#" onclick="selectMenuItem(event, this)">Item 3</a>
-                                </li>
-                                <li>
-                                    <a href="#" onclick="selectMenuItem(event, this)">Item 4</a>
+                                    <a href="/YogaCenter/classbooking">View schedule</a>
                                 </li>
                             </ul>
                         </div>
