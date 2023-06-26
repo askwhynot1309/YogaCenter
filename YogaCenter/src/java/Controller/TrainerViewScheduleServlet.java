@@ -41,6 +41,8 @@ public class TrainerViewScheduleServlet extends HttpServlet {
             List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
             Account accTrainer = (Account) session.getAttribute("Trainer");
             int id = accTrainer.getIdaccount();
+            System.out.println(id);
+            session.setAttribute("trainerId", id);
             List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
             request.setAttribute("currentweek", currentweek);
             ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsForTrainer(id);

@@ -72,7 +72,7 @@
                             </tbody>
                         </table>
                     </c:if>
-                    <c:if test="${sessionScope.Trainer == inforClass.account}">
+                    <c:if test="${sessionScope.trainerId == inforClass.idaccount}">
                         <h3 style="display: flex; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 30px; text-transform: uppercase; background-color: #3b83f65f; color: #0071e2; padding: 10px">Trainees of the course</h3>
                         <c:if test="${ListTrainee == null}">
                             <p style="text-align: center; font-weight: 700">Do not have any trainees that learn this course !</p>
