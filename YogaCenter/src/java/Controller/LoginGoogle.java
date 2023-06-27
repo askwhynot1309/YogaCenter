@@ -45,13 +45,8 @@ public class LoginGoogle extends HttpServlet {
                 session.setAttribute("account", checkEmail);
                 request.getRequestDispatcher("home").forward(request, response);
             } else {
-                int insertNewEmail = Dao.UserDao.insertNewEmailTrainee(email);
-                if (insertNewEmail == 1) {
-                    session.setAttribute("account", checkEmail);
-                    request.getRequestDispatcher("home").forward(request, response);
-                } else {
-                    response.sendRedirect("error.html");
-                }
+                request.setAttribute("email", email);
+                request.getRequestDispatcher("fillInformation.jsp").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();

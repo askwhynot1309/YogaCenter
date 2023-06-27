@@ -15,6 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/style.css"/>
         <title>View cart</title>
     </head>
@@ -80,9 +81,6 @@
             width: 100%;
         }
         .col-2, .col{
-            padding: 0 1vh;
-        }
-        a{
             padding: 0 1vh;
         }
         .close{
@@ -216,7 +214,7 @@
                                 %>
 
                             </div>
-                            <div class="back-to-shop"><a href="/YogaCenter/course">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                                <div class="back-to-shop"><a href="/YogaCenter/course" style="padding: 0 1vh">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
                         </div>
                         <div class="col-md-4 summary">
                             <div><h5><b>Summary</b></h5></div>
@@ -251,4 +249,5 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
     </body>
+    <c:import url="footer.html"/>
 </html>

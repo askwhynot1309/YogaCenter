@@ -6,6 +6,7 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,10 +37,24 @@ public class ButtonAddTraineeServlet extends HttpServlet {
             String phone = request.getParameter("phone");
             String cccd = request.getParameter("cccd");
             String address = request.getParameter("address");
+            BigDecimal amount = BigDecimal.valueOf(0);
+            String img = "images.png";
+             if(Utils.CheckEmailExist.isAddressValid(email) == false){
+                request.setAttribute("Invalid", "Invalid");
+                request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
+            }
+            if(Utils.CheckValidation.isValidCCCD(cccd) == false){
+                request.setAttribute("InvalidCCCD", "Invalid");
+                request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
+            }
+            if(Utils.CheckValidation.checkPhone(phone) == false){
+                request.setAttribute("InvalidPhone", "Invalid");
+                request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
+            }
             if (Dao.UserDao.checkEmailTraineeIsExist(email) == null) {
                 if (Dao.UserDao.isCccdExists(cccd) == false) {
                     if (Dao.UserDao.isPhoneExists(phone) == false) {
-                        int insertTrainee = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, "", "");
+                        int insertTrainee = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, amount, img);
                         request.setAttribute("addSuccess", "message");
                         request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
                     } else {

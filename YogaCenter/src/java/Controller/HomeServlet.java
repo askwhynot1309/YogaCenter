@@ -7,10 +7,10 @@ package Controller;
 import Object.Course;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,10 +39,14 @@ public class HomeServlet extends HttpServlet {
             Date currentdate = new Date(System.currentTimeMillis());
             ArrayList<Course> randomList = new ArrayList<>();
             ArrayList<Course> list = Dao.CourseDao.getCourseByDateStart(currentdate);
-            ArrayList<Course> listramdom = Dao.CourseDao.getAllCourse();            
+            ArrayList<Course> listramdom = Dao.CourseDao.getAllCourse();
+            ArrayList<Course> list4Course = Dao.CourseDao.get4Course();
             if (list != null && !list.isEmpty()) {
                 for (Course course : list) {
+                    Date staDate = Utils.CheckDayAfterOneMonth.getDateAfterOneMonth(course.getDate_start());
+                    Date cloDate = Utils.CheckDayBeforeThreeWeek.getDateBeforeThreeWeek(staDate);
                     int changeStatus = Dao.CourseDao.changeStatusCourse(1, course.getIdCourse());
+                    int insertCourseNewStartDate = Dao.CourseDao.insertCourse(course.getName_course(), course.getImg_course(), course.getFee_course(), course.getDescription(), course.getLearnt(), course.getSummary(), staDate, cloDate, course.getSlot(), course.getLevel(), 0);
                 }
                 Collections.shuffle(listramdom);
                 int count = 0;
@@ -53,6 +57,7 @@ public class HomeServlet extends HttpServlet {
                     }
                 }
                 request.setAttribute("ramdomCourse", randomList);
+                request.setAttribute("list4Course", list4Course);
                 request.getRequestDispatcher("homepage.jsp").forward(request, response);
             } else {
                 Collections.shuffle(listramdom);
@@ -64,6 +69,7 @@ public class HomeServlet extends HttpServlet {
                     }
                 }
                 request.setAttribute("ramdomCourse", randomList);
+                request.setAttribute("list4Course", list4Course);
                 request.getRequestDispatcher("homepage.jsp").forward(request, response);
             }
         } catch (Exception e) {

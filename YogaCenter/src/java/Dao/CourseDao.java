@@ -38,6 +38,7 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
                     int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     String learnt = table.getNString("Objective");
@@ -45,7 +46,62 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, learnt, summary, level, name_level, status);
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    kq.add(course);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ArrayList<Course> getAllCourseThatTraineeOrder() throws Exception {
+        ArrayList<Course> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select distinct c.Course_ID, c.Course_Name\n"
+                    + "from BookingDetail bd JOIN Course c ON bd.ID_Course=c.Course_ID\n"
+                    + "Where Status_Account = 1";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int course_id = table.getInt("Course_ID");
+                    String course_name = table.getNString("Course_Name");
+                    Course course = new Course(course_id, course_name);
+                    kq.add(course);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ArrayList<Course> get4Course() throws Exception {
+        ArrayList<Course> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select top 4 *\n"
+                    + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
+                    + "Order by Course_ID desc";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int course_id = table.getInt("Course_ID");
+                    String course_name = table.getNString("Course_Name");
+                    String course_img = table.getString("Img");
+                    BigDecimal course_fee = table.getBigDecimal("Course_Fee");
+                    Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
+                    int slot = table.getInt("Slot");
+                    String description = table.getNString("Description");
+                    String learnt = table.getNString("Objective");
+                    String summary = table.getNString("Summary");
+                    int level = table.getInt("ID_Level");
+                    String name_level = table.getNString("Level_Name");
+                    int status = table.getInt("Status");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
                     kq.add(course);
                 }
             }
@@ -71,6 +127,7 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
                     int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     String learnt = table.getNString("Objective");
@@ -78,7 +135,7 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, learnt, summary, level, name_level, status);
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
                     kq.add(course);
                 }
             }
@@ -105,6 +162,7 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
                     int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     String learnt = table.getNString("Objective");
@@ -112,7 +170,7 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, learnt, summary, level, name_level, status);
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
                     kq.add(course);
                 }
             }
@@ -120,7 +178,7 @@ public class CourseDao {
         }
         return kq;
     }
-    
+
     public static ArrayList<Course> getAllCourseBySearch(String search) throws Exception {
         ArrayList<Course> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -139,6 +197,7 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
                     int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     String learnt = table.getNString("Objective");
@@ -146,7 +205,7 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, learnt, summary, level, name_level, status);
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
                     kq.add(course);
                 }
             }
@@ -173,6 +232,7 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
                     int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     String learnt = table.getNString("Objective");
@@ -180,7 +240,7 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, learnt, summary, level, name_level, status);
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
                     kq.add(course);
                 }
             }
@@ -188,7 +248,7 @@ public class CourseDao {
         }
         return kq;
     }
-    
+
     public static ArrayList<Course> getAllCourseBySearchWithLevel(String search, int id_level) throws Exception {
         ArrayList<Course> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -207,6 +267,7 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
                     int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     String learnt = table.getNString("Objective");
@@ -214,7 +275,7 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, learnt, summary, level, name_level, status);
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
                     kq.add(course);
                 }
             }
@@ -223,12 +284,12 @@ public class CourseDao {
         return kq;
     }
 
-    public static int insertCourse(String name, String img, BigDecimal fee, String description, String objective, String summary, Date start, int slot, int level, int status) throws Exception {
+    public static int insertCourse(String name, String img, BigDecimal fee, String description, String objective, String summary, Date start, Date close, int slot, int level, int status) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "insert into Course(Course_Name, Course_Fee, Img, Start_date, Slot, Description, Objective, Summary, ID_Level, Status)\n"
-                    + "Values (?,?,?,?,?,?,?,?,?,?)";
+            String s = "insert into Course(Course_Name, Course_Fee, Img, Start_date, Slot, Description, Objective, Summary, ID_Level, Status, Close_date)\n"
+                    + "Values (?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, name);
             pst.setBigDecimal(2, fee);
@@ -240,6 +301,7 @@ public class CourseDao {
             pst.setNString(8, summary);
             pst.setInt(9, level);
             pst.setInt(10, status);
+            pst.setDate(10, close);
             kq = pst.executeUpdate();
             cn.close();
         }
@@ -262,6 +324,7 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
                     int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     String learnt = table.getNString("Objective");
@@ -269,14 +332,14 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    kq = new Course(id, course_name, course_img, course_fee, course_start, slot, description, learnt, summary, level, name_level, status);
+                    kq = new Course(id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
                 }
             }
             cn.close();
         }
         return kq;
     }
-    
+
     public static ArrayList<Course> getTop3InformationOfCourse(int id) throws Exception {
         ArrayList<Course> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -293,6 +356,7 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
                     int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     String learnt = table.getNString("Objective");
@@ -300,7 +364,7 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(id, course_name, course_img, course_fee, course_start, slot, description, learnt, summary, level, name_level, status);
+                    Course course = new Course(id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
                     kq.add(course);
                 }
             }
@@ -309,24 +373,21 @@ public class CourseDao {
         return kq;
     }
 
-    public static int updateCourse(int id, String name, String img, BigDecimal fee, String description, String objective, String summary, Date start, int slot, int level) throws Exception {
+    public static int updateCourse(int id, String img, BigDecimal fee, String description, String objective, String summary, int slot) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "update Course\n"
-                    + "set Course_Name = ?, Course_Fee = ?, Img = ?, Start_date = ?, Slot = ?, Description = ?, Objective = ?, Summary = ?, ID_Level = ?\n"
+                    + "set Course_Fee = ?, Img = ?, Slot = ?, Description = ?, Objective = ?, Summary = ?\n"
                     + "where Course_ID = ?";
             PreparedStatement pst = cn.prepareStatement(s);
-            pst.setNString(1, name);
-            pst.setBigDecimal(2, fee);
-            pst.setString(3, img);
-            pst.setDate(4, start);
-            pst.setInt(5, slot);
-            pst.setNString(6, description);
-            pst.setNString(7, objective);
-            pst.setNString(8, summary);
-            pst.setInt(9, level);
-            pst.setInt(10, id);
+            pst.setBigDecimal(1, fee);
+            pst.setString(2, img);
+            pst.setInt(3, slot);
+            pst.setNString(4, description);
+            pst.setNString(5, objective);
+            pst.setNString(6, summary);
+            pst.setInt(7, id);
             kq = pst.executeUpdate();
             cn.close();
         }
@@ -355,7 +416,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Start_date <= ?";
+                    + "where Close_date <= ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
             ResultSet table = pst.executeQuery();
@@ -366,6 +427,7 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
                     int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     String learnt = table.getNString("Objective");
@@ -373,7 +435,7 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, learnt, summary, level, name_level, status);
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
                     kq.add(course);
                 }
             }
@@ -382,15 +444,16 @@ public class CourseDao {
         return kq;
     }
 
-    public static Course checkTheSameCourse(String course) throws Exception {
+    public static Course checkTheSameCourse(String course, int id_level) throws Exception {
         Course kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Course_Name = ?";
+                    + "where Course_Name = ? and c.ID_Level = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, course);
+            pst.setInt(2, id_level);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
@@ -399,6 +462,7 @@ public class CourseDao {
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
                     Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
                     int slot = table.getInt("Slot");
                     String description = table.getNString("Description");
                     String learnt = table.getNString("Objective");
@@ -406,7 +470,7 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    kq = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, learnt, summary, level, name_level, status);
+                    kq = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
                 }
             }
             cn.close();
@@ -418,6 +482,8 @@ public class CourseDao {
         Connection cn = null;
         boolean inserted = false;
         int orderID = 0;
+        PreparedStatement pst;
+        String sql;
         try {
             cn = DBUtils.getConnection();
             if (cn != null) {
@@ -425,13 +491,13 @@ public class CourseDao {
 
                 //insert to bookingCouse table
                 Date d = new Date(System.currentTimeMillis());
-                String sql = "INSERT [dbo].[BookingCourse] ([ID_Trainee], [DateOrder], [Method]) VALUES(?, ?, ?)";
-                PreparedStatement pst = cn.prepareStatement(sql);
+                sql = "INSERT [dbo].[BookingCourse] ([ID_Trainee], [DateOrder], [Method]) VALUES(?, ?, ?)";
+                pst = cn.prepareStatement(sql);
                 pst.setInt(1, Trainee_ID);
                 pst.setDate(2, d);
                 pst.setInt(3, method);
                 pst.executeUpdate();
-                
+
                 sql = "SELECT TOP 1 [OrderID]\n"
                         + "FROM [dbo].[BookingCourse]\n"
                         + "ORDER BY [OrderID] DESC";
@@ -449,16 +515,31 @@ public class CourseDao {
                 pst.executeUpdate();
 
                 //Insert to BookingDetail table
-                Set<String> courseIDs = cart.keySet();
-                for (String courseID : courseIDs) {
-                    sql = "INSERT [dbo].[BookingDetail] VALUES (?, ?, ?)";
-                    pst = cn.prepareStatement(sql);
-                    pst.setInt(1, orderID);
-                    pst.setInt(2, Integer.parseInt(courseID.trim()));
-                    pst.setInt(3, cart.get(courseID));
-                    pst.executeUpdate();
-                    cn.commit();
-                    cn.setAutoCommit(true);
+                if (method == 1) {
+                    Set<String> courseIDs = cart.keySet();
+                    for (String courseID : courseIDs) {
+                        sql = "INSERT [dbo].[BookingDetail] VALUES (?, ?, ?, ?)";
+                        pst = cn.prepareStatement(sql);
+                        pst.setInt(1, orderID);
+                        pst.setInt(2, Integer.parseInt(courseID.trim()));
+                        pst.setInt(3, cart.get(courseID));
+                        pst.setInt(4, 1);
+                        pst.executeUpdate();
+                        cn.commit();
+                        cn.setAutoCommit(true);
+                    }
+                } else {
+                    Set<String> courseIDs = cart.keySet();
+                    for (String courseID : courseIDs) {
+                        sql = "INSERT [dbo].[BookingDetail] ([Order_ID], [ID_Course], [Quantity]) VALUES (?, ?, ?)";
+                        pst = cn.prepareStatement(sql);
+                        pst.setInt(1, orderID);
+                        pst.setInt(2, Integer.parseInt(courseID.trim()));
+                        pst.setInt(3, cart.get(courseID));
+                        pst.executeUpdate();
+                        cn.commit();
+                        cn.setAutoCommit(true);
+                    }
                 }
 
                 inserted = true;
@@ -506,12 +587,13 @@ public class CourseDao {
                         String course_img = rs.getString("Img");
                         BigDecimal course_fee = rs.getBigDecimal("Course_Fee");
                         Date course_start = rs.getDate("Start_date");
+                        Date course_close = rs.getDate("Close_date");
                         int slot = rs.getInt("Slot");
                         String description = rs.getNString("Description");
                         int level = rs.getInt("ID_Level");
                         String name_level = rs.getNString("Level_Name");
                         int status = rs.getInt("Status");
-                        Course course = new Course(course_id, course_name, course_img, course_fee, course_start, slot, description, level, name_level, status);
+                        Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, level, name_level, status);
                         courseList.add(course);
                     }
                 }

@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="css/login.css">
         <link rel="stylesheet" href ="css/login-success.css">
         <link rel="stylesheet" href="fontawesome-free-5.15.3-web/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <title>Login</title>
     </head>
     <c:import url="header.jsp"/> 
@@ -41,6 +42,7 @@
                 </div>
                 <c:set var="Loginfail" value="${requestScope.Loginfail}"/>
                 <c:set var="successMessage" value="${requestScope.successMessage}"/>
+                <c:set var="message" value="${requestScope.message}"/>
                 <c:if test="${Loginfail != null}">
                     <div style="text-align: center; margin-top: 50px; font-size: 14px"><p style="color: red"><c:out value="${Loginfail}"/></p></div>
                     </c:if>
@@ -78,6 +80,18 @@
             <script>
                 let notification = document.querySelector('.notification-success');
                 notification.timeOut = setTimeout(() => notification.remove(), 5000);
+            </script>
+        </c:if>
+            <c:if test="${message != null}">
+            <div class="notification-success" style="z-index: 1000">
+                <div class="content">
+                    <div class="title">Success</div>
+                    <span>Create account successfully.</span>
+                </div>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification-success');
+                notification.timeOut = setTimeout(() => notification.remove(), 2000);
             </script>
         </c:if>
 </html>

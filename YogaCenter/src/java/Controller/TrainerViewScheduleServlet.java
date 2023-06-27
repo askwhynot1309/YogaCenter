@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Object.Account;
 import Object.ClassDetail;
 import Utils.DisplayAllDaysByWeek;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,10 +37,13 @@ public class TrainerViewScheduleServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
             List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
+            Account accTrainer = (Account) session.getAttribute("Trainer");
+            int id = accTrainer.getIdaccount();
             List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
             request.setAttribute("currentweek", currentweek);
-            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetails();
+            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsForTrainer(id);
             if (listClass != null && !listClass.isEmpty()) {
                 request.setAttribute("listClass", listClass);
             }
