@@ -39,7 +39,7 @@ public class TimeDao {
     }
 
     public static Time getTimeByTrainerAndChoice(int Course_ID, int Account_ID, int Choice) {
-        Time timeClass = null;        
+        Time timeClass = null;
         Connection cn = null;
         try {
             cn = DBUtils.getConnection();
@@ -65,5 +65,22 @@ public class TimeDao {
         } catch (Exception e) {
         }
         return timeClass;
+    }
+
+    public static int getTimeID(String Time_Choose) throws Exception {
+        int Time_ID = 0;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT [Time_ID]\n"
+                    + "FROM [dbo].[Time]\n"
+                    + "WHERE [Time_Choose] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, Time_Choose);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null && rs.next()) {
+                Time_ID = rs.getInt("Time_ID");
+            }
+        }
+        return Time_ID;
     }
 }

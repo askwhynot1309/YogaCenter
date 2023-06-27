@@ -5,22 +5,22 @@
 package Controller;
 
 import Dao.MessageDao;
-import Object.Account;
 import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ADMIN
+ * @author ngmin
  */
-public class LoginServlet extends HttpServlet {
+public class TraineeViewRequestChangeClass extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,44 +32,37 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String account = request.getParameter("account");
-            String password = request.getParameter("password");
-            HttpSession session = request.getSession();
-            String newpassword = Utils.HexPassword.HexPassword(password);
-            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);
-            if (accountLogin != null) {
-                if (accountLogin.getStatus() == 0) {
-                    switch (accountLogin.getRole()) {
-                        case 0:
-                            session.setAttribute("Admin", accountLogin);
-                            request.getRequestDispatcher("/request?action=DashBoard&option=0").forward(request, response);
-                            break;
-                        case 1:
-                            session.setAttribute("Staff", accountLogin);
-                            request.getRequestDispatcher("/request?action=DashBoard&option=1").forward(request, response);
-                            break;
-                        case 2:
-                            session.setAttribute("Trainer", accountLogin);
-                            request.getRequestDispatcher("/request?action=DashBoard&option=2").forward(request, response);
-                            break;
-                        case 3:
-                            session.setAttribute("account", accountLogin);
-                            response.sendRedirect("home");
-                    }
-                } else {
-                    request.setAttribute("LoginLimited", "This account has been blocked !");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
+            ArrayList<Message> messList = MessageDao.getAllMessage();
+
+            ArrayList<Message> messRequest = new ArrayList<>();
+            for (Message messageList : messList) {
+                int ID_Message = messageList.getMessageID();
+                int ID_sendMessage = messageList.getFromUserID();
+                int ID_recieveMessage = messageList.getToUserID();
+
+                String mess = messageList.getMessage();
+                String numberPattern = "\\d+";
+                java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(numberPattern);
+                java.util.regex.Matcher matcher = pattern.matcher(mess);
+                int fromClass = 0;
+                int toClass = 0;
+
+                if (matcher.find()) {
+                    fromClass = Integer.parseInt(matcher.group());
                 }
-            } else {
-                request.setAttribute("Loginfail", "This account or password is not correct. Please sign in again.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                if (matcher.find()) {
+                    toClass = Integer.parseInt(matcher.group());
+                }
+                int status = messageList.getStatus();
+
+                messRequest.add(new Message(ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            request.setAttribute("messRequest", messRequest);
+        request.getRequestDispatcher("traineeViewRequestChangeClass.jsp").forward(request, response);
         }
     }
 
@@ -85,7 +78,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeViewRequestChangeClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -99,7 +96,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeViewRequestChangeClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

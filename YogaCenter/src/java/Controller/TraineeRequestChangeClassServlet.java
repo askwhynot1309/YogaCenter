@@ -4,11 +4,15 @@
  */
 package Controller;
 
-import Dao.MessageDao;
+import Dao.ClassDetailDao;
+import Dao.CourseDao;
 import Object.Account;
-import Object.Message;
+import Object.Course;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,9 +22,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ADMIN
+ * @author ngmin
  */
-public class LoginServlet extends HttpServlet {
+public class TraineeRequestChangeClassServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,40 +40,32 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String account = request.getParameter("account");
-            String password = request.getParameter("password");
-            HttpSession session = request.getSession();
-            String newpassword = Utils.HexPassword.HexPassword(password);
-            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);
-            if (accountLogin != null) {
-                if (accountLogin.getStatus() == 0) {
-                    switch (accountLogin.getRole()) {
-                        case 0:
-                            session.setAttribute("Admin", accountLogin);
-                            request.getRequestDispatcher("/request?action=DashBoard&option=0").forward(request, response);
-                            break;
-                        case 1:
-                            session.setAttribute("Staff", accountLogin);
-                            request.getRequestDispatcher("/request?action=DashBoard&option=1").forward(request, response);
-                            break;
-                        case 2:
-                            session.setAttribute("Trainer", accountLogin);
-                            request.getRequestDispatcher("/request?action=DashBoard&option=2").forward(request, response);
-                            break;
-                        case 3:
-                            session.setAttribute("account", accountLogin);
-                            response.sendRedirect("home");
-                    }
-                } else {
-                    request.setAttribute("LoginLimited", "This account has been blocked !");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                }
-            } else {
-                request.setAttribute("Loginfail", "This account or password is not correct. Please sign in again.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+            HttpSession session = request.getSession(true);
+            Account trainee = (Account) session.getAttribute("account");
+            LocalDate startDate = LocalDate.now();
+            LocalDate endDate = LocalDate.now();
+            LocalDate currentDate = LocalDate.now();
+
+            ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(trainee.getIdaccount());
+            for (Course course : courseList) {
+                Date courseDate = course.getDate_start();
+                LocalDate courseDateStart = courseDate.toLocalDate();
+                startDate = courseDateStart.minusDays(10);
+                endDate = courseDateStart.minusDays(7);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            if (currentDate.isAfter(endDate)) {
+                request.setAttribute("overdue", "Overdue for form application and registration");
+                request.setAttribute("startDate", startDate);
+                request.setAttribute("endDate", endDate);
+                request.setAttribute("courseList", courseList);
+                request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
+            } else if (currentDate.isBefore(startDate)) {
+                request.setAttribute("overdue", "It's not time to registration");
+                request.setAttribute("startDate", startDate);
+                request.setAttribute("endDate", endDate);
+                request.setAttribute("courseList", courseList);                
+                request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
+            }
         }
     }
 
