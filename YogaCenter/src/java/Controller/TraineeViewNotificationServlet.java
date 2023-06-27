@@ -10,6 +10,8 @@ import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +20,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ADMIN
+ * @author ngmin
  */
-public class LoginServlet extends HttpServlet {
+public class TraineeViewNotificationServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,44 +34,16 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String account = request.getParameter("account");
-            String password = request.getParameter("password");
-            HttpSession session = request.getSession();
-            String newpassword = Utils.HexPassword.HexPassword(password);
-            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);
-            if (accountLogin != null) {
-                if (accountLogin.getStatus() == 0) {
-                    switch (accountLogin.getRole()) {
-                        case 0:
-                            session.setAttribute("Admin", accountLogin.getName());
-                            request.getRequestDispatcher("/request?action=DashBoard&option=0").forward(request, response);
-                            break;
-                        case 1:
-                            session.setAttribute("Staff", accountLogin.getName());
-                            request.getRequestDispatcher("/request?action=DashBoard&option=1").forward(request, response);
-                            break;
-                        case 2:
-                            session.setAttribute("Trainer", accountLogin.getName());
-                            request.getRequestDispatcher("/request?action=DashBoard&option=2").forward(request, response);
-                            break;
-                        case 3:
-                            session.setAttribute("account", accountLogin);
-                            response.sendRedirect("home");
-                    }
-                } else {
-                    request.setAttribute("LoginLimited", "This account has been blocked !");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                }
-            } else {
-                request.setAttribute("Loginfail", "This account or password is not correct. Please sign in again.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            HttpSession session = request.getSession(true);
+            Account account = (Account) request.getAttribute("account");
+            int Account_ID = Integer.parseInt(request.getParameter("accountID"));
+            ArrayList<Message> notificationList = MessageDao.getAllMessageByUserID(Account_ID);
+            session.setAttribute("notiList", notificationList);
+            response.sendRedirect("traineeViewNotification.jsp");
         }
     }
 
@@ -85,7 +59,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeViewNotificationServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -99,7 +77,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeViewNotificationServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

@@ -4,6 +4,7 @@
     Author     : ngmin
 --%>
 
+<%@page import="Object.Message"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="Object.Time"%>
 <%@page import="Dao.TimeDao"%>
@@ -73,7 +74,7 @@
         }
     </style>
     <body>
-        <c:import url="header.jsp"></c:import>
+        <%--<c:import url="header.jsp"></c:import>--%>
             <div class="container">
                 <h2 style="text-align: center">Class Schedule</h2>
             <%
@@ -83,10 +84,11 @@
                 Account trainee = (Account) session.getAttribute("account");
                 LocalDate startDate = (LocalDate) request.getAttribute("startDate");
                 LocalDate endDate = (LocalDate) request.getAttribute("endDate");
-                LocalDate courseDateStart = (LocalDate) request.getAttribute("courseDate");
-                LocalDate currentDate = (LocalDate) request.getAttribute("currentDate");
-//            %>
-            <h4 style="text-align: center; color: red;">Starting date: <%=startDate%>. Duedate: before <%=endDate%></h4>
+                int currentClassID = 0;
+                int currentChoise = 0;
+                int currentIDTime = 0;
+            %>
+            <h4 style="text-align: center; color: red;">Starting date: <%=startDate%>. Due date: before <%=endDate%></h4>
             <%
                 if (!hashChoise.isEmpty() && overdue != null) {
 
@@ -164,6 +166,10 @@
                                                     <button type="submit" name="action" value="traineeChooseClass">Change</button>
                                                 </form>
                                                 <%
+                                                    } else {
+                                                        currentClassID = ID_Class;
+                                                        currentChoise = choice;
+                                                        currentIDTime = time_class.getId_time();
                                                     }
                                                 %>
                                             </th>
@@ -182,8 +188,88 @@
                     </div>
                 </div>
             </div>
+
+            <div class="container">
+                <h4>Request to change subject classes</h4>
+
+                <div class="d-flex justify-content-center row">
+                    <div class="col-md-10">
+                        <div class="rounded">
+                            <div class="table-responsive table-borderless">
+                                <form action="/YogaCenter/request" method="post">
+                                    <input type="hidden" name="txtCourseID" value="<%=Course_ID%>">
+                                    <input type="hidden" name="txClassID" value="<%=currentClassID%>">
+                                    <input type="hidden" name="txtChoice" value="<%=currentChoise%>">
+                                    <input type="hidden" name="txtIDTime" value="<%=currentIDTime%>">
+                                    <input type="hidden" name="overdue" value="<%=overdue%>">
+                                    <input type="hidden" name="startDate" value="<%=startDate%>">
+                                    <input type="hidden" name="endDate" value="<%=endDate%>">
+                                    <button type="submit" name="action" value="traineeRequestChangeClass">Create Request</button>
+                                </form>
+                                <table class="table">
+                                    <thead>
+                                        <tr style="background-color: #1CB0F6;">
+                                            <th>From trainee</th>
+                                            <th>From class</th>
+                                            <th>To trainee</th>
+                                            <th>To class</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%
+                                            rowNumber = 0;
+                                            ArrayList<Message> messRequest = (ArrayList<Message>) request.getAttribute("messRequest");
+                                            for (Message mess : messRequest) {
+                                                if (mess.getFromUserID() == trainee.getIdaccount()) {
+                                        %>
+                                        <tr class="cell-1 <%= rowNumber % 2 == 0 ? "alternate-row" : ""%>">
+                                            <th><%= mess.getFromUserID()%></th>
+                                            <th>Room <%= mess.getFromClassID()%></th>
+                                            <th><%= mess.getToUserID()%></th>
+                                            <th>Room <%= mess.getToClassID()%></th>
+
+                                            <%
+                                                if (mess.getStatus() == 0) {
+                                            %><th class="badge badge-warning">wait for confirmation</th><%
+                                            } else if (mess.getStatus() == 1) {
+                                                %><th class="badge badge-primary">Approved</th><%
+                                                } else {
+                                                %><th class="badge badge-danger">Reject</th><%
+                                                    }
+                                                %>
+                                        </tr>
+                                    <%
+                                        }
+                                        if (mess.getToUserID() == trainee.getIdaccount() && mess.getStatus() == 0) {
+                                    %>
+                                    <tr class="cell-1 <%= rowNumber % 2 == 0 ? "alternate-row" : ""%>">
+                                        <th><%= mess.getFromUserID()%></th>
+                                        <th>Room <%= mess.getFromClassID()%></th>
+                                        <th><%= mess.getToUserID()%></th>
+                                        <th>Room <%= mess.getToClassID()%></th>
+                                        <th>
+                                            <form action="/YogaCenter/request" method="post">
+                                                <input type="hidden" name="txtCourseID">
+                                                <button class="badge badge-success">Approve</button>
+                                            </form>
+                                            <a class="badge badge-danger" href="/YogaCenter/request?action=statusRequest&status=1&messageID=<%=mess.getMessageID()%>">Reject</a>
+                                        </th>
+                                    </tr>
+                                    <%
+                                            }
+                                        }
+                                        rowNumber++;
+                                    %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <%
-            } else if (!hashChoise.isEmpty() && overdue == null) {
+            } else if (!hashChoise.isEmpty() && overdue != null) {
             %>
             <div style="text-align: center">
                 <h4>

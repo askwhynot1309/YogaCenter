@@ -39,7 +39,7 @@ public class HomeServlet extends HttpServlet {
             Date currentdate = new Date(System.currentTimeMillis());
             ArrayList<Course> randomList = new ArrayList<>();
             ArrayList<Course> list = Dao.CourseDao.getCourseByDateStart(currentdate);
-            ArrayList<Course> listramdom = Dao.CourseDao.getAllCourse();
+            ArrayList<Course> listramdom = Dao.CourseDao.getAllCourse();            
             if (list != null && !list.isEmpty()) {
                 for (Course course : list) {
                     int changeStatus = Dao.CourseDao.changeStatusCourse(1, course.getIdCourse());

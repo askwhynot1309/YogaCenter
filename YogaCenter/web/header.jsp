@@ -1,3 +1,7 @@
+<%@page import="Dao.MessageDao"%>
+<%@page import="Object.Message"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Object.Account"%>
 <%@page import="java.util.HashMap"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,6 +17,8 @@
 
     <body>
         <c:set var="cart" value="${sessionScope.cart}"/>
+        <c:set var="noti" value="${requestScope.notiList}"/>
+        
         <header class="header" style = "z-index: 1; position: sticky;">
             <a href="/YogaCenter/home" id="logo"><img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" width="75px" height="75px" alt="logo"/></a>
 
@@ -26,6 +32,7 @@
 
             <c:set var="account" value="${sessionScope.account}"/>
             <c:if test="${account != null}">
+                <c:set var="notiList" value="${MessageDao.getAllMessageByUserID(account.idaccount)}"></c:set>
                 <div class="iconTrainee">
                     <div class='custom-cart-wrapper'>
                         <a href="/YogaCenter/viewcart" class="fa-solid fa-cart-shopping fa-2xl"></a>
@@ -34,11 +41,12 @@
                                 <div id='cartQuantity' class='custom-cart'>${cart.size()}</div>
                             </c:when>
                         </c:choose>
-                        
+
                     </div>
 
-                    <div style="cursor: pointer">
-                        <span class="fa-solid fa-bell fa-2xl"></span>
+                    <div class='custom-cart-wrapper'>
+                        <a href="/YogaCenter/request?action=viewNotification&accountID=${account.idaccount}" class="fa-solid fa-bell fa-2xl"></a>
+                        <div id='cartQuantity' class='custom-cart'>${notiList.size()}</div>
                     </div>
 
                     <div class="dropdown" style="cursor: pointer">

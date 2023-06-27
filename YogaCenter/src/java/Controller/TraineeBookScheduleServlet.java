@@ -6,7 +6,10 @@ package Controller;
 
 import Dao.ClassDetailDao;
 import Dao.CourseDao;
+import Dao.MessageDao;
+import Object.Account;
 import Object.Course;
+import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -19,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,6 +44,8 @@ public class TraineeBookScheduleServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession(true);
+            Account account = (Account)session.getAttribute("account");
             int Course_ID = Integer.parseInt(request.getParameter("courseID"));
             Course course = CourseDao.getInformationOfCourse(Course_ID);
             HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(Course_ID);
@@ -48,17 +54,44 @@ public class TraineeBookScheduleServlet extends HttpServlet {
             LocalDate courseDateStart = courseDate.toLocalDate();
             LocalDate startDate = courseDateStart.minusDays(10);
             LocalDate endDate = courseDateStart.minusDays(7);
-            
+
+            ArrayList<Message> messList = MessageDao.getAllMessage();
+
+            ArrayList<Message> messRequest = new ArrayList<>();
+            for (Message messageList : messList) {
+                int ID_Message = messageList.getMessageID();
+                int ID_sendMessage = messageList.getFromUserID();
+                int ID_recieveMessage = messageList.getToUserID();
+
+                String mess = messageList.getMessage();
+                String numberPattern = "\\d+";
+                java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(numberPattern);
+                java.util.regex.Matcher matcher = pattern.matcher(mess);
+                int fromClass = 0;
+                int toClass = 0;
+
+                if (matcher.find()) {
+                    fromClass = Integer.parseInt(matcher.group());
+                }
+                if (matcher.find()) {
+                    toClass = Integer.parseInt(matcher.group());
+                }
+                int status = messageList.getStatus();
+
+                messRequest.add(new Message(ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status));
+            }
+
             LocalDate currentDate = LocalDate.now();
             if (!hashChoise.isEmpty()) {
                 request.setAttribute("hashChoise", hashChoise);
+                request.setAttribute("messRequest", messRequest);
                 request.setAttribute("Course_ID", Course_ID);
                 request.setAttribute("startDate", startDate);
                 request.setAttribute("endDate", endDate);
                 if (currentDate.isAfter(endDate)) {
-                    request.setAttribute("overdue", "Overdue for form application and registration");    
+                    request.setAttribute("overdue", "Overdue for form application and registration");
                     request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
-                }else if (currentDate.isBefore(startDate)) {
+                } else if (currentDate.isBefore(startDate)) {
                     request.setAttribute("overdue", "It's not time to registration");
                 }
             }
