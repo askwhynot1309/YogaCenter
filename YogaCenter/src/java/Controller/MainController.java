@@ -165,6 +165,9 @@ public class MainController extends HttpServlet {
                     case "ButtonSignCourse":
                         url = "ButtonSignCourseServlet";
                         break;
+                    case "SubmitAttendance":
+                        url = "CheckAttendance";
+                        break;
                     case "Cancel":
                         url = "CancelCourseOrderServlet";
                         break;

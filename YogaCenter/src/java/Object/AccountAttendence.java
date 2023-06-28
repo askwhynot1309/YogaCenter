@@ -23,7 +23,7 @@ public class AccountAttendence {
         this.dateAttendence = dateAttendence;
         this.status = status;
     }
-
+    
     public int getId_attendence() {
         return id_attendence;
     }

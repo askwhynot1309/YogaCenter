@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -610,6 +611,65 @@ public class ClassDetailDao {
     }
 
     public static int checkNumTraineeInAClass(int class_ID) {
+    public boolean checkAttendance(int traineeId, int courseId, Date date, int status) throws Exception {
+        boolean updated = false;
+        Connection con = DBUtils.getConnection();
+
+        String query = "INSERT INTO dbo.CheckAttendance (ID_Trainee, ID_Course, AttendanceDate, Status) VALUES (?, ?, ?, ?)";
+
+        try ( PreparedStatement statement = con.prepareStatement(query)) {
+            statement.setInt(1, traineeId);
+            statement.setInt(2, courseId);
+            statement.setDate(3, date);
+            statement.setInt(4, status);
+
+            statement.executeUpdate();
+            updated = true;
+        }
+        return updated;
+    }
+
+    public boolean updateAttendanceStatus(int traineeId, int courseId, Date date, int status) throws Exception {
+        boolean check = false;
+        String query = "UPDATE dbo.CheckAttendance SET Status = ? WHERE ID_Trainee = ? AND ID_Course = ? AND AttendanceDate = ?";
+        Connection con = DBUtils.getConnection();
+
+        try ( PreparedStatement statement = con.prepareStatement(query)) {
+            statement.setInt(1, status);
+            statement.setInt(2, traineeId);
+            statement.setInt(3, courseId);
+            statement.setDate(4, date);
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                check = true;
+            }
+        }
+        return check;
+    }
+
+    public boolean checkAttendanceExistence(int traineeId, int courseId, Date attendanceDate) throws Exception {
+        String query = "SELECT COUNT(*) FROM dbo.CheckAttendance WHERE ID_Trainee = ? AND ID_Course = ? AND AttendanceDate = ?";
+        Connection con = DBUtils.getConnection();
+        
+        try ( PreparedStatement statement = con.prepareStatement(query)) {
+            statement.setInt(1, traineeId);
+            statement.setInt(2, courseId);
+            statement.setDate(3, attendanceDate);
+
+            try ( ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        }
+
+        return false;
+    }
+    
+    
+    public static int checkNumTraineeInAClass(int Class_ID, int IDtime, int Choice) {
         int num = 0;
         Connection cn = null;
         try {

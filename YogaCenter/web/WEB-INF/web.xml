@@ -130,7 +130,7 @@
     </servlet>
     <servlet>
         <servlet-name>TraineeClassBooked</servlet-name>
-        <servlet-class>Controller.TraineeViewSchedule</servlet-class>
+        <servlet-class>Controller.TraineeClassBooked</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TraineeManagePurchaseServlet</servlet-name>
@@ -221,32 +221,12 @@
         <servlet-class>Controller.ViewPreviousServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CheckAttendance</servlet-name>
+        <servlet-class>Controller.CheckAttendance</servlet-class>
+    </servlet>
+    <servlet>    
         <servlet-name>TraineeBookScheduleServlet</servlet-name>
         <servlet-class>Controller.TraineeBookScheduleServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>TraineeRequestChangeClassServlet</servlet-name>
-        <servlet-class>Controller.TraineeRequestChangeClassServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>TraineeCheckTraineeRequested</servlet-name>
-        <servlet-class>Controller.TraineeCheckTraineeRequested</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>TraineeSubmitRequestChangeClass</servlet-name>
-        <servlet-class>Controller.TraineeSubmitRequestChangeClass</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>TraineeViewNotificationServlet</servlet-name>
-        <servlet-class>Controller.TraineeViewNotificationServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>TraineeViewTheirCouse</servlet-name>
-        <servlet-class>Controller.TraineeViewTheirCouse</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>TraineeViewRequestChangeClass</servlet-name>
-        <servlet-class>Controller.TraineeViewRequestChangeClass</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TraineeShowYourCourse</servlet-name>
@@ -489,32 +469,12 @@
         <url-pattern>/viewprevious</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>CheckAttendance</servlet-name>
+        <url-pattern>/CheckAttendance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>    
         <servlet-name>TraineeBookScheduleServlet</servlet-name>
         <url-pattern>/ChooseClass</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TraineeRequestChangeClassServlet</servlet-name>
-        <url-pattern>/RequestChangeClass</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TraineeCheckTraineeRequested</servlet-name>
-        <url-pattern>/CheckTraineeRequested</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TraineeSubmitRequestChangeClass</servlet-name>
-        <url-pattern>/SubmitRequest</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TraineeViewNotificationServlet</servlet-name>
-        <url-pattern>/viewNotification</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TraineeViewTheirCouse</servlet-name>
-        <url-pattern>/myCourses</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TraineeViewRequestChangeClass</servlet-name>
-        <url-pattern>/viewRequest</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeShowYourCourse</servlet-name>
