@@ -105,7 +105,7 @@
                                                             <input type="radio" name="attendanceStatus${loop.index}" value="0" id="no${loop.index}">
                                                             <label for="no${loop.index}">No</label>
                                                             <input type="hidden" name="traineeId" value="${trainee.idaccount}">
-                                                            <input type="hidden" name="courseId" value="${inforClass.id_course}">
+                                                            <input type="hidden" name="id_class" value="${inforClass.id_class}">
                                                             <input type="hidden" name="classDate" value="${inforClass.date}">
                                                             <input type="hidden" name="reuseId" value="${sessionScope.reuseId}">
                                                         </td>

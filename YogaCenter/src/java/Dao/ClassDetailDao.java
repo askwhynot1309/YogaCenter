@@ -318,7 +318,7 @@ public class ClassDetailDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int class_id = table.getInt("ClassDetail_ID");
+                    int class_id = table.getInt("Class_ID");
                     String room_name = table.getString("Room_Name");
                     int id_time = table.getInt("IDtime");
                     Date datestudy = table.getDate("DateStudy");
@@ -610,16 +610,15 @@ public class ClassDetailDao {
         return kq;
     }
 
-    public static int checkNumTraineeInAClass(int class_ID) {
-    public boolean checkAttendance(int traineeId, int courseId, Date date, int status) throws Exception {
+    public boolean checkAttendance(int traineeId, int id_classInt, Date date, int status) throws Exception {
         boolean updated = false;
         Connection con = DBUtils.getConnection();
 
-        String query = "INSERT INTO dbo.CheckAttendance (ID_Trainee, ID_Course, AttendanceDate, Status) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO dbo.CheckAttendance (ID_Trainee, Class_ID, AttendanceDate, Status) VALUES (?, ?, ?, ?)";
 
         try ( PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, traineeId);
-            statement.setInt(2, courseId);
+            statement.setInt(2, id_classInt);
             statement.setDate(3, date);
             statement.setInt(4, status);
 
@@ -629,15 +628,15 @@ public class ClassDetailDao {
         return updated;
     }
 
-    public boolean updateAttendanceStatus(int traineeId, int courseId, Date date, int status) throws Exception {
+    public boolean updateAttendanceStatus(int traineeId, int id_classInt, Date date, int status) throws Exception {
         boolean check = false;
-        String query = "UPDATE dbo.CheckAttendance SET Status = ? WHERE ID_Trainee = ? AND ID_Course = ? AND AttendanceDate = ?";
+        String query = "UPDATE dbo.CheckAttendance SET Status = ? WHERE ID_Trainee = ? AND Class_ID = ? AND AttendanceDate = ?";
         Connection con = DBUtils.getConnection();
 
         try ( PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, status);
             statement.setInt(2, traineeId);
-            statement.setInt(3, courseId);
+            statement.setInt(3, id_classInt);
             statement.setDate(4, date);
 
             int rowsAffected = statement.executeUpdate();
@@ -648,13 +647,13 @@ public class ClassDetailDao {
         return check;
     }
 
-    public boolean checkAttendanceExistence(int traineeId, int courseId, Date attendanceDate) throws Exception {
-        String query = "SELECT COUNT(*) FROM dbo.CheckAttendance WHERE ID_Trainee = ? AND ID_Course = ? AND AttendanceDate = ?";
+    public boolean checkAttendanceExistence(int traineeId, int id_classInt, Date attendanceDate) throws Exception {
+        String query = "SELECT COUNT(*) FROM dbo.CheckAttendance WHERE ID_Trainee = ? AND Class_ID = ? AND AttendanceDate = ?";
         Connection con = DBUtils.getConnection();
         
         try ( PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, traineeId);
-            statement.setInt(2, courseId);
+            statement.setInt(2, id_classInt);
             statement.setDate(3, attendanceDate);
 
             try ( ResultSet resultSet = statement.executeQuery()) {
@@ -669,7 +668,7 @@ public class ClassDetailDao {
     }
     
     
-    public static int checkNumTraineeInAClass(int Class_ID, int IDtime, int Choice) {
+    public static int checkNumTraineeInAClass(int class_ID) {
         int num = 0;
         Connection cn = null;
         try {

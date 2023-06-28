@@ -228,8 +228,8 @@ public class UserDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from ClassDetail cd\n"
-                    + "JOIN Account a ON cd.IDAccount = a.ID_Account\n"
-                    + "JOIN Class c ON cd.Class_ID =c.Class_ID\n"
+                    + "JOIN Account a ON cd.ID_Account = a.ID_Account\n"
+                    + "JOIN Class c ON cd.Class_ID = c.Class_ID\n"
                     + "where a.Role = 3 and cd.IDtime = ? and cd.DateStudy = ? and c.Class_Name = ? and cd.IDCourse = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id_time);

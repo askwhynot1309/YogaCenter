@@ -55,6 +55,7 @@ public class TraineeChooseScheduleServlet extends HttpServlet {
                     int insertClass = Dao.ClassDetailDao.insertClassForTeach(id_room, id_time, idaccount, id_course, option);
                     for (Get30SlotsByCourse dateForSlot : list) {
                         int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(insertClass, dateForSlot.getDay());
+                        int insertCheckAttendence = Dao.AttendenceDao.insertDayToCheckAttendence(idaccount, insertClass, dateForSlot.getDay(), 0);
                     }
                 }
             }

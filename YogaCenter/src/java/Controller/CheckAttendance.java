@@ -55,7 +55,7 @@ public class CheckAttendance extends HttpServlet {
             String[] attendanceStatusArray = attendanceStatusList.toArray(new String[attendanceStatusList.size()]);
 
             String[] traineeIdArray = request.getParameterValues("traineeId");
-            String[] courseIdArray = request.getParameterValues("courseId");
+            String[] courseIdArray = request.getParameterValues("id_class");
             String[] classDateArray = request.getParameterValues("classDate");
 //            System.out.println(traineeIdArray.length);
 //            System.out.println(courseIdArray.length);
@@ -66,12 +66,12 @@ public class CheckAttendance extends HttpServlet {
                 for (int i = 0; i < traineeIdArray.length; i++) {
                     String attendanceStatus = attendanceStatusArray[i];
                     String traineeId = traineeIdArray[i];
-                    String courseId = courseIdArray[i];
+                    String id_class = courseIdArray[i];
                     String classDate = classDateArray[i];
 
                     int status = Integer.parseInt(attendanceStatus);
                     int traineeIdInt = Integer.parseInt(traineeId);
-                    int courseIdInt = Integer.parseInt(courseId);
+                    int id_classInt = Integer.parseInt(id_class);
 
                     // chuyen sang kieu data Date
                     Date AttendanceDate = null;
@@ -85,13 +85,13 @@ public class CheckAttendance extends HttpServlet {
                     }
                     // System.out.println(attendanceStatus + classDate + courseId + traineeId);
                     ClassDetailDao dao = new ClassDetailDao();
-                    if (dao.checkAttendanceExistence(traineeIdInt, courseIdInt, AttendanceDate)) {
-                        if (dao.updateAttendanceStatus(traineeIdInt, courseIdInt, AttendanceDate, status)) {
+                    if (dao.checkAttendanceExistence(traineeIdInt, id_classInt, AttendanceDate)) {
+                        if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, AttendanceDate, status)) {
                             request.setAttribute("notification", "Attendance status updated successfully");
                             request.getRequestDispatcher("/trainerviewschedule").forward(request, response);
                         }
                     } else {
-                        if (dao.checkAttendance(traineeIdInt, courseIdInt, AttendanceDate, status)) {
+                        if (dao.checkAttendance(traineeIdInt, id_classInt, AttendanceDate, status)) {
                             request.setAttribute("notification", "Attendance status updated successfully");
                             request.getRequestDispatcher("/trainerviewschedule").forward(request, response);
                         } else {

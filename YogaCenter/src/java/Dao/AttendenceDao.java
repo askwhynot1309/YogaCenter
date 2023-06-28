@@ -21,20 +21,13 @@ public class AttendenceDao {
         ArrayList<AccountAttendence> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select *\n"
+            String s = "SELECT DISTINCT c.ID_Course, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee\n"
                     + "from Class c JOIN CheckAttendance ca ON c.Class_ID = ca.ID_Class\n"
                     + "JOIN Room r ON cd.Class_ID = r.Room_ID\n"
                     + "JOIN Time t ON cd.IDtime = t.Time_ID\n"
-                    + "JOIN Account a ON cd.IDAccount = a.ID_Account\n"
-                    + "where cd.DateStudy = ? AND a.Role = 3 AND ca.AttendanceDate = ?";
-            String s = "SELECT DISTINCT ca.ID_Course, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee\n"
-                    + "FROM ClassDetail cd\n"
-                    + "JOIN CheckAttendance ca ON cd.IDCourse = ca.ID_Course\n"
-                    + "JOIN Class c ON cd.Class_ID = c.Class_ID\n"
-                    + "JOIN Time t ON cd.IDtime = t.Time_ID\n"
-                    + "JOIN Account a ON cd.IDAccount = a.ID_Account\n"
-                    + "WHERE cd.DateStudy = ? AND a.Role = 3 AND ca.AttendanceDate = ?\n"
-                    + "GROUP BY ca.ID_Course, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee";
+                    + "JOIN Account a ON ca.ID_Trainee = a.ID_Account\n"
+                    + "where cd.DateStudy = ? AND a.Role = 3 AND ca.AttendanceDate = ?\n"
+                    + "GROUP BY c.ID_Course, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
             pst.setDate(2, date);
@@ -58,17 +51,16 @@ public class AttendenceDao {
         ArrayList<AccountAttendence> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "SELECT DISTINCT cd.IDCourse, ca.AttendanceDate, ca.Status\n"
-                    + "FROM ClassDetail cd\n"
-                    + "JOIN CheckAttendance ca ON cd.IDCourse = ca.ID_Course\n"
-                    + "JOIN Class c ON cd.Class_ID = c.Class_ID\n"
+            String s = "SELECT DISTINCT c.ID_Course, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee\n"
+                    + "FROM Class c JOIN ClassDate cdate ON cdate.Class_ID = c.Class_ID\n"
+                    + "JOIN CheckAttendance ca ON c.Class_ID = ca.Class_ID\n"
+                    + "JOIN Room r ON cd.Class_ID = r.Room_ID\n"
                     + "JOIN Time t ON cd.IDtime = t.Time_ID\n"
-                    + "JOIN Account a ON cd.IDAccount = a.ID_Account\n"
-                    + "WHERE cd.DateStudy = '2023-06-29' AND a.Role = 3\n"
-                    + "GROUP BY cd.IDCourse, ca.AttendanceDate, ca.Status";
+                    + "JOIN Account a ON ca.ID_Trainee = a.ID_Account\n"
+                    + "WHERE cdate.DateStudy = ? AND a.Role = 3\n"
+                    + "GROUP BY c.ID_Course, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
-            pst.setDate(2, date);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
@@ -80,6 +72,22 @@ public class AttendenceDao {
                     kq.add(attendence);
                 }
             }
+            cn.close();
+        }
+        return kq;
+    }
+    
+    public static int insertDayToCheckAttendence(int idaccount, int insertClass, Date date, int status) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "insert into CheckAttendance(ID_Trainee, ID_Class, AttendanceDate, Status) values (?,?,?,?)";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, idaccount);
+            pst.setInt(2, insertClass);
+            pst.setDate(3, date);
+            pst.setInt(4, status);
+            kq = pst.executeUpdate();
             cn.close();
         }
         return kq;
