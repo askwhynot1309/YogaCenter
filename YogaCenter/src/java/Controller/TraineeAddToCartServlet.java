@@ -31,7 +31,7 @@ public class TraineeAddToCartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String ID_Course = request.getParameter("cid");
 
@@ -42,6 +42,11 @@ public class TraineeAddToCartServlet extends HttpServlet {
                     cart = new HashMap<>();
                     cart.put(ID_Course, 1);
                 } else {
+                    if (cart.containsKey(ID_Course)) {
+                        session.setAttribute("cart", cart);
+                        request.setAttribute("wrong", "message");
+                        request.getRequestDispatcher("course").forward(request, response);
+                    }
                     Integer tmp = cart.get(ID_Course);
                     if (tmp == null) {
                         cart.put(ID_Course, 1);

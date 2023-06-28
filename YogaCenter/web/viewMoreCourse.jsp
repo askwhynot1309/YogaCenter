@@ -158,7 +158,7 @@
             .btn {
                 display: flex;
                 height: 3em;
-                width: 100px;
+                width: 150px;
                 align-items: center;
                 justify-content: center;
                 background-color: #eeeeee4b;
@@ -176,16 +176,7 @@
                 font-size: 20px;
                 transition: all 0.4s ease-in;
             }
-
-            .btn:hover > svg {
-                font-size: 1.2em;
-                transform: translateX(-5px);
-            }
-
-            .btn:hover {
-                box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
-                transform: translateY(-2px);
-            }
+        
             .btn a{
                 text-decoration: none;
             }

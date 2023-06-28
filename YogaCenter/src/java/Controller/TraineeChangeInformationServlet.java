@@ -42,7 +42,7 @@ public class TraineeChangeInformationServlet extends HttpServlet {
             HttpSession session = request.getSession();
             int updated = UserDao.updateInformationTrainee(ID_Account, email, fullname, phone, address);
             if (updated == 1) {
-                request.getRequestDispatcher("TraineeManageInformationServlet").forward(request, response);
+                request.getRequestDispatcher("information").forward(request, response);
             }
         }
     }

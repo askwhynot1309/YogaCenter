@@ -35,7 +35,7 @@ public class TraineeViewClassDetail extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.parseInt(request.getParameter("id"));
-            ClassDetail trainer = Dao.ClassDetailDao.getTrainerByClassDetailID(id);
+            ClassDetail trainer = Dao.ClassDetailDao.getTrainerByClassID(id);
             ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id);
             ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(information.getTime(), information.getClass_name(), information.getDate(), information.getId_course());
             if (listTrainee.isEmpty()) {

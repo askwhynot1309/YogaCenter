@@ -14,7 +14,7 @@
     </head>
     <c:import url="header.jsp"/>
     <body>
-        <c:set var="acc" value="${sessionScope.account}"/>
+        <c:set var="acc" value="${requestScope.acc}"/>
         <c:if test="${acc != null}">
             <div class="inforTable">
                 <div class="container">
@@ -44,7 +44,7 @@
                             <p>Information about your self</p>
                         </div>
                         <div class="content-body">
-                            <form action="/YogaCenter/request">
+                            <form action="/YogaCenter/request" method="POST">
                                 <div class="form-container">
                                     <div>
                                         <fieldset class="" style="padding: 10px">

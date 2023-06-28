@@ -12,7 +12,7 @@ import java.sql.Date;
  */
 public class ClassDetail {
 
-    private int id_detail;
+    private int id_class;
     private int id_room;
     private String class_name;
     private int time;
@@ -27,24 +27,23 @@ public class ClassDetail {
     public ClassDetail() {
     }
 
-    public ClassDetail(int id_detail, int id_room, int time, int idaccount, Date date, int id_course) {
-        this.id_detail = id_detail;
+    public ClassDetail(int id_class, int id_room, int time, int idaccount, int id_course) {
+        this.id_class = id_class;
         this.id_room = id_room;
         this.time = time;
         this.idaccount = idaccount;
-        this.date = date;
         this.id_course = id_course;
     }
 
     public ClassDetail(int id_detail, String class_name, int time, Date date) {
-        this.id_detail = id_detail;
+        this.id_class = id_detail;
         this.class_name = class_name;
         this.time = time;
         this.date = date;
     }
 
     public ClassDetail(int id_detail, String class_name, int time, String datestudy, int idaccount, String account, int id_course, int status, String course) {
-        this.id_detail = id_detail;
+        this.id_class = id_detail;
         this.class_name = class_name;
         this.time = time;
         this.datestudy = datestudy;
@@ -56,7 +55,7 @@ public class ClassDetail {
     }
 
     public ClassDetail(int id_detail, int id_room, int time, int idaccount, Date date, String account, int id_course, String course) {
-        this.id_detail = id_detail;
+        this.id_class = id_detail;
         this.id_room = id_room;
         this.time = time;
         this.idaccount = idaccount;
@@ -67,7 +66,7 @@ public class ClassDetail {
     }
 
     public ClassDetail(int id_detail, String class_name, int time, int idaccount, Date date, String account, int id_course, String course) {
-        this.id_detail = id_detail;
+        this.id_class = id_detail;
         this.class_name = class_name;
         this.time = time;
         this.idaccount = idaccount;
@@ -79,7 +78,7 @@ public class ClassDetail {
 
     
     public ClassDetail(int id_detail, String class_name, int time, String datestudy, int idaccount, String account, int id_course, String course) {
-        this.id_detail = id_detail;
+        this.id_class = id_detail;
         this.class_name = class_name;
         this.time = time;
         this.datestudy = datestudy;
@@ -114,11 +113,11 @@ public class ClassDetail {
     }
 
     public int getId_detail() {
-        return id_detail;
+        return id_class;
     }
 
     public void setId_detail(int id_detail) {
-        this.id_detail = id_detail;
+        this.id_class = id_detail;
     }
 
     public String getClass_name() {

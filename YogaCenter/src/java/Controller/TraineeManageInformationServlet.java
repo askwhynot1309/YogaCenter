@@ -33,6 +33,10 @@ public class TraineeManageInformationServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
+            Account acc = (Account) session.getAttribute("account");
+            Account account = Dao.UserDao.getAccountByID(acc.getIdaccount());
+            request.setAttribute("acc", account);
             request.getRequestDispatcher("traineeManageInformation.jsp").forward(request, response);
         }
     }

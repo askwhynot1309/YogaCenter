@@ -112,7 +112,7 @@ public class AddCourseServlet extends HttpServlet {
                             }
                         }
                     }
-                    else if(create == currentDate){
+                    else if(create.toLocalDate().isBefore(currentDate.toLocalDate())){
                         if (listCourse != null && !listCourse.isEmpty()) {
                             if (listLevel != null && !listLevel.isEmpty()) {
                                 request.setAttribute("listCourse", listCourse);
@@ -126,7 +126,7 @@ public class AddCourseServlet extends HttpServlet {
                             if (listLevel != null && !listLevel.isEmpty()) {
                                 request.setAttribute("listLevel", listLevel);
                                 request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
-                                request.setAttribute("expired", "Ngày bắt đầu đã qua");
+                                request.setAttribute("wrong", "Ngày bắt đầu đã qua");
                                 request.getRequestDispatcher("managecourse").forward(request, response);
                             } else {
                                 request.setAttribute("expired", "Ngày bắt đầu đã qua");
@@ -162,8 +162,7 @@ public class AddCourseServlet extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
-            dispatcher.forward(request, response);
+            e.printStackTrace();
         }
     }
 

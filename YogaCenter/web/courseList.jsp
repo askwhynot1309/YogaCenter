@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/style.css"/>
-        <link rel="stylesheet" href="css/admin/admin-course-add.css">
+        <link rel="stylesheet" href="css/trainee/trainee-add-message">
         <style>
             .container {
                 margin-top: 1.5rem;
@@ -42,7 +42,7 @@
             }
             .course-img {
                 width: 100%;
-                height: auto;
+                height: 175px;
                 object-fit: cover;
             }
 
@@ -270,11 +270,13 @@
         <c:set var="CourseLevel" value="${requestScope.CourseLevel}"></c:set>
         <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
         <c:set var="ErrorMessage" value="${requestScope.ErrorMessage}"></c:set>
+        <c:set var="wrong" value="${requestScope.wrong}"></c:set>
+        <c:set var="currentdate" value="${requestScope.currentdate}"></c:set>
         <c:set var="user" value="${sessionScope.account}"/>
         <c:set var="listCourseAccountActive" value="${requestScope.listCourseAccountActive}"/>
         <div class="container">
             <div style="width: 100%; padding: 10px; background: #009879; margin-bottom: 20px">
-                <h3 style="text-transform: uppercase">courses in YogaCenter</h3>
+                <h3 style="text-transform: uppercase">courses in Yoga Center</h3>
             </div>
             <c:if test="${CourseList == null}">
                 <h3 style="text-align: center; margin-bottom: 300px"><c:out value="${ErrorMessage}"/></h3>
@@ -291,15 +293,30 @@
                                         <p><strong>Fee:</strong> ${course.fee_course}</p>
                                         <p><strong>Start Date:</strong> ${course.date_start}</p>
                                         <p><strong>Level:</strong> ${course.name_level}</p>
-                                        <c:if test="${user != null && course.status == 0}">
-                                            <div style="position: absolute; bottom: 10px; width: 90%">
-                                                <div style="margin-bottom: 10px">
-                                                    <a class="cartBtn" href="/YogaCenter/request?action=AddCourseToCart&cid=${course.idCourse}">
-                                                        <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
-                                                        ADD TO CART
-                                                    </a>
+                                        <c:choose>
+                                            <c:when test="${listCourseAccountActive == null && user != null && course.status == 0}">
+                                                <div style="position: absolute; bottom: 10px; width: 90%">
+                                                    <div style="margin-bottom: 10px">
+                                                        <a class="cartBtn" href="/YogaCenter/request?action=AddCourseToCart&cid=${course.idCourse}">
+                                                            <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+                                                            ADD TO CART
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
+                                                            <span class="top-key"></span>
+                                                            <span class="text">View more</span>
+                                                            <span class="bottom-key-1"></span>
+                                                            <span class="bottom-key-2"></span>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                                <div>
+                                            </c:when>
+                                            <c:when test="${user != null && course.status == 0 && currentdate.after(course.date_close)}">
+                                                <div style="position: absolute; bottom: 10px; width: 90%">
+                                                    <div style="text-align: center">
+                                                        <p style="color: red">The course has been closed.</p>
+                                                    </div>
                                                     <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
                                                         <span class="top-key"></span>
                                                         <span class="text">View more</span>
@@ -307,52 +324,53 @@
                                                         <span class="bottom-key-2"></span>
                                                     </a>
                                                 </div>
-                                            </div>
-                                        </c:if>
-                                        <c:if test="${user != null && course.status == 1}">
-                                            <div style="position: absolute; bottom: 10px; width: 90%">
-                                                <div style="text-align: center">
-                                                    <p style="color: red">The course has been closed.</p>
-                                                </div>
-                                                <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
-                                                    <span class="top-key"></span>
-                                                    <span class="text">View more</span>
-                                                    <span class="bottom-key-1"></span>
-                                                    <span class="bottom-key-2"></span>
-                                                </a>
-                                            </div>
-                                        </c:if>
-                                        <c:if test="${listCourseAccountActive != null && user != null}">
-                                            <div style="position: absolute; bottom: 10px; width: 90%">
+                                            </c:when>
+                                            <c:when test="${listCourseAccountActive != null && user != null}">
+                                                <c:set var="courseBought" value="false" scope="page" />
                                                 <c:forEach var="coureactive" items="${listCourseAccountActive}">
                                                     <c:if test="${course.idCourse == coureactive.id_course}">
-                                                        <p style="text-align: center; color: red">You bought course</p>
+                                                        <c:set var="courseBought" value="true" scope="page" />
                                                     </c:if>
                                                 </c:forEach>
-                                                <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
-                                                    <span class="top-key"></span>
-                                                    <span class="text">View more</span>
-                                                    <span class="bottom-key-1"></span>
-                                                    <span class="bottom-key-2"></span>
-                                                </a>
-                                            </div>
-                                        </c:if>
 
-                                        <c:if test="${user == null}">
-                                            <div style="position: absolute; bottom: 10px; width: 90%">
-                                                <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
-                                                    <span class="top-key"></span>
-                                                    <span class="text">View more</span>
-                                                    <span class="bottom-key-1"></span>
-                                                    <span class="bottom-key-2"></span>
-                                                </a>
-                                                <button class="cssbuttons-io-button">Register now
-                                                    <a  href="register.jsp" class="icon">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
+                                                <div style="position: absolute; bottom: 10px; width: 90%">
+                                                    <c:choose>
+                                                        <c:when test="${courseBought}">
+                                                            <p style="text-align: center; color: red">You bought the course</p>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <div style="margin-bottom: 10px">
+                                                                <a class="cartBtn" href="/YogaCenter/request?action=AddCourseToCart&cid=${course.idCourse}">
+                                                                    <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+                                                                    ADD TO CART
+                                                                </a>
+                                                            </div>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
+                                                        <span class="top-key"></span>
+                                                        <span class="text">View more</span>
+                                                        <span class="bottom-key-1"></span>
+                                                        <span class="bottom-key-2"></span>
                                                     </a>
-                                                </button>
-                                            </div>
-                                        </c:if>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div style="position: absolute; bottom: 10px; width: 90%">
+                                                    <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
+                                                        <span class="top-key"></span>
+                                                        <span class="text">View more</span>
+                                                        <span class="bottom-key-1"></span>
+                                                        <span class="bottom-key-2"></span>
+                                                    </a>
+                                                    <button class="cssbuttons-io-button">Register now
+                                                        <a  href="register.jsp" class="icon">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
+                                                        </a>
+                                                    </button>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>
@@ -370,6 +388,18 @@
             </div>
             <script>
                 let notification = document.querySelector('.notification-success');
+                notification.timeOut = setTimeout(() => notification.remove(), 2000);
+            </script>
+        </c:if>
+        <c:if test="${wrong != null}">
+            <div class="notification" style="z-index: 1000">
+                <div class="content">
+                    <div class="title">Error</div>
+                    <span>You had added this course already.</span>
+                </div>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification');
                 notification.timeOut = setTimeout(() => notification.remove(), 2000);
             </script>
         </c:if>

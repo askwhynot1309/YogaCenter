@@ -23,6 +23,7 @@ public class OrderCourse {
     private int method;
     private int quantity;
     private BigDecimal fee_course;
+    private int status_account;
     private String level;
     private Date course_start;
     private String img;
@@ -71,7 +72,7 @@ public class OrderCourse {
         this.method = method;
     }
 
-    public OrderCourse(int id_order, int id_account, String name_account, int id_course, String name_course, Date dateorder, int status, int method, int quantity, BigDecimal fee_course) {
+    public OrderCourse(int id_order, int id_account, String name_account, int id_course, String name_course, Date dateorder, int status, int method, int quantity, BigDecimal fee_course, int status_account) {
         this.id_order = id_order;
         this.id_account = id_account;
         this.name_account = name_account;
@@ -82,6 +83,7 @@ public class OrderCourse {
         this.method = method;
         this.quantity = quantity;
         this.fee_course = fee_course;
+        this.status_account = status_account;
     }
 
     public OrderCourse(int id_order, int id_account, Date dateorder, int status, int quantity) {
@@ -90,6 +92,14 @@ public class OrderCourse {
         this.dateorder = dateorder;
         this.status = status;
         this.quantity = quantity;
+    }
+
+    public int getStatus_account() {
+        return status_account;
+    }
+
+    public void setStatus_account(int status_account) {
+        this.status_account = status_account;
     }
 
     public String getImg() {

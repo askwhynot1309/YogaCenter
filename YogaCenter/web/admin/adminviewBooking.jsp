@@ -59,13 +59,13 @@
                                             <td style="width: 450px">
                                                 <form action="/YogaCenter/request" method="POST">
                                                     <c:if test="${order.status == 0}">
-                                                        <p style="color: red">Cancel</p>
+                                                        <p style="color: yellowgreen">Processing</p>
                                                     </c:if>
                                                     <c:if test="${order.status == 1}">
-                                                        <p style="color: yellow">Processing</p>
+                                                        <p style="color: green">Completed</p>
                                                     </c:if>
                                                     <c:if test="${order.status == 2}">
-                                                        <p style="color: green">Completed</p>
+                                                        <p style="color: red">Cancel</p>
                                                     </c:if>
                                                 </form>
                                             </td>

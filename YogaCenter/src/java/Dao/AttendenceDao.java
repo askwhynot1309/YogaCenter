@@ -21,12 +21,12 @@ public class AttendenceDao {
         ArrayList<AccountAttendence> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select *\n" +
-"from ClassDetail cd JOIN CheckAttendance ca ON cd.IDCourse = ca.ID_Course\n" +
-"JOIN Class c ON cd.Class_ID = c.Class_ID\n" +
-"JOIN Time t ON cd.IDtime = t.Time_ID\n" +
-"JOIN Account a ON cd.IDAccount = a.ID_Account\n" +
-"where cd.DateStudy = ? AND a.Role = 3 AND ca.AttendanceDate = ?";
+            String s = "select *\n"
+                    + "from Class c JOIN CheckAttendance ca ON c.Class_ID = ca.ID_Class\n"
+                    + "JOIN Room r ON cd.Class_ID = r.Room_ID\n"
+                    + "JOIN Time t ON cd.IDtime = t.Time_ID\n"
+                    + "JOIN Account a ON cd.IDAccount = a.ID_Account\n"
+                    + "where cd.DateStudy = ? AND a.Role = 3 AND ca.AttendanceDate = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
             pst.setDate(2, date);
@@ -35,9 +35,9 @@ public class AttendenceDao {
                 while (table.next()) {
                     int id_attendence = table.getInt("Attendance_ID");
                     int id_trainee = table.getInt("ID_Trainee");
-                    int id_course = table.getInt("ID_Course");
+                    int id_class = table.getInt("ID_Class");
                     int status = table.getInt("Status");
-                    AccountAttendence attendence = new AccountAttendence(id_attendence, id_trainee, id_course, date, status);
+                    AccountAttendence attendence = new AccountAttendence(id_attendence, id_trainee, id_class, date, status);
                     kq.add(attendence);
                 }
             }
