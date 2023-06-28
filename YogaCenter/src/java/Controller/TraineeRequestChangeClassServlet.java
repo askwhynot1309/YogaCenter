@@ -14,6 +14,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +38,7 @@ public class TraineeRequestChangeClassServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -45,25 +47,31 @@ public class TraineeRequestChangeClassServlet extends HttpServlet {
             LocalDate startDate = LocalDate.now();
             LocalDate endDate = LocalDate.now();
             LocalDate currentDate = LocalDate.now();
-
             ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(trainee.getIdaccount());
-            for (Course course : courseList) {
-                Date courseDate = course.getDate_start();
-                LocalDate courseDateStart = courseDate.toLocalDate();
-                startDate = courseDateStart.minusDays(10);
-                endDate = courseDateStart.minusDays(7);
-            }
-            if (currentDate.isAfter(endDate)) {
-                request.setAttribute("overdue", "Overdue for form application and registration");
-                request.setAttribute("startDate", startDate);
-                request.setAttribute("endDate", endDate);
-                request.setAttribute("courseList", courseList);
-                request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
-            } else if (currentDate.isBefore(startDate)) {
-                request.setAttribute("overdue", "It's not time to registration");
-                request.setAttribute("startDate", startDate);
-                request.setAttribute("endDate", endDate);
-                request.setAttribute("courseList", courseList);                
+            if (!courseList.isEmpty()) {
+                for (Course course : courseList) {
+                    Date courseDate = course.getDate_start();
+                    LocalDate courseDateStart = courseDate.toLocalDate();
+                    startDate = courseDateStart.minusDays(10);
+                    endDate = courseDateStart.minusDays(7);
+
+                    if (currentDate.isAfter(endDate)) {
+                        request.setAttribute("overdue", "Overdue for form application and registration");
+                        request.setAttribute("startDate", startDate);
+                        request.setAttribute("endDate", endDate);
+                        request.setAttribute("courseList", courseList);
+                        request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
+                    } else if (currentDate.isBefore(startDate)) {
+                        request.setAttribute("overdue", "It's not time to registration");
+                        request.setAttribute("startDate", startDate);
+                        request.setAttribute("endDate", endDate);
+                        request.setAttribute("courseList", courseList);
+                        request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
+                    }
+                }
+            } else {
+                request.setAttribute("registered", "You have not registered for any courses yet");
+                
                 request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
             }
         }
@@ -81,7 +89,11 @@ public class TraineeRequestChangeClassServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeRequestChangeClassServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -95,7 +107,11 @@ public class TraineeRequestChangeClassServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(TraineeRequestChangeClassServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
