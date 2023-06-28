@@ -31,10 +31,11 @@ public class CheckValidation {
         if (length != 9 && length != 12) {
             return false;
         }
-        String birthdate = idCard.substring(4, 10);
-        if (!birthdate.matches("(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[0-2])[0-9]{2}")) {
+        for (int i = 0; i < idCard.length(); i++) {
+        if (!Character.isDigit(idCard.charAt(i))) {
             return false;
         }
+    }
         return true;
     }
     
