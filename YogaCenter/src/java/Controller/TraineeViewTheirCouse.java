@@ -40,6 +40,8 @@ public class TraineeViewTheirCouse extends HttpServlet {
             ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
             request.setAttribute("courseList", courseList);
             request.getRequestDispatcher("traineeViewTheirCourse.jsp").forward(request, response);
+        }catch(Exception e){
+            e.printStackTrace();
         }
     } 
 

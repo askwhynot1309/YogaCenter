@@ -112,12 +112,12 @@ public class ClassDetail {
         this.date = date;
     }
 
-    public int getId_detail() {
+    public int getId_class() {
         return id_class;
     }
 
-    public void setId_detail(int id_detail) {
-        this.id_class = id_detail;
+    public void setId_class(int id_class) {
+        this.id_class = id_class;
     }
 
     public String getClass_name() {

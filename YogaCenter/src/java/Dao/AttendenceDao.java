@@ -21,13 +21,12 @@ public class AttendenceDao {
         ArrayList<AccountAttendence> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "SELECT DISTINCT c.ID_Course, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee\n"
+            String s = "SELECT c.IDCourse, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee\n"
                     + "from Class c JOIN CheckAttendance ca ON c.Class_ID = ca.ID_Class\n"
-                    + "JOIN Room r ON cd.Class_ID = r.Room_ID\n"
-                    + "JOIN Time t ON cd.IDtime = t.Time_ID\n"
+                    + "JOIN ClassDate cd ON cd.Class_ID = c.Class_ID\n"
                     + "JOIN Account a ON ca.ID_Trainee = a.ID_Account\n"
                     + "where cd.DateStudy = ? AND a.Role = 3 AND ca.AttendanceDate = ?\n"
-                    + "GROUP BY c.ID_Course, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee";
+                    + "GROUP BY c.IDCourse, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
             pst.setDate(2, date);
@@ -36,7 +35,7 @@ public class AttendenceDao {
                 while (table.next()) {
                     int id_attendence = table.getInt("Attendance_ID");
                     int id_trainee = table.getInt("ID_Trainee");
-                    int id_course = table.getInt("ID_Course");
+                    int id_course = table.getInt("IDCourse");
                     int status = table.getInt("Status");
                     AccountAttendence attendence = new AccountAttendence(id_attendence, id_trainee, id_course, date, status);
                     kq.add(attendence);
@@ -76,7 +75,7 @@ public class AttendenceDao {
         }
         return kq;
     }
-    
+
     public static int insertDayToCheckAttendence(int idaccount, int insertClass, Date date, int status) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();

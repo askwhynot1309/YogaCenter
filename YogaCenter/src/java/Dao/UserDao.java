@@ -227,10 +227,10 @@ public class UserDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "from ClassDetail cd\n"
-                    + "JOIN Account a ON cd.ID_Account = a.ID_Account\n"
-                    + "JOIN Class c ON cd.Class_ID = c.Class_ID\n"
-                    + "where a.Role = 3 and cd.IDtime = ? and cd.DateStudy = ? and c.Class_Name = ? and cd.IDCourse = ?";
+                    + "from Class C JOIN ClassDate CDATE ON C.Class_ID = CDATE.Class_ID JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
+                    + "JOIN Account a ON CD.ID_Account = a.ID_Account\n"
+                    + "JOIN Room r ON r.Room_ID = C.Room_ID\n"
+                    + "where a.Role = 3 and C.IDtime = ? and CDATE.DateStudy = ? and r.Room_Name = ? and C.IDCourse = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id_time);
             pst.setDate(2, date);

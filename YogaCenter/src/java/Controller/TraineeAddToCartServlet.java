@@ -41,18 +41,19 @@ public class TraineeAddToCartServlet extends HttpServlet {
                 if (cart == null) {
                     cart = new HashMap<>();
                     cart.put(ID_Course, 1);
+                    request.setAttribute("addsuccess", "message");
                 } else {
                     if (cart.containsKey(ID_Course)) {
                         request.setAttribute("wrong", "message");
-                        request.getRequestDispatcher("course").forward(request, response);
-                    }
-                    Integer tmp = cart.get(ID_Course);
-                    if (tmp == null) {
-                        cart.put(ID_Course, 1);
+                    } else {
+                        Integer tmp = cart.get(ID_Course);
+                        if (tmp == null) {
+                            cart.put(ID_Course, 1);
+                            request.setAttribute("addsuccess", "message");
+                        }
                     }
                 }
                 session.setAttribute("cart", cart);
-                request.setAttribute("addsuccess", "message");
                 request.getRequestDispatcher("course").forward(request, response);
             }
         }
