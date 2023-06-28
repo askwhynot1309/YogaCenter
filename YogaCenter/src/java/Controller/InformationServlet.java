@@ -109,12 +109,7 @@ public class InformationServlet extends HttpServlet {
 
                     ClassDetail trainerinformation = Dao.ClassDetailDao.getClassDetailById(id);
                     ArrayList<Account> trainerlistTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformation.getTime(), trainerinformation.getClass_name(), trainerinformation.getDate(), trainerinformation.getId_course());
-                    ArrayList<AccountAttendence> listAttend = Dao.AttendenceDao.getAccountToAttendence(trainerinformation.getDate());
-
-//                  for (AccountAttendence attendance : listAttend) {
-//                        System.out.println(attendance.getStatus());
-//                    }
-                    
+                    ArrayList<AccountAttendence> listAttend = Dao.AttendenceDao.getAccountToAttendence(trainerinformation.getDate());    
                     if (trainerlistTrainee.isEmpty()) {
                         session.setAttribute("InforClass", trainerinformation);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);

@@ -568,9 +568,10 @@ public class CourseDao {
         return inserted;
     }
 
-    public static ArrayList<Course> getAllCourseByTraineeID(int Trainee_ID) throws Exception {
+    public static ArrayList<Course> getAllCourseByTraineeID(int Trainee_ID) throws Exception{
         ArrayList<Course> courseList = new ArrayList<>();
-        Connection cn = DBUtils.getConnection();
+        Connection cn = null;
+        cn = DBUtils.getConnection();
         if (cn != null) {
             String sql = "SELECT DISTINCT C.Course_ID, C.Course_Name, C.Img, C.Course_Fee, C.Start_date, C.Close_date, C.Slot, C.Description, C.ID_Level, C.Status, l.Level_Name\n"
                     + "FROM [dbo].[Course] C \n"
@@ -583,21 +584,21 @@ public class CourseDao {
             if (rs != null) {
                 while (rs.next()) {
                     int course_id = rs.getInt("Course_ID");
-                    String course_name = rs.getString("Course_Name");
+                    String course_name = rs.getNString("Course_Name");
                     String course_img = rs.getString("Img");
                     BigDecimal course_fee = rs.getBigDecimal("Course_Fee");
                     Date course_start = rs.getDate("Start_date");
                     Date course_close = rs.getDate("Close_date");
                     int slot = rs.getInt("Slot");
-                    String description = rs.getString("Description");
+                    String description = rs.getNString("Description");
                     int level = rs.getInt("ID_Level");
+                    String name_level = rs.getNString("Level_Name");
                     int status = rs.getInt("Status");
-                    String name_level = rs.getString("Level_Name");
-
                     Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, level, name_level, status);
                     courseList.add(course);
                 }
             }
+            cn.close();
         }
         cn.close();
         return courseList;

@@ -41,12 +41,10 @@ public class TraineeViewTheirCouse extends HttpServlet {
             HttpSession session = request.getSession(true);
             Account account = (Account) session.getAttribute("account");
             ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
-            if (!courseList.isEmpty()) {
-                request.setAttribute("courseList", courseList);
-                request.getRequestDispatcher("traineeViewTheirCourse.jsp").forward(request, response);
-            }else{
-            }
-
+            request.setAttribute("courseList", courseList);
+            request.getRequestDispatcher("traineeViewTheirCourse.jsp").forward(request, response);
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

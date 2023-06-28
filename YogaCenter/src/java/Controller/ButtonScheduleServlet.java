@@ -62,8 +62,7 @@ public class ButtonScheduleServlet extends HttpServlet {
                 request.getRequestDispatcher("schedule").forward(request, response);
             }
         } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            e.printStackTrace();
         }
     }
 

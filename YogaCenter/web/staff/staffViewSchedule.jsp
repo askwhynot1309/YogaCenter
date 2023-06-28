@@ -116,10 +116,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -139,10 +139,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -162,10 +162,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -185,10 +185,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -208,10 +208,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -231,10 +231,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -254,10 +254,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -282,10 +282,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -305,10 +305,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -328,10 +328,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -351,10 +351,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -374,10 +374,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -397,10 +397,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -420,10 +420,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -449,10 +449,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -472,10 +472,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -495,10 +495,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -518,10 +518,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -541,10 +541,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -564,10 +564,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -587,10 +587,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -615,10 +615,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -638,10 +638,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -661,10 +661,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -684,10 +684,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -707,10 +707,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -730,10 +730,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -753,10 +753,10 @@
                                                                                     <c:choose>
                                                                                         <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
                                                                                             <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffChangeClass">Need to change room</a>
+                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass">Need to change room</a>
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </c:when>
@@ -854,7 +854,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Sunday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -867,7 +867,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Monday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -880,7 +880,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'TuesDay'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -893,7 +893,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Wednesday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></P> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></P> 
                                                                                 </c:when>
                                                                                 <c:otherwise>
                                                                                 </c:otherwise>
@@ -906,7 +906,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Thursday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -919,7 +919,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Friday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -932,7 +932,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Saturday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -950,7 +950,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Sunday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -963,7 +963,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Monday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -976,7 +976,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Tuesday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -989,7 +989,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Wednesday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1002,7 +1002,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Thursday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1015,7 +1015,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Friday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1028,7 +1028,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Saturday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1047,7 +1047,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Sunday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1060,7 +1060,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Monday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1073,7 +1073,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Tuesday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1086,7 +1086,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Wednesday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1099,7 +1099,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Thursday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1112,7 +1112,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Friday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1125,7 +1125,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Saturday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1143,7 +1143,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Sunday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1156,7 +1156,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Monday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1169,7 +1169,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Tuesday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1182,7 +1182,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Wednesday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1195,7 +1195,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Thursday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1208,7 +1208,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Friday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -1221,7 +1221,7 @@
                                                                     <c:forEach var="acc" items="${listClass}">
                                                                         <c:choose>
                                                                             <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Saturday'}">
-                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_detail}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                                <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail">${acc.account}(${acc.class_name})</a></p> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>

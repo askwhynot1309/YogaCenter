@@ -74,6 +74,8 @@ public class TraineeRequestChangeClassServlet extends HttpServlet {
                 
                 request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
             }
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

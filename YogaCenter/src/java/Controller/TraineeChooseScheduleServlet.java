@@ -52,9 +52,8 @@ public class TraineeChooseScheduleServlet extends HttpServlet {
                 if (isDelete) {
                     Course course = Dao.CourseDao.getInformationOfCourse(id_course);
                     ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), option);
-                    int insertClass = Dao.ClassDetailDao.insertClassForTeach(id_room, id_time, idaccount, id_course, option);
+                    int insertClass = Dao.ClassDetailDao.insertClassForLearn(id_room, id_time, idaccount, id_course, option);
                     for (Get30SlotsByCourse dateForSlot : list) {
-                        int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(insertClass, dateForSlot.getDay());
                         int insertCheckAttendence = Dao.AttendenceDao.insertDayToCheckAttendence(idaccount, insertClass, dateForSlot.getDay(), 0);
                     }
                 }
