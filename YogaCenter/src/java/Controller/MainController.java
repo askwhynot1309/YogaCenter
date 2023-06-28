@@ -126,6 +126,21 @@ public class MainController extends HttpServlet {
                     case "ClassDetail":
                         url = "TraineeViewClassDetail";
                         break;
+                    case "traineeRequestChangeClass":
+                        url = "RequestChangeClass";
+                        break;
+                    case "checkTrainee":
+                        url = "CheckTraineeRequested";
+                        break;
+                    case "createRequest":
+                        url = "SubmitRequest";
+                        break;
+                    case "viewNotification":
+                        url = "viewNotification";
+                        break;
+                    case "statusRequest":
+                        url = "changeStatusRequest";
+                        break;
                     case "TrainerManageTrainee":
                         url = "TrainerManageTrainee";
                         break;

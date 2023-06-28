@@ -1,0 +1,107 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Dao;
+
+import Object.Message;
+import Utils.DBUtils;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author ngmin
+ */
+public class MessageDao {
+
+    public static boolean createRequestChangeClass(int fromUserID, String message, int toUserID, int status, Date dateCreate) throws Exception {
+        boolean result = false;
+        Connection cn = null;
+        cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "INSERT INTO [dbo].[Message]\n"
+                    + "VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, fromUserID);
+            pst.setString(2, message);
+            pst.setInt(3, toUserID);
+            pst.setInt(4, status);
+            pst.setDate(5, dateCreate);
+            pst.executeUpdate();
+            result = true;
+        }
+        cn.close();
+        return result;
+    }
+
+    public static ArrayList<Message> getAllMessage() throws Exception {
+        ArrayList<Message> messList = new ArrayList<>();
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Message]\n";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int messageID = rs.getInt("ID_Message");
+                    int fromUserID = rs.getInt("ID_sendMessage");
+                    String message = rs.getString("Message");
+                    int toUserID = rs.getInt("ID_recieveMessage");
+                    int status = rs.getInt("Status");
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, status);
+                    messList.add(messObj);
+                }
+            }
+            cn.close();
+        }
+        return messList;
+    }
+
+    public static ArrayList<Message> getAllMessageByUserID(int AccountID) throws Exception {
+        ArrayList<Message> messList = new ArrayList<>();
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Message]\n"
+                    + "WHERE ID_recieveMessage = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, AccountID);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int messageID = rs.getInt("ID_Message");
+                    int fromUserID = rs.getInt("ID_sendMessage");
+                    String message = rs.getString("Message");
+                    int toUserID = rs.getInt("ID_recieveMessage");
+                    int status = rs.getInt("Status");
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, status);
+                    messList.add(messObj);
+                }
+            }
+            cn.close();
+        }
+        return messList;
+    }
+
+    public static boolean updateStatusRequest(int newStatus, int messageID) throws Exception {
+        boolean isUpdated = false;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "  UPDATE [dbo].[Message]\n"
+                    + "  SET [Status] = ?\n"
+                    + "  WHERE [ID_Message] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, newStatus);
+            pst.setInt(2, messageID);
+            pst.executeUpdate();
+            isUpdated = true;
+        }
+        return isUpdated;
+    }
+}
