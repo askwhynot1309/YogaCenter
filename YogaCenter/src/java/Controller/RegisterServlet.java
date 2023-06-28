@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Object.Account;
 import Utils.EmailUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,15 +53,13 @@ public class RegisterServlet extends HttpServlet {
             } else if (password.length() < 6 || password.length() > 16) {
                 request.setAttribute("ErrorMessagePassword", "Password length must be between 6 and 16 ");
                 checkValid = false;
-            } else if (Utils.CheckValidation.checkPhone(phone)== false) {
+            } else if (Utils.CheckValidation.checkPhone(phone) == false) {
                 request.setAttribute("ErrorMessagePhone", "Phone is invalid");
                 checkValid = false;
-            }
-            else if(Utils.CheckValidation.isValidCCCD(cccd) == false){
+            } else if (Utils.CheckValidation.isValidCCCD(cccd) == false) {
                 request.setAttribute("ErrorMessageCCCD", "Citizen identity card is invalid");
                 checkValid = false;
-            }
-            else if (email.isEmpty() || account.isEmpty() || password.isEmpty() || name.isEmpty() || cccd.isEmpty() || phone.isEmpty() || address.isEmpty()) {
+            } else if (email.isEmpty() || account.isEmpty() || password.isEmpty() || name.isEmpty() || cccd.isEmpty() || phone.isEmpty() || address.isEmpty()) {
                 request.setAttribute("ErrorMessage", "Fill in all the fields");
                 checkValid = false;
             } else if (Dao.UserDao.isEmailExist(email)) {
@@ -78,16 +77,14 @@ public class RegisterServlet extends HttpServlet {
             }
 
             if (checkValid) {
-                int registrationSuccess = Dao.UserDao.insertNewUserWithoutLoginByEmail(name, email, phone, cccd, address, account, password, img, BigDecimal.valueOf(0));
-                if (registrationSuccess == 1) {
+                Account newaccount = new Account(email, BigDecimal.valueOf(0), account, newpassword, name, cccd, "", phone, address, img, 3, 0);
+              
                     String otp = EmailUtils.generateOtp();
                     Utils.EmailUtils.sendOtpEmail(email, otp);
                     HttpSession session = request.getSession();
+                    session.setAttribute("newaccount", newaccount);
                     session.setAttribute("otp", otp);
                     request.getRequestDispatcher("confirmOTPtoregister.jsp").forward(request, response);
-                } else {
-                    response.sendRedirect("registrationFailure.jsp");
-                }
             } else {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             }

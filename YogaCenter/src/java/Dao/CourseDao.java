@@ -59,8 +59,8 @@ public class CourseDao {
         ArrayList<Course> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select distinct c.Course_ID, c.Course_Name\n"
-                    + "from BookingDetail bd JOIN Course c ON bd.ID_Course=c.Course_ID\n"
+            String s = "select distinct c.Course_ID, c.Course_Name, l.Level_Name\n"
+                    + "from BookingDetail bd JOIN Course c ON bd.ID_Course=c.Course_ID JOIN Level l ON c.ID_Level = l.Level_ID\n"
                     + "Where Status_Account = 1";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
@@ -68,7 +68,8 @@ public class CourseDao {
                 while (table.next()) {
                     int course_id = table.getInt("Course_ID");
                     String course_name = table.getNString("Course_Name");
-                    Course course = new Course(course_id, course_name);
+                    String name_level = table.getNString("Level_Name");
+                    Course course = new Course(course_id, course_name, name_level);
                     kq.add(course);
                 }
             }
@@ -301,7 +302,7 @@ public class CourseDao {
             pst.setNString(8, summary);
             pst.setInt(9, level);
             pst.setInt(10, status);
-            pst.setDate(10, close);
+            pst.setDate(11, close);
             kq = pst.executeUpdate();
             cn.close();
         }
@@ -531,11 +532,12 @@ public class CourseDao {
                 } else {
                     Set<String> courseIDs = cart.keySet();
                     for (String courseID : courseIDs) {
-                        sql = "INSERT [dbo].[BookingDetail] ([Order_ID], [ID_Course], [Quantity]) VALUES (?, ?, ?)";
+                        sql = "INSERT [dbo].[BookingDetail] VALUES (?, ?, ?, ?)";
                         pst = cn.prepareStatement(sql);
                         pst.setInt(1, orderID);
                         pst.setInt(2, Integer.parseInt(courseID.trim()));
                         pst.setInt(3, cart.get(courseID));
+                        pst.setInt(4, 3);
                         pst.executeUpdate();
                         cn.commit();
                         cn.setAutoCommit(true);

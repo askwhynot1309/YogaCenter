@@ -54,8 +54,9 @@ public class ButtonScheduleServlet extends HttpServlet {
                 request.getRequestDispatcher("schedule").forward(request, response);
             } else {
                 ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), option);
+                int insertClass = Dao.ClassDetailDao.insertClassForTeach(id_room, id_time, idaccount, id_course, option);
                 for (Get30SlotsByCourse dateForSlot : list) {
-                    int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(id_room, id_time, idaccount, id_course, dateForSlot.getDay(), option);
+                    int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(insertClass, dateForSlot.getDay());
                 }
                 request.setAttribute("arrangesuccess", "Settup successfully !");
                 request.getRequestDispatcher("schedule").forward(request, response);

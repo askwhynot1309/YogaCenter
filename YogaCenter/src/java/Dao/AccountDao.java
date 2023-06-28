@@ -99,13 +99,79 @@ public class AccountDao {
         return kq;
     }
 
-    public static ArrayList<Account> getAllEmplyeeBySearch(String search) throws Exception {
+    public static ArrayList<Account> getAllEmplyeeBySearchEmployee(String search) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
                     + "from Account\n"
-                    + "where Name like ? And (Role = 0 OR Role = 1 OR Role = 2)";
+                    + "where Name like ? And (Role = 1 OR Role = 2)";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setNString(1, "%" + search + "%");
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    Account account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    kq.add(account);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
+    public static ArrayList<Account> getAllEmplyeeBySearchByStaff(String search) throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Name like ? And Role = 1";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setNString(1, "%" + search + "%");
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    Account account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    kq.add(account);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
+     public static ArrayList<Account> getAllEmplyeeBySearchByTrainer(String search) throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Name like ? And Role = 2";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, "%" + search + "%");
             ResultSet table = pst.executeQuery();
@@ -348,6 +414,22 @@ public class AccountDao {
                     kq = new Account(idTrainer, mail, acc, password, name, cccd, cv, phone, address, img, role_id, status);
                 }
             }
+            cn.close();
+        }
+        return kq;
+    }
+    
+    public static int updateMoneyOfAccount(int id, BigDecimal amount) throws Exception{
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "update Account\n"
+                    + "Set Money = ?\n"
+                    + "where ID_Account = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setBigDecimal(1, amount);
+            pst.setInt(2, id);
+            kq = pst.executeUpdate();
             cn.close();
         }
         return kq;

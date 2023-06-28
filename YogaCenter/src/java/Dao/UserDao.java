@@ -86,7 +86,75 @@ public class UserDao {
         return kq;
     }
 
-    public static ArrayList<Account> getAllTraineeBySearch(String search) throws Exception {
+    public static ArrayList<Account> getAllTraineeBySearchUser(String search) throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Name like ? And Role = 3";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setNString(1, "%" + search + "%");
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainee = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    BigDecimal amount = table.getBigDecimal("Money");
+                    Account account = new Account(idTrainee, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
+                    kq.add(account);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
+    public static ArrayList<Account> getAllTraineeBySearchByName(String search) throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Name like ? And Role = 3";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setNString(1, "%" + search + "%");
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainee = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    BigDecimal amount = table.getBigDecimal("Money");
+                    Account account = new Account(idTrainee, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
+                    kq.add(account);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
+    public static ArrayList<Account> getAllTraineeBySearchByEmail(String search) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -119,16 +187,50 @@ public class UserDao {
         }
         return kq;
     }
-
+    
+    public static ArrayList<Account> getAllTraineeBySearchByPhone(String search) throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Phone like ? And Role = 3";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, "%" + search + "%");
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainee = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    BigDecimal amount = table.getBigDecimal("Money");
+                    Account account = new Account(idTrainee, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
+                    kq.add(account);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
     public static ArrayList<Account> getAllTraineeInTimeAndRoom(int id_time, String id_room, Date date, int id_course) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
                     + "from ClassDetail cd\n"
-                    + "JOIN Account a ON cd.IDAccount = a.ID_Account\n"
-                    + "JOIN Class c ON cd.Class_ID =c.Class_ID\n"
-                    + "where a.Role = 3 and cd.IDtime = ? and cd.DateStudy = ? and c.Class_Name = ? and cd.IDCourse = ? cd.Status_ClassDetail = 1";
+                    + "JOIN Account a ON cd.ID_Account = a.ID_Account\n"
+                    + "JOIN Class c ON cd.Class_ID = c.Class_ID\n"
+                    + "where a.Role = 3 and cd.IDtime = ? and cd.DateStudy = ? and c.Class_Name = ? and cd.IDCourse = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id_time);
             pst.setDate(2, date);

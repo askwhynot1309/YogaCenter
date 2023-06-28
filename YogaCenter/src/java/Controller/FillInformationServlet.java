@@ -55,21 +55,14 @@ public class FillInformationServlet extends HttpServlet {
             } else if (Dao.UserDao.isPhoneExists(phone)) {
                 request.setAttribute("ErrorMessagePhone", "Phone already exists");
                 checkValid = false;
-            }
-
-            if (checkValid) {
-                int registrationSuccess = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, amount, img);
-                if (registrationSuccess == 1) {
+            } else if (checkValid) {
+                Account newaccount = new Account(email, amount, "", "", name, cccd, "", phone, address, img, 3, 0);
                     String otp = EmailUtils.generateOtp();
                     Utils.EmailUtils.sendOtpEmail(email, otp);
                     HttpSession session = request.getSession();
-                    Account account = Dao.UserDao.checkEmailTraineeIsExist(email);
-                    session.setAttribute("account", account);
+                    session.setAttribute("newaccount", newaccount);
                     session.setAttribute("otp", otp);
                     request.getRequestDispatcher("confirmOTPtologin.jsp").forward(request, response);
-                } else {
-                    response.sendRedirect("registrationFailure.jsp");
-                }
             } else {
                 request.getRequestDispatcher("fillInformation.jsp").forward(request, response);
             }

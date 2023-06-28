@@ -118,10 +118,11 @@ public class OrderCourseDao {
         SlotsTrainee kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select Count(ClassDetail_ID) as Count, cd.IDCourse\n"
-                    + "from ClassDetail cd Join CheckAttendance ca ON cd.DateStudy = ca.AttendanceDate\n"
-                    + "Group By Class_ID, IDtime, Choice, cd.DateStudy, cd.IDAccount, ca.Status, cd.IDCourse\n"
-                    + "Having cd.IDAccount = ? and cd.DateStudy <= ? and ca.Status = ? and cd.IDCourse = ?";
+            String s = "select Count(CDATE.Class_ID) as Count, C.IDCourse\n"
+                    + "from ClassDate CDATE Join CheckAttendance CA ON CDATE.DateStudy = CA.AttendanceDate\n"
+                    + "Join Class C ON C.Class_ID = CDATE.Class_ID Join ClassDetail CD ON CD.Class_ID = C.Class_ID\n"
+                    + "Group By CDATE.Class_ID, CDATE.DateStudy, CD.ID_Account, CA.Status, C.IDCourse\n"
+                    + "Having cd.ID_Account = ? and CDATE.DateStudy <= ? and CA.Status = ? and C.IDCourse = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id_account);
             pst.setDate(2, current_date);

@@ -12,6 +12,7 @@ import Object.Level;
 import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -41,6 +42,7 @@ public class ShowCourseListServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
+            Date currentdate = new Date(System.currentTimeMillis());
             Account account = (Account) session.getAttribute("account");
             ArrayList<Course> CourseList = new ArrayList<>();
             ArrayList<Level> CourseLevel = new ArrayList<>();
@@ -55,6 +57,7 @@ public class ShowCourseListServlet extends HttpServlet {
             if (!CourseList.isEmpty()) {
                 request.setAttribute("CourseList", CourseList);
                 request.setAttribute("CourseLevel", CourseLevel);
+                request.setAttribute("currentDate", currentdate);
                 request.getRequestDispatcher("courseList.jsp").forward(request, response);
             } else if (CourseList.isEmpty()) {
                 request.setAttribute("ErrorMessage", "No course available!");

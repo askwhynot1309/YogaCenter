@@ -31,9 +31,10 @@ public class Course implements Serializable {
     public Course() {
     }
 
-    public Course(int idCourse, String name_course) {
+    public Course(int idCourse, String name_course, String name_level) {
         this.idCourse = idCourse;
         this.name_course = name_course;
+        this.name_level = name_level;
     }
 
     public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, Date date_end, int slot, String description, int level, String name_level, int status) {

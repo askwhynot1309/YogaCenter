@@ -123,7 +123,7 @@ public class OrderDao {
         ArrayList<OrderCourse> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select bc.OrderID, bc.ID_Trainee, bc.Method, bc.DateOrder, sp.Status, bd.ID_Course, bd.Quantity, a.Name, c.Course_Name, c.Course_Fee\n"
+            String s = "select bc.OrderID, bc.ID_Trainee, bc.Method, bc.DateOrder, sp.Status, bd.ID_Course, bd.Quantity, a.Name, c.Course_Name, c.Course_Fee, bd.Status_Account\n"
                     + "from BookingCourse bc JOIN BookingDetail bd ON bc.OrderID = bd.Order_ID JOIN StatusPayment sp ON sp.ID_Order = bc.OrderID\n"
                     + "JOIN Account a ON a.ID_Account = bc.ID_Trainee\n"
                     + "JOIN Course c ON c.Course_ID = bd.ID_Course\n"
@@ -140,10 +140,11 @@ public class OrderDao {
                     String name_course = table.getNString("Course_Name");
                     Date dateorder = table.getDate("DateOrder");
                     int status = table.getInt("Status");
+                    int status_account = table.getInt("Status_Account");
                     int method = table.getInt("Method");
                     int quantity = table.getInt("Quantity");
                     BigDecimal fee = table.getBigDecimal("Course_Fee");
-                    OrderCourse order = new OrderCourse(id_order, id_account, name_account, id_course, name_course, dateorder, status, method, quantity, fee);
+                    OrderCourse order = new OrderCourse(id_order, id_account, name_account, id_course, name_course, dateorder, status, method, quantity, fee, status_account);
                     kq.add(order);
                 }
             }
@@ -182,7 +183,7 @@ public class OrderDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int id_course = table.getInt("ID_Course");
+                    int id_course = table.getInt("Course_ID");
                     String course_name = table.getNString("Course_Name");
                     Date date_start = table.getDate("Start_date");
                     BigDecimal fee = table.getBigDecimal("Course_Fee");

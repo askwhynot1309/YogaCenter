@@ -117,7 +117,7 @@
                                                     int ID_Class = 0;
                                                     Time time_class = TimeDao.getTimeByTrainerAndChoice(Course_ID, key, choice);
                                                     String time = time_class.getTime();
-                                                    ID_Class = ClassDetailDao.getIDClassByTrainerCourseChoiseTime(key, Course_ID, choice, time_class.getId_time());
+                                                    ID_Class = ClassDetailDao.getIDRoomByTrainerCourseChoiseTime(key, Course_ID, choice, time_class.getId_time());
                                                     ArrayList<Account> accountList = AccountDao.getAllTrainer();
                                                     for (Account account : accountList) {
                                                         if (key == account.getIdaccount()) {

@@ -158,7 +158,7 @@
             .btn {
                 display: flex;
                 height: 3em;
-                width: 100px;
+                width: 150px;
                 align-items: center;
                 justify-content: center;
                 background-color: #eeeeee4b;
@@ -177,15 +177,6 @@
                 transition: all 0.4s ease-in;
             }
 
-            .btn:hover > svg {
-                font-size: 1.2em;
-                transform: translateX(-5px);
-            }
-
-            .btn:hover {
-                box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
-                transform: translateY(-2px);
-            }
             .btn a{
                 text-decoration: none;
             }
@@ -322,7 +313,7 @@
                         <h5><strong>Start-date of course :</strong> ${information.date_start}</h5>
                         <h5><strong>Slots of course :</strong> ${information.slot}</h5>
                         <h5><strong>Level of course :</strong> ${information.name_level}</h5>
-                        <c:if test="${user != null && information.status == 0}">
+                        <c:if test="${listCourseAccountActive == null && user != null && information.status == 0}">
                             <a class="cartBtn" href="/YogaCenter/request?action=AddCourseToCart&cid=${information.idCourse}">
                                 <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
                                 Buy now
@@ -334,11 +325,26 @@
                             </div>
                         </c:if>
                         <c:if test="${listCourseAccountActive != null && user != null}">
-                                <c:forEach var="coureactive" items="${listCourseAccountActive}">
-                                    <c:if test="${information.idCourse == coureactive.id_course}">
-                                        <p style="text-align: center; color: red">You bought course</p>
-                                    </c:if>
-                                </c:forEach>
+                            <c:set var="courseBought" value="false" scope="page" />
+                            <c:forEach var="coureactive" items="${listCourseAccountActive}">
+                                <c:if test="${course.idCourse == coureactive.id_course}">
+                                    <c:set var="courseBought" value="true" scope="page" />
+                                </c:if>
+                            </c:forEach>
+
+                            <div style="position: absolute; bottom: 10px; width: 90%">
+                                <c:choose>
+                                    <c:when test="${courseBought}">
+                                        <p style="text-align: center; color: red">You bought the course</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="cartBtn" href="/YogaCenter/request?action=AddCourseToCart&cid=${information.idCourse}">
+                                            <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
+                                            Buy now
+                                        </a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
                         </c:if>
                         <c:if test="${user == null}">
                             <button class="cssbuttons-io-button">Register now

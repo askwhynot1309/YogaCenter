@@ -647,7 +647,7 @@
                                         <select name="course" id="select-box-course">
                                             <option value="0"></option>
                                             <c:forEach var="course" items="${listCourse}">
-                                                <option value="${course.idCourse}">${course.name_course}(${course.date_start})</option>
+                                                <option value="${course.idCourse}">${course.name_course}(${course.name_level})</option>
                                             </c:forEach>
                                         </select>
                                     </c:if>

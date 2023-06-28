@@ -13,10 +13,6 @@
         <servlet-class>Controller.LoginServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>MainController</servlet-name>
-        <servlet-class>Controller.MainController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>SearchValueServlet</servlet-name>
         <servlet-class>Controller.SearchValueServlet</servlet-class>
     </servlet>
@@ -221,8 +217,32 @@
         <servlet-class>Controller.ViewPreviousServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CheckAttendance</servlet-name>
+        <servlet-class>Controller.CheckAttendance</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>TraineeBookScheduleServlet</servlet-name>
         <servlet-class>Controller.TraineeBookScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TraineeShowYourCourse</servlet-name>
+        <servlet-class>Controller.TraineeShowYourCourse</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelCourseOrderServlet</servlet-name>
+        <servlet-class>Controller.CancelCourseOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FillInformationServlet</servlet-name>
+        <servlet-class>Controller.FillInformationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitOTPFillInformationServlet</servlet-name>
+        <servlet-class>Controller.SubmitOTPFillInformationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitOTPRegisterServlet</servlet-name>
+        <servlet-class>Controller.SubmitOTPRegisterServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TraineeRequestChangeClassServlet</servlet-name>
@@ -249,24 +269,8 @@
         <servlet-class>Controller.TraineeViewRequestChangeClass</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TraineeShowYourCourse</servlet-name>
-        <servlet-class>Controller.TraineeShowYourCourse</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CancelCourseOrderServlet</servlet-name>
-        <servlet-class>Controller.CancelCourseOrderServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>FillInformationServlet</servlet-name>
-        <servlet-class>Controller.FillInformationServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SubmitOTPFillInformationServlet</servlet-name>
-        <servlet-class>Controller.SubmitOTPFillInformationServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SubmitOTPRegisterServlet</servlet-name>
-        <servlet-class>Controller.SubmitOTPRegisterServlet</servlet-class>
+        <servlet-name>MainController</servlet-name>
+        <servlet-class>Controller.MainController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -279,10 +283,6 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MainController</servlet-name>
-        <url-pattern>/request</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchValueServlet</servlet-name>
@@ -489,6 +489,10 @@
         <url-pattern>/viewprevious</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>CheckAttendance</servlet-name>
+        <url-pattern>/CheckAttendance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>TraineeBookScheduleServlet</servlet-name>
         <url-pattern>/ChooseClass</url-pattern>
     </servlet-mapping>
@@ -535,6 +539,10 @@
     <servlet-mapping>
         <servlet-name>SubmitOTPRegisterServlet</servlet-name>
         <url-pattern>/SubmitOTPRegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MainController</servlet-name>
+        <url-pattern>/request</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

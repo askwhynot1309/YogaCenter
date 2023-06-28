@@ -1,5 +1,6 @@
 package Controller;
 
+import Dao.AttendenceDao;
 import Object.Account;
 import Object.AccountAttendence;
 import Object.ClassDetail;
@@ -104,14 +105,23 @@ public class InformationServlet extends HttpServlet {
                     request.getRequestDispatcher("staff/staffViewInfOrder.jsp").forward(request, response);
                     break;
                 case "trainerClassDetail":
+                    HttpSession session = request.getSession(true);
+
                     ClassDetail trainerinformation = Dao.ClassDetailDao.getClassDetailById(id);
                     ArrayList<Account> trainerlistTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformation.getTime(), trainerinformation.getClass_name(), trainerinformation.getDate(), trainerinformation.getId_course());
+                    ArrayList<AccountAttendence> listAttend = Dao.AttendenceDao.getAccountToAttendence(trainerinformation.getDate());
+
+//                  for (AccountAttendence attendance : listAttend) {
+//                        System.out.println(attendance.getStatus());
+//                    }
+                    
                     if (trainerlistTrainee.isEmpty()) {
-                        request.setAttribute("InforClass", trainerinformation);
+                        session.setAttribute("InforClass", trainerinformation);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("ListTrainee", trainerlistTrainee);
-                        request.setAttribute("InforClass", trainerinformation);
+                        session.setAttribute("ListTrainee", trainerlistTrainee);
+                        session.setAttribute("InforClass", trainerinformation);
+                        session.setAttribute("listAttend", listAttend);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
                     }
                     break;
@@ -121,9 +131,9 @@ public class InformationServlet extends HttpServlet {
                     request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
                     break;
                 case "viewmore":
+                    session = request.getSession();
                     Course viewcoure = Dao.CourseDao.getInformationOfCourse(id);
                     ArrayList<Course> top3Course = Dao.CourseDao.getTop3InformationOfCourse(viewcoure.getLevel());
-                    HttpSession session = request.getSession();
                     Account account = (Account) session.getAttribute("account");
                     if (account != null) {
                         ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(account.getIdaccount());

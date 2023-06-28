@@ -45,9 +45,9 @@ public class TimeDao {
             cn = DBUtils.getConnection();
             if (cn != null) {
                 String sql = "SELECT distinct T.Time_Choose, T.Time_ID\n"
-                        + "FROM [dbo].[ClassDetail] C \n"
-                        + "JOIN [dbo].[Time] T ON C.IDtime = T.Time_ID\n"
-                        + "JOIN [dbo].[Account] A ON C.IDAccount = A.ID_Account\n"
+                        + "FROM [dbo].[Class] C \n"
+                        + "JOIN [dbo].[Time] T ON C.IDtime = T.Time_ID JOIN [dbo].[ClassDetail] CD ON CD.Class_ID = C.Class_ID\n"
+                        + "JOIN [dbo].[Account] A ON CD.ID_Account = A.ID_Account\n"
                         + "WHERE IDCourse = ? AND A.ID_Account = ? AND C.Choice = ?";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setInt(1, Course_ID);

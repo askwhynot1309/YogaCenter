@@ -58,8 +58,7 @@ public class ViewScheduleServlet extends HttpServlet {
             request.setAttribute("listDay", list);
             request.getRequestDispatcher("admin/adminManageSchedule.jsp").forward(request, response);
         } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.html");
-            dispatcher.forward(request, response);
+            e.printStackTrace();
         }
     }
 

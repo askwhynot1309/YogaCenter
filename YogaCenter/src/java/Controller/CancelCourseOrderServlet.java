@@ -8,6 +8,7 @@ import Object.Account;
 import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,15 +35,24 @@ public class CancelCourseOrderServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
             int id_course = Integer.parseInt(request.getParameter("id_course"));
             int id_order = Integer.parseInt(request.getParameter("id_order"));
             int status = Integer.parseInt(request.getParameter("status"));
+            BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
+            Account acc = (Account) session.getAttribute("account");
+            Account account = Dao.UserDao.getAccountByID(acc.getIdaccount());
+            BigDecimal moneycurrent = account.getAmount();
+            BigDecimal total = moneycurrent.add(fee);
             switch (status) {
-                case 0:
-                    int changeStatusRefund = Dao.OrderDao.changeStatusAccountOrder(id_order, id_course, status);
-                    break;
                 case 2:
+                    int changeStatusRefund = Dao.OrderDao.changeStatusAccountOrder(id_order, id_course, status);
+                    int updateFee = Dao.AccountDao.updateMoneyOfAccount(acc.getIdaccount(), total);
+                    request.setAttribute("refund", "message");
+                    break;
+                case 0:
                     int changeStatusCancel = Dao.OrderDao.changeStatusAccountOrder(id_order, id_course, status);
+                    request.setAttribute("cancel", "message");
                     break;
             }
             request.getRequestDispatcher("yourcourse").forward(request, response);

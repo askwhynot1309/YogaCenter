@@ -22,14 +22,14 @@ public class RoomDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select * \n"
-                    + "from Class\n"
+                    + "from Room\n"
                     + "where Status = 0";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int id_room = table.getInt("Class_ID");
-                    String room = table.getString("Class_Name");
+                    int id_room = table.getInt("Room_ID");
+                    String room = table.getString("Room_Name");
                     int status = table.getInt("Status");
                     Room space = new Room(id_room, room, status);
                     kq.add(space);
@@ -45,14 +45,14 @@ public class RoomDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "from Class\n"
-                    + "order by Class_ID desc";
+                    + "from Room\n"
+                    + "order by Room_ID desc";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int id_room = table.getInt("Class_ID");
-                    String room = table.getString("Class_Name");
+                    int id_room = table.getInt("Room_ID");
+                    String room = table.getString("Room_Name");
                     int status = table.getInt("Status");
                     Room space = new Room(id_room, room, status);
                     kq.add(space);
@@ -67,15 +67,15 @@ public class RoomDao {
         ArrayList<Room> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select c.Class_ID, c.Class_Name, c.Status, cs.ClassDetail_ID, cs.Feedback, cs.DateFeedback, cs.Status\n"
-                    + "from Class c JOIN ClassStatus cs ON c.Class_ID = cs.Class_ID\n"
-                    + "where cs.Status = 1";
+            String s = "select r.Room_ID, r.Room_Name, r.Status, rs.ClassDetail_ID, rs.Feedback, rs.DateFeedback, rs.Status\n"
+                    + "from Room r JOIN RoomStatus rs ON r.Room_ID = rs.Room_ID\n"
+                    + "where rs.Status = 1";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int id_room = table.getInt("Class_ID");
-                    String room = table.getString("Class_Name");
+                    int id_room = table.getInt("Room_ID");
+                    String room = table.getString("Room_Name");
                     int status = table.getInt("Status");
                     int id_classdetail = table.getInt("ClassDetail_ID");
                     String feedback = table.getNString("Feedback");
@@ -95,15 +95,15 @@ public class RoomDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "from Class\n"
-                    + "where Class_Name = ?";
+                    + "from Room\n"
+                    + "where Room_Name = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, input);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int id_room = table.getInt("Class_ID");
-                    String room = table.getString("Class_Name");
+                    int id_room = table.getInt("Room_ID");
+                    String room = table.getString("Room_Name");
                     int status = table.getInt("Status");
                     kq = new Room(id_room, room, status);
                 }
@@ -117,7 +117,7 @@ public class RoomDao {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "insert into Class(Class_Name, Status) values (?,?)";
+            String s = "insert into Room(Room_Name, Status) values (?,?)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, name);
             pst.setInt(2, status);
@@ -131,7 +131,7 @@ public class RoomDao {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "insert into ClassStatus(Class_ID, Feedback, DateFeedback, Status) values (?,?,?,?)";
+            String s = "insert into RoomStatus(Room_ID, Feedback, DateFeedback, Status) values (?,?,?,?)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
             pst.setNString(2, feedback);
@@ -147,9 +147,9 @@ public class RoomDao {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "update Class\n"
+            String s = "update Room\n"
                     + "set Status = ?\n"
-                    + "where Class_ID = ?";
+                    + "where Room_ID = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, status);
             pst.setInt(2, id);
@@ -163,9 +163,9 @@ public class RoomDao {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "update ClassStatus\n"
+            String s = "update RoomStatus\n"
                     + "set Status = 0\n"
-                    + "where Class_ID = ? And DateFeedback = ?";
+                    + "where Room_ID = ? And DateFeedback = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
             pst.setDate(2, datefeedback);

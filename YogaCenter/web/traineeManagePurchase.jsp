@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/style.css"/>
-        <link rel="stylesheet" href="css/admin/admin-course-add.css">
+        <link rel="stylesheet" href="css/trainee/trainee-add-message">
         <title>Purchase History</title>
     </head>
     <style>
