@@ -17,8 +17,7 @@
 
     <body>
         <c:set var="cart" value="${sessionScope.cart}"/>
-        <c:set var="noti" value="${requestScope.notiList}"/>
-        
+
         <header class="header" style = "z-index: 1; position: sticky;">
             <a href="/YogaCenter/home" id="logo"><img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" width="75px" height="75px" alt="logo"/></a>
 
@@ -33,11 +32,11 @@
             <c:set var="account" value="${sessionScope.account}"/>
             <c:if test="${account != null}">
                 <c:set var="notiList" value="${MessageDao.getAllMessageByUserID(account.idaccount)}"></c:set>
-                <div class="iconTrainee">
-                    <div class="dropdown" style="cursor: pointer">
-                        <span class="fa-solid fa-user fa-2xl"></span>
-                        <div class="dropdown-content" style="width: 200px; z-index: -1; background: #d0efe1">
-                            <p style="text-align: center; margin-top: 50px">${account.name}</p>
+                    <div class="iconTrainee">
+                        <div class="dropdown" style="cursor: pointer">
+                            <span class="fa-solid fa-user fa-2xl"></span>
+                            <div class="dropdown-content" style="width: 200px; z-index: -1; background: #d0efe1">
+                                <p style="text-align: center; margin-top: 50px">${account.name}</p>
                             <p style="font-weight: 900">
                                 <a href="/YogaCenter/information">
                                     <i class="fas fa-user icon"></i>

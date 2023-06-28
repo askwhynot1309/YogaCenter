@@ -49,7 +49,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="table-body">
-                                                    <c:forEach var="course" items="${courseList}">
+                                                    <c:forEach var="course" items="${requestScope.courseList}">
                                                         <tr class="cell-1">
                                                             <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">${course.name_course}</a></th>
                                                             <th>${course.date_start}</th>

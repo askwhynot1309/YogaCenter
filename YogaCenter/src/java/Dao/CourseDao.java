@@ -600,6 +600,7 @@ public class CourseDao {
             }
             cn.close();
         }
+        cn.close();
         return courseList;
     }
 }
