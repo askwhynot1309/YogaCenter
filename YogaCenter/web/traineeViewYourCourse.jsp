@@ -137,6 +137,9 @@
                                             <c:if test="${course.status == 2}">
                                                 <p style="color: yellowgreen; width: 75px"><i class="fa-sharp fa-solid fa-reply" style="color: yellowgreen"></i> Refund</p>
                                             </c:if>
+                                                <c:if test="${course.status == 3}">
+                                                <p style="color: brown; width: 75px">Pending! Please complete order.</p>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>

@@ -532,11 +532,12 @@ public class CourseDao {
                 } else {
                     Set<String> courseIDs = cart.keySet();
                     for (String courseID : courseIDs) {
-                        sql = "INSERT [dbo].[BookingDetail] ([Order_ID], [ID_Course], [Quantity]) VALUES (?, ?, ?)";
+                        sql = "INSERT [dbo].[BookingDetail] VALUES (?, ?, ?, ?)";
                         pst = cn.prepareStatement(sql);
                         pst.setInt(1, orderID);
                         pst.setInt(2, Integer.parseInt(courseID.trim()));
                         pst.setInt(3, cart.get(courseID));
+                        pst.setInt(4, 3);
                         pst.executeUpdate();
                         cn.commit();
                         cn.setAutoCommit(true);

@@ -37,14 +37,16 @@ public class ButtonChangeroomServlet extends HttpServlet {
             int time = Integer.parseInt(request.getParameter("id-time"));
             int id = Integer.parseInt(request.getParameter("id"));
             String date = request.getParameter("newdate");
+            String date2 = request.getParameter("olddate");
             Date newdate = Date.valueOf(date);
+            Date olddate = Date.valueOf(date2);
             Date currentDate = new Date(System.currentTimeMillis());
             if(newdate.before(newdate)){
                 request.setAttribute("wrongDate", "message");
             }else{
                 ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(room, time, newdate);
                 if(check == null){
-                    int update = Dao.ClassDetailDao.updateDateTimeRoomWithProblem(id, room, time, newdate);
+                    int update = Dao.ClassDetailDao.updateDateTimeRoomWithProblem(id, room, time, newdate, olddate);
                     request.setAttribute("success", "message");
                 }else{
                     request.setAttribute("theSame", "message");

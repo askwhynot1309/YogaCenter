@@ -39,19 +39,19 @@ public class ButtonAddTraineeServlet extends HttpServlet {
             String address = request.getParameter("address");
             BigDecimal amount = BigDecimal.valueOf(0);
             String img = "images.png";
-             if(Utils.CheckEmailExist.isAddressValid(email) == false){
+            if (Utils.CheckEmailExist.isAddressValid(email) == false) {
                 request.setAttribute("Invalid", "Invalid");
                 request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
             }
-            if(Utils.CheckValidation.isValidCCCD(cccd) == false){
+            else if (Utils.CheckValidation.isValidCCCD(cccd) == false) {
                 request.setAttribute("InvalidCCCD", "Invalid");
                 request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
             }
-            if(Utils.CheckValidation.checkPhone(phone) == false){
+            else if (Utils.CheckValidation.checkPhone(phone) == false) {
                 request.setAttribute("InvalidPhone", "Invalid");
                 request.getRequestDispatcher("staff/staffAddTrainee.jsp").forward(request, response);
             }
-            if (Dao.UserDao.checkEmailTraineeIsExist(email) == null) {
+            else if (Dao.UserDao.checkEmailTraineeIsExist(email) == null) {
                 if (Dao.UserDao.isCccdExists(cccd) == false) {
                     if (Dao.UserDao.isPhoneExists(phone) == false) {
                         int insertTrainee = Dao.UserDao.insertNewUser(name, email, phone, cccd, address, amount, img);

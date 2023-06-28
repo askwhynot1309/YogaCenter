@@ -22,7 +22,7 @@ public class RoomDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select * \n"
-                    + "from Rooom\n"
+                    + "from Room\n"
                     + "where Status = 0";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
@@ -67,9 +67,9 @@ public class RoomDao {
         ArrayList<Room> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select c.Room_ID, c.Room_Name, c.Status, cs.ClassDetail_ID, cs.Feedback, cs.DateFeedback, cs.Status\n"
-                    + "from Room r JOIN RoomStatus cs ON c.Room_ID = cs.Room_ID\n"
-                    + "where cs.Status = 1";
+            String s = "select r.Room_ID, r.Room_Name, r.Status, rs.ClassDetail_ID, rs.Feedback, rs.DateFeedback, rs.Status\n"
+                    + "from Room r JOIN RoomStatus rs ON r.Room_ID = rs.Room_ID\n"
+                    + "where rs.Status = 1";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
             if (table != null) {
@@ -131,7 +131,7 @@ public class RoomDao {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "insert into ClassStatus(Room_ID, Feedback, DateFeedback, Status) values (?,?,?,?)";
+            String s = "insert into RoomStatus(Room_ID, Feedback, DateFeedback, Status) values (?,?,?,?)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
             pst.setNString(2, feedback);
@@ -163,7 +163,7 @@ public class RoomDao {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "update ClassStatus\n"
+            String s = "update RoomStatus\n"
                     + "set Status = 0\n"
                     + "where Room_ID = ? And DateFeedback = ?";
             PreparedStatement pst = cn.prepareStatement(s);

@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/style.css"/>
-        <link rel="stylesheet" href="css/trainee/trainee-add-message">
+        <link rel="stylesheet" href="css/trainee/trainee-add-message.css">
         <style>
             .container {
                 margin-top: 1.5rem;

@@ -78,6 +78,7 @@
                                 <div>
                                     <p>Current-Date : ${inforClass.date}</p>
                                     <p>Date change : <input type="date" name="newdate"></p>
+                                    <p><input name="olddate" value="${inforClass.date}" hidden=""></p>
                                 </div>
                                 <div>
                                     <p>Current-Time : 

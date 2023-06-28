@@ -7,6 +7,7 @@ package Controller;
 import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,18 +35,22 @@ public class SubmitOTPFillInformationServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             String enteredOtp = request.getParameter("otp");
             HttpSession session = request.getSession();
-            Account account = (Account) session.getAttribute("account");
+            Account newaccount = (Account) session.getAttribute("newaccount");
 
             // Get the stored OTP from session
             String storedOtp = (String) request.getSession().getAttribute("otp");
 
             if (enteredOtp.equals(storedOtp)) {
-                session.setAttribute("account", account);
+                int insertNewAccount = Dao.UserDao.insertNewUser(newaccount.getName(), newaccount.getEmail(), newaccount.getPhone(), newaccount.getCccd(), newaccount.getAddress(), newaccount.getAmount(), newaccount.getImage());
+                session.setAttribute("account", newaccount);
                 response.sendRedirect("home");
             } else {
                 request.setAttribute("ErrorMessageOTP", "Invalid OTP");
                 request.getRequestDispatcher("confirmOTPtologin.jsp").forward(request, response);
-            }        }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

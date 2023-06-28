@@ -24,8 +24,8 @@ public class ClassDetailDao {
         ArrayList<ClassDetail> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.IDAccount, A.Name, C.IDCourse, COU.Course_Name, R.Status\n"
-                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.IDAccount = A.ID_Account\n"
+            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name, R.Status\n"
+                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
                     + "Where A.Role = 2 ";
@@ -43,7 +43,7 @@ public class ClassDetailDao {
                     int month = calendar.get(Calendar.MONTH) + 1;
                     int day = calendar.get(Calendar.DAY_OF_MONTH);
                     String date = year + "-" + month + "-" + day;
-                    int idaccount = table.getInt("IDAccount");
+                    int idaccount = table.getInt("ID_Account");
                     String account = table.getNString("Name");
                     int id_course = table.getInt("IDCourse");
                     int status = table.getInt("Status");
@@ -61,8 +61,8 @@ public class ClassDetailDao {
         ArrayList<ClassDetail> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.IDAccount, A.Name, C.IDCourse, COU.Course_Name, R.Status\n"
-                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.IDAccount = A.ID_Account\n"
+            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name, R.Status\n"
+                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
                     + "Where A.Role = 2 and CD.IDAccount = ? ";
@@ -81,7 +81,7 @@ public class ClassDetailDao {
                     int month = calendar.get(Calendar.MONTH) + 1;
                     int day = calendar.get(Calendar.DAY_OF_MONTH);
                     String date = year + "-" + month + "-" + day;
-                    int idaccount = table.getInt("IDAccount");
+                    int idaccount = table.getInt("ID_Account");
                     String account = table.getNString("Name");
                     int id_course = table.getInt("IDCourse");
                     int status = table.getInt("Status");
@@ -99,8 +99,8 @@ public class ClassDetailDao {
         ArrayList<ClassDetail> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.IDAccount, A.Name, C.IDCourse, COU.Course_Name, R.Status\n"
-                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.IDAccount = A.ID_Account\n"
+            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name, R.Status\n"
+                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
                     + "Where A.Role = 2 and CDATE.DateStudy = ?";
@@ -119,7 +119,7 @@ public class ClassDetailDao {
                     int month = calendar.get(Calendar.MONTH) + 1;
                     int day = calendar.get(Calendar.DAY_OF_MONTH);
                     String date = year + "-" + month + "-" + day;
-                    int idaccount = table.getInt("IDAccount");
+                    int idaccount = table.getInt("ID_Account");
                     String account = table.getNString("Name");
                     int id_course = table.getInt("IDCourse");
                     int status = table.getInt("Status");
@@ -152,26 +152,26 @@ public class ClassDetailDao {
         Connection cn = Utils.DBUtils.getConnection();
         cn.setAutoCommit(false);
         if (cn != null) {
-                String s = "select Class_ID\n"
-                        + "from Class C JOIN ClassDate CD ON C.Class_ID = CD.Class_ID\n"
-                        + "where C.Room_ID = ? and C.IDCourse = ? and C.IDtime = ? and C.Choice";
-                PreparedStatement pst = cn.prepareStatement(s);
-                pst.setInt(1, room_id);
-                pst.setInt(2, id_course);
-                pst.setInt(3, id_time);
-                pst.setInt(4, choice);
-                ResultSet table = pst.executeQuery();
-                if (table != null) {
-                    while (table.next()) {
-                        int class_id = table.getInt("Class_ID");
-                        String s3 = "insert into ClassDetail(Class_ID, ID_Account) values (?,?)";
-                        PreparedStatement pst3 = cn.prepareStatement(s3);
-                        pst3.setInt(1, class_id);
-                        pst3.setInt(2, id_account);
-                        pst3.executeUpdate();
-                        kq = class_id;
-                    }
+            String s = "select Class_ID\n"
+                    + "from Class C JOIN ClassDate CD ON C.Class_ID = CD.Class_ID\n"
+                    + "where C.Room_ID = ? and C.IDCourse = ? and C.IDtime = ? and C.Choice";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, room_id);
+            pst.setInt(2, id_course);
+            pst.setInt(3, id_time);
+            pst.setInt(4, choice);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int class_id = table.getInt("Class_ID");
+                    String s3 = "insert into ClassDetail(Class_ID, ID_Account) values (?,?)";
+                    PreparedStatement pst3 = cn.prepareStatement(s3);
+                    pst3.setInt(1, class_id);
+                    pst3.setInt(2, id_account);
+                    pst3.executeUpdate();
+                    kq = class_id;
                 }
+            }
             cn.commit();
             cn.setAutoCommit(true);
             cn.close();
@@ -184,7 +184,7 @@ public class ClassDetailDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.IDAccount = A.ID_Account\n"
+                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
                     + "Where C.Room_ID = ? And C.IDtime = ? And COU.Start_date = ? And C.Choice = ? AND a.Role = 2";
@@ -200,7 +200,7 @@ public class ClassDetailDao {
                     String room_name = table.getString("Room_Name");
                     int id_time = table.getInt("IDtime");
                     Date datestudy = table.getDate("DateStudy");
-                    int idaccount = table.getInt("IDAccount");
+                    int idaccount = table.getInt("ID_Account");
                     String account = table.getNString("Name");
                     int id_course = table.getInt("IDCourse");
                     String course = table.getNString("Course_Name");
@@ -217,7 +217,7 @@ public class ClassDetailDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.IDAccount = A.ID_Account\n"
+                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
                     + "Where  C.IDtime = ? And C.Choice = ? AND CD.IDAccount = ?";
@@ -232,7 +232,7 @@ public class ClassDetailDao {
                     String room_name = table.getString("Room_Name");
                     int id_time = table.getInt("IDtime");
                     Date datestudy = table.getDate("DateStudy");
-                    int idaccount = table.getInt("IDAccount");
+                    int idaccount = table.getInt("ID_Account");
                     String account = table.getNString("Name");
                     int id_course = table.getInt("IDCourse");
                     String course = table.getNString("Course_Name");
@@ -249,7 +249,7 @@ public class ClassDetailDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "FROM Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.IDAccount = A.ID_Account\n"
+                    + "FROM Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
                     + "Where C.IDtime = ? And CD.IDAccount = ? And C.Choice = ? And COU.Start_date = ?";
@@ -265,7 +265,7 @@ public class ClassDetailDao {
                     String room_name = table.getString("Room_Name");
                     int id_time = table.getInt("IDtime");
                     Date datestudy = table.getDate("DateStudy");
-                    int idacc = table.getInt("IDAccount");
+                    int idacc = table.getInt("ID_Account");
                     String account = table.getNString("Name");
                     int id_course = table.getInt("IDCourse");
                     String course = table.getNString("Course_Name");
@@ -276,7 +276,7 @@ public class ClassDetailDao {
         }
         return kq;
     }
-    
+
     public static int getIDClass(int ID_Room, int ID_Course, int choice, int ID_Time) {
         int ID_Class = 0;
         Connection cn = null;
@@ -308,7 +308,7 @@ public class ClassDetailDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.IDAccount = A.ID_Account\n"
+                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
                     + "Where C.Class_ID = ?";
@@ -321,7 +321,7 @@ public class ClassDetailDao {
                     String room_name = table.getString("Room_Name");
                     int id_time = table.getInt("IDtime");
                     Date datestudy = table.getDate("DateStudy");
-                    int idaccount = table.getInt("IDAccount");
+                    int idaccount = table.getInt("ID_Account");
                     String account = table.getNString("Name");
                     int id_course = table.getInt("IDCourse");
                     String course = table.getNString("Course_Name");
@@ -362,7 +362,7 @@ public class ClassDetailDao {
                 trainer = new ClassDetail(Class_ID, "minh", IDTime, IDTime, DateStudy, "", IDCourse, "");
                 sql = "SELECT *\n"
                         + "FROM Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
-                        + "JOIN Account A ON CD.IDAccount = A.ID_Account JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
+                        + "JOIN Account A ON CD.ID_Account = A.ID_Account JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                         + "JOIN Course COU ON C.IDCourse = COU.Course_ID\n"
                         + "JOIN Room R ON R.Room_ID = C.Room_ID\n"
                         + "WHERE A.Role = 2 AND C.Class_ID = ? AND C.IDtime = ? AND CDATE.DateStudy = ? AND C.IDCourse = ? AND C.Choice = ?";
@@ -378,7 +378,7 @@ public class ClassDetailDao {
                     String room_name = rs.getString("Room_Name");
                     int id_time = rs.getInt("IDtime");
                     Date datestudy = rs.getDate("DateStudy");
-                    int idaccount = rs.getInt("IDAccount");
+                    int idaccount = rs.getInt("ID_Account");
                     String account = rs.getNString("Name");
                     int id_course = rs.getInt("IDCourse");
                     String course = rs.getNString("Course_Name");
@@ -402,7 +402,7 @@ public class ClassDetailDao {
             if (cn != null) {
                 String sql = "SELECT DISTINCT A.ID_Account, C.Choice\n"
                         + "FROM Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
-                        + "JOIN Account A ON CD.IDAccount = A.ID_Account\n"
+                        + "JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                         + "WHERE C.IDCourse = ?";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setInt(1, Course_ID);
@@ -432,7 +432,7 @@ public class ClassDetailDao {
             if (cn != null) {
                 String sql = "SELECT DISTINCT Room_ID\n"
                         + "FROM Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
-                        + "WHERE CD.IDAccount = ? AND C.IDCourse = ? AND C.Choice = ? AND C.IDtime = ?";
+                        + "WHERE CD.ID_Account = ? AND C.IDCourse = ? AND C.Choice = ? AND C.IDtime = ?";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setInt(1, ID_Trainer);
                 pst.setInt(2, ID_Course);
@@ -457,10 +457,10 @@ public class ClassDetailDao {
         if (cn != null) {
             String sql = "select *\n"
                     + "from Class c JOIN ClassDetail cd ON c.Class_ID = cd.Class_ID\n"
-                    + "JOIN Account a ON cd.IDAccount =a.ID_Account JOIN ClassDate cdate ON c.Class_ID = cdate.Class_ID\n"
+                    + "JOIN Account a ON cd.ID_Account =a.ID_Account JOIN ClassDate cdate ON c.Class_ID = cdate.Class_ID\n"
                     + "JOIN Room r ON c.Room_ID = r.Room_ID\n"
                     + "JOIN Course cou ON cou.Course_ID = c.IDCourse\n"
-                    + "Where a.Role = 3 AND cd.IDAccount = ?";
+                    + "Where a.Role = 3 AND cd.ID_Account = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, ID_Account);
             ResultSet table = pst.executeQuery();
@@ -476,7 +476,7 @@ public class ClassDetailDao {
                     int month = calendar.get(Calendar.MONTH) + 1;
                     int day = calendar.get(Calendar.DAY_OF_MONTH);
                     String date = year + "-" + month + "-" + day;
-                    int idaccount = table.getInt("IDAccount");
+                    int idaccount = table.getInt("ID_Account");
                     String account = table.getNString("Name");
                     int id_course = table.getInt("IDCourse");
                     String course = table.getNString("Course_Name");
@@ -504,11 +504,11 @@ public class ClassDetailDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int classdetail = table.getInt("ClassDetail_ID");
-                    String class_name = table.getString("Class_Name");
+                    int class_id = table.getInt("Class_ID");
+                    String room_name = table.getString("Room_Name");
                     int time = table.getInt("IDtime");
                     Date datestudy = table.getDate("DateStudy");
-                    kq = new ClassDetail(classdetail, class_name, time, datestudy);
+                    kq = new ClassDetail(class_id, room_name, time, datestudy);
                 }
             }
             cn.close();
@@ -523,10 +523,10 @@ public class ClassDetailDao {
             cn = DBUtils.getConnection();
             if (cn != null) {
                 String sql = "SELECT DISTINCT A.ID_Account\n"
-                        + "FROM [dbo].[Class] C JOIN [dbo].[ClassDetail] CD ON C.Class_ID = CD.Class_ID\n"
-                        + "JOIN [dbo].[Account] A ON CD.ID_Account = A.ID_Account\n"
-                        + "JOIN [dbo].[Time] T ON CD.IDtime = T.Time_ID\n"
-                        + "JOIN [dbo].[Room] R ON C.Room_ID = R.Room_ID\n"
+                        + "FROM Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
+                        + "JOIN Account A ON CD.ID_Account = A.ID_Account\n"
+                        + "JOIN Time T ON CD.IDtime = T.Time_ID\n"
+                        + "JOIN Room R ON C.Room_ID = R.Room_ID\n"
                         + "WHERE C.IDCourse = ? AND A.ID_Account = ? AND T.Time_ID = ? AND C.Room_ID = ? AND A.Role = 3 AND C.Choice = ?";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setInt(1, Course_ID);
@@ -553,8 +553,8 @@ public class ClassDetailDao {
         try {
             cn = DBUtils.getConnection();
             if (cn != null) {
-                String sql = "delete [dbo].[ClassDetail]\n"
-                        + "where IDAccount = ? AND Class_ID = ? ";
+                String sql = "delete ClassDetail\n"
+                        + "where ID_Account = ? AND Class_ID = ? ";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setInt(1, Trainee_ID);
                 pst.setInt(2, id_class);
@@ -567,12 +567,13 @@ public class ClassDetailDao {
         return isDelete;
     }
 
-    public static int updateDateTimeRoomWithProblem(int id, int id_room, int id_time, Date date) throws Exception {
+    public static int updateDateTimeRoomWithProblem(int id, int id_room, int id_time, Date date, Date olddate) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
+        cn.setAutoCommit(false);
         if (cn != null) {
             String s = "update Class\n"
-                    + "set Room_ID = ?, IDtime = ?, DateStudy = ?\n"
+                    + "set Room_ID = ?, IDtime = ?\n"
                     + "where Class_ID = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id_room);
@@ -580,6 +581,29 @@ public class ClassDetailDao {
             pst.setDate(3, date);
             pst.setInt(4, id);
             kq = pst.executeUpdate();
+            if (kq == 1) {
+                String s2 = "Select ClassDate_ID\n"
+                        + "from ClassDate\n"
+                        + "Where Class_ID = ? and DateStudy = ?";
+                PreparedStatement pst2 = cn.prepareStatement(s2);
+                pst.setInt(1, id);
+                pst.setDate(2, olddate);
+                ResultSet table = pst2.executeQuery();
+                if (table != null) {
+                    while (table.next()) {
+                        int classDate_ID = table.getInt("ClassDate_ID");
+                        String s3 = "Update ClassDate\n"
+                                + "Set DateStudy = ?\n"
+                                + "Where ClassDate_ID = ?";
+                        PreparedStatement pst3 = cn.prepareStatement(s3);
+                        pst.setDate(1, date);
+                        pst.setInt(2, classDate_ID);
+                        kq = pst3.executeUpdate();
+                    }
+                }
+            }
+            cn.commit();
+            cn.setAutoCommit(true);
             cn.close();
         }
         return kq;
@@ -591,7 +615,7 @@ public class ClassDetailDao {
         try {
             cn = DBUtils.getConnection();
             if (cn != null) {
-                String sql = "  SELECT COUNT(distinct IDAccount) as Count\n"
+                String sql = "  SELECT COUNT(distinct ID_Account) as Count\n"
                         + "  FROM ClassDetail cd JOIN Account a ON cd.ID_Account = a.ID_Account\n"
                         + "  GROUP BY Class_ID\n"
                         + "  HAVING Class_ID = ? AND a.Role = 3";
@@ -614,8 +638,8 @@ public class ClassDetailDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "from Class c Join ClassDetail cd.Class_ID = c.Class_ID\n"
-                    + "Where IDAccount = ?";
+                    + "from Class c Join ClassDetail cd ON cd.Class_ID = c.Class_ID\n"
+                    + "Where cd.ID_Account = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id_account);
             ResultSet table = pst.executeQuery();
@@ -624,7 +648,7 @@ public class ClassDetailDao {
                     int class_id = table.getInt("Class_ID");
                     int room_id = table.getInt("Room_ID");
                     int id_time = table.getInt("IDtime");
-                    int idacc = table.getInt("IDAccount");
+                    int idacc = table.getInt("ID_Account");
                     int id_course = table.getInt("IDCourse");
                     ClassDetail cd = new ClassDetail(class_id, room_id, id_time, idacc, id_course);
                     kq.add(cd);

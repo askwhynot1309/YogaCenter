@@ -43,7 +43,6 @@ public class TraineeAddToCartServlet extends HttpServlet {
                     cart.put(ID_Course, 1);
                 } else {
                     if (cart.containsKey(ID_Course)) {
-                        session.setAttribute("cart", cart);
                         request.setAttribute("wrong", "message");
                         request.getRequestDispatcher("course").forward(request, response);
                     }

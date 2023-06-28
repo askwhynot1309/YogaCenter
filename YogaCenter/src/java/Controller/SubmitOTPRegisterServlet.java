@@ -4,12 +4,15 @@
  */
 package Controller;
 
+import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,18 +33,25 @@ public class SubmitOTPRegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
+            HttpSession session = request.getSession();
             String enteredOtp = request.getParameter("otp");
+            Account newaccount = (Account) session.getAttribute("newaccount");
 
             // Get the stored OTP from session
             String storedOtp = (String) request.getSession().getAttribute("otp");
 
             if (enteredOtp.equals(storedOtp)) {
+                int registrationSuccess = Dao.UserDao.insertNewUserWithoutLoginByEmail(newaccount.getName(), newaccount.getEmail(), newaccount.getPhone(), newaccount.getCccd(), newaccount.getAddress(), newaccount.getAccount(), newaccount.getPassword(), newaccount.getImage(), BigDecimal.valueOf(0));
                 request.setAttribute("message", "message");
+                session.removeAttribute("newaccount");
                 response.sendRedirect("login.jsp");
             } else {
                 request.setAttribute("ErrorMessageOTP", "Invalid OTP");
                 request.getRequestDispatcher("confirmOTPtologin.jsp").forward(request, response);
-            }        }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
