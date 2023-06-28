@@ -1,8 +1,3 @@
-<%-- 
-    Document   : traineeCreateRequest
-    Created on : Jun 27, 2023, 2:27:02 PM
-    Author     : ngmin
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -25,55 +20,66 @@
 
                     <div class="col-lg-9" style="padding: 0">
                         <div class="container">
-                        <c:set var="overdue" value="${requestScope.overdue}"></c:set>
+                        <c:set var="registered" value="${requestScope.registered}"></c:set>
                         <c:choose>
-                            <c:when test="${overdue != null}">
-                                <c:set var="startDate" value="${requestScope.startDate}"></c:set>
-                                <c:set var="endDate" value="${requestScope.endDate}"></c:set>
-                                <c:set var="courseList" value="${requestScope.courseList}"></c:set>
-                                    <h2 style="text-align: center;">Request to change class</h2>
-                                    <h4 style="text-align: center; color: red;">Starting date: ${startDate}. Due date: before ${endDate}</h4>
+                            <c:when test="${registered == null}">
+                                <c:set var="overdue" value="${requestScope.overdue}"></c:set>
+                                <c:choose>
+                                    <c:when test="${overdue != null}">
+                                        <c:set var="startDate" value="${requestScope.startDate}"></c:set>
+                                        <c:set var="endDate" value="${requestScope.endDate}"></c:set>
+                                        <c:set var="courseList" value="${requestScope.courseList}"></c:set>
+                                            <h2 style="text-align: center;">Request to change class</h2>
+                                            <h4 style="text-align: center; color: red;">Starting date: ${startDate}. Due date: before ${endDate}</h4>
 
-                                <div class="container mt-5">
-                                    <div class="d-flex justify-content-center row">
-                                        <div class="col-md-10">
-                                            <div class="rounded">
-                                                <div class="table-responsive table-borderless">
-                                                    <table class="table" style="border: solid 1px;">
-                                                        <form action="/YogaCenter/request" method="post">                                                            
-                                                            <tr>
-                                                                <th>Class</th>
-                                                                <th>
-                                                                    <select name="course" id="course">
-                                                                        <c:forEach var="course" items="${requestScope.courseList}">
-                                                                            <option value="${course.idCourse}">${course.name_course}</option>
-                                                                        </c:forEach>                                                                        
-                                                                    </select>
-                                                                </th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>To Trainee ID</th>
-                                                                <th>
-                                                                    Trainee No. <input type="number" id="txtToTraineeID" name="txtToTraineeID" required="">
-                                                                    <input type="checkbox" id="check">
-                                                                </th>
-                                                            </tr>
-                                                        </form>
-                                                    </table>
+                                        <div class="container mt-5">
+                                            <div class="d-flex justify-content-center row">
+                                                <div class="col-md-10">
+                                                    <div class="rounded">
+                                                        <div class="table-responsive table-borderless">
+                                                            <table class="table" style="border: solid 1px;">
+                                                                <form action="/YogaCenter/request" method="post">                                                            
+                                                                    <tr>
+                                                                        <th>Class</th>
+                                                                        <th>
+                                                                            <select name="course" id="course">
+                                                                                <c:forEach var="course" items="${requestScope.courseList}">
+                                                                                    <option value="${course.idCourse}">${course.name_course}</option>
+                                                                                </c:forEach>                                                                        
+                                                                            </select>
+                                                                        </th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>To Trainee ID</th>
+                                                                        <th>
+                                                                            Trainee No. <input type="number" id="txtToTraineeID" name="txtToTraineeID" required="">
+                                                                            <input type="checkbox" id="check">
+                                                                        </th>
+                                                                    </tr>
+                                                                </form>
+                                                            </table>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </c:when>
+                                    <c:when test="${overdue == null}">
+                                        <div style="text-align: center">
+                                            <h4 style="color: red">
+                                                <span>${overdue}</span>
+                                            </h4>
+                                        </div>
+                                    </c:when>
+                                </c:choose>
                             </c:when>
-                            <c:when test="${overdue == null}">
-                                <div style="text-align: center">
-                                    <h4 style="color: red">
-                                        <span>${overdue}</span>
-                                    </h4>
-                                </div>
+
+                            <c:when test="${registered != null}">
+                                <h4>${registered}</h4>
                             </c:when>
                         </c:choose>
+
+
                     </div>
                 </div>
             </div>
@@ -102,16 +108,16 @@
                 action.type = 'hidden';
                 courseID.name = 'courseID';
                 courseID.value = ID_Course;
-                
-                
+
+
                 var action = document.createElement('input');
                 action.type = 'hidden';
                 action.name = 'action';
                 action.value = 'checkTrainee';
-                
+
                 form.appendChild(courseID);
                 form.appendChild(action);
-                
+
                 document.body.appendChild(form);
                 form.submit();
             }

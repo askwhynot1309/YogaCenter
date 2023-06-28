@@ -46,7 +46,10 @@ public class TraineeBookScheduleServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(true);
             Account account = (Account)session.getAttribute("account");
+            out.print("test 1");
             int Course_ID = Integer.parseInt(request.getParameter("courseID"));
+            
+            out.print("test");
             Course course = CourseDao.getInformationOfCourse(Course_ID);
             HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(Course_ID);
 
@@ -80,22 +83,25 @@ public class TraineeBookScheduleServlet extends HttpServlet {
 
                 messRequest.add(new Message(ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status));
             }
-
+            out.print("test");
             LocalDate currentDate = LocalDate.now();
-            if (!hashChoise.isEmpty()) {
+            out.print(hashChoise.size());
                 request.setAttribute("hashChoise", hashChoise);
                 request.setAttribute("messRequest", messRequest);
                 request.setAttribute("Course_ID", Course_ID);
                 request.setAttribute("startDate", startDate);
                 request.setAttribute("endDate", endDate);
                 if (currentDate.isAfter(endDate)) {
+                    
                     request.setAttribute("overdue", "Overdue for form application and registration");
                     request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
                 } else if (currentDate.isBefore(startDate)) {
+                    
                     request.setAttribute("overdue", "It's not time to registration");
+                    request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
                 }
-            }
-            request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
+            
+            
         }
     }
 
