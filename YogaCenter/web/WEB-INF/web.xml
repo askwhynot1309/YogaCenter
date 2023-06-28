@@ -247,6 +247,8 @@
     <servlet>
         <servlet-name>TraineeViewRequestChangeClass</servlet-name>
         <servlet-class>Controller.TraineeViewRequestChangeClass</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>TraineeShowYourCourse</servlet-name>
         <servlet-class>Controller.TraineeShowYourCourse</servlet-class>
     </servlet>
@@ -513,6 +515,8 @@
     <servlet-mapping>
         <servlet-name>TraineeViewRequestChangeClass</servlet-name>
         <url-pattern>/viewRequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>TraineeShowYourCourse</servlet-name>
         <url-pattern>/yourcourse</url-pattern>
     </servlet-mapping>
