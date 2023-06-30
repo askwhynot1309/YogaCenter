@@ -580,6 +580,33 @@ public class ClassDetailDao {
         return kq;
     }
 
+    public static boolean checkTraineeInCourse(int Course_ID, int Trainee_ID) throws Exception {
+        boolean isExisted = false;
+        ArrayList<Integer> idAccountList = new ArrayList<>();
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT CD.ID_Account\n"
+                    + "FROM ClassDetail CD \n"
+                    + "JOIN Class C ON CD.Class_ID = C.Class_ID\n"
+                    + "JOIN Account A ON CD.ID_Account = A.ID_Account\n"
+                    + "WHERE C.IDCourse = ? AND A.Role = 3";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, Course_ID);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null && rs.next()) {
+                int ID_Account = rs.getInt("ID_Account");
+                idAccountList.add(ID_Account);
+            }
+            for (Integer integer : idAccountList) {
+                if (Trainee_ID == integer) {
+                    isExisted = true;
+                }
+            }
+        }
+        cn.close();
+        return isExisted;
+    }
+
     public static int checkTraineeIDInClass(int Course_ID, int Trainee_ID, int ID_Time, int ID_Room, int choice) {
         int AccountID = 0;
         Connection cn = null;
@@ -589,7 +616,7 @@ public class ClassDetailDao {
                 String sql = "SELECT DISTINCT A.ID_Account\n"
                         + "FROM Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
                         + "JOIN Account A ON CD.ID_Account = A.ID_Account\n"
-                        + "JOIN Time T ON CD.IDtime = T.Time_ID\n"
+                        + "JOIN Time T ON C.IDtime = T.Time_ID\n"
                         + "JOIN Room R ON C.Room_ID = R.Room_ID\n"
                         + "WHERE C.IDCourse = ? AND A.ID_Account = ? AND T.Time_ID = ? AND C.Room_ID = ? AND A.Role = 3 AND C.Choice = ?";
                 PreparedStatement pst = cn.prepareStatement(sql);
@@ -609,6 +636,55 @@ public class ClassDetailDao {
         } catch (Exception e) {
         }
         return AccountID;
+    }
+
+    public static boolean updateClassID(int newClass_ID, int currentClass_ID, int Trainee_ID) throws Exception {
+        boolean isUpdated = false;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "UPDATE [dbo].[ClassDetail]\n"
+                    + "SET Class_ID = ?\n"
+                    + "WHERE Class_ID = ? AND ID_Account = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, newClass_ID);
+            pst.setInt(2, currentClass_ID);
+            pst.setInt(3, Trainee_ID);
+            pst.executeUpdate();
+
+            sql = "";
+            sql = "UPDATE [dbo].[CheckAttendance]\n"
+                    + "SET ID_Class = ?\n"
+                    + "WHERE ID_Class = ? AND ID_Trainee = ?";
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, newClass_ID);
+            pst.setInt(2, currentClass_ID);
+            pst.setInt(3, Trainee_ID);
+            pst.executeUpdate();
+
+            isUpdated = true;
+        }
+        cn.close();
+        return isUpdated;
+    }
+
+    public static int getCurrentClassID(int Trainee_ID, int Course_ID) throws Exception {
+        int Class_ID = 0;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "select C.Class_ID\n"
+                    + "from [dbo].[Class] C \n"
+                    + "JOIN [dbo].[ClassDetail] CD ON C.Class_ID = CD.Class_ID\n"
+                    + "WHERE CD.ID_Account = ? AND C.IDCourse = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, Trainee_ID);
+            pst.setInt(2, Course_ID);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null && rs.next()) {
+                Class_ID = rs.getInt("Class_ID");
+            }
+        }
+        cn.close();
+        return Class_ID;
     }
 
     public static boolean deleteTraineeInClass(int Trainee_ID, int id_class) {
@@ -679,7 +755,7 @@ public class ClassDetailDao {
 
         String query = "INSERT INTO dbo.CheckAttendance (ID_Trainee, Class_ID, AttendanceDate, Status) VALUES (?, ?, ?, ?)";
 
-        try ( PreparedStatement statement = con.prepareStatement(query)) {
+        try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, traineeId);
             statement.setInt(2, id_classInt);
             statement.setDate(3, date);
@@ -696,7 +772,7 @@ public class ClassDetailDao {
         String query = "UPDATE dbo.CheckAttendance SET Status = ? WHERE ID_Trainee = ? AND ID_Class = ? AND AttendanceDate = ?";
         Connection con = DBUtils.getConnection();
 
-        try ( PreparedStatement statement = con.prepareStatement(query)) {
+        try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, status);
             statement.setInt(2, traineeId);
             statement.setInt(3, id_classInt);
@@ -714,12 +790,12 @@ public class ClassDetailDao {
         String query = "SELECT COUNT(*) FROM dbo.CheckAttendance WHERE ID_Trainee = ? AND ID_Class = ? AND AttendanceDate = ?";
         Connection con = DBUtils.getConnection();
 
-        try ( PreparedStatement statement = con.prepareStatement(query)) {
+        try (PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, traineeId);
             statement.setInt(2, id_classInt);
             statement.setDate(3, attendanceDate);
 
-            try ( ResultSet resultSet = statement.executeQuery()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     int count = resultSet.getInt(1);
                     return count > 0;
