@@ -59,40 +59,28 @@
                                             <td style="width: 450px">
                                                 <form action="/YogaCenter/request" method="POST">
                                                     <c:if test="${order.status == 0}">
-                                                        <p>Cancel 
-                                                            <input type="radio" name="status" value="0" checked="">&ensp;
-                                                            Processing
-                                                            <input type="radio" name="status" disabled="">&ensp;
-                                                            Completed
-                                                            <input type="radio" name="status" disabled="">&ensp;
-                                                            <input name="option" value="orderChange" hidden="">
-                                                            <input name="id" value="${order.id_order}" hidden="">
+                                                        <select name="status">
+                                                            <option value="2">Cancel</option>
+                                                            <option value="0" selected="">Processing</option>
+                                                            <option value="1">Completed</option>
+                                                        </select>
                                                             <button name="action" value="change" class="btn-search">Change</button>
-                                                        </p>
                                                     </c:if>
                                                     <c:if test="${order.status == 1}">
-                                                        <p>Cancel 
-                                                            <input type="radio" name="status" value="0">&ensp;
-                                                            Processing
-                                                            <input type="radio" name="status" value="1" checked="">&ensp;
-                                                            Completed
-                                                            <input type="radio" name="status" value="2">&ensp;
-                                                            <input name="option" value="orderChange" hidden="">
-                                                            <input name="id" value="${order.id_order}" hidden="">
+                                                        <select name="status">
+                                                            <option value="2" disabled="">Cancel</option>
+                                                            <option value="0" disabled="">Processing</option>
+                                                            <option value="1" selected="">Completed</option>
+                                                        </select>
                                                             <button name="action" value="comfirm" class="btn-search">Change</button>
-                                                        </p>
                                                     </c:if>
                                                     <c:if test="${order.status == 2}">
-                                                        <p>Cancel 
-                                                            <input type="radio" name="status" disabled="">&ensp;
-                                                            Processing
-                                                            <input type="radio" name="status" disabled="">&ensp;
-                                                            Completed
-                                                            <input type="radio" name="status" value="2" checked="">&ensp;
-                                                            <input name="option" value="orderChange" hidden="">
-                                                            <input name="id" value="${order.id_order}" hidden="">
+                                                        <select name="status">
+                                                            <option value="2" selected="">Cancel</option>
+                                                            <option value="0" disabled="">Processing</option>
+                                                            <option value="1">Completed</option>
+                                                        </select>
                                                             <button name="action" value="change" class="btn-search">Change</button>
-                                                        </p>
                                                     </c:if>
                                                 </form>
                                             </td>
