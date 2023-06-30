@@ -46,16 +46,13 @@ public class TraineeViewSchedule extends HttpServlet {
             request.setAttribute("courseList", courseList);
             List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
             List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
-            
             request.setAttribute("currentweek", currentweek);
-            request.setAttribute("listDay", list);
-            request.setAttribute("courseList", courseList);
-            
             ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsByTrainee(account.getIdaccount());
             if (listClass != null && !listClass.isEmpty()) {
                 request.setAttribute("listClass", listClass);
             }
-            
+            request.setAttribute("listDay", list);
+            request.setAttribute("courseList", courseList);
             request.getRequestDispatcher("traineeDashBoard.jsp").forward(request, response);
         }
     } 
