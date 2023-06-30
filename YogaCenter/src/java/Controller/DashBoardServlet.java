@@ -34,13 +34,13 @@ public class DashBoardServlet extends HttpServlet {
             int option = Integer.parseInt(request.getParameter("option"));
             switch (option) {
                 case 0:
-                    request.getRequestDispatcher("admin/adminDashboard.jsp").forward(request, response);
+                    request.getRequestDispatcher("DashboardInformation?option=0").forward(request, response);
                     break;
                 case 1:
-                    request.getRequestDispatcher("staff/staffDashboard.jsp").forward(request, response);
+                    request.getRequestDispatcher("DashboardInformation?option=1").forward(request, response);
                     break;
                 case 2:
-                    request.getRequestDispatcher("trainer/trainerDashboard.jsp").forward(request, response);
+                    request.getRequestDispatcher("DashboardInformation?option=2").forward(request, response);
                     break;
                 case 3:
                     request.getRequestDispatcher("trainee/traineeDashboard.jsp").forward(request, response);

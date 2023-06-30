@@ -58,7 +58,7 @@
                 </li>
             </ul>
             <div class="divider"></div>
-            <h4>Settings</h4>
+            <h4 style="color: white;">Settings</h4>
             <ul>
                 <li>
                     <a href="/YogaCenter/request?action=Logout">

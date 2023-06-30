@@ -13,8 +13,8 @@
 
     <body>
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-3" style="padding: 0">
+            <div class="row" style="height: 100%; overflow: auto;">
+                <div class="col-lg-3" style="margin-left: 0px; padding: 0;">
                     <c:import url="adminMenu.jsp"/>
                 </div>
             </div>

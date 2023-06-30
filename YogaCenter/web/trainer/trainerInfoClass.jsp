@@ -23,7 +23,7 @@
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-3" style="padding: 0;">
                     <c:import url="trainerDashboard.jsp"/>
                 </div>
                 <div class="col-lg-9">

@@ -66,7 +66,7 @@ public class ClassDetailDao {
                     + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
-                    + "Where A.Role = 2 and CD.IDAccount = ? ";
+                    + "Where A.Role = 2 and CD.ID_Account = ? ";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
             ResultSet table = pst.executeQuery();
@@ -253,7 +253,7 @@ public class ClassDetailDao {
                     + "FROM Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
-                    + "Where C.IDtime = ? And CD.IDAccount = ? And C.Choice = ? And COU.Start_date = ?";
+                    + "Where C.IDtime = ? And CD.ID_Account = ? And C.Choice = ? And COU.Start_date = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, time_id);
             pst.setInt(2, idaccount);
@@ -310,7 +310,7 @@ public class ClassDetailDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
-                    + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
+                    + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN [ClassDate] CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
                     + "Where C.Class_ID = ?";
             PreparedStatement pst = cn.prepareStatement(s);

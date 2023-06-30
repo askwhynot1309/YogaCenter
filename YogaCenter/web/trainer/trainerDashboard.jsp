@@ -7,7 +7,7 @@
         <title>Staff Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="css/staff/staff.css">
+        <link rel="stylesheet" href="css/admin/admin.css">
     </head>
 
     <body>
@@ -24,6 +24,12 @@
                     <a href="/YogaCenter/manageuser">
                         <i class="fas fa-user icon"></i>
                         Manage Trainee
+                    </a>
+                </li>
+                <li>
+                    <a href="/YogaCenter/TrainerShowCourseList">
+                        <i class="fas fa-book icon"></i>
+                        Course List
                     </a>
                 </li>
                 <li>

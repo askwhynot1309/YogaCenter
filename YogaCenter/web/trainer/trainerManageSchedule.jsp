@@ -40,7 +40,7 @@
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-2" style="padding: 0;">
                     <c:import url="trainerDashboard.jsp"/>
                 </div>
                 <div class="col-md-10">

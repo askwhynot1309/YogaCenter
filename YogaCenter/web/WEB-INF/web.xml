@@ -272,6 +272,18 @@
         <servlet-name>MainController</servlet-name>
         <servlet-class>Controller.MainController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DashboardInformation</servlet-name>
+        <servlet-class>Controller.DashboardInformation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrainerShowCourseList</servlet-name>
+        <servlet-class>Controller.TrainerShowCourseList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrainerShowCourseInfo</servlet-name>
+        <servlet-class>Controller.TrainerShowCourseInfo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -543,6 +555,18 @@
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/request</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardInformation</servlet-name>
+        <url-pattern>/DashboardInformation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerShowCourseList</servlet-name>
+        <url-pattern>/TrainerShowCourseList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerShowCourseInfo</servlet-name>
+        <url-pattern>/TrainerShowCourseInfo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
