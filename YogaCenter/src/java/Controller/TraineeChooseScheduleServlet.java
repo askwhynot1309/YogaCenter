@@ -36,26 +36,33 @@ public class TraineeChooseScheduleServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            try {
 
+            } catch (Exception e) {
+            }
             int idaccount = Integer.parseInt(request.getParameter("trainee"));
             int id_course = Integer.parseInt(request.getParameter("id_course"));
             int id_room = Integer.parseInt(request.getParameter("id_room"));
             int option = Integer.parseInt(request.getParameter("option"));
             int id_time = Integer.parseInt(request.getParameter("id_time"));
-            int id_class = Dao.ClassDetailDao.getIDClass(id_room, id_course, id_time, id_time);
-            if (Dao.ClassDetailDao.checkNumTraineeInAClass(id_class) >= 16) {
-                request.setAttribute("ChangeFail", "This class is full of trainees");
-            } else if (Dao.ClassDetailDao.checkTraineeHasTheSameClassInSameTime(id_time, option, idaccount) != null) {
-                request.setAttribute("ChangeFail", "You are currently has another class in this time");
+            int id_class = Dao.ClassDetailDao.getIDClass(id_room, id_course, option, id_time);
+
+            int currentClass_ID = Dao.ClassDetailDao.getCurrentClassID(idaccount, id_course);
+            boolean isExisted = Dao.ClassDetailDao.checkTraineeInCourse(id_course, idaccount);
+            if (isExisted) {
+                if (Dao.ClassDetailDao.checkNumTraineeInAClass(id_class) >= 16) {
+                    request.setAttribute("ChangeFail", "This class is full of trainees");
+                } else if (Dao.ClassDetailDao.checkTraineeHasTheSameClassInSameTime(id_time, option, idaccount) != null) {
+                    request.setAttribute("ChangeFail", "You are currently has another class in this time");
+                } else {
+                    boolean isUpdate = Dao.ClassDetailDao.updateClassID(id_class, currentClass_ID, idaccount);
+                }
             } else {
-                boolean isDelete = Dao.ClassDetailDao.deleteTraineeInClass(idaccount, id_course);
-                if (isDelete) {
-                    Course course = Dao.CourseDao.getInformationOfCourse(id_course);
-                    ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), option);
-                    int insertClass = Dao.ClassDetailDao.insertClassForLearn(id_room, id_time, idaccount, id_course, option);
-                    for (Get30SlotsByCourse dateForSlot : list) {
-                        int insertCheckAttendence = Dao.AttendenceDao.insertDayToCheckAttendence(idaccount, insertClass, dateForSlot.getDay(), 0);
-                    }
+                Course course = Dao.CourseDao.getInformationOfCourse(id_course);
+                ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), option);
+                int insertClass = Dao.ClassDetailDao.insertClassForLearn(id_room, id_time, idaccount, id_course, option);
+                for (Get30SlotsByCourse dateForSlot : list) {
+                    int insertCheckAttendence = Dao.AttendenceDao.insertDayToCheckAttendence(idaccount, insertClass, dateForSlot.getDay(), 0);
                 }
             }
             request.getRequestDispatcher("classbooking").forward(request, response);
