@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -51,6 +52,27 @@ public class ClassDetailDao {
                     String course = table.getNString("Course_Name");
                     ClassDetail classdetails = new ClassDetail(id_class, class_name, id_time, date, idaccount, account, id_course, status, course);
                     kq.add(classdetails);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ClassDetail getCourseExistInClass(int id) throws Exception {
+        ClassDetail kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Select C.IDCourse\n"
+                    + "From Class C\n"
+                    + "Where C.IDCourse = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_course = table.getInt("IDCourse");
+                    kq = new ClassDetail(0, "", 0, 0, Date.valueOf(LocalDate.now()), "", id_course, "");
                 }
             }
             cn.close();

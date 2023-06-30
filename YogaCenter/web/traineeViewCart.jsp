@@ -154,6 +154,70 @@
             background-position-x: 95%;
             background-position-y: center;
         }
+        .hidden {
+            display: none;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        .message {
+            box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+            background: #fff;
+            color: #222;
+            border: 0;
+            border-radius: 0.25rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            z-index: 10000;
+        }
+
+        .message::backdrop {
+            background: rgb(0 0 0 / 0.5);
+            opacity: 0;
+        }
+
+        .message[closing] {
+            animation: slide-up 1000ms forwards, fade-out 500ms forwards;
+        }
+
+        @keyframes fade-out {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes slide-up {
+            0% {
+                transform: translateY(100%);
+            }
+            100% {
+                transform: translateY(0%);
+            }
+        }
+
+        /* extra styling */
+
+        .message {
+            width: 400px;
+
+            & > * {
+                margin: 0 0 0.5rem 0;
+            }
+        }
     </style>
     <body>
         <c:import url="header.jsp"/>
@@ -193,57 +257,99 @@
                                 %>
                                 <form>
                                     <div class="row border-top border-bottom">
-                                    <div class="row main align-items-center">
-                                        <div class="col-2">
-                                            <img style="width: 50px; height: " class="img-fluid" src="img/<%=imgPath%>">
-                                        </div>
-                                        <div class="col">
-                                            <div class="row"><%= courseName%></div>    
-                                        </div>
-                                        <div class="col">
-                                            <%= nf.format(price)%>.000 VNÐ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a href="/YogaCenter/request?action=DeleteCartItems&courseID=<%=cID%>" style="cursor: pointer" class="close">✕</a>
+                                        <div class="row main align-items-center">
+                                            <div class="col-2">
+                                                <img style="width: 50px; height: " class="img-fluid" src="img/<%=imgPath%>">
+                                            </div>
+                                            <div class="col">
+                                                <div class="row"><%= courseName%></div>    
+                                            </div>
+                                            <div class="col">
+                                                <%= nf.format(price)%>.000 VNÐ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a href="/YogaCenter/request?action=DeleteCartItems&courseID=<%=cID%>" style="cursor: pointer" class="close">✕</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 </form>
-                                
+
                                 <%
                                         }
                                     }
                                 %>
 
                             </div>
-                                <div class="back-to-shop"><a href="/YogaCenter/course" style="padding: 0 1vh">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                            <div class="back-to-shop"><a href="/YogaCenter/course" style="padding: 0 1vh">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
                         </div>
                         <div class="col-md-4 summary">
                             <div><h5><b>Summary</b></h5></div>
                             <hr>
                             <div class="row">
                                 <div class="col" style="padding-left:1px;"> ITEMS <span id="checkoutQuantity"></span></div>
-                                <div class="col text-right"><span id="checkoutPrice"><%= nf.format(totalMoney) %>.000</span> VNĐ</div>
+                                <div class="col text-right"><span id="checkoutPrice"><%= nf.format(totalMoney)%>.000</span> VNĐ</div>
                             </div>
                             <form action="/YogaCenter/request" method="POST">
                                 <p>PAYMENT METHOD</p>
                                 <select name="method">
                                     <option class="text-muted" value="0">CASH</option>
                                     <option class="text-muted" value="1">BANK TRANSFER</option>
+                                    <option class="text-muted" value="2">YOUR ACCOUNT MONEY</option>
                                 </select>
 
                                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                                     <div class="col">TOTAL PRICE</div>
-                                    <div class="col text-right"><span id="checkoutPriceMore"><%= nf.format(totalMoney) %>.000</span> VNĐ</div>
+                                    <div class="col text-right"><span id="checkoutPriceMore"><%= nf.format(totalMoney)%>.000</span> VNĐ</div>
                                 </div>
+                                <input name="total" value="<%= totalMoney%>" hidden="">
                                 <button type="submit" value="saveOrder" name="action" class="btn">CHECKOUT</button>
                             </form>
                         </div>
                     </div>
-
+                    <c:set var="message" value="${requestScope.message}"/>
+                    <c:if test="${message != null}">
+                        <div id="overlay" class="overlay"></div>
+                        <div class="message" id="message" style="width: 400px">
+                            <h3 style="text-align: center; color: blue">Message</h3>
+                            <p>There is not enough money in your account right now. Please choose a payment method to pay the rest.</p>
+                            <p>Amount to be paid : ${message} VNĐ</p>
+                            <div>
+                                <form method="POST" action="/YogaCenter/request">
+                                    PAYMENT METHOD : <select name="method">
+                                        <option class="text-muted" value="0">CASH</option>
+                                        <option class="text-muted" value="1">BANK TRANSFER</option>
+                                    </select><br>
+                                    <input name="total" value="${message}" hidden="">
+                                    <div style="display: flex; align-items: center; justify-content: space-between">
+                                        <button class="btn btn-primary" name="action" value="Ok" style="width: 75px">Comfirm</button>
+                                        <button class="btn btn-primary btn-close" style="width: 75px">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </div>
 
+        <script>
+            const modal = document.querySelector("#message");
+            const closeModal = document.querySelector(".btn-close");
 
+            closeModal.addEventListener("click", () => {
+                modal.setAttribute("closing", "");
+
+                modal.addEventListener(
+                        "animationend",
+                        () => {
+                    modal.removeAttribute("closing");
+                    modal.close();
+                },
+                        {once: true}
+                );
+                modal.classList.add("hidden");
+                overlay.classList.add("hidden");
+            });
+
+        </script>
 
         <script src="js/script.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

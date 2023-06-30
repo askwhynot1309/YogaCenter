@@ -307,6 +307,83 @@ public class SearchValueServlet extends HttpServlet {
                         }
                     }
                 }
+                case "traineeSearchCourse" -> {
+                    int level = Integer.parseInt(request.getParameter("level"));
+                    int status = Integer.parseInt(request.getParameter("status"));
+                    if (level == 0 && status == 0) {
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("CourseList", listCourse);
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        }
+                    } else if (level != 0 && status == 0) {
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevel(search, level);
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("CourseList", listCourse);
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        }
+                    } else if (level != 0 && status == 1) {
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevelAndNewest(search, level);
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("CourseList", listCourse);
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        }
+                    } else if (level != 0 && status == 2) {
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevelAndOldest(search, level);
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("CourseList", listCourse);
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        }
+                    } else if (level == 0 && status == 1) {
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("CourseList", listCourse);
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        }
+                    } else {
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchOldest(search);
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("CourseList", listCourse);
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("CourseLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("courseList.jsp").forward(request, response);
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
