@@ -4,6 +4,8 @@
  */
 package Object;
 
+import java.sql.Date;
+
 /**
  *
  * @author ngmin
@@ -16,6 +18,7 @@ public class Message {
     private int fromClassID;
     private int toClassID;
     private int status;
+    private Date dateSend;
 
     public Message(int messageID, int fromUserID, int toUserID, int fromClassID, int toClassID, int status) {
         this.messageID = messageID;
@@ -26,12 +29,21 @@ public class Message {
         this.status = status;
     }
 
-    public Message(int messageID, int fromUserID, String message, int toUserID, int status) {
+    public Message(int messageID, int fromUserID, String message, int toUserID, Date datesend, int status) {
         this.messageID = messageID;
         this.fromUserID = fromUserID;
         this.message = message;
         this.toUserID = toUserID;
+        this.dateSend = datesend;
         this.status = status;
+    }
+
+    public Date getDateSend() {
+        return dateSend;
+    }
+
+    public void setDateSend(Date dateSend) {
+        this.dateSend = dateSend;
     }
 
     public int getMessageID() {

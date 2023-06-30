@@ -177,6 +177,9 @@ public class MainController extends HttpServlet {
                     case "Cancel":
                         url = "CancelCourseOrderServlet";
                         break;
+                    case "Ok":
+                        url = "PaymentWithAmountAccountServlet";
+                        break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);
             }

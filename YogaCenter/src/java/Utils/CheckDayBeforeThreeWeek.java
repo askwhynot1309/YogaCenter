@@ -15,7 +15,7 @@ public class CheckDayBeforeThreeWeek {
     public static Date getDateBeforeThreeWeek(Date datestatrt){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(datestatrt);
-        calendar.add(Calendar.DAY_OF_YEAR, -22);
+        calendar.add(Calendar.DAY_OF_YEAR, -21);
         Date sevenDaysBefore = new Date(calendar.getTimeInMillis());
         return sevenDaysBefore;
     }

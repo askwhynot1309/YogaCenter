@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -30,8 +29,8 @@ public class MessageDao {
             pst.setInt(1, fromUserID);
             pst.setString(2, message);
             pst.setInt(3, toUserID);
-            pst.setInt(4, status);
-            pst.setDate(5, dateCreate);
+            pst.setDate(4, dateCreate);
+            pst.setInt(5, status);
             pst.executeUpdate();
             result = true;
         }
@@ -53,8 +52,9 @@ public class MessageDao {
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
                     int toUserID = rs.getInt("ID_recieveMessage");
+                    Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    Message messObj = new Message(messageID, fromUserID, message, toUserID, status);
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status);
                     messList.add(messObj);
                 }
             }
@@ -79,8 +79,36 @@ public class MessageDao {
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
                     int toUserID = rs.getInt("ID_recieveMessage");
+                    Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    Message messObj = new Message(messageID, fromUserID, message, toUserID, status);
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID,datesend, status);
+                    messList.add(messObj);
+                }
+            }
+            cn.close();
+        }
+        return messList;
+    }
+    
+    public static ArrayList<Message> getAllMessageByUserIDWithNotRead(int AccountID) throws Exception {
+        ArrayList<Message> messList = new ArrayList<>();
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Message]\n"
+                    + "WHERE ID_recieveMessage = ? and Status = 0";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, AccountID);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int messageID = rs.getInt("ID_Message");
+                    int fromUserID = rs.getInt("ID_sendMessage");
+                    String message = rs.getString("Message");
+                    int toUserID = rs.getInt("ID_recieveMessage");
+                    Date datesend = rs.getDate("DateCreate");
+                    int status = rs.getInt("Status");
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status);
                     messList.add(messObj);
                 }
             }
@@ -103,5 +131,31 @@ public class MessageDao {
             isUpdated = true;
         }
         return isUpdated;
+    }
+    
+    public static Message getMessageByIdMessage(int id) throws Exception{
+        Message kq = null;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Message]\n"
+                    + "WHERE ID_Message = ? ";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int messageID = rs.getInt("ID_Message");
+                    int fromUserID = rs.getInt("ID_sendMessage");
+                    String message = rs.getString("Message");
+                    int toUserID = rs.getInt("ID_recieveMessage");
+                    Date datesend = rs.getDate("DateCreate");
+                    int status = rs.getInt("Status");
+                    kq = new Message(messageID, fromUserID, message, toUserID, datesend, status);
+                }
+            }
+            cn.close();
+        }
+        return kq;
     }
 }

@@ -4,13 +4,12 @@
  */
 package Controller;
 
+import Dao.CourseDao;
 import Object.Account;
-import Object.Course;
-import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ADMIN
  */
-public class DashBoardServlet extends HttpServlet {
+public class PaymentWithAmountAccountServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,24 +36,31 @@ public class DashBoardServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int option = Integer.parseInt(request.getParameter("option"));
-            HttpSession session = request.getSession();
-            Account account = (Account) session.getAttribute("Admin");
-            switch (option) {
-                case 0:
-                    request.getRequestDispatcher("admin/adminDashboard.jsp").forward(request, response);
-                    break;
-                case 1:
-                    request.getRequestDispatcher("staff/staffDashboard.jsp").forward(request, response);
-                    break;
-                case 2:
-                    request.getRequestDispatcher("trainer/trainerDashboard.jsp").forward(request, response);
-                    break;
-                case 3:
-                    request.getRequestDispatcher("trainee/traineeDashboard.jsp").forward(request, response);
-                    break;
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                Account account = (Account) session.getAttribute("account");
+                int ID_Trainee = account.getIdaccount();
+                int method = Integer.parseInt(request.getParameter("method"));
+                BigDecimal totalmoney = BigDecimal.valueOf(Double.parseDouble(request.getParameter("total")));
+                int status;
+                if (method == 0) {
+                    status = 0;
+                } else{
+                    status = 1;
+                } 
+                HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
+                boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
+                cart.clear();
+                if (inserted == true) {
+                    session.removeAttribute("cart");
+                    request.setAttribute("addsuccess", "message");
+                    request.setAttribute("money", totalmoney);
+                    request.getRequestDispatcher("purchase").forward(request, response);
+                } else {
+                    response.sendRedirect("error.html");
+                }
             }
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
     }

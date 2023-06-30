@@ -434,4 +434,36 @@ public class AccountDao {
         }
         return kq;
     }
+
+    public static ArrayList<Account> getAllAccount() throws Exception{
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "Order by ID_Account desc";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    Account account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    kq.add(account);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
 }
