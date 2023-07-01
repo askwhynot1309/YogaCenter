@@ -144,7 +144,10 @@ public class MainController extends HttpServlet {
                     case "viewNotification":
                         url = "viewNotification";
                         break;
-                    case "statusRequest":
+                    case "approveRequest":
+                        url = "changeStatusRequest";
+                        break;
+                    case "rejectRequest":
                         url = "changeStatusRequest";
                         break;
                     case "TrainerManageTrainee":

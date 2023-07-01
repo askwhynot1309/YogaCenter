@@ -20,6 +20,7 @@
 
                     <div class="col-lg-9" style="padding: 0">
                         <div class="container">
+                        <c:set var="trainee" value="${sessionScope.account}"></c:set>
                         <c:set var="registered" value="${requestScope.registered}"></c:set>
                         <c:choose>
                             <c:when test="${registered == null}">
@@ -29,6 +30,13 @@
                                         <c:set var="startDate" value="${requestScope.startDate}"></c:set>
                                         <c:set var="endDate" value="${requestScope.endDate}"></c:set>
                                         <c:set var="courseList" value="${requestScope.courseList}"></c:set>
+
+                                        <c:set var="classDetails" value="${requestScope.classDetails}"></c:set>
+                                        <c:set var="dayChoice" value="${requestScope.dayChoice}"></c:set>
+                                        <c:set var="time" value="${requestScope.Time}"></c:set>
+                                        <c:set var="toTraineeRegistered" value="${requestScope.toTraineeRegistered}"></c:set>
+                                        <c:set var="Course_ID" value="${requestScope.Course_ID}"></c:set>
+
                                             <h2 style="text-align: center;">Request to change class</h2>
                                             <h4 style="text-align: center; color: red;">Starting date: ${startDate}. Due date: before ${endDate}</h4>
 
@@ -37,14 +45,21 @@
                                                 <div class="col-md-10">
                                                     <div class="rounded">
                                                         <div class="table-responsive table-borderless">
-                                                            <table class="table" style="border: solid 1px;">
-                                                                <form action="/YogaCenter/request" method="post">                                                            
+                                                            <form action="/YogaCenter/request" method="post">
+                                                                <table class="table" style="border: solid 1px;">
                                                                     <tr>
-                                                                        <th>Class</th>
+                                                                        <th>Course</th>
                                                                         <th>
-                                                                            <select name="course" id="course">
+                                                                            <select name="txtCourseID">
                                                                                 <c:forEach var="course" items="${requestScope.courseList}">
-                                                                                    <option value="${course.idCourse}">${course.name_course}</option>
+                                                                                    <c:choose>
+                                                                                        <c:when test="${course.idCourse == Course_ID}">
+                                                                                            <option value="${course.idCourse}" selected>${course.name_course}</option>
+                                                                                        </c:when>
+                                                                                        <c:otherwise>
+                                                                                            <option value="${course.idCourse}">${course.name_course}</option>
+                                                                                        </c:otherwise>
+                                                                                    </c:choose>
                                                                                 </c:forEach>                                                                        
                                                                             </select>
                                                                         </th>
@@ -52,12 +67,38 @@
                                                                     <tr>
                                                                         <th>To Trainee ID</th>
                                                                         <th>
-                                                                            Trainee No. <input type="number" id="txtToTraineeID" name="txtToTraineeID" required="">
-                                                                            <input type="checkbox" id="check">
+                                                                            Trainee No. <input type="number" id="txtToTraineeID" name="txtToTraineeID" required="" value="${classDetails.idaccount}">
+                                                                            <button type="submit" name="action" value="checkTrainee">Check Trainee</button>
+                                                                            <c:if test="${classDetails.class_name != null && classDetails.idaccount != null}">
+                                                                                <p>${classDetails.idaccount}</p>
+                                                                            </c:if>
                                                                         </th>
                                                                     </tr>
-                                                                </form>
-                                                            </table>
+
+                                                                    <c:if test="${classDetails.class_name != null && classDetails.idaccount != null}">
+                                                                        <tr>
+                                                                            <th>Class</th>
+                                                                            <th>
+                                                                                <p>${classDetails.class_name}</p>
+                                                                                <p>${dayChoice}</p>
+                                                                                <p>${time}</p>
+                                                                            </th>
+
+                                                                        </tr>
+                                                                    </c:if>
+                                                                </table>
+                                                                <c:if test="${classDetails.class_name != null && classDetails.idaccount != null}">
+                                                                    <c:set var="currentRoomName" value="${requestScope.currentRoomName}"/>
+                                                                    <input type="text" name="txtFromTraineeID" value="${trainee.idaccount}">
+                                                                    <input type="text" name="txtToTraineeID" value="${classDetails.idaccount}">
+                                                                    <input type="text" name="txtFromRoomName" value="${currentRoomName}">
+                                                                    <input type="text" name="txtToRoomName" value="${classDetails.id_class}">
+                                                                    <button type="submit" name="action" value="createRequest">Submit</button> 
+                                                                </c:if>
+                                                                <c:if test="${toTraineeRegistered != null}">
+                                                                    <h4 style="color: red">${toTraineeRegistered}</h4>
+                                                                </c:if>   
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>

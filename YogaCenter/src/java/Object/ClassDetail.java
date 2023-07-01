@@ -23,7 +23,8 @@ public class ClassDetail {
     private int id_course;
     private int status;
     private String course;
-
+    private int Choice;
+    
     public ClassDetail() {
     }
 
@@ -86,6 +87,19 @@ public class ClassDetail {
         this.account = account;
         this.id_course = id_course;
         this.course = course;
+    }
+
+    public ClassDetail(int Class_ID, String Room_name, int time, String datestudy, int Account_ID, String Account_name, int Course_ID, int status, String Course_name, int choice) {
+        this.id_class = Class_ID;
+        this.class_name = Room_name;
+        this.time = time;
+        this.datestudy = datestudy;
+        this.idaccount = Account_ID;
+        this.account = Account_name;
+        this.id_course = Course_ID;
+        this.status = status;
+        this.course = Course_name;
+        this.Choice = choice;
     }
 
     public int getStatus() {
@@ -176,4 +190,16 @@ public class ClassDetail {
         this.course = course;
     }
 
+    public int getChoice() {
+        return Choice;
+    }
+
+    public void setChoice(int Choice) {
+        this.Choice = Choice;
+    }
+
+    @Override
+    public String toString() {
+        return "ClassDetail{" + "id_class=" + id_class + ", id_room=" + id_room + ", class_name=" + class_name + ", time=" + time + ", datestudy=" + datestudy + ", idaccount=" + idaccount + ", date=" + date + ", account=" + account + ", id_course=" + id_course + ", status=" + status + ", course=" + course + ", Choice=" + Choice + '}';
+    }
 }

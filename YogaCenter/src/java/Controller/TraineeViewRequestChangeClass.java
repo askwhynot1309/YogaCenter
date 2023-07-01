@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,34 +37,50 @@ public class TraineeViewRequestChangeClass extends HttpServlet {
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            ArrayList<Message> messList = MessageDao.getAllMessage();
+            try {
+                /* TODO output your page here. You may use following sample code. */
+                ArrayList<Message> messList = MessageDao.getAllMessage();
 
-            ArrayList<Message> messRequest = new ArrayList<>();
-            for (Message messageList : messList) {
-                int ID_Message = messageList.getMessageID();
-                int ID_sendMessage = messageList.getFromUserID();
-                int ID_recieveMessage = messageList.getToUserID();
+                ArrayList<Message> messRequest = new ArrayList<>();
+                for (Message messageList : messList) {
+                    int ID_Message = messageList.getMessageID();
+                    int ID_sendMessage = messageList.getFromUserID();
+                    int ID_recieveMessage = messageList.getToUserID();
+//                    
+                    String mess = messageList.getMessage();
 
-                String mess = messageList.getMessage();
-                String numberPattern = "\\d+";
-                java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(numberPattern);
-                java.util.regex.Matcher matcher = pattern.matcher(mess);
-                int fromClass = 0;
-                int toClass = 0;
+                    Pattern pattern = Pattern.compile("^Course (\\d+) (.*) change Room (\\d+) to Room (\\d+)$");
+                    Matcher matcher = pattern.matcher(mess);
 
-                if (matcher.find()) {
-                    fromClass = Integer.parseInt(matcher.group());
+                    int courseNumber = 0;
+                    String course_Name = "";
+                    int fromClass = 0;
+                    int toClass = 0;
+
+                    if (matcher.matches()) {
+                        // Extract the four parts using group indices
+                        courseNumber = Integer.parseInt(matcher.group(1));
+                        course_Name = matcher.group(2);
+                        fromClass = Integer.parseInt(matcher.group(3));
+                        toClass = Integer.parseInt(matcher.group(4));
+
+                        out.print("<p>" + courseNumber + "</p>");
+                        out.print("<p>" + course_Name + "</p>");
+                        out.print("<p>" + fromClass + "</p>");
+                        out.print("<p>" + toClass + "</p>");
+                    }
+                    out.print("test");
+                    int status = messageList.getStatus();
+//                    
+                    messRequest.add(new Message(courseNumber, ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status));
+//                    
                 }
-                if (matcher.find()) {
-                    toClass = Integer.parseInt(matcher.group());
-                }
-                int status = messageList.getStatus();
-
-                messRequest.add(new Message(ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status));
+                request.setAttribute("messRequest", messRequest);
+                request.getRequestDispatcher("traineeViewRequestChangeClass.jsp").forward(request, response);
+            } catch (Exception e) {
+                out.print(e);
             }
-            request.setAttribute("messRequest", messRequest);
-        request.getRequestDispatcher("traineeViewRequestChangeClass.jsp").forward(request, response);
+
         }
     }
 

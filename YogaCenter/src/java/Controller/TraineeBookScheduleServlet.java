@@ -46,10 +46,8 @@ public class TraineeBookScheduleServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(true);
             Account account = (Account)session.getAttribute("account");
-            out.print("test 1");
             int Course_ID = Integer.parseInt(request.getParameter("courseID"));
             
-            out.print("test");
             Course course = CourseDao.getInformationOfCourse(Course_ID);
             HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(Course_ID);
 
@@ -58,36 +56,34 @@ public class TraineeBookScheduleServlet extends HttpServlet {
             LocalDate startDate = courseDateStart.minusDays(10);
             LocalDate endDate = courseDateStart.minusDays(7);
 
-            ArrayList<Message> messList = MessageDao.getAllMessage();
-
-            ArrayList<Message> messRequest = new ArrayList<>();
-            for (Message messageList : messList) {
-                int ID_Message = messageList.getMessageID();
-                int ID_sendMessage = messageList.getFromUserID();
-                int ID_recieveMessage = messageList.getToUserID();
-
-                String mess = messageList.getMessage();
-                String numberPattern = "\\d+";
-                java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(numberPattern);
-                java.util.regex.Matcher matcher = pattern.matcher(mess);
-                int fromClass = 0;
-                int toClass = 0;
-
-                if (matcher.find()) {
-                    fromClass = Integer.parseInt(matcher.group());
-                }
-                if (matcher.find()) {
-                    toClass = Integer.parseInt(matcher.group());
-                }
-                int status = messageList.getStatus();
-
-                messRequest.add(new Message(ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status));
-            }
-            out.print("test");
+//            ArrayList<Message> messList = MessageDao.getAllMessage();
+//
+//            ArrayList<Message> messRequest = new ArrayList<>();
+//            for (Message messageList : messList) {
+//                int ID_Message = messageList.getMessageID();
+//                int ID_sendMessage = messageList.getFromUserID();
+//                int ID_recieveMessage = messageList.getToUserID();
+//
+//                String mess = messageList.getMessage();
+//                String numberPattern = "\\d+";
+//                java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(numberPattern);
+//                java.util.regex.Matcher matcher = pattern.matcher(mess);
+//                int fromClass = 0;
+//                int toClass = 0;
+//
+//                if (matcher.find()) {
+//                    fromClass = Integer.parseInt(matcher.group());
+//                }
+//                if (matcher.find()) {
+//                    toClass = Integer.parseInt(matcher.group());
+//                }
+//                int status = messageList.getStatus();
+//
+//                messRequest.add(new Message(ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status));
+//            }
             LocalDate currentDate = LocalDate.now();
             out.print(hashChoise.size());
                 request.setAttribute("hashChoise", hashChoise);
-                request.setAttribute("messRequest", messRequest);
                 request.setAttribute("Course_ID", Course_ID);
                 request.setAttribute("startDate", startDate);
                 request.setAttribute("endDate", endDate);
