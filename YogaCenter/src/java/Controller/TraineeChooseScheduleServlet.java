@@ -49,7 +49,7 @@ public class TraineeChooseScheduleServlet extends HttpServlet {
 
             int currentClass_ID = Dao.ClassDetailDao.getCurrentClassID(idaccount, id_course);
             boolean isExisted = Dao.ClassDetailDao.checkTraineeInCourse(id_course, idaccount);
-            if (isExisted) {
+            if (isExisted == true) {
                 if (Dao.ClassDetailDao.checkNumTraineeInAClass(id_class) >= 16) {
                     request.setAttribute("ChangeFail", "This class is full of trainees");
                 } else if (Dao.ClassDetailDao.checkTraineeHasTheSameClassInSameTime(id_time, option, idaccount) != null) {

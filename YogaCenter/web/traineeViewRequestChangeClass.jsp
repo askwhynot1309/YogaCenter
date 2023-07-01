@@ -36,41 +36,44 @@
                                             <form action="/YogaCenter/request" method="post">
                                                 <button type="submit" name="action" value="traineeRequestChangeClass">Create Request</button>
                                             </form>
-                                        <table class="table">
-                                            <thead>
-                                                <tr style="background-color: #1CB0F6;">
-                                                    <th>From trainee</th>
-                                                    <th>From class</th>
-                                                    <th>To trainee</th>
-                                                    <th>To class</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr style="background-color: #1CB0F6;">
+                                                        <th>Course ID</th>
+                                                        <th>From trainee</th>
+                                                        <th>From class</th>
+                                                        <th>To trainee</th>
+                                                        <th>To class</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                 <c:set var="trainee" value="${sessionScope.account}"/>
                                                 <c:forEach var="mess" items="${requestScope.messRequest}">                                                    
                                                     <c:if test="${mess.fromUserID == trainee.idaccount}">
                                                         <tr class="cell-1 ${rowNumber % 2 == 0 ? 'alternate-row' : ''}">
+                                                            <th>${mess.course_ID}</th>
                                                             <th>${mess.fromUserID}</th>
-                                                            <th>Room ${mess.fromClassID}</th>
+                                                            <th>Class ${mess.fromClassID}</th>
                                                             <th>${mess.toUserID}</th>
-                                                            <th>Room ${mess.toClassID}</th>
+                                                            <th>Class ${mess.toClassID}</th>
 
                                                             <c:choose>
                                                                 <c:when test="${mess.status == 0}">
                                                                     <th class="badge badge-warning">wait for confirmation</th>
-                                                                    </c:when>
-                                                                    <c:when test="${mess.status == 1}">
+                                                                </c:when>
+                                                                <c:when test="${mess.status == 1}">
                                                                     <th class="badge badge-primary">Approved</th>
-                                                                    </c:when>
-                                                                    <c:otherwise>
+                                                                </c:when>
+                                                                <c:otherwise>
                                                                     <th class="badge badge-danger">Reject</th>
-                                                                    </c:otherwise>
-                                                                </c:choose>
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </tr>
                                                     </c:if>
                                                     <c:if test="${mess.toUserID == trainee.idaccount && mess.status == 0}">
                                                         <tr class="cell-1 ${rowNumber % 2 == 0 ? 'alternate-row' : ''}">
+                                                            <th>${mess.course_ID}</th>
                                                             <th>${mess.fromUserID}</th>
                                                             <th>Room ${mess.fromClassID}</th>
                                                             <th>${mess.toUserID}</th>
@@ -78,13 +81,12 @@
                                                             <th>
                                                                 <form action="/YogaCenter/request" method="post">
                                                                     <input type="hidden" name="txtCourseID">
-                                                                    <button class="badge badge-success">Approve</button>
+                                                                    <button type="submit" name="action" value="approveRequest"  class="badge badge-success">Approve</button> | 
+                                                                    <button type="submit" name="action" value="rejectRequest" class="badge badge-danger">Reject</button>
                                                                 </form>
-                                                                <a class="badge badge-danger" href="/YogaCenter/request?action=statusRequest&amp;status=1&amp;messageID=${mess.messageID}">Reject</a>
                                                             </th>
                                                         </tr>
                                                     </c:if>
-
                                                 </c:forEach>
                                             </tbody>
                                         </table>

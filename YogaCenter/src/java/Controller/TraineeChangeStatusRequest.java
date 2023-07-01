@@ -37,20 +37,17 @@ public class TraineeChangeStatusRequest extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int newStatus = Integer.parseInt(request.getParameter("status"));
-            int messageID = Integer.parseInt(request.getParameter("messageID"));
-            out.print(newStatus);
-            out.print(messageID);
+            String action = request.getParameter("action");
+            out.print(action);
 
-            if (newStatus == 1) {
-                boolean isUpdate = MessageDao.updateStatusRequest(newStatus, messageID);
-                if (isUpdate) {
-                    response.sendRedirect("home");
-                }
-            } else if (newStatus == 2) {
-                
-            }
-
+//            if (newStatus == 1) {
+//                boolean isUpdate = MessageDao.updateStatusRequest(newStatus, messageID);
+//                if (isUpdate) {
+//                    response.sendRedirect("viewRequest");
+//                }
+//            } else if (newStatus == 2) {
+//                
+//            }
         }
     }
 

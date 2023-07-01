@@ -44,37 +44,31 @@ public class TraineeRequestChangeClassServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(true);
             Account trainee = (Account) session.getAttribute("account");
-            LocalDate startDate = LocalDate.now();
-            LocalDate endDate = LocalDate.now();
+
+            LocalDate startDate = CourseDao.getCourseStartDate(trainee.getIdaccount());
+            LocalDate endDate = CourseDao.getCourseEndDate(trainee.getIdaccount());
             LocalDate currentDate = LocalDate.now();
             ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(trainee.getIdaccount());
             if (!courseList.isEmpty()) {
-                for (Course course : courseList) {
-                    Date courseDate = course.getDate_start();
-                    LocalDate courseDateStart = courseDate.toLocalDate();
-                    startDate = courseDateStart.minusDays(10);
-                    endDate = courseDateStart.minusDays(7);
-
-                    if (currentDate.isAfter(endDate)) {
-                        request.setAttribute("overdue", "Overdue for form application and registration");
-                        request.setAttribute("startDate", startDate);
-                        request.setAttribute("endDate", endDate);
-                        request.setAttribute("courseList", courseList);
-                        request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
-                    } else if (currentDate.isBefore(startDate)) {
-                        request.setAttribute("overdue", "It's not time to registration");
-                        request.setAttribute("startDate", startDate);
-                        request.setAttribute("endDate", endDate);
-                        request.setAttribute("courseList", courseList);
-                        request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
-                    }
+                if (currentDate.isAfter(endDate)) {
+                    request.setAttribute("overdue", "Overdue for form application and registration");
+                    request.setAttribute("startDate", startDate);
+                    request.setAttribute("endDate", endDate);
+                    request.setAttribute("courseList", courseList);
+                    request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
+                } else if (currentDate.isBefore(startDate)) {
+                    request.setAttribute("overdue", "It's not time to registration");
+                    request.setAttribute("startDate", startDate);
+                    request.setAttribute("endDate", endDate);
+                    request.setAttribute("courseList", courseList);
+                    request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
                 }
             } else {
                 request.setAttribute("registered", "You have not registered for any courses yet");
-                
+
                 request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

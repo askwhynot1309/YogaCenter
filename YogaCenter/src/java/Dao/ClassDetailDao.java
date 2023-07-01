@@ -508,9 +508,9 @@ public class ClassDetailDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int class_id = table.getInt("Class_ID");
-                    String room_name = table.getString("Room_Name");
-                    int id_time = table.getInt("IDtime");
+                    int Class_ID = table.getInt("Class_ID");
+                    String Room_name = table.getString("Room_Name");
+                    int Time_ID = table.getInt("IDTime");
                     Date datestudy = table.getDate("DateStudy");
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(datestudy);
@@ -518,17 +518,40 @@ public class ClassDetailDao {
                     int month = calendar.get(Calendar.MONTH) + 1;
                     int day = calendar.get(Calendar.DAY_OF_MONTH);
                     String date = year + "-" + month + "-" + day;
-                    int idaccount = table.getInt("ID_Account");
-                    String account = table.getNString("Name");
+                    int Account_ID = table.getInt("ID_Account");
+                    String Account_name = table.getNString("Name");
+                    int Course_ID = table.getInt("IDCourse");
                     int id_course = table.getInt("IDCourse");
-                    String course = table.getNString("Course_Name");
-                    ClassDetail classdetails = new ClassDetail(class_id, room_name, id_time, date, idaccount, account, id_course, course);
+                    String Course_name = table.getNString("Course_Name");
+                    int Choice = table.getInt("Choice");
+                    ClassDetail classdetails = new ClassDetail(Class_ID, Room_name, Time_ID, date, Account_ID, Account_name, Course_ID, day, Course_name, Choice);
                     kq.add(classdetails);
                 }
             }
             cn.close();
         }
         return kq;
+    }
+
+    public static String getCurrentRoomName(int Trainee_ID, int Course_ID) throws Exception {
+        String Room_name = "";
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "select DISTINCT r.Room_Name\n"
+                    + "from Class c JOIN ClassDetail cd ON c.Class_ID = cd.Class_ID\n"
+                    + "JOIN Account a ON cd.ID_Account =a.ID_Account JOIN ClassDate cdate ON c.Class_ID = cdate.Class_ID\n"
+                    + "JOIN Room r ON c.Room_ID = r.Room_ID\n"
+                    + "JOIN Course cou ON cou.Course_ID = c.IDCourse\n"
+                    + "Where a.Role = 3 AND cd.ID_Account = ? AND C.IDCourse = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, Trainee_ID);
+            pst.setInt(2, Course_ID);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null && rs.next()) {
+                Room_name = rs.getString("Room_Name");
+            }
+        }
+        return Room_name;
     }
 
     public static ClassDetail checkRoomTimeDateHasTheSame(int id_room, int id_time, Date date) throws Exception {
@@ -572,13 +595,15 @@ public class ClassDetailDao {
             pst.setInt(1, Course_ID);
             ResultSet rs = pst.executeQuery();
             if (rs != null && rs.next()) {
-                int ID_Account = rs.getInt("ID_Account");
-                idAccountList.add(ID_Account);
-            }
-            for (Integer integer : idAccountList) {
-                if (Trainee_ID == integer) {
-                    isExisted = true;
+                while (rs.next()) {
+                    int ID_Account = rs.getInt("ID_Account");
+                    idAccountList.add(ID_Account);
                 }
+            }
+        }
+        for (Integer integer : idAccountList) {
+            if (Trainee_ID == integer) {
+                isExisted = true;
             }
         }
         cn.close();

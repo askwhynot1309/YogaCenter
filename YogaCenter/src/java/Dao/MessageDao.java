@@ -30,8 +30,8 @@ public class MessageDao {
             pst.setInt(1, fromUserID);
             pst.setString(2, message);
             pst.setInt(3, toUserID);
-            pst.setInt(4, status);
-            pst.setDate(5, dateCreate);
+            pst.setDate(4, dateCreate);
+            pst.setInt(5, status);            
             pst.executeUpdate();
             result = true;
         }

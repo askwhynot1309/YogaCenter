@@ -4,11 +4,15 @@
  */
 package Object;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ngmin
  */
-public class Message {
+public class Message implements Serializable {
+
+    private int course_ID;
     private int messageID;
     private int fromUserID;
     private String message;
@@ -17,7 +21,8 @@ public class Message {
     private int toClassID;
     private int status;
 
-    public Message(int messageID, int fromUserID, int toUserID, int fromClassID, int toClassID, int status) {
+    public Message(int course_ID, int messageID, int fromUserID, int toUserID, int fromClassID, int toClassID, int status) {
+        this.course_ID = course_ID;
         this.messageID = messageID;
         this.fromUserID = fromUserID;
         this.toUserID = toUserID;
@@ -32,6 +37,14 @@ public class Message {
         this.message = message;
         this.toUserID = toUserID;
         this.status = status;
+    }
+
+    public int getCourse_ID() {
+        return course_ID;
+    }
+
+    public void setCourse_ID(int course_ID) {
+        this.course_ID = course_ID;
     }
 
     public int getMessageID() {
@@ -89,4 +102,5 @@ public class Message {
     public void setToClassID(int toClassID) {
         this.toClassID = toClassID;
     }
+
 }
