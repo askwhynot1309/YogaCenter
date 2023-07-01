@@ -10,6 +10,7 @@
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/trainee/trainee-add-message.css">
+        <link rel="stylesheet" href="css/admin/admin-course.css">
         <style>
             .container {
                 margin-top: 1.5rem;
@@ -262,6 +263,15 @@
                     opacity: 1;
                 }
             }
+            .div{
+                display: flex;
+                justify-content: space-between;
+                line-height: 28px;
+                align-items: center;
+                position: relative;
+                padding: 10px;
+                width: 700px
+            }
         </style>
     </head>
     <body>
@@ -271,10 +281,38 @@
         <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
         <c:set var="ErrorMessage" value="${requestScope.ErrorMessage}"></c:set>
         <c:set var="wrong" value="${requestScope.wrong}"></c:set>
-        <c:set var="currentdate" value="${requestScope.currentdate}"></c:set>
+        <c:set var="currentdate" value="${requestScope.currentDate}"></c:set>
         <c:set var="user" value="${sessionScope.account}"/>
         <c:set var="listCourseAccountActive" value="${requestScope.listCourseAccountActive}"/>
         <div class="container">
+            <div style="display: flex; align-items: center; justify-content: center">
+                <form action="/YogaCenter/request" method="POST" class="form-search">
+                    <div class="div">
+                        <svg class="icon-search" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+                        <input placeholder="Search by Name Course" type="text" name="txtsearch" value="${param.txtsearch}" class="input" style="width: 400px">
+                        <input name="option" value="traineeSearchCourse" hidden="">
+                        <c:if test="${CourseLevel != null && !CourseLevel.isEmpty()}">
+                            <select name="level">
+                                <option value="0"></option>
+                                <c:forEach var="level" items="${CourseLevel}">
+                                    <option value="${level.getIdLevel()}">${level.getLevel_Name()}</option>
+                                </c:forEach>
+                            </select>
+                        </c:if>
+                        <c:if test="${CourseLevel == null}">
+                            <select name="level">
+                                <option value="0"></option>
+                            </select>
+                        </c:if>
+                        <select name="status">
+                            <option value="0"></option>
+                            <option value="1">Newest</option>
+                            <option value="2">Oldest</option>
+                        </select>
+                        <button name="action" value="search" class="btn-search">Search</button>
+                    </div>
+                </form>
+            </div>
             <div style="width: 100%; padding: 10px; background: #009879; margin-bottom: 20px">
                 <h3 style="text-transform: uppercase">courses in Yoga Center</h3>
             </div>
@@ -312,11 +350,21 @@
                                                     </div>
                                                 </div>
                                             </c:when>
-                                            <c:when test="${user != null && course.status == 0 && currentdate.after(course.date_close)}">
+                                            <c:when test="${user != null && (currentdate.after(course.date_close) || currentdate.equals(course.date_close))}">
                                                 <div style="position: absolute; bottom: 10px; width: 90%">
                                                     <div style="text-align: center">
                                                         <p style="color: red">The course has been closed.</p>
                                                     </div>
+                                                    <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
+                                                        <span class="top-key"></span>
+                                                        <span class="text">View more</span>
+                                                        <span class="bottom-key-1"></span>
+                                                        <span class="bottom-key-2"></span>
+                                                    </a>
+                                                </div>
+                                            </c:when>
+                                            <c:when test="${user != null && course.status == 1}">
+                                                <div style="position: absolute; bottom: 10px; width: 90%">
                                                     <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
                                                         <span class="top-key"></span>
                                                         <span class="text">View more</span>
@@ -355,7 +403,7 @@
                                                     </a>
                                                 </div>
                                             </c:when>
-                                            <c:otherwise>
+                                            <c:when test="${user == null && course.status == 0}">
                                                 <div style="position: absolute; bottom: 10px; width: 90%">
                                                     <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
                                                         <span class="top-key"></span>
@@ -369,7 +417,7 @@
                                                         </a>
                                                     </button>
                                                 </div>
-                                            </c:otherwise>
+                                            </c:when>
                                         </c:choose>
                                     </div>
                                 </div>

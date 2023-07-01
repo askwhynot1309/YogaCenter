@@ -284,6 +284,14 @@
         <servlet-name>TraineeSaveOrderBanking</servlet-name>
         <servlet-class>Controller.TraineeSaveOrderBanking</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminMessageServlet</servlet-name>
+        <servlet-class>Controller.AdminMessageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PaymentWithAmountAccountServlet</servlet-name>
+        <servlet-class>Controller.PaymentWithAmountAccountServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -567,6 +575,14 @@
     <servlet-mapping>
         <servlet-name>TraineeSaveOrderBanking</servlet-name>
         <url-pattern>/bankingPayment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminMessageServlet</servlet-name>
+        <url-pattern>/message</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentWithAmountAccountServlet</servlet-name>
+        <url-pattern>/PaymentWithAmountAccountServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -4,12 +4,14 @@
  */
 package Controller;
 
-import Dao.MessageDao;
 import Object.Account;
+import Object.ClassDetail;
+import Object.Course;
 import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +36,7 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String account = request.getParameter("account");
             String password = request.getParameter("password");
@@ -45,6 +47,22 @@ public class LoginServlet extends HttpServlet {
                 if (accountLogin.getStatus() == 0) {
                     switch (accountLogin.getRole()) {
                         case 0:
+                            ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserIDWithNotRead(accountLogin.getIdaccount());
+                            Date currentdate = new Date(System.currentTimeMillis());
+                            ArrayList<Course> newlist = new ArrayList<>();
+                            ArrayList<Course> listCourseTraineeSingin = Dao.CourseDao.getCourseHaveTraineeSignInCourse(currentdate);
+                            for (Course course : listCourseTraineeSingin) {
+                                if (Dao.ClassDetailDao.getCourseExistInClass(course.getIdCourse()) == null) {
+                                    newlist.add(course);
+                                }
+                            }
+                            if (!newlist.isEmpty()) {
+                                boolean insertMessage = Dao.MessageDao.createRequestChangeClass(accountLogin.getIdaccount(), "There is a course to create a class, you need to create a class now!!!!", accountLogin.getIdaccount(), 0, currentdate);
+                                if (insertMessage) {
+                                    request.setAttribute("message", "message");
+                                }
+                            }
+                            session.setAttribute("Message", listMessage);
                             session.setAttribute("Admin", accountLogin);
                             request.getRequestDispatcher("/request?action=DashBoard&option=0").forward(request, response);
                             break;
