@@ -816,33 +816,33 @@ public class CourseDao {
         cn.close();
         return courseList;
     }
-    
-    public static LocalDate getCourseStartDate(int Trainee_ID) throws Exception{
+
+    public static LocalDate getCourseStartDate(int Trainee_ID) throws Exception {
         LocalDate startDate = LocalDate.now();
         ArrayList<Course> courseList = getAllCourseByTraineeID(Trainee_ID);
         if (!courseList.isEmpty()) {
-                for (Course course : courseList) {
-                    Date courseDate = course.getDate_start();
-                    LocalDate courseDateStart = courseDate.toLocalDate();
-                    startDate = courseDateStart.minusDays(5);
-                }
+            for (Course course : courseList) {
+                Date courseDate = course.getDate_start();
+                LocalDate courseDateStart = courseDate.toLocalDate();
+                startDate = courseDateStart.minusDays(5);
             }
+        }
         return startDate;
     }
-    
-    public static LocalDate getCourseEndDate(int Trainee_ID) throws Exception{
+
+    public static LocalDate getCourseEndDate(int Trainee_ID) throws Exception {
         LocalDate endDate = LocalDate.now();
         ArrayList<Course> courseList = getAllCourseByTraineeID(Trainee_ID);
         if (!courseList.isEmpty()) {
-                for (Course course : courseList) {
-                    Date courseDate = course.getDate_start();
-                    LocalDate courseDateStart = courseDate.toLocalDate();
-                    endDate = courseDateStart.minusDays(3);
-                }
+            for (Course course : courseList) {
+                Date courseDate = course.getDate_start();
+                LocalDate courseDateStart = courseDate.toLocalDate();
+                endDate = courseDateStart.minusDays(3);
             }
+        }
         return endDate;
     }
-  
+
     public static ArrayList<Course> getCourseHaveTraineeSignInCourse(Date date) throws Exception {
         ArrayList<Course> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -860,6 +860,40 @@ public class CourseDao {
                 while (table.next()) {
                     int course_id = table.getInt("Course_ID");
                     Course course = new Course(course_id, "", "", BigDecimal.valueOf(0), date, date, 0, "", "", "", 0, "", 0);
+                    kq.add(course);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ArrayList<Course> trainerGetAllCourse() throws Exception {
+        ArrayList<Course> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
+                    + "where Status = 0\n"
+                    + "Order by Course_ID desc";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int course_id = table.getInt("Course_ID");
+                    String course_name = table.getNString("Course_Name");
+                    String course_img = table.getString("Img");
+                    BigDecimal course_fee = table.getBigDecimal("Course_Fee");
+                    Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
+                    int slot = table.getInt("Slot");
+                    String description = table.getNString("Description");
+                    String learnt = table.getNString("Objective");
+                    String summary = table.getNString("Summary");
+                    int level = table.getInt("ID_Level");
+                    String name_level = table.getNString("Level_Name");
+                    int status = table.getInt("Status");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
                     kq.add(course);
                 }
             }

@@ -60,9 +60,9 @@ public class InformationServlet extends HttpServlet {
                 case "classDetail":
                     Date date = Date.valueOf(request.getParameter("date"));
                     int id_account = Integer.parseInt(request.getParameter("acc"));
-                    ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id , date, id_account);
+                    ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id, date, id_account);
                     ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(information.getTime(), information.getClass_name(), information.getDate(), information.getId_course());
-                     ArrayList<AccountAttendence> listAttendTrainer = Dao.AttendenceDao.getAccountToAttendence(information.getDate());
+                    ArrayList<AccountAttendence> listAttendTrainer = Dao.AttendenceDao.getAccountToAttendence(information.getDate());
                     if (listTrainee.isEmpty()) {
                         request.setAttribute("InforClass", information);
                         request.getRequestDispatcher("admin/adminInforClass.jsp").forward(request, response);
@@ -78,7 +78,7 @@ public class InformationServlet extends HttpServlet {
                     request.getRequestDispatcher("staff/staffInforCourse.jsp").forward(request, response);
                     break;
                 case "staffClassDetail":
-                     Date staffdate = Date.valueOf(request.getParameter("date"));
+                    Date staffdate = Date.valueOf(request.getParameter("date"));
                     int staff_id_account = Integer.parseInt(request.getParameter("acc"));
                     ClassDetail infor = Dao.ClassDetailDao.getClassDetailById(id, staffdate, staff_id_account);
                     ArrayList<Account> listTrainees = Dao.UserDao.getAllTraineeInTimeAndRoom(infor.getTime(), infor.getClass_name(), infor.getDate(), infor.getId_course());
@@ -96,7 +96,7 @@ public class InformationServlet extends HttpServlet {
                     }
                     break;
                 case "staffChangeClass":
-                     Date Staffdate = Date.valueOf(request.getParameter("date"));
+                    Date Staffdate = Date.valueOf(request.getParameter("date"));
                     int Staff_id_account = Integer.parseInt(request.getParameter("acc"));
                     ClassDetail in = Dao.ClassDetailDao.getClassDetailById(id, Staffdate, Staff_id_account);
                     ArrayList<Room> room = Dao.RoomDao.getAllRoomActive();
@@ -116,7 +116,7 @@ public class InformationServlet extends HttpServlet {
                     break;
                 case "trainerClassDetail":
                     session = request.getSession(true);
-                     Date trainer_date = Date.valueOf(request.getParameter("date"));
+                    Date trainer_date = Date.valueOf(request.getParameter("date"));
                     int trainer_id_account = Integer.parseInt(request.getParameter("acc"));
                     ClassDetail trainerinformation = Dao.ClassDetailDao.getClassDetailById(id, trainer_date, trainer_id_account);
                     ArrayList<Account> trainerlistTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformation.getTime(), trainerinformation.getClass_name(), trainerinformation.getDate(), trainerinformation.getId_course());
@@ -180,6 +180,10 @@ public class InformationServlet extends HttpServlet {
                         request.setAttribute("getDetailMessage", getDetailMessage);
                         request.getRequestDispatcher("trainer/trainerMessageDetail.jsp").forward(request, response);
                     }
+                    break;
+                case "trainerCourseInfo":
+                    request.setAttribute("informationCourse", info);
+                    request.getRequestDispatcher("trainer/trainerViewCourseInfo.jsp").forward(request, response);
                     break;
             }
         } catch (Exception e) {
