@@ -38,16 +38,36 @@ public class TraineeChangeStatusRequest extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String action = request.getParameter("action");
-            out.print(action);
+            int messageID = Integer.parseInt(request.getParameter("txtMessageID"));
 
-//            if (newStatus == 1) {
-//                boolean isUpdate = MessageDao.updateStatusRequest(newStatus, messageID);
-//                if (isUpdate) {
-//                    response.sendRedirect("viewRequest");
-//                }
-//            } else if (newStatus == 2) {
-//                
-//            }
+            int txtFromTraineeID = Integer.parseInt(request.getParameter("txtFromTraineeID"));
+            int txtFromClassID = Integer.parseInt(request.getParameter("txtFromClassID"));
+            int txtToUserID = Integer.parseInt(request.getParameter("txtToUserID"));
+            int txtToClassID = Integer.parseInt(request.getParameter("txtToClassID"));
+
+            out.print(action);
+            boolean isUpdate = false;
+            switch (action) {
+                case "rejectRequest":
+                    isUpdate = MessageDao.updateStatusRequest(2, messageID);
+                    
+                    if (isUpdate) {
+                        response.sendRedirect("viewRequest");
+                    }
+                    break;
+                case "approveRequest":
+                    isUpdate = MessageDao.changeClassByRequest(txtFromTraineeID, txtFromClassID, txtToUserID, txtToClassID);
+                    
+                    isUpdate = false;
+                    isUpdate = MessageDao.updateStatusRequest(1, messageID);
+                    
+                    if (isUpdate) {
+                        response.sendRedirect("viewRequest");
+                    }
+                    break;
+                default:
+                    throw new AssertionError();
+            }
         }
     }
 

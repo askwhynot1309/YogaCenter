@@ -30,7 +30,7 @@ public class MessageDao {
             pst.setString(2, message);
             pst.setInt(3, toUserID);
             pst.setDate(4, dateCreate);
-            pst.setInt(5, status);            
+            pst.setInt(5, status);
             pst.executeUpdate();
             result = true;
         }
@@ -116,6 +116,32 @@ public class MessageDao {
         }
         return messList;
     }
+    
+    public static ArrayList<Message> getAllMessageByUserIDAndStatus0(int AccountID) throws Exception {
+        ArrayList<Message> messList = new ArrayList<>();
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Message]\n"
+                    + "WHERE ID_recieveMessage = ? AND Status = 0";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, AccountID);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int messageID = rs.getInt("ID_Message");
+                    int fromUserID = rs.getInt("ID_sendMessage");
+                    String message = rs.getString("Message");
+                    int toUserID = rs.getInt("ID_recieveMessage");
+                    int status = rs.getInt("Status");
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, status);
+                    messList.add(messObj);
+                }
+            }
+            cn.close();
+        }
+        return messList;
+    }
 
     public static boolean updateStatusRequest(int newStatus, int messageID) throws Exception {
         boolean isUpdated = false;
@@ -129,6 +155,49 @@ public class MessageDao {
             pst.setInt(2, messageID);
             pst.executeUpdate();
             isUpdated = true;
+        }
+        return isUpdated;
+    }
+
+    public static boolean changeClassByRequest(int fromTraineeID, int fromClassID, int toTraineeID, int toClassID) throws Exception {
+        boolean isUpdated = false;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "UPDATE [dbo].[CheckAttendance] \n"
+                    + "SET ID_Trainee = ? \n"
+                    + "WHERE ID_Class = ? AND ID_Trainee = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, toTraineeID);
+            pst.setInt(2, fromClassID);
+            pst.setInt(3, fromTraineeID);
+            pst.executeUpdate();
+
+            sql = "UPDATE [dbo].[ClassDetail]\n"
+                    + "SET ID_Account = ?\n"
+                    + "WHERE Class_ID = ? AND ID_Account = ?";
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, toTraineeID);
+            pst.setInt(2, fromClassID);
+            pst.setInt(3, fromTraineeID);
+            pst.executeUpdate();
+
+            sql = "UPDATE [dbo].[CheckAttendance] \n"
+                    + "SET ID_Trainee = ? \n"
+                    + "WHERE ID_Class = ? AND ID_Trainee = ?";
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, fromTraineeID);
+            pst.setInt(2, toClassID);
+            pst.setInt(3, toTraineeID);
+            pst.executeUpdate();
+
+            sql = "UPDATE [dbo].[ClassDetail]\n"
+                    + "SET ID_Account = ?\n"
+                    + "WHERE Class_ID = ? AND ID_Account = ?";
+            pst = cn.prepareStatement(sql);
+            pst.setInt(1, fromTraineeID);
+            pst.setInt(2, toClassID);
+            pst.setInt(3, toTraineeID);
+            pst.executeUpdate();
         }
         return isUpdated;
     }

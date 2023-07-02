@@ -31,7 +31,7 @@
 
             <c:set var="account" value="${sessionScope.account}"/>
             <c:if test="${account != null}">
-                <c:set var="notiList" value="${MessageDao.getAllMessageByUserID(account.idaccount)}"></c:set>
+                <c:set var="notiList" value="${MessageDao.getAllMessageByUserIDAndStatus0(account.idaccount)}"></c:set>
                     <div class="iconTrainee">
                         <div class="dropdown" style="cursor: pointer">
                             <span class="fa-solid fa-user fa-2xl"></span>
@@ -77,8 +77,13 @@
                     </div>
                     <div class='custom-cart-wrapper'>
                         <a href="/YogaCenter/request?action=viewNotification&accountID=${account.idaccount}" class="fa-solid fa-bell fa-2xl"></a>
-                        <div id='cartQuantity' class='custom-cart'>${notiList.size()}</div>
+                        <c:choose>
+                            <c:when test="${notiList.size() > 0}">
+                                <div id='cartQuantity' class='custom-cart'>${notiList.size()}</div>
+                            </c:when>
+                        </c:choose>
                     </div>
+
                     <div class='custom-cart-wrapper'>
                         <a href="/YogaCenter/viewcart" class="fa-solid fa-cart-shopping fa-2xl"></a>
                         <c:choose>

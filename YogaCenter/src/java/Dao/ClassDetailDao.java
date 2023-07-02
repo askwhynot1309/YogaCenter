@@ -581,7 +581,7 @@ public class ClassDetailDao {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, Course_ID);
             ResultSet rs = pst.executeQuery();
-            if (rs != null && rs.next()) {
+            if (rs != null) {
                 while (rs.next()) {
                     int ID_Account = rs.getInt("ID_Account");
                     idAccountList.add(ID_Account);
@@ -591,6 +591,7 @@ public class ClassDetailDao {
         for (Integer integer : idAccountList) {
             if (Trainee_ID == integer) {
                 isExisted = true;
+                break;
             }
         }
         cn.close();

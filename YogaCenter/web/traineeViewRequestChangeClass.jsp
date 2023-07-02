@@ -49,7 +49,49 @@
                                                 </thead>
                                                 <tbody>
                                                 <c:set var="trainee" value="${sessionScope.account}"/>
-                                                <c:forEach var="mess" items="${requestScope.messRequest}">                                                    
+                                                <c:forEach var="mess" items="${requestScope.messRequest}">      
+                                                    <c:if test="${mess.toUserID == trainee.idaccount && mess.status == 0}">
+                                                        <tr class="cell-1 ${rowNumber % 2 == 0 ? 'alternate-row' : ''}">
+                                                            <th>${mess.course_ID}</th>
+                                                            <th>${mess.fromUserID}</th>
+                                                            <th>Room ${mess.fromClassID}</th>
+                                                            <th>${mess.toUserID}</th>
+                                                            <th>Room ${mess.toClassID}</th>
+                                                            <th>
+                                                                <form action="/YogaCenter/request" method="post">
+                                                                    <input type="hidden" name="txtCourseID">
+                                                                    <input type="hidden" name="txtMessageID" value="${mess.messageID}">
+                                                                    <input type="hidden" name="txtFromTraineeID" value="${mess.fromUserID}">
+                                                                    <input type="hidden" name="txtFromClassID" value="${mess.fromClassID}">
+                                                                    <input type="hidden" name="txtToUserID" value="${mess.toUserID}">
+                                                                    <input type="hidden" name="txtToClassID" value="${mess.toClassID}">
+                                                                    <button type="submit" name="action" value="approveRequest"  class="badge badge-success">Approve</button> | 
+                                                                    <button type="submit" name="action" value="rejectRequest" class="badge badge-danger">Reject</button>
+                                                                </form>
+                                                            </th>
+                                                        </tr>
+                                                    </c:if>
+                                                    <c:if test="${mess.toUserID == trainee.idaccount && mess.status != 0}">
+                                                        <tr class="cell-1 ${rowNumber % 2 == 0 ? 'alternate-row' : ''}">
+                                                            <th>${mess.course_ID}</th>
+                                                            <th>${mess.fromUserID}</th>
+                                                            <th>Class ${mess.fromClassID}</th>
+                                                            <th>${mess.toUserID}</th>
+                                                            <th>Class ${mess.toClassID}</th>
+
+                                                            <c:choose>
+                                                                <c:when test="${mess.status == 0}">
+                                                                    <th class="badge badge-warning">wait for confirmation</th>
+                                                                    </c:when>
+                                                                    <c:when test="${mess.status == 1}">
+                                                                    <th class="badge badge-primary">Approved</th>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                    <th class="badge badge-danger">Reject</th>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                        </tr>
+                                                    </c:if>
                                                     <c:if test="${mess.fromUserID == trainee.idaccount}">
                                                         <tr class="cell-1 ${rowNumber % 2 == 0 ? 'alternate-row' : ''}">
                                                             <th>${mess.course_ID}</th>
@@ -61,30 +103,14 @@
                                                             <c:choose>
                                                                 <c:when test="${mess.status == 0}">
                                                                     <th class="badge badge-warning">wait for confirmation</th>
-                                                                </c:when>
-                                                                <c:when test="${mess.status == 1}">
+                                                                    </c:when>
+                                                                    <c:when test="${mess.status == 1}">
                                                                     <th class="badge badge-primary">Approved</th>
-                                                                </c:when>
-                                                                <c:otherwise>
+                                                                    </c:when>
+                                                                    <c:otherwise>
                                                                     <th class="badge badge-danger">Reject</th>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </tr>
-                                                    </c:if>
-                                                    <c:if test="${mess.toUserID == trainee.idaccount && mess.status == 0}">
-                                                        <tr class="cell-1 ${rowNumber % 2 == 0 ? 'alternate-row' : ''}">
-                                                            <th>${mess.course_ID}</th>
-                                                            <th>${mess.fromUserID}</th>
-                                                            <th>Room ${mess.fromClassID}</th>
-                                                            <th>${mess.toUserID}</th>
-                                                            <th>Room ${mess.toClassID}</th>
-                                                            <th>
-                                                                <form action="/YogaCenter/request" method="post">
-                                                                    <input type="hidden" name="txtCourseID">
-                                                                    <button type="submit" name="action" value="approveRequest"  class="badge badge-success">Approve</button> | 
-                                                                    <button type="submit" name="action" value="rejectRequest" class="badge badge-danger">Reject</button>
-                                                                </form>
-                                                            </th>
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                         </tr>
                                                     </c:if>
                                                 </c:forEach>
