@@ -29,7 +29,7 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String action = request.getParameter("action");
             if (action == null) {
@@ -105,6 +105,12 @@ public class MainController extends HttpServlet {
                     case "AddCourseToCart":
                         url = "TraineeAddToCartServlet";
                         break;
+                    case "checkOutCart":
+                        url = "CheckOut";
+                        break;
+                    case "saveOrderBanking":
+                        url = "bankingPayment";
+                        break;
                     case "saveOrder":
                         url = "TraineeSaveOrderServlet";
                         break;
@@ -138,7 +144,10 @@ public class MainController extends HttpServlet {
                     case "viewNotification":
                         url = "viewNotification";
                         break;
-                    case "statusRequest":
+                    case "approveRequest":
+                        url = "changeStatusRequest";
+                        break;
+                    case "rejectRequest":
                         url = "changeStatusRequest";
                         break;
                     case "TrainerManageTrainee":

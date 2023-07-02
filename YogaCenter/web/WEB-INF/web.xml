@@ -273,6 +273,18 @@
         <servlet-class>Controller.MainController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>TraineeBankPaymentServlet</servlet-name>
+        <servlet-class>Controller.TraineeBankPaymentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TraineeCheckOutCart</servlet-name>
+        <servlet-class>Controller.TraineeCheckOutCart</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TraineeSaveOrderBanking</servlet-name>
+        <servlet-class>Controller.TraineeSaveOrderBanking</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AdminMessageServlet</servlet-name>
         <servlet-class>Controller.AdminMessageServlet</servlet-class>
     </servlet>
@@ -559,6 +571,18 @@
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/request</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeBankPaymentServlet</servlet-name>
+        <url-pattern>/TraineeBankPaymentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeCheckOutCart</servlet-name>
+        <url-pattern>/CheckOut</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TraineeSaveOrderBanking</servlet-name>
+        <url-pattern>/bankingPayment</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminMessageServlet</servlet-name>

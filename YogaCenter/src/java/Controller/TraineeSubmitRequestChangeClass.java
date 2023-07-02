@@ -4,21 +4,18 @@
  */
 package Controller;
 
-import Dao.ClassDetailDao;
 import Dao.CourseDao;
 import Dao.MessageDao;
-import Dao.TimeDao;
 import Object.Course;
 import Object.Message;
-import Utils.Get30SlotsByCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,69 +44,87 @@ public class TraineeSubmitRequestChangeClass extends HttpServlet {
 
             int fromTraineeID = Integer.parseInt(request.getParameter("txtFromTraineeID")); //trainee
             int toTraineeID = Integer.parseInt(request.getParameter("txtToTraineeID"));
-            int fromClassID = Integer.parseInt(request.getParameter("txtFromClassID"));//id room
-            String toClassName = request.getParameter("txtToClassName");
+            String fromClassID = request.getParameter("txtFromRoomName");//id room
+            String toClassName = request.getParameter("txtToRoomName");
             int CourseID = Integer.parseInt(request.getParameter("txtCourseID"));
-            String message = "change Room " + fromClassID + " to " + toClassName;
+
+            String courseName = "";
+            ArrayList<Course> courseList = CourseDao.getAllCourse();
+            for (Course course : courseList) {
+                if (CourseID == course.getIdCourse()) {
+                    courseName = course.getName_course();
+                }
+            }
+
+            String message = "Course " + CourseID + " " + courseName + " change Room " + fromClassID + " to Room " + toClassName;
             Date dateCreate = new Date(System.currentTimeMillis());
 
             boolean result = MessageDao.createRequestChangeClass(fromTraineeID, message, toTraineeID, 0, dateCreate);
             if (result == true) {
                 ArrayList<Message> messList = MessageDao.getAllMessage();
-                out.print("messList size is: " + messList.size());
-                
+//                out.print("messList size is: " + messList.size());
+//                
                 ArrayList<Message> messRequest = new ArrayList<>();
                 for (Message messageList : messList) {
                     int ID_Message = messageList.getMessageID();
                     int ID_sendMessage = messageList.getFromUserID();
                     int ID_recieveMessage = messageList.getToUserID();
-                    
+//                    
                     String mess = messageList.getMessage();
-                    String numberPattern = "\\d+";
-                    java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(numberPattern);
-                    java.util.regex.Matcher matcher = pattern.matcher(mess);
+
+                    Pattern pattern = Pattern.compile("^Course (\\d+) (.*) change Room (\\d+) to Room (\\d+)$");
+                    Matcher matcher = pattern.matcher(mess);
+
+                    int courseNumber = 0;
+                    String course_Name = "";
                     int fromClass = 0;
                     int toClass = 0;
 
-                    if (matcher.find()) {
-                        fromClass = Integer.parseInt(matcher.group());
+                    if (matcher.matches()) {
+                        // Extract the four parts using group indices
+                        courseNumber = Integer.parseInt(matcher.group(1));
+                        course_Name = matcher.group(2);
+                        fromClass = Integer.parseInt(matcher.group(3));
+                        toClass = Integer.parseInt(matcher.group(4));
+
+                        out.print("<p>" + courseNumber + "</p>");
+                        out.print("<p>" + course_Name + "</p>");
+                        out.print("<p>" + fromClass + "</p>");
+                        out.print("<p>" + toClass + "</p>");
                     }
-                    if (matcher.find()) {
-                        toClass = Integer.parseInt(matcher.group());
-                    }
+                    out.print("test");
                     int status = messageList.getStatus();
-                    
-                    messRequest.add(new Message(ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status));
-//                    out.print(messRequest.size());
-                    
+//                    
+                    messRequest.add(new Message(courseNumber, ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status));
+//                    
                 }
-//                out.print(messList.size());
-
-                Course course = CourseDao.getInformationOfCourse(CourseID);
-                HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(CourseID);
-
-                Date courseDate = course.getDate_start();
-                LocalDate courseDateStart = courseDate.toLocalDate();
-                LocalDate startDate = courseDateStart.minusDays(10);
-                LocalDate endDate = courseDateStart.minusDays(7);
-
-                LocalDate currentDate = LocalDate.now();
-                if (!hashChoise.isEmpty()) {
-                    request.setAttribute("hashChoise", hashChoise);
-                    request.setAttribute("Course_ID", CourseID);
-                    request.setAttribute("startDate", startDate);
-                    request.setAttribute("endDate", endDate);
-                    request.setAttribute("messRequest", messRequest);
-                    
-                    if (currentDate.isAfter(endDate)) {
-                        request.setAttribute("overdue", "Overdue for form application and registration");
-                        request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
-                    } else if (currentDate.isBefore(startDate)) {
-                        request.setAttribute("overdue", "It's not time to registration");
-                        request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
-                    }
-                }
-            }else {
+                request.getRequestDispatcher("viewRequest").forward(request, response);
+//
+//                Course course = CourseDao.getInformationOfCourse(CourseID);
+//                HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(CourseID);
+//
+//                Date courseDate = course.getDate_start();
+//                LocalDate courseDateStart = courseDate.toLocalDate();
+//                LocalDate startDate = courseDateStart.minusDays(10);
+//                LocalDate endDate = courseDateStart.minusDays(7);
+//
+//                LocalDate currentDate = LocalDate.now();
+//                if (!hashChoise.isEmpty()) {
+//                    request.setAttribute("hashChoise", hashChoise);
+//                    request.setAttribute("Course_ID", CourseID);
+//                    request.setAttribute("startDate", startDate);
+//                    request.setAttribute("endDate", endDate);
+//                    request.setAttribute("messRequest", messRequest);
+//                    
+//                    if (currentDate.isAfter(endDate)) {
+//                        request.setAttribute("overdue", "Overdue for form application and registration");
+//                        request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
+//                    } else if (currentDate.isBefore(startDate)) {
+//                        request.setAttribute("overdue", "It's not time to registration");
+//                        request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
+//                    }
+//                }
+            } else {
                 response.sendRedirect("error.html");
             }
         }

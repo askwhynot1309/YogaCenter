@@ -299,8 +299,9 @@
                                     <div class="col">TOTAL PRICE</div>
                                     <div class="col text-right"><span id="checkoutPriceMore"><%= nf.format(totalMoney)%>.000</span> VNĐ</div>
                                 </div>
-                                <input name="total" value="<%= totalMoney%>" hidden="">
-                                <button type="submit" value="saveOrder" name="action" class="btn">CHECKOUT</button>
+                                <input type="hidden" name="txtPrice" value="<%=totalMoney%>">
+                                <button type="submit" value="checkOutCart" name="action" class="btn">CHECKOUT</button>
+
                             </form>
                         </div>
                     </div>

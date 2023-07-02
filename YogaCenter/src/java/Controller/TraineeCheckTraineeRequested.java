@@ -5,9 +5,13 @@
 package Controller;
 
 import Dao.ClassDetailDao;
+import Dao.CourseDao;
+import Object.Account;
 import Object.ClassDetail;
+import Object.Course;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -38,59 +43,98 @@ public class TraineeCheckTraineeRequested extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String id = request.getParameter("courseID");
-            out.print(id);
-            
-            
-//            int Trainee_ID = Integer.parseInt(request.getParameter("txtToTraineeID"));
-//            int Course_ID = Integer.parseInt(request.getParameter("txtCourseID"));
-//            int Class_ID = Integer.parseInt(request.getParameter("Class_ID"));
-//            String currentChoice = request.getParameter("txtChoice");
-//            String currentTime = request.getParameter("txtCurrentTime");
-//
-//            ArrayList<ClassDetail> classes = ClassDetailDao.getAllClassDetailsByTrainee(Trainee_ID);
-//            String overdue = request.getParameter("overdue");
-//            String txtStartDate = request.getParameter("startDate");
-//            String txtEndDate = request.getParameter("endDate");
-//
-//            DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-//            LocalDate startDate = LocalDate.parse(txtStartDate, formatter);
-//            LocalDate endDate = LocalDate.parse(txtEndDate, formatter);
-//
-//            String toTraineeName = "";
-//            int toTraineeID = 0;
-//            String toClassName = "";
-//            for (ClassDetail classe : classes) {
-//                toTraineeName = classe.getAccount();
-//                toTraineeID = classe.getIdaccount();
-//                if (classe.getId_course() == Course_ID) {
-//                    toClassName = classe.getClass_name();
-//                    
-//                }
-//            }
-//
-//            if (toClassName.isEmpty()) {
-//                request.setAttribute("message", "this trainee doesn't attend in this class");
-//            } else {
-//                request.setAttribute("toClassName", toClassName);
-//            }
-//            
-//            request.setAttribute("txtCourseID", Course_ID);
-//            request.setAttribute("txClassID", Class_ID);
-//            request.setAttribute("txtChoice", currentChoice);
-//            request.setAttribute("txtIDTime", currentTime);
-//            request.setAttribute("overdue", overdue);
-//            request.setAttribute("startDate", startDate);
-//            request.setAttribute("endDate", endDate);
-//
-//            request.setAttribute("toTraineeName", toTraineeName);
-//            request.setAttribute("toTraineeID", toTraineeID);
+            try {
+                HttpSession session = request.getSession(true);
+                Account trainee = (Account) session.getAttribute("account");
 
-            request.getRequestDispatcher("traineeCreateRequestMoveClass.jsp").forward(request, response);
+                int Course_ID = Integer.parseInt(request.getParameter("txtCourseID"));
+                int toTraineeID = Integer.parseInt(request.getParameter("txtToTraineeID"));
+
+                ArrayList<ClassDetail> classes = Dao.ClassDetailDao.getAllClassDetailsByTrainee(toTraineeID);
+                ClassDetail classDetails = null;
+                int Choice = 0;
+                int Time_ID = 0;
+                for (ClassDetail classe : classes) {
+                    if (classe.getId_course() == Course_ID) {
+                        classDetails = classe;
+                        Choice = classe.getChoice();
+                        Time_ID = classe.getTime();
+                    }
+                }
+                if (classDetails != null) {
+                    String dayChoice = "";
+                    switch (Choice) {
+                        case 1:
+                            dayChoice = "Monday - Wednesday - Friday";
+                            break;
+                        case 2:
+                            dayChoice = "Tuesday - Thurday - Saturday";
+                            break;
+                        case 3:
+                            dayChoice = "Sunday";
+                            break;
+                        default:
+                            throw new AssertionError();
+                    }
+
+                    String Time = "";
+                    switch (Time_ID) {
+                        case 1:
+                            Time = "9h - 11h";
+                            break;
+                        case 2:
+                            Time = "13h - 15h";
+                            break;
+                        case 3:
+                            Time = "16h - 18h";
+                            break;
+                        case 4:
+                            Time = "19h - 21h";
+                            break;
+                        default:
+                            throw new AssertionError();
+                    }
+
+                    request.setAttribute("dayChoice", dayChoice);
+                    request.setAttribute("Time", Time);
+                    request.setAttribute("classDetails", classDetails);
+
+                    int currentRoomName = Dao.ClassDetailDao.getCurrentClassID(trainee.getIdaccount(), Course_ID);
+                    request.setAttribute("currentRoomName", currentRoomName);
+                    out.print(currentRoomName);
+                }else{
+                    request.setAttribute("toTraineeRegistered", "This Trainee doesn't registered in this course");
+                }
+                LocalDate startDate = CourseDao.getCourseStartDate(trainee.getIdaccount());
+                LocalDate endDate = CourseDao.getCourseEndDate(trainee.getIdaccount());
+                LocalDate currentDate = LocalDate.now();
+                ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(trainee.getIdaccount());
+
+                request.setAttribute("Course_ID", Course_ID);
+                
+                if (currentDate.isAfter(endDate)) {
+                    request.setAttribute("overdue", "Overdue for form application and registration");
+                    request.setAttribute("startDate", startDate);
+                    request.setAttribute("endDate", endDate);
+                    request.setAttribute("courseList", courseList);
+                    request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
+                } else if (currentDate.isBefore(startDate)) {
+                    request.setAttribute("overdue", "It's not time to registration");
+                    request.setAttribute("startDate", startDate);
+                    request.setAttribute("endDate", endDate);
+                    request.setAttribute("courseList", courseList);
+                    request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
+                }
+            } catch (Exception e) {
+                out.print(e);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -104,8 +148,10 @@ public class TraineeCheckTraineeRequested extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (Exception ex) {
-            Logger.getLogger(TraineeCheckTraineeRequested.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TraineeCheckTraineeRequested.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -122,8 +168,10 @@ public class TraineeCheckTraineeRequested extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (Exception ex) {
-            Logger.getLogger(TraineeCheckTraineeRequested.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TraineeCheckTraineeRequested.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

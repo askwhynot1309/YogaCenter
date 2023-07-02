@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -815,7 +816,33 @@ public class CourseDao {
         cn.close();
         return courseList;
     }
-
+    
+    public static LocalDate getCourseStartDate(int Trainee_ID) throws Exception{
+        LocalDate startDate = LocalDate.now();
+        ArrayList<Course> courseList = getAllCourseByTraineeID(Trainee_ID);
+        if (!courseList.isEmpty()) {
+                for (Course course : courseList) {
+                    Date courseDate = course.getDate_start();
+                    LocalDate courseDateStart = courseDate.toLocalDate();
+                    startDate = courseDateStart.minusDays(5);
+                }
+            }
+        return startDate;
+    }
+    
+    public static LocalDate getCourseEndDate(int Trainee_ID) throws Exception{
+        LocalDate endDate = LocalDate.now();
+        ArrayList<Course> courseList = getAllCourseByTraineeID(Trainee_ID);
+        if (!courseList.isEmpty()) {
+                for (Course course : courseList) {
+                    Date courseDate = course.getDate_start();
+                    LocalDate courseDateStart = courseDate.toLocalDate();
+                    endDate = courseDateStart.minusDays(3);
+                }
+            }
+        return endDate;
+    }
+  
     public static ArrayList<Course> getCourseHaveTraineeSignInCourse(Date date) throws Exception {
         ArrayList<Course> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
