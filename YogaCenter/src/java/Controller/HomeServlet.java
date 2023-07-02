@@ -40,7 +40,7 @@ public class HomeServlet extends HttpServlet {
             ArrayList<Course> randomList = new ArrayList<>();
             ArrayList<Course> list = Dao.CourseDao.getCourseByDateClose(currentdate);
             ArrayList<Course> liststartDate = Dao.CourseDao.getCourseByDateStart(currentdate);
-            ArrayList<Course> listramdom = Dao.CourseDao.getAllCourse();
+            ArrayList<Course> listramdom = Dao.CourseDao.getAllCourseHaveTopOrder();
             ArrayList<Course> list4Course = Dao.CourseDao.get4Course();
             if (list != null && !list.isEmpty()) {
                 for (Course course : list) {

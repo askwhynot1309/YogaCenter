@@ -41,6 +41,7 @@ public class LoginServlet extends HttpServlet {
             String account = request.getParameter("account");
             String password = request.getParameter("password");
             HttpSession session = request.getSession();
+            Date currentdate = new Date(System.currentTimeMillis());
             String newpassword = Utils.HexPassword.HexPassword(password);
             Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);
             if (accountLogin != null) {
@@ -48,7 +49,6 @@ public class LoginServlet extends HttpServlet {
                     switch (accountLogin.getRole()) {
                         case 0:
                             ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserIDWithNotRead(accountLogin.getIdaccount());
-                            Date currentdate = new Date(System.currentTimeMillis());
                             ArrayList<Course> newlist = new ArrayList<>();
                             ArrayList<Course> listCourseTraineeSingin = Dao.CourseDao.getCourseHaveTraineeSignInCourse(currentdate);
                             for (Course course : listCourseTraineeSingin) {
@@ -64,15 +64,19 @@ public class LoginServlet extends HttpServlet {
                             }
                             session.setAttribute("Message", listMessage);
                             session.setAttribute("Admin", accountLogin);
-                            request.getRequestDispatcher("/request?action=DashBoard&option=0").forward(request, response);
+                            request.getRequestDispatcher("dashboard").forward(request, response);
                             break;
                         case 1:
+                            ArrayList<Message> listMessageStaff = Dao.MessageDao.getAllMessageByUserIDWithNotRead(accountLogin.getIdaccount());
+                            session.setAttribute("Message", listMessageStaff);
                             session.setAttribute("Staff", accountLogin);
-                            request.getRequestDispatcher("/request?action=DashBoard&option=1").forward(request, response);
+                            request.getRequestDispatcher("staffmessage").forward(request, response);
                             break;
                         case 2:
+                            ArrayList<Message> listMessageTrainer = Dao.MessageDao.getAllMessageByUserIDWithNotRead(accountLogin.getIdaccount());
+                            session.setAttribute("Message", listMessageTrainer);
                             session.setAttribute("Trainer", accountLogin);
-                            request.getRequestDispatcher("/request?action=DashBoard&option=2").forward(request, response);
+                            request.getRequestDispatcher("trainermessage").forward(request, response);
                             break;
                         case 3:
                             session.setAttribute("account", accountLogin);

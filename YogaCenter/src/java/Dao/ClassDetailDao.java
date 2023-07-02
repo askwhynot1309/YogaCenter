@@ -59,6 +59,30 @@ public class ClassDetailDao {
         return kq;
     }
 
+    public static ClassDetail getAccountInClassWhenCancelCourse(int id_course, int id_account) throws Exception {
+        ClassDetail kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select C.Class_ID, C.IDCourse, CD.ID_Account\n"
+                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
+                    + "where C.IDCourse = ? and CD.ID_Account = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id_course);
+            pst.setInt(2, id_account);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idclass = table.getInt("Class_ID");
+                    int idcourse = table.getInt("IDCourse");
+                    int idaccount = table.getInt("ID_Account");
+                    kq = new ClassDetail(idclass, 0, 0, idaccount, id_course);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
     public static ClassDetail getCourseExistInClass(int id) throws Exception {
         ClassDetail kq = null;
         Connection cn = Utils.DBUtils.getConnection();
@@ -367,17 +391,19 @@ public class ClassDetailDao {
         return ID_Class;
     }
 
-    public static ClassDetail getClassDetailById(int id) throws Exception {
+    public static ClassDetail getClassDetailById(int id_class, Date date, int id_account) throws Exception {
         ClassDetail kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select *\n"
+            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name\n"
                     + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
-                    + "Where C.Class_ID = ?";
+                    + "Where C.Class_ID = ? And CD.ID_Account = ? And CDATE.DateStudy = ?";
             PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, id);
+            pst.setInt(1, id_class);
+            pst.setInt(2, id_account);
+            pst.setDate(3, date);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
@@ -395,67 +421,6 @@ public class ClassDetailDao {
             cn.close();
         }
         return kq;
-    }
-
-    public static ClassDetail getTrainerByClassID(int Class_ID) {
-        ClassDetail trainer = null;
-        Connection cn = null;
-        int Room_ID = 0;
-        int IDTime = 0;
-        Date DateStudy = null;
-        int IDCourse = 0;
-        int Choice = 0;
-        try {
-            cn = DBUtils.getConnection();
-            cn.setAutoCommit(false);
-            if (cn != null) {
-                String sql = "SELECT *\n"
-                        + "FROM Class C JOIN ClassDate CD ON C.Class_ID = CD.Class_ID\n"
-                        + "WHERE Class_ID = ?";
-                PreparedStatement pst = cn.prepareStatement(sql);
-                pst.setInt(1, Class_ID);
-                ResultSet rs = pst.executeQuery();
-
-                if (rs != null && rs.next()) {
-                    Room_ID = rs.getInt("Room_ID");
-                    IDTime = rs.getInt("IDtime");
-                    DateStudy = rs.getDate("DateStudy");
-                    IDCourse = rs.getInt("IDCourse");
-                    Choice = rs.getInt("Choice");
-                }
-                trainer = new ClassDetail(Class_ID, "minh", IDTime, IDTime, DateStudy, "", IDCourse, "");
-                sql = "SELECT *\n"
-                        + "FROM Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
-                        + "JOIN Account A ON CD.ID_Account = A.ID_Account JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
-                        + "JOIN Course COU ON C.IDCourse = COU.Course_ID\n"
-                        + "JOIN Room R ON R.Room_ID = C.Room_ID\n"
-                        + "WHERE A.Role = 2 AND C.Class_ID = ? AND C.IDtime = ? AND CDATE.DateStudy = ? AND C.IDCourse = ? AND C.Choice = ?";
-                pst = cn.prepareStatement(sql);
-                pst.setInt(1, Class_ID);
-                pst.setInt(2, IDTime);
-                pst.setDate(3, DateStudy);
-                pst.setInt(4, IDCourse);
-                pst.setInt(5, Choice);
-                rs = pst.executeQuery();
-                if (rs != null && rs.next()) {
-                    int class_id = rs.getInt("Class_ID");
-                    String room_name = rs.getString("Room_Name");
-                    int id_time = rs.getInt("IDtime");
-                    Date datestudy = rs.getDate("DateStudy");
-                    int idaccount = rs.getInt("ID_Account");
-                    String account = rs.getNString("Name");
-                    int id_course = rs.getInt("IDCourse");
-                    String course = rs.getNString("Course_Name");
-                    trainer = new ClassDetail(class_id, room_name, id_time, idaccount, datestudy, account, id_course, course);
-                }
-                cn.commit();
-                cn.setAutoCommit(true);
-                cn.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return trainer;
     }
 
     public static HashMap<Integer, ArrayList<Integer>> getChoiceWithAllTrainerInCourseID(int Course_ID) {

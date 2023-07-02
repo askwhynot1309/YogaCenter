@@ -45,6 +45,7 @@ public class InformationServlet extends HttpServlet {
             Course info = Dao.CourseDao.getInformationOfCourse(id);
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
             ArrayList<OrderCourse> listinf = Dao.OrderDao.getInformationOrder(id);
+            HttpSession session = request.getSession();
             switch (option) {
                 case "infCourse":
                     request.setAttribute("informationCourse", info);
@@ -57,13 +58,17 @@ public class InformationServlet extends HttpServlet {
                     request.getRequestDispatcher("admin/adminInforEmployee.jsp").forward(request, response);
                     break;
                 case "classDetail":
-                    ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id);
+                    Date date = Date.valueOf(request.getParameter("date"));
+                    int id_account = Integer.parseInt(request.getParameter("acc"));
+                    ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id , date, id_account);
                     ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(information.getTime(), information.getClass_name(), information.getDate(), information.getId_course());
+                     ArrayList<AccountAttendence> listAttendTrainer = Dao.AttendenceDao.getAccountToAttendence(information.getDate());
                     if (listTrainee.isEmpty()) {
                         request.setAttribute("InforClass", information);
                         request.getRequestDispatcher("admin/adminInforClass.jsp").forward(request, response);
                     } else {
                         request.setAttribute("ListTrainee", listTrainee);
+                        session.setAttribute("listAttend", listAttendTrainer);
                         request.setAttribute("InforClass", information);
                         request.getRequestDispatcher("admin/adminInforClass.jsp").forward(request, response);
                     }
@@ -73,7 +78,9 @@ public class InformationServlet extends HttpServlet {
                     request.getRequestDispatcher("staff/staffInforCourse.jsp").forward(request, response);
                     break;
                 case "staffClassDetail":
-                    ClassDetail infor = Dao.ClassDetailDao.getClassDetailById(id);
+                     Date staffdate = Date.valueOf(request.getParameter("date"));
+                    int staff_id_account = Integer.parseInt(request.getParameter("acc"));
+                    ClassDetail infor = Dao.ClassDetailDao.getClassDetailById(id, staffdate, staff_id_account);
                     ArrayList<Account> listTrainees = Dao.UserDao.getAllTraineeInTimeAndRoom(infor.getTime(), infor.getClass_name(), infor.getDate(), infor.getId_course());
                     ArrayList<AccountAttendence> listAttendence = Dao.AttendenceDao.getAccountToAttendence(infor.getDate());
                     if (listTrainees.isEmpty()) {
@@ -89,7 +96,9 @@ public class InformationServlet extends HttpServlet {
                     }
                     break;
                 case "staffChangeClass":
-                    ClassDetail in = Dao.ClassDetailDao.getClassDetailById(id);
+                     Date Staffdate = Date.valueOf(request.getParameter("date"));
+                    int Staff_id_account = Integer.parseInt(request.getParameter("acc"));
+                    ClassDetail in = Dao.ClassDetailDao.getClassDetailById(id, Staffdate, Staff_id_account);
                     ArrayList<Room> room = Dao.RoomDao.getAllRoomActive();
                     ArrayList<Time> time = Dao.TimeDao.getAllTime();
                     request.setAttribute("roomlist", room);
@@ -106,9 +115,10 @@ public class InformationServlet extends HttpServlet {
                     request.getRequestDispatcher("staff/staffViewInfOrder.jsp").forward(request, response);
                     break;
                 case "trainerClassDetail":
-                    HttpSession session = request.getSession(true);
-
-                    ClassDetail trainerinformation = Dao.ClassDetailDao.getClassDetailById(id);
+                    session = request.getSession(true);
+                     Date trainer_date = Date.valueOf(request.getParameter("date"));
+                    int trainer_id_account = Integer.parseInt(request.getParameter("acc"));
+                    ClassDetail trainerinformation = Dao.ClassDetailDao.getClassDetailById(id, trainer_date, trainer_id_account);
                     ArrayList<Account> trainerlistTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformation.getTime(), trainerinformation.getClass_name(), trainerinformation.getDate(), trainerinformation.getId_course());
                     ArrayList<AccountAttendence> listAttend = Dao.AttendenceDao.getAccountToAttendence(trainerinformation.getDate());
                     Date currentDate = new Date(System.currentTimeMillis());
@@ -149,6 +159,26 @@ public class InformationServlet extends HttpServlet {
                         request.setAttribute("getAllAccount", getAllAccount);
                         request.setAttribute("getDetailMessage", getDetailMessage);
                         request.getRequestDispatcher("admin/adminMessageDetail.jsp").forward(request, response);
+                    }
+                    break;
+                case "staffdetailmessage":
+                    boolean staffChangeStatus = Dao.MessageDao.updateStatusRequest(2, id);
+                    if (staffChangeStatus) {
+                        Message getDetailMessage = Dao.MessageDao.getMessageByIdMessage(id);
+                        ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
+                        request.setAttribute("getAllAccount", getAllAccount);
+                        request.setAttribute("getDetailMessage", getDetailMessage);
+                        request.getRequestDispatcher("staff/staffMessageDetail.jsp").forward(request, response);
+                    }
+                    break;
+                case "trainerdetailmessage":
+                    boolean trainerChangeStatus = Dao.MessageDao.updateStatusRequest(2, id);
+                    if (trainerChangeStatus) {
+                        Message getDetailMessage = Dao.MessageDao.getMessageByIdMessage(id);
+                        ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
+                        request.setAttribute("getAllAccount", getAllAccount);
+                        request.setAttribute("getDetailMessage", getDetailMessage);
+                        request.getRequestDispatcher("trainer/trainerMessageDetail.jsp").forward(request, response);
                     }
                     break;
             }

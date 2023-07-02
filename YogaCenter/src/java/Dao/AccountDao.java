@@ -7,6 +7,7 @@ package Dao;
 import Object.Account;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -131,7 +132,7 @@ public class AccountDao {
         }
         return kq;
     }
-    
+
     public static ArrayList<Account> getAllEmplyeeBySearchByStaff(String search) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -164,8 +165,8 @@ public class AccountDao {
         }
         return kq;
     }
-    
-     public static ArrayList<Account> getAllEmplyeeBySearchByTrainer(String search) throws Exception {
+
+    public static ArrayList<Account> getAllEmplyeeBySearchByTrainer(String search) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -319,8 +320,8 @@ public class AccountDao {
         }
         return kq;
     }
-     
-    public static Account checkTheSameEmail(int role, String email) throws Exception{
+
+    public static Account checkTheSameEmail(int role, String email) throws Exception {
         Account kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -352,8 +353,8 @@ public class AccountDao {
         }
         return kq;
     }
-    
-    public static Account checkTheSameCCCD(int role, String txt_cccd) throws Exception{
+
+    public static Account checkTheSameCCCD(int role, String txt_cccd) throws Exception {
         Account kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -385,8 +386,8 @@ public class AccountDao {
         }
         return kq;
     }
-    
-    public static Account checkTheSamePhone(int role, String txt_phone) throws Exception{
+
+    public static Account checkTheSamePhone(int role, String txt_phone) throws Exception {
         Account kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -418,8 +419,8 @@ public class AccountDao {
         }
         return kq;
     }
-    
-    public static int updateMoneyOfAccount(int id, BigDecimal amount) throws Exception{
+
+    public static int updateMoneyOfAccount(int id, BigDecimal amount) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -435,7 +436,7 @@ public class AccountDao {
         return kq;
     }
 
-    public static ArrayList<Account> getAllAccount() throws Exception{
+    public static ArrayList<Account> getAllAccount() throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -459,6 +460,62 @@ public class AccountDao {
                     int status = table.getInt("Status");
                     int role = table.getInt("Role");
                     Account account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    kq.add(account);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ArrayList<Account> getAllStaff() throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Account\n"
+                    + "where Role = 1\n"
+                    + "Order by ID_Account desc";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    String email = table.getString("Email");
+                    String cccd = table.getString("CCCD");
+                    String acc = table.getString("Account");
+                    String cv = table.getString("CV");
+                    String password = table.getString("Password");
+                    String name = table.getNString("Name");
+                    String phone = table.getString("Phone");
+                    String address = table.getNString("Address");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status");
+                    int role = table.getInt("Role");
+                    Account account = new Account(idTrainer, email, acc, password, name, cccd, cv, phone, address, img, role, status);
+                    kq.add(account);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ArrayList<Account> GetAllTraineeAndTrainerinThisClass(int id, Date olddate) throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from ClassDetail CD JOIN ClassDate CDATE ON CD.Class_ID = CDATE.Class_ID\n"
+                    + "Where CD.Class_ID = ? AND CDATE.DateStudy = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            pst.setDate(2, olddate);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_account = table.getInt("ID_Account");
+                    Account account = new Account(id_account, "", "", "", "", "", "", "", "", "", 0, 0);
                     kq.add(account);
                 }
             }

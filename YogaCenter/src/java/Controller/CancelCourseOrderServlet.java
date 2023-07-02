@@ -5,6 +5,7 @@
 package Controller;
 
 import Object.Account;
+import Object.ClassDetail;
 import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,6 +53,8 @@ public class CancelCourseOrderServlet extends HttpServlet {
                     break;
                 case 0:
                     int changeStatusCancel = Dao.OrderDao.changeStatusAccountOrder(id_order, id_course, status);
+                    ClassDetail getTraineeInThisClassWithCourse = Dao.ClassDetailDao.getAccountInClassWhenCancelCourse(id_course, acc.getIdaccount());
+                    boolean deleteTraineeWhenCancelCourse = Dao.ClassDetailDao.deleteTraineeInClass(acc.getIdaccount(), getTraineeInThisClassWithCourse.getId_class());
                     request.setAttribute("cancel", "message");
                     break;
             }
