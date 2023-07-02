@@ -174,4 +174,27 @@ public class RoomDao {
         }
         return kq;
     }
+
+    public static Room getRoomByID(int id) throws Exception{
+        Room kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Room\n"
+                    + "where Room_ID = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_room = table.getInt("Room_ID");
+                    String room = table.getString("Room_Name");
+                    int status = table.getInt("Status");
+                    kq = new Room(id_room, room, status);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
 }

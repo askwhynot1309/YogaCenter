@@ -123,7 +123,7 @@ public class OrderDao {
         ArrayList<OrderCourse> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select bc.OrderID, bc.ID_Trainee, bc.Method, bc.DateOrder, sp.Status, bd.ID_Course, bd.Quantity, a.Name, c.Course_Name, c.Course_Fee, bd.Status_Account\n"
+            String s = "select bc.OrderID, bc.ID_Trainee, bc.Method, bd.Status_Account, bc.DateOrder, sp.Status, bd.ID_Course, bd.Quantity, a.Name, c.Course_Name, c.Course_Fee\n"
                     + "from BookingCourse bc JOIN BookingDetail bd ON bc.OrderID = bd.Order_ID JOIN StatusPayment sp ON sp.ID_Order = bc.OrderID\n"
                     + "JOIN Account a ON a.ID_Account = bc.ID_Trainee\n"
                     + "JOIN Course c ON c.Course_ID = bd.ID_Course\n"

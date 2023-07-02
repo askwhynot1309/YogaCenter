@@ -75,6 +75,7 @@
         <div class="container">
             <h2>Purchase history</h2>
             <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
+            <c:set var="money" value="${requestScope.money}"></c:set>
                 <div class="container mt-5">
                     <div class="d-flex justify-content-center row">
                         <div class="col-md-12">
@@ -122,7 +123,12 @@
                                             <th rowspan="<%= orderDetail.size()%>"><%= order.getDateorder()%></td>
                                                 <% }
                                                     if (isFirstRow) {%>
+                                                    <c:if test="${money == null}">
                                             <th rowspan="<%= orderDetail.size()%>"><%= nf.format(totalPrice)%>.000 VNĐ</td>
+                                            </c:if>
+                                                <c:if test="${money != null}">
+                                                <th rowspan="<%= orderDetail.size()%>">${money} VNĐ</td>
+                                            </c:if>
                                                 <% }
                                                     switch (order.getMethod()) {
                                                         case 0:

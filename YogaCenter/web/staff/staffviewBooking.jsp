@@ -10,9 +10,50 @@
         <link rel="stylesheet" href="css/admin/admin-table.css">
         <link rel="stylesheet" href="css/admin/admin-course.css">
         <link rel="stylesheet" href="css/admin/admin-course-add.css">
-        <title>Staff Dashboard</title>
+        <title>Management Booking</title>
+        <style>
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 9999;
+            }
+            .message {
+                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+                background: #fff;
+                color: #222;
+                border: 0;
+                border-radius: 0.25rem;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                border-radius: 20px;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                z-index: 10000;
+            }
+
+            .message::backdrop {
+                background: rgb(0 0 0 / 0.5);
+                opacity: 0;
+            }
+        </style>
     </head>
     <body>
+        <c:set var="exist" value="${sessionScope.Staff}"/>
+        <c:if test="${exist == null}">
+            <div id="overlay" class="overlay"></div>
+            <div class="message" id="message">
+                <h3 style="text-align: center; color: red">Message</h3>
+                <p>Your session is timeout. Back to login page to login again!</p>
+                <div style=" text-align: center">
+                    <a class="btn btn-primary" href="login.jsp">Login</a>
+                </div>
+            </div>
+        </c:if>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3" style="padding: 0">
@@ -59,40 +100,28 @@
                                             <td style="width: 450px">
                                                 <form action="/YogaCenter/request" method="POST">
                                                     <c:if test="${order.status == 0}">
-                                                        <p>Cancel 
-                                                            <input type="radio" name="status" value="0" checked="">&ensp;
-                                                            Processing
-                                                            <input type="radio" name="status" disabled="">&ensp;
-                                                            Completed
-                                                            <input type="radio" name="status" disabled="">&ensp;
-                                                            <input name="option" value="orderChange" hidden="">
-                                                            <input name="id" value="${order.id_order}" hidden="">
-                                                            <button name="action" value="change" class="btn-search">Change</button>
-                                                        </p>
+                                                        <select name="status">
+                                                            <option value="2">Cancel</option>
+                                                            <option value="0" selected="">Processing</option>
+                                                            <option value="1">Completed</option>
+                                                        </select>
+                                                        <button name="action" value="change" class="btn-search">Change</button>
                                                     </c:if>
                                                     <c:if test="${order.status == 1}">
-                                                        <p>Cancel 
-                                                            <input type="radio" name="status" value="0">&ensp;
-                                                            Processing
-                                                            <input type="radio" name="status" value="1" checked="">&ensp;
-                                                            Completed
-                                                            <input type="radio" name="status" value="2">&ensp;
-                                                            <input name="option" value="orderChange" hidden="">
-                                                            <input name="id" value="${order.id_order}" hidden="">
-                                                            <button name="action" value="comfirm" class="btn-search">Change</button>
-                                                        </p>
+                                                        <select name="status">
+                                                            <option value="2" disabled="">Cancel</option>
+                                                            <option value="0" disabled="">Processing</option>
+                                                            <option value="1" selected="">Completed</option>
+                                                        </select>
+                                                        <button name="action" value="comfirm" class="btn-search">Change</button>
                                                     </c:if>
                                                     <c:if test="${order.status == 2}">
-                                                        <p>Cancel 
-                                                            <input type="radio" name="status" disabled="">&ensp;
-                                                            Processing
-                                                            <input type="radio" name="status" disabled="">&ensp;
-                                                            Completed
-                                                            <input type="radio" name="status" value="2" checked="">&ensp;
-                                                            <input name="option" value="orderChange" hidden="">
-                                                            <input name="id" value="${order.id_order}" hidden="">
-                                                            <button name="action" value="change" class="btn-search">Change</button>
-                                                        </p>
+                                                        <select name="status">
+                                                            <option value="2" selected="">Cancel</option>
+                                                            <option value="0" disabled="">Processing</option>
+                                                            <option value="1">Completed</option>
+                                                        </select>
+                                                        <button name="action" value="change" class="btn-search">Change</button>
                                                     </c:if>
                                                 </form>
                                             </td>

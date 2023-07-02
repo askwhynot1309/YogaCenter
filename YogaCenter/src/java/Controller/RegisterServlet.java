@@ -57,7 +57,7 @@ public class RegisterServlet extends HttpServlet {
                 request.setAttribute("ErrorMessagePhone", "Phone is invalid");
                 checkValid = false;
             } else if (Utils.CheckValidation.isValidCCCD(cccd) == false) {
-                request.setAttribute("ErrorMessageCCCD", "Citizen identity card is invalid");
+                request.setAttribute("ErrorMessageCccd", "Citizen identity card is invalid");
                 checkValid = false;
             } else if (email.isEmpty() || account.isEmpty() || password.isEmpty() || name.isEmpty() || cccd.isEmpty() || phone.isEmpty() || address.isEmpty()) {
                 request.setAttribute("ErrorMessage", "Fill in all the fields");

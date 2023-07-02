@@ -5,16 +5,57 @@
 <html>
 
     <head>
-        <title>Admin Dashboard</title>
+        <title>Schedule</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/admin/admin.css">
         <link rel="stylesheet" href="css/admin/admin-schedule.css">
         <link rel="stylesheet" href="css/admin/admin-schedule-setup.css">
+        <style>
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 9999;
+            }
+            .message {
+                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+                background: #fff;
+                color: #222;
+                border: 0;
+                border-radius: 0.25rem;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                border-radius: 20px;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                z-index: 10000;
+            }
+
+            .message::backdrop {
+                background: rgb(0 0 0 / 0.5);
+                opacity: 0;
+            }
+        </style>
     </head>
 
     <body>
+        <c:set var="exist" value="${sessionScope.Admin}"/>
+        <c:if test="${exist == null}">
+            <div id="overlay" class="overlay"></div>
+            <div class="message" id="message">
+                <h3 style="text-align: center; color: red">Message</h3>
+                <p>Your session is timeout. Back to login page to login again!</p>
+                <div style=" text-align: center">
+                    <a class="btn btn-primary" href="login.jsp">Login</a>
+                </div>
+            </div>
+        </c:if>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2" style="padding: 0; position: fixed">
@@ -107,7 +148,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Sunday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -120,7 +161,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Monday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -133,7 +174,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Tuesday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -146,7 +187,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Wednesday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></P> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></P> 
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                             </c:otherwise>
@@ -159,7 +200,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Thursday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -172,7 +213,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Friday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -185,7 +226,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Saturday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -203,7 +244,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Sunday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -216,7 +257,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Monday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -229,7 +270,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Tuesday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -242,7 +283,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Wednesday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -255,7 +296,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Thursday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -268,7 +309,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Friday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -281,7 +322,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Saturday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -300,7 +341,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Sunday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -313,7 +354,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Monday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -326,7 +367,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Tuesday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -339,7 +380,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Wednesday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -352,7 +393,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Thursday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -365,7 +406,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Friday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -378,7 +419,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Saturday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -396,7 +437,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Sunday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -409,7 +450,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Monday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -422,7 +463,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Tuesday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -435,7 +476,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Wednesday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -448,7 +489,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Thursday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -461,7 +502,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Friday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>
@@ -474,7 +515,7 @@
                                                                 <c:forEach var="acc" items="${listClass}">
                                                                     <c:choose>
                                                                         <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Saturday'}">
-                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=infclassDetail">${acc.account}(${acc.class_name})</a></p> 
+                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=classDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                         </c:otherwise>

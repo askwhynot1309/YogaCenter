@@ -189,6 +189,7 @@
             </div>
         </div>
         <c:set var="list4Course" value="${requestScope.list4Course}"/>
+        <c:set var="ramdomCourse" value="${requestScope.ramdomCourse}"/>
         <c:if test="${list4Course != null}">
             <div class="slider">
                 <div class="list">
@@ -213,58 +214,32 @@
                 </div>
             </div>
         </c:if>
-        <div class="our-classes">
-            <h1 style="font-weight: 700; text-transform: uppercase">Our class</h1>
-            <div class="main-class">
-                <%
-                    Account account = (Account) session.getAttribute("account");
-                    ArrayList<Course> courseList = CourseDao.getAllCourse();
-                    Collections.shuffle(courseList); // Shuffle the courseList randomly
-                    int count = 0; // Counter to track the number of displayed courses
-                    for (Course course : courseList) {
-                        if (count < 3) { // Display only the first three courses
-                            count++;
-                %>
-                <div class="inner-class" style="height: 450px; position: relative">
-                    <div>
-                        <img style="width: 80%; height: 250px; object-fit: cover" src="img/<%= course.getImg_course()%>" alt=""/>
-                    </div>
-                    <div class="class-content" style="margin-top: 20px; text-align: left">
-                        <h4 style="margin-left: 30px">Name of course : <%= course.getName_course()%></h4>
-                        <h4 style="margin-bottom: 20px; margin-left: 30px">Level : <%= course.getName_level()%></h4>
-                        <%
-                            if (account == null && course.getLevel() == 1) {
-                        %>
-                        <div style="position: absolute; bottom: 0; width: 100%">
-                            <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=<%= course.getIdCourse()%>">
-                                <span class="top-key"></span>
-                                <span class="text">View more</span>
-                                <span class="bottom-key-1"></span>
-                                <span class="bottom-key-2"></span>
-                            </a>
+        <c:if test="${ramdomCourse != null}">
+            <div class="our-classes">
+                <h1 style="font-weight: 700; text-transform: uppercase">Top Courses Booking</h1>
+                <div class="main-class">
+                    <c:forEach var="topcourse" items="${ramdomCourse}">
+                    <div class="inner-class" style="height: 450px; width: 400px; position: relative">
+                        <div>
+                            <img style="width: 80%; height: 250px; object-fit: cover" src="img/${topcourse.img_course}" alt=""/>
                         </div>
-                        <%
-                        } else {
-                        %>
-                        <div style="position: absolute; bottom: 0; width: 100%">
-                            <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=<%= course.getIdCourse()%>">
-                                <span class="top-key"></span>
-                                <span class="text">View more</span>
-                                <span class="bottom-key-1"></span>
-                                <span class="bottom-key-2"></span>
-                            </a>
+                        <div class="class-content" style="margin-top: 20px; text-align: left">
+                            <h4 style="margin-left: 30px">${topcourse.name_course}</h4>
+                            <h4 style="margin-bottom: 20px; margin-left: 30px">Level : ${topcourse.name_level}</h4>
+                            <div style="position: absolute; bottom: 0; width: 100%">
+                                <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${topcourse.idCourse}">
+                                    <span class="top-key"></span>
+                                    <span class="text">View more</span>
+                                    <span class="bottom-key-1"></span>
+                                    <span class="bottom-key-2"></span>
+                                </a>
+                            </div>
                         </div>
-                        <%
-                            }
-                        %>
                     </div>
+                    </c:forEach>
                 </div>
-                <%
-                        }
-                    }
-                %>
             </div>
-        </div>
+        </c:if>
 
 
         <div class="our-instructor">
