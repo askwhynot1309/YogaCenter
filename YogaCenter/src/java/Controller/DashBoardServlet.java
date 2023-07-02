@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import Dao.DashboardDao;
+import Dao.DashboardDao.MessageInfo;
 import Object.Account;
 import Object.Course;
 import Object.Message;
@@ -11,6 +13,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +43,30 @@ public class DashBoardServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             Account account = (Account) session.getAttribute("Admin");
+            HashMap<String, List<?>> orderChartData = DashboardDao.getOrderChart();
+            ArrayList<Integer> levelCount = DashboardDao.getLevelCount();
+            int employeeCount = DashboardDao.getTotalEmployee();
+            int customerCount = DashboardDao.getTotalCustomer();
+            int courseCount = DashboardDao.getTotalCourse();
+            int pendingOrders = DashboardDao.getPendingOrders();
+            ArrayList<MessageInfo> message = DashboardDao.getMessage();
+            request.setAttribute("msg", message);
+
+            List<?> labels = orderChartData.get("labels");
+            List<?> data = orderChartData.get("data");
+
+            if (data.size() > 10) {
+                data = data.subList(data.size() - 10, data.size());
+                labels = labels.subList(labels.size() - 10, labels.size());
+            }
+
+            request.setAttribute("labels", labels);
+            request.setAttribute("data", data);
+            request.setAttribute("level", levelCount);
+            request.setAttribute("employeeCount", employeeCount);
+            request.setAttribute("customerCount", customerCount);
+            request.setAttribute("courseCount", courseCount);
+            request.setAttribute("pendingOrders", pendingOrders);
             request.getRequestDispatcher("admin/adminDashboard.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

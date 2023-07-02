@@ -56,7 +56,7 @@
         </c:if>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-2">
+                <div class="col-lg-2" style="padding: 0">
                     <c:import url="trainerDashboard.jsp"></c:import>
                     </div>
                     <div class="col-lg-10">

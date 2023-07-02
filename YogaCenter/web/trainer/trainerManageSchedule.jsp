@@ -79,10 +79,10 @@
         </c:if>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-2" style="padding: 0; position: fixed">
                     <c:import url="trainerDashboard.jsp"/>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-10" style="margin-left: 250px">
                     <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Yoga Center Schedule</h2>
                     <c:set var="listDays" value="${requestScope.listDay}" />
                     <c:set var="listClass" value="${sessionScope.listClass}" />
