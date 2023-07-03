@@ -5,24 +5,23 @@
 package Controller;
 
 import Dao.MessageDao;
+import Dao.UserDao;
 import Object.Account;
 import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ngmin
  */
-public class TraineeViewNotificationServlet extends HttpServlet {
+public class ClassifyMessageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,14 +37,16 @@ public class TraineeViewNotificationServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(true);
-            Account account = (Account) session.getAttribute("account");
-            int Account_ID = Integer.parseInt(request.getParameter("accountID"));
-            ArrayList<Message> notificationList = MessageDao.getAllMessageByUserIDWithNotRead(Account_ID);
-            if (notificationList != null) {
-                request.setAttribute("notiList", notificationList);
+            int messageID = Integer.parseInt(request.getParameter("messID"));
+            Message message = MessageDao.getMessageByIdMessage(messageID);
+            Account account = UserDao.getAccountByID(message.getFromUserID());
+            switch (account.getRole()) {
+                case 3:
+                    request.getRequestDispatcher("viewRequest").forward(request, response);
+                    break;
+                default:
+                    throw new AssertionError();
             }
-            request.getRequestDispatcher("traineeViewNotification.jsp").forward(request, response);
         }
     }
 
@@ -64,7 +65,7 @@ public class TraineeViewNotificationServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(TraineeViewNotificationServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClassifyMessageServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -82,7 +83,7 @@ public class TraineeViewNotificationServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(TraineeViewNotificationServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClassifyMessageServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

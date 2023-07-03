@@ -23,7 +23,7 @@ public class Message implements Serializable {
     private int status;
     private Date dateSend;
 
-    public Message(int course_ID, int messageID, int fromUserID, int toUserID, int fromClassID, int toClassID, int status) {
+    public Message(int course_ID, int messageID, int fromUserID, int toUserID, int fromClassID, int toClassID, int status, Date dateSend) {
         this.course_ID = course_ID;
         this.messageID = messageID;
         this.fromUserID = fromUserID;
@@ -31,6 +31,7 @@ public class Message implements Serializable {
         this.fromClassID = fromClassID;
         this.toClassID = toClassID;
         this.status = status;
+        this.dateSend = dateSend;
     }
 
     public Message(int messageID, int fromUserID, String message, int toUserID, Date datesend, int status) {

@@ -56,6 +56,7 @@ public class TraineeViewSchedule extends HttpServlet {
                 ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsByTrainee(account.getIdaccount());
                 if (listClass != null && !listClass.isEmpty()) {
                     request.setAttribute("listClass", listClass);
+                    
                 }
 
                 request.getRequestDispatcher("traineeDashBoard.jsp").forward(request, response);

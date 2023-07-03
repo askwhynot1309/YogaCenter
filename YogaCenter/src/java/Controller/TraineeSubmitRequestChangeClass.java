@@ -56,7 +56,7 @@ public class TraineeSubmitRequestChangeClass extends HttpServlet {
                 }
             }
 
-            String message = "Course " + CourseID + " " + courseName + " change Room " + fromClassID + " to Room " + toClassName;
+            String message = "Course " + CourseID + " " + courseName + " change Class " + fromClassID + " to Class " + toClassName;
             Date dateCreate = new Date(System.currentTimeMillis());
 
             boolean result = MessageDao.createRequestChangeClass(fromTraineeID, message, toTraineeID, 0, dateCreate);
@@ -72,7 +72,7 @@ public class TraineeSubmitRequestChangeClass extends HttpServlet {
 //                    
                     String mess = messageList.getMessage();
 
-                    Pattern pattern = Pattern.compile("^Course (\\d+) (.*) change Room (\\d+) to Room (\\d+)$");
+                    Pattern pattern = Pattern.compile("^Course (\\d+) (.*) change Class (\\d+) to Class (\\d+)$");
                     Matcher matcher = pattern.matcher(mess);
 
                     int courseNumber = 0;
@@ -92,10 +92,9 @@ public class TraineeSubmitRequestChangeClass extends HttpServlet {
                         out.print("<p>" + fromClass + "</p>");
                         out.print("<p>" + toClass + "</p>");
                     }
-                    out.print("test");
                     int status = messageList.getStatus();
-//                    
-                    messRequest.add(new Message(courseNumber, ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status));
+                    Date dateSend = messageList.getDateSend();
+                    messRequest.add(new Message(courseNumber, ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status, dateSend));
 //                    
                 }
                 request.getRequestDispatcher("viewRequest").forward(request, response);
