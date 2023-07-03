@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -51,6 +52,51 @@ public class ClassDetailDao {
                     String course = table.getNString("Course_Name");
                     ClassDetail classdetails = new ClassDetail(id_class, class_name, id_time, date, idaccount, account, id_course, status, course);
                     kq.add(classdetails);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ClassDetail getAccountInClassWhenCancelCourse(int id_course, int id_account) throws Exception {
+        ClassDetail kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select C.Class_ID, C.IDCourse, CD.ID_Account\n"
+                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
+                    + "where C.IDCourse = ? and CD.ID_Account = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id_course);
+            pst.setInt(2, id_account);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idclass = table.getInt("Class_ID");
+                    int idcourse = table.getInt("IDCourse");
+                    int idaccount = table.getInt("ID_Account");
+                    kq = new ClassDetail(idclass, 0, 0, idaccount, id_course);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ClassDetail getCourseExistInClass(int id) throws Exception {
+        ClassDetail kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Select C.IDCourse\n"
+                    + "From Class C\n"
+                    + "Where C.IDCourse = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_course = table.getInt("IDCourse");
+                    kq = new ClassDetail(0, "", 0, 0, Date.valueOf(LocalDate.now()), "", id_course, "");
                 }
             }
             cn.close();
@@ -349,13 +395,15 @@ public class ClassDetailDao {
         ClassDetail kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select *\n"
+            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name\n"
                     + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
-                    + "Where C.Class_ID = ?";
+                    + "Where C.Class_ID = ? And CD.ID_Account = ? And CDATE.DateStudy = ?";
             PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, id);
+            pst.setInt(1, id_class);
+            pst.setInt(2, id_account);
+            pst.setDate(3, date);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {

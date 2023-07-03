@@ -37,11 +37,11 @@ public class SearchValueServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String search = request.getParameter("txtsearch");
             String option = request.getParameter("option");
-            
+
             switch (option) {
                 case "searchEmployee":
                     int employeeChoice = Integer.parseInt(request.getParameter("choice"));
@@ -96,7 +96,7 @@ public class SearchValueServlet extends HttpServlet {
                             }
                         }
                         break;
-                        case 1 : {
+                        case 1: {
                             ArrayList<Account> listUser = Dao.UserDao.getAllTraineeBySearchByName(search);
                             if (listUser != null && !listUser.isEmpty()) {
                                 request.setAttribute("listUser", listUser);
@@ -107,7 +107,7 @@ public class SearchValueServlet extends HttpServlet {
                             }
                         }
                         break;
-                        case 2 : {
+                        case 2: {
                             ArrayList<Account> listUserByEmail = Dao.UserDao.getAllTraineeBySearchByEmail(search);
                             if (listUserByEmail != null && !listUserByEmail.isEmpty()) {
                                 request.setAttribute("listUser", listUserByEmail);
@@ -118,7 +118,7 @@ public class SearchValueServlet extends HttpServlet {
                             }
                         }
                         break;
-                        case 3 : {
+                        case 3: {
                             ArrayList<Account> listUserByPhone = Dao.UserDao.getAllTraineeBySearchByPhone(search);
                             if (listUserByPhone != null && !listUserByPhone.isEmpty()) {
                                 request.setAttribute("listUser", listUserByPhone);
@@ -132,7 +132,7 @@ public class SearchValueServlet extends HttpServlet {
                     }
                 }
                 break;
-                case "searchCourse" : {
+                case "searchCourse": {
                     int level = Integer.parseInt(request.getParameter("level"));
                     Date date = new Date(System.currentTimeMillis());
                     if (level == 0) {
@@ -164,7 +164,7 @@ public class SearchValueServlet extends HttpServlet {
                     }
                 }
                 break;
-                case "staffSearchCourse" : {
+                case "staffSearchCourse": {
                     int level = Integer.parseInt(request.getParameter("level"));
                     if (level == 0) {
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
@@ -193,10 +193,10 @@ public class SearchValueServlet extends HttpServlet {
                     }
                 }
                 break;
-                case "staffSearchUser" : {
+                case "staffSearchUser": {
                     int staffchoice = Integer.parseInt(request.getParameter("choice"));
                     switch (staffchoice) {
-                        case 0 : {
+                        case 0: {
                             ArrayList<Account> listUser = Dao.UserDao.getAllTraineeBySearchUser(search);
                             if (listUser != null && !listUser.isEmpty()) {
                                 request.setAttribute("listUser", listUser);
@@ -207,7 +207,7 @@ public class SearchValueServlet extends HttpServlet {
                             }
                         }
                         break;
-                        case 1 : {
+                        case 1: {
                             ArrayList<Account> listUser = Dao.UserDao.getAllTraineeBySearchByName(search);
                             if (listUser != null && !listUser.isEmpty()) {
                                 request.setAttribute("listUser", listUser);
@@ -218,7 +218,7 @@ public class SearchValueServlet extends HttpServlet {
                             }
                         }
                         break;
-                        case 2 : {
+                        case 2: {
                             ArrayList<Account> listUserByEmail = Dao.UserDao.getAllTraineeBySearchByEmail(search);
                             if (listUserByEmail != null && !listUserByEmail.isEmpty()) {
                                 request.setAttribute("listUser", listUserByEmail);
@@ -229,7 +229,7 @@ public class SearchValueServlet extends HttpServlet {
                             }
                         }
                         break;
-                        case 3 : {
+                        case 3: {
                             ArrayList<Account> listUserByPhone = Dao.UserDao.getAllTraineeBySearchByPhone(search);
                             if (listUserByPhone != null && !listUserByPhone.isEmpty()) {
                                 request.setAttribute("listUser", listUserByPhone);
@@ -242,7 +242,7 @@ public class SearchValueServlet extends HttpServlet {
                         break;
                     }
                 }
-                case "staffSearchCourseToSign" : {
+                case "staffSearchCourseToSign": {
                     int level = Integer.parseInt(request.getParameter("level"));
                     int key = Integer.parseInt(request.getParameter("key"));
                     ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(key);
@@ -278,10 +278,10 @@ public class SearchValueServlet extends HttpServlet {
                     }
                 }
                 break;
-                case "TrainerSearchTrainee" : {
+                case "TrainerSearchTrainee": {
                     int trainerchoice = Integer.parseInt(request.getParameter("choice"));
                     switch (trainerchoice) {
-                        case 0 : {
+                        case 0: {
                             ArrayList<Account> listUser = Dao.UserDao.getAllTraineeBySearchUser(search);
                             if (listUser != null && !listUser.isEmpty()) {
                                 request.setAttribute("listUser", listUser);
@@ -292,7 +292,7 @@ public class SearchValueServlet extends HttpServlet {
                             }
                         }
                         break;
-                        case 1 : {
+                        case 1: {
                             ArrayList<Account> listUser = Dao.UserDao.getAllTraineeBySearchByName(search);
                             if (listUser != null && !listUser.isEmpty()) {
                                 request.setAttribute("listUser", listUser);
@@ -303,7 +303,7 @@ public class SearchValueServlet extends HttpServlet {
                             }
                         }
                         break;
-                        case 2 : {
+                        case 2: {
                             ArrayList<Account> listUserByEmail = Dao.UserDao.getAllTraineeBySearchByEmail(search);
                             if (listUserByEmail != null && !listUserByEmail.isEmpty()) {
                                 request.setAttribute("listUser", listUserByEmail);
@@ -314,7 +314,7 @@ public class SearchValueServlet extends HttpServlet {
                             }
                         }
                         break;
-                        case 3 : {
+                        case 3: {
                             ArrayList<Account> listUserByPhone = Dao.UserDao.getAllTraineeBySearchByPhone(search);
                             if (listUserByPhone != null && !listUserByPhone.isEmpty()) {
                                 request.setAttribute("listUser", listUserByPhone);
@@ -328,6 +328,35 @@ public class SearchValueServlet extends HttpServlet {
                     }
                 }
                 break;
+
+                case "TrainerSearchCourse": {
+                    int level = Integer.parseInt(request.getParameter("level"));
+                    if (level == 0) {
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("listCourse", listCourse);
+                            request.setAttribute("listLevel", listLevel);
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("listLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        }
+                    } else {
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevel(search, level);
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("listCourse", listCourse);
+                            request.setAttribute("listLevel", listLevel);
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("listLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,24 +1,26 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package Controller;
 
+import Dao.CourseDao;
 import Object.Account;
-import Object.AccountAttendence;
-import Object.ClassDetail;
-import Object.Course;
-import Object.Level;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ADMIN
  */
-public class TraineeViewClassDetail extends HttpServlet {
+public class PaymentWithAmountAccountServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,19 +36,31 @@ public class TraineeViewClassDetail extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int id = Integer.parseInt(request.getParameter("id"));
-            String DateStudy = request.getParameter("datestudy");
-            ClassDetail classDetail = Dao.ClassDetailDao.getDetailOfClassID(id, DateStudy);
-            ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInClassID(classDetail.getId_class());
-            if (listTrainee.isEmpty()) {
-                request.setAttribute("InforClass", classDetail);
-                request.getRequestDispatcher("traineeViewClassDetail.jsp").forward(request, response);
-            } else {
-                request.setAttribute("ListTrainee", listTrainee);
-                request.setAttribute("InforClass", classDetail);
-                request.getRequestDispatcher("traineeViewClassDetail.jsp").forward(request, response);
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                Account account = (Account) session.getAttribute("account");
+                int ID_Trainee = account.getIdaccount();
+                int method = Integer.parseInt(request.getParameter("method"));
+                BigDecimal totalmoney = BigDecimal.valueOf(Double.parseDouble(request.getParameter("total")));
+                int status;
+                if (method == 0) {
+                    status = 0;
+                } else{
+                    status = 1;
+                } 
+                HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
+                boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
+                cart.clear();
+                if (inserted == true) {
+                    session.removeAttribute("cart");
+                    request.setAttribute("addsuccess", "message");
+                    request.setAttribute("money", totalmoney);
+                    request.getRequestDispatcher("purchase").forward(request, response);
+                } else {
+                    response.sendRedirect("error.html");
+                }
             }
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
     }

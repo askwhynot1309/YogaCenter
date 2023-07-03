@@ -5,6 +5,7 @@
 package Object;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  *
@@ -20,6 +21,7 @@ public class Message implements Serializable {
     private int fromClassID;
     private int toClassID;
     private int status;
+    private Date dateSend;
 
     public Message(int course_ID, int messageID, int fromUserID, int toUserID, int fromClassID, int toClassID, int status) {
         this.course_ID = course_ID;
@@ -31,7 +33,16 @@ public class Message implements Serializable {
         this.status = status;
     }
 
-    public Message(int messageID, int fromUserID, String message, int toUserID, int status) {
+    public Message(int messageID, int fromUserID, String message, int toUserID, Date datesend, int status) {
+        this.messageID = messageID;
+        this.fromUserID = fromUserID;
+        this.message = message;
+        this.toUserID = toUserID;
+        this.dateSend = datesend;
+        this.status = status;
+    }
+    
+    public Message(int messageID,int fromUserID, String message, int toUserID, int status) {
         this.messageID = messageID;
         this.fromUserID = fromUserID;
         this.message = message;
@@ -45,6 +56,14 @@ public class Message implements Serializable {
 
     public void setCourse_ID(int course_ID) {
         this.course_ID = course_ID;
+    }
+  
+    public Date getDateSend() {
+        return dateSend;
+    }
+
+    public void setDateSend(Date dateSend) {
+        this.dateSend = dateSend;
     }
 
     public int getMessageID() {

@@ -4,13 +4,17 @@
  */
 package Controller;
 
+import Object.Account;
+import Object.Room;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,12 +36,20 @@ public class GiveFeedbackServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
+            Account acc = (Account) session.getAttribute("Staff");
             int id = Integer.parseInt(request.getParameter("id"));
             String feedback = request.getParameter("txt_feedback");
             Date currentFeedback = new Date(System.currentTimeMillis());
             int status = Integer.parseInt(request.getParameter("status"));
+            Room getRoom = Dao.RoomDao.getRoomByID(id);
             int insertFeedback = Dao.RoomDao.insertNewFeedbackRoom(id, feedback, currentFeedback, 1);
             int insertStatus = Dao.RoomDao.updateSatusRoom(id, status);
+            ArrayList<Account> getAllStaff = Dao.AccountDao.getAllStaff();
+            boolean sendMessageToAdmin = Dao.MessageDao.createRequestChangeClass(acc.getIdaccount(), getRoom + " : " + feedback, id, 1, currentFeedback);
+            for (Account account : getAllStaff) {
+                boolean insertMessage = Dao.MessageDao.createRequestChangeClass(1, "You need to change the classroom in which the classes were originally proposed to the new classroom.", account.getIdaccount() , 0, currentFeedback);
+            }
             if(insertFeedback == 1 && insertStatus == 1){
                 request.setAttribute("sentsuccess", "message");
                 request.getRequestDispatcher("class").forward(request, response);

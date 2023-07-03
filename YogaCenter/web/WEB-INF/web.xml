@@ -284,6 +284,26 @@
         <servlet-name>TraineeSaveOrderBanking</servlet-name>
         <servlet-class>Controller.TraineeSaveOrderBanking</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminMessageServlet</servlet-name>
+        <servlet-class>Controller.AdminMessageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PaymentWithAmountAccountServlet</servlet-name>
+        <servlet-class>Controller.PaymentWithAmountAccountServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffMessageServlet</servlet-name>
+        <servlet-class>Controller.StaffMessageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrainerMessageServlet</servlet-name>
+        <servlet-class>Controller.TrainerMessageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrainerShowCourseList</servlet-name>
+        <servlet-class>Controller.TrainerShowCourseList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -370,7 +390,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DashBoardServlet</servlet-name>
-        <url-pattern>/DashBoardServlet</url-pattern>
+        <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StaffManageTraineeServlet</servlet-name>
@@ -567,6 +587,26 @@
     <servlet-mapping>
         <servlet-name>TraineeSaveOrderBanking</servlet-name>
         <url-pattern>/bankingPayment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminMessageServlet</servlet-name>
+        <url-pattern>/message</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentWithAmountAccountServlet</servlet-name>
+        <url-pattern>/PaymentWithAmountAccountServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffMessageServlet</servlet-name>
+        <url-pattern>/staffmessage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerMessageServlet</servlet-name>
+        <url-pattern>/trainermessage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerShowCourseList</servlet-name>
+        <url-pattern>/TrainerShowCourseList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

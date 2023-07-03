@@ -4,14 +4,17 @@
  */
 package Controller;
 
+import Object.Account;
 import Object.ClassDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,6 +36,8 @@ public class ButtonChangeroomServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
+            Account account = (Account)session.getAttribute("Staff");
             int room = Integer.parseInt(request.getParameter("id-room"));
             int time = Integer.parseInt(request.getParameter("id-time"));
             int id = Integer.parseInt(request.getParameter("id"));
@@ -46,6 +51,10 @@ public class ButtonChangeroomServlet extends HttpServlet {
             }else{
                 ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(room, time, newdate);
                 if(check == null){
+                    ArrayList<Account> listTrainerAndTrainee = Dao.AccountDao.GetAllTraineeAndTrainerinThisClass(id, olddate);
+                    for (Account account1 : listTrainerAndTrainee) {
+                        boolean insertMessageForTrainerAndTraineeToChangeClass = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "Your classroom must be changed new classroom because of some problems. Please view your schedule to join clasroom.", account1.getIdaccount(), 0, new Date(System.currentTimeMillis()));
+                    }
                     int update = Dao.ClassDetailDao.updateDateTimeRoomWithProblem(id, room, time, newdate, olddate);
                     request.setAttribute("success", "message");
                 }else{

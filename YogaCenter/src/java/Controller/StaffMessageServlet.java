@@ -1,24 +1,25 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package Controller;
 
 import Object.Account;
-import Object.AccountAttendence;
-import Object.ClassDetail;
-import Object.Course;
-import Object.Level;
+import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ADMIN
  */
-public class TraineeViewClassDetail extends HttpServlet {
+public class StaffMessageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,19 +35,14 @@ public class TraineeViewClassDetail extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int id = Integer.parseInt(request.getParameter("id"));
-            String DateStudy = request.getParameter("datestudy");
-            ClassDetail classDetail = Dao.ClassDetailDao.getDetailOfClassID(id, DateStudy);
-            ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInClassID(classDetail.getId_class());
-            if (listTrainee.isEmpty()) {
-                request.setAttribute("InforClass", classDetail);
-                request.getRequestDispatcher("traineeViewClassDetail.jsp").forward(request, response);
-            } else {
-                request.setAttribute("ListTrainee", listTrainee);
-                request.setAttribute("InforClass", classDetail);
-                request.getRequestDispatcher("traineeViewClassDetail.jsp").forward(request, response);
-            }
-        } catch (Exception e) {
+            HttpSession session = request.getSession();
+            Account account = (Account)session.getAttribute("Staff");
+            ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserID(account.getIdaccount());
+            ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
+            request.setAttribute("getAllAccount", getAllAccount);
+            request.setAttribute("listMessage", listMessage);
+            request.getRequestDispatcher("staff/staffMessage.jsp").forward(request, response);
+        }catch(Exception e){
             e.printStackTrace();
         }
     }

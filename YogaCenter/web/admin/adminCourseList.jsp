@@ -4,16 +4,57 @@
 <html>
 
     <head>
-        <title>Admin Dashboard</title>
+        <title>Course Management</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/admin/admin.css">
         <link rel="stylesheet" href="css/admin/admin-course.css">
         <link rel="stylesheet" href="css/admin/admin-course-add.css">
+        <style>
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 9999;
+            }
+            .message {
+                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+                background: #fff;
+                color: #222;
+                border: 0;
+                border-radius: 0.25rem;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                border-radius: 20px;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                z-index: 10000;
+            }
+
+            .message::backdrop {
+                background: rgb(0 0 0 / 0.5);
+                opacity: 0;
+            }
+        </style>
     </head>
 
     <body>
+        <c:set var="exist" value="${sessionScope.Admin}"/>
+        <c:if test="${exist == null}">
+            <div id="overlay" class="overlay"></div>
+            <div class="message" id="message">
+                <h3 style="text-align: center; color: red">Message</h3>
+                <p>Your session is timeout. Back to login page to login again!</p>
+                <div style=" text-align: center">
+                    <a class="btn btn-primary" href="login.jsp">Login</a>
+                </div>
+            </div>
+        </c:if>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3" style="padding: 0">
@@ -119,19 +160,19 @@
                                                 <td style="width: 395px">${course.name_course}</td>
                                                 <td>${course.fee_course} VNĐ</td>
                                                 <td>
-                                                    <c:if test="${course.date_start.before(currentDate)}">
+                                                    <c:if test="${course.date_close.before(currentDate)}">
                                                         <form action="/YogaCenter/request" method="POST">
                                                             <span>Active</span>&ensp; <input type="radio" name="status" value="0" disabled="">
                                                             <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="">
                                                         </form>
                                                     </c:if>
-                                                    <c:if test="${course.date_start.after(currentDate)}">
+                                                    <c:if test="${course.date_close.after(currentDate)}">
                                                         <c:if test="${course.status == 0}">
                                                             <form action="/YogaCenter/request" method="POST">
                                                                 <span>Active</span>&ensp; <input type="radio" name="status" value="0" checked="">
                                                                 <span>Unactive</span>&ensp; <input type="radio" name="status" value="1">
                                                                 <input name="id" value="${course.idCourse}" hidden="">
-                                                                <input name="date" value="${course.date_start}" hidden="">
+                                                                <input name="date" value="${course.date_close}" hidden="">
                                                                 <input name="option" value="courseChange" hidden="">
                                                                 <button value="comfirm" name="action" class="btn-search">Change</button>
                                                             </form>
@@ -141,7 +182,7 @@
                                                                 <span>Active</span>&ensp; <input type="radio" name="status" value="0">
                                                                 <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="">
                                                                 <input name="id" value="${course.idCourse}" hidden="">
-                                                                <input name="date" value="${course.date_start}" hidden="">
+                                                                <input name="date" value="${course.date_close}" hidden="">
                                                                 <input name="option" value="courseChange" hidden="">
                                                                 <button value="comfirm" name="action" class="btn-search">Change</button>
                                                             </form>
@@ -149,7 +190,7 @@
                                                     </c:if>
                                                 </td>
                                                 <td>
-                                                    <c:if test="${course.date_start.after(currentDate)}">
+                                                    <c:if test="${course.date_close.after(currentDate)}">
                                                         <a href="/YogaCenter/request?action=inf&id=${course.idCourse}&option=infCourse" class="btn btn-primary">More information</a>
                                                     </c:if>
                                                     <a href="/YogaCenter/viewprevious?id=${course.idCourse}"><svg xmlns="http://www.w3.org/2000/svg" height="0.75em" viewBox="0 0 576 512"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg></a>
