@@ -12,7 +12,9 @@ import Object.Time;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,12 +44,16 @@ public class InformationServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             String option = request.getParameter("option");
             Course info = Dao.CourseDao.getInformationOfCourse(id);
+            NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
+            int price = info.getFee_course().intValue();
+            String stringPrice = nf.format(price);
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
             ArrayList<OrderCourse> listinf = Dao.OrderDao.getInformationOrder(id);
             HttpSession session = request.getSession();
             switch (option) {
                 case "infCourse":
                     request.setAttribute("informationCourse", info);
+                    request.setAttribute("stringPrice", price);
                     request.setAttribute("listLevel", listLevel);
                     request.getRequestDispatcher("admin/adminInforCourse.jsp").forward(request, response);
                     break;
@@ -74,6 +80,7 @@ public class InformationServlet extends HttpServlet {
                     break;
                 case "staffInfCourse":
                     request.setAttribute("informationCourse", info);
+                    request.setAttribute("stringPrice", stringPrice);
                     request.getRequestDispatcher("staff/staffInforCourse.jsp").forward(request, response);
                     break;
                 case "staffClassDetail":

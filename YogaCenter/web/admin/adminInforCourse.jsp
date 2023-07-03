@@ -80,13 +80,14 @@
                         <h2 style="display: flex; justify-content: center; margin-bottom: 10px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Information of course</h2>
                     <c:set var="informationCourse" value="${requestScope.informationCourse}"/>
                     <c:set var="expired" value="${requestScope.expired}"/>
+                    <c:set var="stringPrice" value="${requestScope.stringPrice}"/>
                     <c:set var="success" value="${requestScope.success}"/>
                     <c:if test="${informationCourse != null}">
                         <form action="/YogaCenter/request" method="POST" enctype="multipart/form-data" style="padding: 20px; margin-top: 1rem">
                             <div style="float: left; width: 700px">
                                 <div style="display: flex; align-items: center; justify-content: space-between">
                                     <p>Name : <input type="text" name="course_name" value="${informationCourse.name_course}" class="input-course-name" readonly=""></p>
-                                    <p>Fee of course : <input type="number" name="course_fee" value="${informationCourse.fee_course}" class="input-course"></p>
+                                    <p>Fee of course : <input type="number" name="course_fee" value="${stringPrice}" class="input-course"></p>
                                 </div>
                                 <div style="display: flex; align-items: center; justify-content: space-between">
                                     <p>Start-date of course : <input value="${informationCourse.date_start}" class="input-course" readonly=""></p>

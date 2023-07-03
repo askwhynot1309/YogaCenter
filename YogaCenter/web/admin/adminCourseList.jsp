@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -111,7 +112,7 @@
                             <form action="/YogaCenter/request" method="POST" enctype="multipart/form-data">
                                 <div style="display: flex; align-items: center; justify-content: space-between">
                                     <p>Name of course : <input type="text" name="course_name" value="${param.course_name}" required="" class="input-course"></p>
-                                    <p>Fee of course : <input type="number" name="course_fee" value="${param.course_fee}" required="" class="input-course"></p>
+                                    <p>Fee of course : <input type="number" name="course_fee" value="${param.course_fee}" required="" class="input-course"> .000 VNĐ</p>
                                     <p>Start-date of course : <input type="date" name="course_start" value="${param.course_start}" required="" class="input-course"></p>
                                     <p>Slots : <input type="number" name="slot" value="${param.slot}" required="" class="input-course"></p>
                                 </div>
@@ -158,7 +159,12 @@
                                             <tr>
                                                 <td>${loop.count}</td>
                                                 <td style="width: 395px">${course.name_course}</td>
-                                                <td>${course.fee_course} VNĐ</td>
+                                                <td>
+                                                    <fmt:setLocale value="vi_VN" />
+                                                    <fmt:setBundle basename="java.text.resources.LocaleElements" />
+                                                    <fmt:formatNumber value="${course.fee_course}" var="stringPrice" />
+                                                    ${stringPrice}.000 VNĐ
+                                                </td>
                                                 <td>
                                                     <c:if test="${course.date_close.before(currentDate)}">
                                                         <form action="/YogaCenter/request" method="POST">
@@ -226,7 +232,7 @@
                 notification.timeOut = setTimeout(() => notification.remove(), 5000);
             </script>
         </c:if> 
-            <c:if test="${wrong != null}">
+        <c:if test="${wrong != null}">
             <div class="notification">
                 <div class="content">
                     <div class="title">Error</div>
@@ -252,7 +258,7 @@
                 notification.timeOut = setTimeout(() => notification.remove(), 5000);
             </script>
         </c:if> 
-            <c:if test="${noimage != null}">
+        <c:if test="${noimage != null}">
             <div class="notification">
                 <div class="content">
                     <div class="title">Error</div>
