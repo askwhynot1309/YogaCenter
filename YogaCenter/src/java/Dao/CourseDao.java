@@ -749,8 +749,8 @@ public class CourseDao {
                         pst = cn.prepareStatement(sql);
                         pst.setInt(1, orderID);
                         pst.setInt(2, Integer.parseInt(courseID.trim()));
-                        pst.setInt(3, cart.get(courseID));
-                        pst.setInt(4, 3);
+                        pst.setInt(3, 3);
+                        pst.setInt(4, cart.get(courseID));
                         pst.executeUpdate();
                         cn.commit();
                         cn.setAutoCommit(true);

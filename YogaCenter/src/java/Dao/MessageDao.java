@@ -133,8 +133,9 @@ public class MessageDao {
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
                     int toUserID = rs.getInt("ID_recieveMessage");
+                    Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    Message messObj = new Message(messageID, fromUserID, message, toUserID, status);
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status);
                     messList.add(messObj);
                 }
             }

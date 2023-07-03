@@ -53,38 +53,40 @@
                                     <p class="col-lg-6"><strong>Course-fee : </strong>${course.fee_course} VNĐ</p>
                                     <c:if test="${listCoursebyTrainee != null}">
                                         <c:forEach var="coursebyTrainee" items="${listCoursebyTrainee}">
-                                            <c:if test="${coursebyTrainee.id_course == course.id_course && coursebyTrainee.status == 1}">
-                                                <c:if test="${slotPresent.size() > 0 && slotAbsent.size() > 0}">
-                                                    <c:forEach var="present" items="${slotPresent}">
-                                                        <c:if test="${present.id_course == course.id_course}">
-                                                            <p style="color: green" class="col-lg-6"><strong>Present : ${present.slot}/${course.slot}</strong></p>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                    <c:forEach var="absent" items="${slotAbsent}">
-                                                        <c:if test="${absent.id_course == course.id_course}">
-                                                            <p style="color: red" class="col-lg-6"><strong>Absent : ${absent.slot}/${course.slot}</strong></p>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </c:if>
-                                                <c:if test="${slotPresent.size() == 0 && slotAbsent.size() == 0}">
-                                                    <h5 style="font-size: 700" class="col-lg-12">NOT YET</h5>
-                                                </c:if>
-                                                <c:if test="${slotPresent.size() > 0 && slotAbsent.size() == 0}">
-                                                    <c:forEach var="present" items="${slotPresent}">
-                                                        <c:if test="${present.id_course == course.id_course}">
-                                                            <p style="color: green" class="col-lg-6"><strong>Present : ${present.slot}/${course.slot}</strong></p>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                    <p style="color: red" class="col-lg-6"><strong>Absent : 0/${course.slot}</strong></p>
-                                                </c:if> 
-                                                <c:if test="${slotPresent.size() == 0 && slotAbsent.size() > 0}">
-                                                    <p style="color: green" class="col-lg-6"><strong>Present : 0/${course.slot}</strong></p>
-                                                    <c:forEach var="absent" items="${slotAbsent}">
-                                                        <c:if test="${absent.id_course == course.id_course}">
-                                                            <p style="color: red" class="col-lg-6"><strong>Absent : ${absent.slot}/${course.slot}</strong></p>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </c:if>
+                                            <c:if test="${coursebyTrainee.id_course == course.id_course}">
+                                                <c:choose>
+                                                    <c:when test="${slotPresent.size() > 0 && slotAbsent.size() > 0}">
+                                                        <c:forEach var="present" items="${slotPresent}">
+                                                            <c:if test="${present.id_course == course.id_course}">
+                                                                <p style="color: green" class="col-lg-6"><strong>Present : ${present.slot}/${course.slot}</strong></p>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                        <c:forEach var="absent" items="${slotAbsent}">
+                                                            <c:if test="${absent.id_course == course.id_course}">
+                                                                <p style="color: red" class="col-lg-6"><strong>Absent : ${absent.slot}/${course.slot}</strong></p>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </c:when>
+                                                    <c:when test="${slotPresent.size() > 0 && slotAbsent.size() == 0}">
+                                                        <c:forEach var="present" items="${slotPresent}">
+                                                            <c:if test="${present.id_course == course.id_course}">
+                                                                <p style="color: green" class="col-lg-6"><strong>Present : ${present.slot}/${course.slot}</strong></p>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                        <p style="color: red" class="col-lg-6"><strong>Absent : 0/${course.slot}</strong></p>
+                                                    </c:when> 
+                                                    <c:when test="${slotPresent.size() == 0 && slotAbsent.size() > 0}">
+                                                        <p style="color: green" class="col-lg-6"><strong>Present : 0/${course.slot}</strong></p>
+                                                        <c:forEach var="absent" items="${slotAbsent}">
+                                                            <c:if test="${absent.id_course == course.id_course}">
+                                                                <p style="color: red" class="col-lg-6"><strong>Absent : ${absent.slot}/${course.slot}</strong></p>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <h5 style="font-size: 700" class="col-lg-12">NOT YET</h5>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:if>
                                         </c:forEach>
                                     </c:if>
@@ -94,7 +96,7 @@
                                         <a href="/YogaCenter/classbooking" class="btn btn-primary">View schedule</a>
                                     </div>
                                     <div class="col-lg-4">
-                                        <div style="display: flex; align-items: center; justify-content: space-between">
+                                        <div style=" align-items: center; justify-content: space-between">
                                             <a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.id_course}" class="btn btn-primary">View detail course</a>
                                             <c:if test="${course.status == 1}">
                                                 <c:if test="${current_date.before(course.course_start)}">
@@ -132,13 +134,13 @@
                                                 </c:if>
                                             </c:if>
                                             <c:if test="${course.status == 0}">
-                                                <p style="color: red; width: 75px"><i class="fa-solid fa-ban" style="color: #ea0606;"></i> Cancel</p>
+                                                <p style="color: red; width: 75px; margin-top: 10px"><i class="fa-solid fa-ban" style="color: #ea0606;"></i> Cancel</p>
                                             </c:if>
                                             <c:if test="${course.status == 2}">
-                                                <p style="color: yellowgreen; width: 75px"><i class="fa-sharp fa-solid fa-reply" style="color: yellowgreen"></i> Refund</p>
+                                                <p style="color: yellowgreen; width: 75px; margin-top: 10px"><i class="fa-sharp fa-solid fa-reply" style="color: yellowgreen"></i> Refund</p>
                                             </c:if>
-                                                <c:if test="${course.status == 3}">
-                                                <p style="color: brown; width: 75px">Pending! Please complete order.</p>
+                                            <c:if test="${course.status == 3}">
+                                                <p style="color: brown; width: 150px; margin-top: 10px">Pending! Please complete order.</p>
                                             </c:if>
                                         </div>
                                     </div>

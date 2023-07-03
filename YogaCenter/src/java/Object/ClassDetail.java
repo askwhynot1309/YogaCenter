@@ -4,13 +4,14 @@
  */
 package Object;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  *
  * @author ADMIN
  */
-public class ClassDetail {
+public class ClassDetail implements Serializable{
 
     private int id_class;
     private int id_room;

@@ -80,7 +80,6 @@ public class CheckAttendance extends HttpServlet {
                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Specify the format of the string date
                         java.util.Date utilDate = dateFormat.parse(classDate); // Parse the string date into a java.util.Date object
                         AttendanceDate = new Date(utilDate.getTime()); // Convert java.util.Date to java.sql.Date
-
                     } catch (Exception e) {
                     }
                     // System.out.println(attendanceStatus + classDate + courseId + traineeId);
