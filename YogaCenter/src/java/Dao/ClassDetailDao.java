@@ -390,8 +390,8 @@ public class ClassDetailDao {
         }
         return ID_Class;
     }
-
-    public static ClassDetail getClassDetailById(int id_class, Date date, int id_account) throws Exception {
+    
+    public static ClassDetail getClassDetailById(int id) throws Exception {
         ClassDetail kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -423,6 +423,47 @@ public class ClassDetailDao {
         return kq;
     }
 
+    public static ClassDetail getDetailOfClassID(int ID_Class, String date) {
+        ClassDetail trainer = null;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "SELECT C.Class_ID,R.Room_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.ID_Account, A.Name, C.IDCourse, Course.Course_Name, C.Choice\n"
+                        + "FROM ClassDetail CD \n"
+                        + "JOIN Account A ON CD.ID_Account = A.ID_Account\n"
+                        + "JOIN Class C ON C.Class_ID = CD.Class_ID\n"
+                        + "JOIN ClassDate CDATE ON CDATE.Class_ID = CD.Class_ID\n"
+                        + "JOIN Room R ON R.Room_ID = C.Room_ID\n"
+                        + "JOIN Course Course on Course.Course_ID = C.IDCourse\n"
+                        + "WHERE A.Role = 2 AND C.Class_ID = ? AND CDATE.DateStudy = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, ID_Class);
+                pst.setString(2, date);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int Class_ID = rs.getInt("Class_ID");
+                        int Room_ID = rs.getInt("Room_ID");
+                        String Room_Name = rs.getString("Room_Name");
+                        int IDtime = rs.getInt("IDtime");
+                        String DateStudy = rs.getString("DateStudy");
+                        int ID_Account = rs.getInt("ID_Account");
+                        String Account = rs.getString("Name");
+                        int IDCourse = rs.getInt("IDCourse");
+                        String Course_name = rs.getString("Course_Name");
+                        int Choice = rs.getInt("Choice");
+                        trainer = new ClassDetail(Class_ID, Room_ID, Room_Name, IDtime, DateStudy, ID_Account, Account, IDCourse, 0, Course_name, Choice);
+                    }
+                }
+            }
+            cn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return trainer;
+    }
+
     public static HashMap<Integer, ArrayList<Integer>> getChoiceWithAllTrainerInCourseID(int Course_ID) {
         HashMap<Integer, ArrayList<Integer>> hashChoise = new HashMap<>();
         Connection cn = null;
@@ -449,6 +490,45 @@ public class ClassDetailDao {
                 cn.close();
             }
         } catch (Exception e) {
+        }
+        return hashChoise;
+    }
+
+    public static HashMap<Integer, ArrayList<ClassDetail>> getClassDetailWithAllTrainerInCourseID(int Course_ID) {
+        HashMap<Integer, ArrayList<ClassDetail>> hashChoise = new HashMap<>();
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "SELECT CD.Class_ID, R.Room_ID, R.Room_Name, C.IDtime, A.ID_Account, A.Name, C.IDCourse, C.Choice\n"
+                        + "FROM Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
+                        + "JOIN Account A ON CD.ID_Account = A.ID_Account\n"
+                        + "JOIN Room R ON R.Room_ID = C.Room_ID\n"
+                        + "WHERE C.IDCourse = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, Course_ID);
+                ResultSet rs = pst.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        int Class_ID = rs.getInt("Class_ID");
+                        int Room_ID = rs.getInt("Room_ID");
+                        String Room_Name = rs.getString("Room_Name");
+                        int IDtime = rs.getInt("IDtime");
+                        int ID_Account = rs.getInt("ID_Account");
+                        String Account = rs.getString("Name");
+                        int IDCourse = rs.getInt("IDCourse");
+                        int Choice = rs.getInt("Choice");
+                        ClassDetail classDetails = new ClassDetail(Class_ID, Room_ID, Room_Name, IDtime, "", ID_Account, Account, IDCourse, 0, "", Choice);
+                        if (!hashChoise.containsKey(ID_Account)) {
+                            hashChoise.put(ID_Account, new ArrayList<>());
+                        }
+                        hashChoise.get(ID_Account).add(classDetails);
+                    }
+                }
+                cn.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return hashChoise;
     }
@@ -486,7 +566,8 @@ public class ClassDetailDao {
         if (cn != null) {
             String sql = "select *\n"
                     + "from Class c JOIN ClassDetail cd ON c.Class_ID = cd.Class_ID\n"
-                    + "JOIN Account a ON cd.ID_Account =a.ID_Account JOIN ClassDate cdate ON c.Class_ID = cdate.Class_ID\n"
+                    + "JOIN Account a ON cd.ID_Account =a.ID_Account\n"
+                    + "JOIN ClassDate cdate ON c.Class_ID = cdate.Class_ID\n"
                     + "JOIN Room r ON c.Room_ID = r.Room_ID\n"
                     + "JOIN Course cou ON cou.Course_ID = c.IDCourse\n"
                     + "Where a.Role = 3 AND cd.ID_Account = ?";
@@ -496,6 +577,7 @@ public class ClassDetailDao {
             if (table != null) {
                 while (table.next()) {
                     int Class_ID = table.getInt("Class_ID");
+                    int Room_ID = table.getInt("Room_ID");
                     String Room_name = table.getString("Room_Name");
                     int Time_ID = table.getInt("IDTime");
                     Date datestudy = table.getDate("DateStudy");
@@ -511,7 +593,7 @@ public class ClassDetailDao {
                     int id_course = table.getInt("IDCourse");
                     String Course_name = table.getNString("Course_Name");
                     int Choice = table.getInt("Choice");
-                    ClassDetail classdetails = new ClassDetail(Class_ID, Room_name, Time_ID, date, Account_ID, Account_name, Course_ID, day, Course_name, Choice);
+                    ClassDetail classdetails = new ClassDetail(Class_ID, Room_ID, Room_name, Time_ID, date, Account_ID, Account_name, Course_ID, day, Course_name, Choice);
                     kq.add(classdetails);
                 }
             }

@@ -89,8 +89,9 @@ public class ClassDetail {
         this.course = course;
     }
 
-    public ClassDetail(int Class_ID, String Room_name, int time, String datestudy, int Account_ID, String Account_name, int Course_ID, int status, String Course_name, int choice) {
+    public ClassDetail(int Class_ID,int id_room, String Room_name, int time, String datestudy, int Account_ID, String Account_name, int Course_ID, int status, String Course_name, int choice) {
         this.id_class = Class_ID;
+        this.id_room = id_room;
         this.class_name = Room_name;
         this.time = time;
         this.datestudy = datestudy;

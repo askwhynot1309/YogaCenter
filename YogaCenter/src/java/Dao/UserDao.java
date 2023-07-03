@@ -119,7 +119,7 @@ public class UserDao {
         }
         return kq;
     }
-    
+
     public static ArrayList<Account> getAllTraineeBySearchByName(String search) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -153,7 +153,7 @@ public class UserDao {
         }
         return kq;
     }
-    
+
     public static ArrayList<Account> getAllTraineeBySearchByEmail(String search) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -187,7 +187,7 @@ public class UserDao {
         }
         return kq;
     }
-    
+
     public static ArrayList<Account> getAllTraineeBySearchByPhone(String search) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -221,7 +221,42 @@ public class UserDao {
         }
         return kq;
     }
-    
+
+    public static ArrayList<Account> getAllTraineeInClassID(int ID_Class) throws Exception {
+        ArrayList<Account> traineeList = new ArrayList<>();
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT DISTINCT A.ID_Account, A.Email, A.CCCD, A.Account, A.CV, A.Password, A.Name, A.Phone, A.Address, A.Img, A.Status, A.Role, A.Money\n"
+                    + "FROM Class C JOIN ClassDate CDATE ON C.Class_ID = CDATE.Class_ID JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
+                    + "JOIN Account a ON CD.ID_Account = a.ID_Account\n"
+                    + "JOIN Room r ON r.Room_ID = C.Room_ID\n"
+                    + "where a.Role = 3 AND C.Class_ID = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, ID_Class);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int idTrainee = rs.getInt("ID_Account");
+                    String email = rs.getString("Email");
+                    String cccd = rs.getString("CCCD");
+                    String acc = rs.getString("Account");
+                    String cv = rs.getString("CV");
+                    String password = rs.getString("Password");
+                    String name = rs.getNString("Name");
+                    String phone = rs.getString("Phone");
+                    String address = rs.getNString("Address");
+                    String img = rs.getString("Img");
+                    int status = rs.getInt("Status");
+                    int role = rs.getInt("Role");
+                    BigDecimal amount = rs.getBigDecimal("Money");
+                    Account classdetails = new Account(idTrainee, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
+                    traineeList.add(classdetails);
+                }
+            }
+        }
+        return traineeList;
+    }
+
     public static ArrayList<Account> getAllTraineeInTimeAndRoom(int id_time, String id_room, Date date, int id_course) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -441,7 +476,7 @@ public class UserDao {
         }
         return kq;
     }
-    
+
     public static int insertNewUserWithoutLoginByEmail(String name, String email, String phone, String cccd, String address, String account, String pwd, String img, BigDecimal money) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();

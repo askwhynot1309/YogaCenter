@@ -25,7 +25,7 @@
                         <div class="col-lg-12">
                         <c:set var="ListTrainee" value="${requestScope.ListTrainee}"/>
                         <c:set var="inforClass" value="${requestScope.InforClass}"/>
-                        <c:if test="${InforClass != null}">
+                        <c:if test="${inforClass != null}">
                             <table class="table">
                                 <tbody>
                                     <tr>
@@ -59,7 +59,7 @@
                                     </tr>
                                     <tr>
                                         <td style="padding: 20px; font-weight: 700">Date : </td>
-                                        <td style="padding: 20px">${inforClass.date}</td>
+                                        <td style="padding: 20px">${inforClass.datestudy}</td>
                                     </tr>
                                 </tbody>
                             </table>
