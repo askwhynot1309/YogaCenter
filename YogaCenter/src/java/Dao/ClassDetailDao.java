@@ -390,8 +390,8 @@ public class ClassDetailDao {
         }
         return ID_Class;
     }
-    
-    public static ClassDetail getClassDetailById(int id) throws Exception {
+
+    public static ClassDetail getClassDetailById(int id_class, Date date, int id_account) throws Exception {
         ClassDetail kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
