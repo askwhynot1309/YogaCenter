@@ -5,11 +5,13 @@
 package Dao;
 
 import Object.AccountAttendence;
+import Utils.DBUtils;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import sun.security.pkcs11.Secmod;
 
 /**
  *
@@ -91,4 +93,41 @@ public class AttendenceDao {
         }
         return kq;
     }
+
+    public static String attendanceStatus(int Trainee_ID, int Class_ID, String DateStudy) throws Exception {
+        String attendanceStatus = "";
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT Status\n"
+                    + "FROM [dbo].[CheckAttendance]\n"
+                    + "WHERE ID_Trainee = ? AND ID_Class = ? AND AttendanceDate = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, Trainee_ID);
+            pst.setInt(2, Class_ID);
+            pst.setString(3, DateStudy);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int status = rs.getInt("Status");
+//                    0:not yet,1:present, 2: absent
+                    switch (status) {
+                        case 0:
+                            attendanceStatus = "not yet";
+                            break;
+                        case 1:
+                            attendanceStatus = "present";
+                            break;
+                        case 2:
+                            attendanceStatus = "absent";
+                            break;
+                        default:
+                            throw new AssertionError();
+                    }
+                }
+            }
+        }
+        cn.close();
+        return attendanceStatus;
+    }
+
 }

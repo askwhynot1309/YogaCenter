@@ -304,6 +304,10 @@
         <servlet-name>TrainerShowCourseList</servlet-name>
         <servlet-class>Controller.TrainerShowCourseList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ClassifyMessageServlet</servlet-name>
+        <servlet-class>Controller.ClassifyMessageServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -607,6 +611,10 @@
     <servlet-mapping>
         <servlet-name>TrainerShowCourseList</servlet-name>
         <url-pattern>/TrainerShowCourseList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClassifyMessageServlet</servlet-name>
+        <url-pattern>/ClassifyMessageServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

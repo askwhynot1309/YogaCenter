@@ -8,6 +8,7 @@ import Dao.MessageDao;
 import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +50,7 @@ public class TraineeViewRequestChangeClass extends HttpServlet {
 //                    
                     String mess = messageList.getMessage();
 
-                    Pattern pattern = Pattern.compile("^Course (\\d+) (.*) change Room (\\d+) to Room (\\d+)$");
+                    Pattern pattern = Pattern.compile("^Course (\\d+) (.*) change Class (\\d+) to Class (\\d+)$");
                     Matcher matcher = pattern.matcher(mess);
 
                     int courseNumber = 0;
@@ -71,8 +72,8 @@ public class TraineeViewRequestChangeClass extends HttpServlet {
                     }
                     out.print("test");
                     int status = messageList.getStatus();
-//                    
-                    messRequest.add(new Message(courseNumber, ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status));
+                    Date dateSend = messageList.getDateSend();
+                    messRequest.add(new Message(courseNumber, ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status, dateSend));
 //                    
                 }
                 request.setAttribute("messRequest", messRequest);

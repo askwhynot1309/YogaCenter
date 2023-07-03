@@ -31,7 +31,7 @@
 
             <c:set var="account" value="${sessionScope.account}"/>
             <c:if test="${account != null}">
-                <c:set var="notiList" value="${MessageDao.getAllMessageByUserIDAndStatus0(account.idaccount)}"></c:set>
+                <c:set var="notiList" value="${MessageDao.getAllMessageByUserIDWithNotRead(account.idaccount)}"></c:set>
                     <div class="iconTrainee">
                         <div class="dropdown" style="cursor: pointer">
                             <span class="fa-solid fa-user fa-2xl"></span>
