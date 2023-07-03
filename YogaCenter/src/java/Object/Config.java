@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Config {
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_Returnurl = "http://localhost:3030/YogaCenter/request?action=saveOrderBanking";
+    public static String vnp_Returnurl = "http://localhost:8080/YogaCenter/request?action=saveOrderBanking";
     public static String vnp_TmnCode = "NLI96IK7";
     public static String vnp_Version = "2.1.0";
     public static String vnp_Command = "pay";
