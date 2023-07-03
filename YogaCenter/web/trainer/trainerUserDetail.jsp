@@ -92,7 +92,7 @@
                             </table>
                         </div>
                         <div style="float: right; width: 350px; border: 5px solid black; padding: 10px">
-                            <img src="https://th.bing.com/th?id=OSK.52d9dd84fb97b03ac2f4bf7af8c6d3ca&w=46&h=46&c=12&rs=1&qlt=80&o=6&dpr=2&pid=SANGAM" height="200px" width="200px" id="img" style="margin-left: 20%">
+                            <img src="${user.image}" height="200px" width="200px" id="img" style="margin-left: 20%">
                         </div>
                     </c:if>
                 </div>

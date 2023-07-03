@@ -182,6 +182,10 @@ public class InformationServlet extends HttpServlet {
                         request.getRequestDispatcher("trainer/trainerMessageDetail.jsp").forward(request, response);
                     }
                     break;
+                case "trainerCourseInfo":
+                    request.setAttribute("informationCourse", info);
+                    request.getRequestDispatcher("trainer/trainerViewCourseInfo.jsp").forward(request, response);
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@
     Author     : ngmin
 --%>
 
+<%@page import="Object.ClassDetail"%>
 <%@page import="Object.Message"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="Object.Time"%>
@@ -51,8 +52,7 @@
                         <div class="container">
                             <h2 style="text-align: center">Class Schedule</h2>
                         <%
-                            HashMap<Integer, ArrayList<Integer>> hashChoise = (HashMap<Integer, ArrayList<Integer>>) request.getAttribute("hashChoise");
-                            int Course_ID = (int) request.getAttribute("Course_ID");
+                            HashMap<Integer, ArrayList<ClassDetail>> hashClassDetail = (HashMap<Integer, ArrayList<ClassDetail>>) request.getAttribute("hashClassDetail");
                             String overdue = (String) request.getAttribute("overdue");
                             Account trainee = (Account) session.getAttribute("account");
                             LocalDate startDate = (LocalDate) request.getAttribute("startDate");
@@ -60,7 +60,7 @@
                         %>
                         <h4 style="text-align: center; color: red;">Starting date: <%=startDate%>. Due date: before <%=endDate%></h4>
                         <%
-                            if (!hashChoise.isEmpty() && overdue != null) {
+                            if (!hashClassDetail.isEmpty() && overdue != null) {
 
                         %>
                         <div class="container mt-5">
@@ -72,6 +72,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Trainer</th>
+                                                        <th>Class ID</th>
                                                         <th>Day</th>
                                                         <th>Time</th>
                                                         <th>Room</th>
@@ -81,15 +82,11 @@
                                                 <tbody class="table-body">
                                                     <%                                            boolean isFirstRow = true;
                                                         int rowNumber = 0;
-                                                        for (Map.Entry<Integer, ArrayList<Integer>> entry : hashChoise.entrySet()) {
+                                                        for (Map.Entry<Integer, ArrayList<ClassDetail>> entry : hashClassDetail.entrySet()) {
                                                             Integer key = entry.getKey();
-                                                            ArrayList<Integer> listChoice = entry.getValue();
-                                                            for (Integer choice : listChoice) {
+                                                            ArrayList<ClassDetail> listChoice = entry.getValue();
+                                                            for (ClassDetail classDetails : listChoice) {
                                                                 String trainerName = "";
-                                                                int ID_Class = 0;
-                                                                Time time_class = TimeDao.getTimeByTrainerAndChoice(Course_ID, key, choice);
-                                                                String time = time_class.getTime();
-                                                                ID_Class = ClassDetailDao.getIDRoomByTrainerCourseChoiseTime(key, Course_ID, choice, time_class.getId_time());
                                                                 ArrayList<Account> accountList = AccountDao.getAllTrainer();
                                                                 for (Account account : accountList) {
                                                                     if (key == account.getIdaccount()) {
@@ -101,16 +98,19 @@
                                                     <tr class="cell-1 <%= rowNumber % 2 == 0 ? "alternate-row" : ""%>">
                                                         <%if (isFirstRow) {
                                                         %>
-                                                        <th style="vertical-align: middle;" class="col-lg-3" rowspan="<%= listChoice.size()%>"><%= trainerName%></th>
+                                                        <th style="vertical-align: middle;" class="col-lg-2" rowspan="<%= listChoice.size()%>"><%= trainerName%></th>
                                                             <%
                                                                     isFirstRow = false;
                                                                 }
                                                             %>
+                                                        <th class="col-lg-2">
+                                                            <a href="/YogaCenter/request?action=ClassDetail&id=<%=classDetails.getId_class()%>&option=classDetail"><%=classDetails.getId_class()%></a>
+                                                        </th>
                                                         <th class="col-lg-3">
                                                             <%
-                                                                if (choice == 1) {
+                                                                if (classDetails.getChoice() == 1) {
                                                             %>Monday - Wednesday - Friday<%
-                                                            } else if (choice == 2) {
+                                                            } else if (classDetails.getChoice() == 2) {
                                                             %>Tuesday - Thursday - Saturday<%
                                                             } else {
                                                             %>Sunday<%
@@ -120,19 +120,35 @@
                                                         <%
 
                                                         %>
-                                                        <th class="col-lg-3"><%= time%></th>
-                                                        <th class="col-lg-3">Room <%= ID_Class%></th>
-                                                        <th class="col-lg-3">
+                                                        <%                                                                switch (classDetails.getTime()) {
+                                                                case 1:
+                                                        %><th class="col-lg-2">9h - 11h</th><%
+                                                                break;
+                                                            case 2:
+                                                            %><th class="col-lg-2">13h - 15h</th><%
+                                                                    break;
+                                                                case 3:
+                                                            %><th class="col-lg-2">16h - 18h</th><%
+                                                                    break;
+                                                                case 4:
+                                                            %><th class="col-lg-2">19h - 21h</th><%
+                                                                        break;
+                                                                    default:
+                                                                        throw new AssertionError();
+                                                                }
+                                                            %>
+                                                        <th class="col-lg-2"><%=classDetails.getClass_name()%></th>
+                                                        <th class="col-lg-2">
                                                             <%
-                                                                int AccountID = ClassDetailDao.checkTraineeIDInClass(Course_ID, trainee.getIdaccount(), time_class.getId_time(), ID_Class, choice);
+                                                                int AccountID = ClassDetailDao.checkTraineeIDInClass(classDetails.getId_course(), trainee.getIdaccount(), classDetails.getTime(), classDetails.getId_room(), classDetails.getChoice());
                                                                 if (AccountID == 0) {
                                                             %>
                                                             <form action="/YogaCenter/request" method="post">
                                                                 <input type="hidden" name="trainee" value="<%=trainee.getIdaccount()%>">
-                                                                <input type="hidden" name="id_course" value="<%=Course_ID%>">
-                                                                <input type="hidden" name="id_room" value="<%=ID_Class%>">
-                                                                <input type="hidden" name="option" value="<%=choice%>">
-                                                                <input type="hidden" name="id_time" value="<%=time_class.getId_time()%>">
+                                                                <input type="hidden" name="id_course" value="<%=classDetails.getId_course()%>">
+                                                                <input type="hidden" name="id_room" value="<%=classDetails.getId_room()%>">
+                                                                <input type="hidden" name="option" value="<%=classDetails.getChoice()%>">
+                                                                <input type="hidden" name="id_time" value="<%=classDetails.getTime()%>">
                                                                 <button type="submit" name="action" value="traineeChooseClass">Change</button>
                                                             </form>
                                                             <%
@@ -155,7 +171,7 @@
                             </div>
                         </div>
                         <%
-                        } else if (!hashChoise.isEmpty() && overdue == null) {
+                        } else if (!hashClassDetail.isEmpty() && overdue == null) {
                         %>
                         <div style="text-align: center">
                             <h4>
@@ -163,7 +179,9 @@
                             </h4>
                         </div>
                         <%
-                            }
+                        } else if (hashClassDetail.isEmpty()) {
+                        %><h1>title</h1><%
+                                    }
                         %>
                     </div>
                 </div>
