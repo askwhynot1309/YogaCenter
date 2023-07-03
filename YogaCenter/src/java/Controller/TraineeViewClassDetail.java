@@ -35,16 +35,15 @@ public class TraineeViewClassDetail extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.parseInt(request.getParameter("id"));
-            Date date = Date.valueOf(request.getParameter("date"));
-            int id_account = Integer.parseInt(request.getParameter("acc"));
-            ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id, date, id_account);
-            ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(information.getTime(), information.getClass_name(), information.getDate(), information.getId_course());
+            String DateStudy = request.getParameter("datestudy");
+            ClassDetail classDetail = Dao.ClassDetailDao.getDetailOfClassID(id, DateStudy);
+            ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInClassID(classDetail.getId_class());
             if (listTrainee.isEmpty()) {
-                request.setAttribute("InforClass", information);
+                request.setAttribute("InforClass", classDetail);
                 request.getRequestDispatcher("traineeViewClassDetail.jsp").forward(request, response);
             } else {
                 request.setAttribute("ListTrainee", listTrainee);
-                request.setAttribute("InforClass", information);
+                request.setAttribute("InforClass", classDetail);
                 request.getRequestDispatcher("traineeViewClassDetail.jsp").forward(request, response);
             }
         } catch (Exception e) {
