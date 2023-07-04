@@ -307,6 +307,36 @@ public class SearchValueServlet extends HttpServlet {
                         }
                     }
                 }
+                
+                 case "TrainerSearchCourse" -> {
+                    int level = Integer.parseInt(request.getParameter("level"));
+                    if (level == 0) {
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("listCourse", listCourse);
+                            request.setAttribute("listLevel", listLevel);
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("listLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        }
+                    } else {
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevel(search, level);
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("listCourse", listCourse);
+                            request.setAttribute("listLevel", listLevel);
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("listLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        }
+                    }
+                }
+                
                 case "traineeSearchCourse" -> {
                     int level = Integer.parseInt(request.getParameter("level"));
                     int status = Integer.parseInt(request.getParameter("status"));
