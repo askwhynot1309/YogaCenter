@@ -108,6 +108,7 @@ CREATE TABLE Message(
 ID_Message int IDENTITY(1,1) PRIMARY KEY,
 ID_sendMessage int FOREIGN KEY REFERENCES Account(ID_Account),
 Message nvarchar(max),
+Title nvarchar(max),
 ID_recieveMessage int FOREIGN KEY REFERENCES Account(ID_Account),
 DateCreate DATE,
 Status int CHECK(Status = 0 or Status = 1 or Status = 2)--0:default, 1:not yet , 2: read
