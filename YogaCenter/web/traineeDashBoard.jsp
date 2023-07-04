@@ -57,13 +57,51 @@
         .cell-1 th{
             vertical-align: middle;
         }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        .message {
+            box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+            background: #fff;
+            color: #222;
+            border: 0;
+            border-radius: 0.25rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            z-index: 10000;
+        }
+
+        .message::backdrop {
+            background: rgb(0 0 0 / 0.5);
+            opacity: 0;
+        }
     </style>
     <body>
         <c:import url="header.jsp"></c:import>
-
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-2" style="margin-right: 50px; padding: 0;">
+        <c:set var="exist" value="${sessionScope.account}"/>
+        <c:if test="${exist == null}">
+            <div id="overlay" class="overlay"></div>
+            <div class="message" id="message">
+                <h3 style="text-align: center; color: red">Message</h3>
+                <p>Your session is timeout. Back to login page to login again!</p>
+                <div style=" text-align: center">
+                    <a class="btn btn-primary" href="login.jsp">Login</a>
+                </div>
+            </div>
+        </c:if>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2" style="margin-right: 50px; padding: 0;">
                     <c:import url="traineeClassMenu.jsp"></c:import>
                     </div>
                     <div class="col-lg-9" style="padding: 0">
@@ -198,12 +236,12 @@
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Wednesday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
                                                                                     <p>${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy)}</p>
-                                                                                    </c:when>
-                                                                                    <c:otherwise>
-                                                                                    </c:otherwise>
-                                                                                </c:choose>
-                                                                            </c:forEach>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
                                                                         </c:forEach>
+                                                                    </c:forEach>
                                                                 </td>
                                                                 <td>
                                                                     <c:forEach var="day" items="${listDay}">

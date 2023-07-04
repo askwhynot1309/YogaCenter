@@ -39,15 +39,18 @@ public class PaymentWithAmountAccountServlet extends HttpServlet {
             HttpSession session = request.getSession(false);
             if (session != null) {
                 Account account = (Account) session.getAttribute("account");
+                if (account == null) {
+                    request.getRequestDispatcher("traineeViewCart.jsp").forward(request, response);
+                }
                 int ID_Trainee = account.getIdaccount();
                 int method = Integer.parseInt(request.getParameter("method"));
                 BigDecimal totalmoney = BigDecimal.valueOf(Double.parseDouble(request.getParameter("total")));
                 int status;
                 if (method == 0) {
                     status = 0;
-                } else{
+                } else {
                     status = 1;
-                } 
+                }
                 HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
                 boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
                 cart.clear();
@@ -60,7 +63,7 @@ public class PaymentWithAmountAccountServlet extends HttpServlet {
                     response.sendRedirect("error.html");
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -7,6 +7,7 @@ package Controller;
 import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ADMIN
  */
-public class TraineeManageInformationServlet extends HttpServlet {
+public class StaffCreateNewMessage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,14 +34,20 @@ public class TraineeManageInformationServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-            Account acc = (Account) session.getAttribute("account");
-            if (acc == null) {
-                    request.getRequestDispatcher("traineeManageInformation.jsp").forward(request, response);
-                }
-            Account account = Dao.UserDao.getAccountByID(acc.getIdaccount());
-            request.setAttribute("acc", account);
-            request.getRequestDispatcher("traineeManageInformation.jsp").forward(request, response);
+             HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("Staff");
+            if (account == null) {
+                request.getRequestDispatcher("staff/staffNewMessage.jsp").forward(request, response);
+            }
+            ArrayList<Account> listTrainee = Dao.UserDao.getAllTrainee();
+            ArrayList<Account> listTrainer = Dao.AccountDao.getAllTrainer();
+            ArrayList<Account> listStaff = Dao.AccountDao.getAllStaff();
+            request.setAttribute("listTrainee", listTrainee);
+            request.setAttribute("listTrainer", listTrainer);
+            request.setAttribute("listStaff", listStaff);
+            request.getRequestDispatcher("staff/staffNewMessage.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

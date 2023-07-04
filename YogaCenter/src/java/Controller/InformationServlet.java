@@ -43,15 +43,15 @@ public class InformationServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.parseInt(request.getParameter("id"));
             String option = request.getParameter("option");
-            Course info = Dao.CourseDao.getInformationOfCourse(id);
-            NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
-            int price = info.getFee_course().intValue();
-            String stringPrice = nf.format(price);
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
             ArrayList<OrderCourse> listinf = Dao.OrderDao.getInformationOrder(id);
             HttpSession session = request.getSession();
             switch (option) {
                 case "infCourse":
+                    Course info = Dao.CourseDao.getInformationOfCourse(id);
+                    NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
+                    int price = info.getFee_course().intValue();
+                    String stringPrice = nf.format(price);
                     request.setAttribute("informationCourse", info);
                     request.setAttribute("stringPrice", price);
                     request.setAttribute("listLevel", listLevel);
@@ -79,8 +79,12 @@ public class InformationServlet extends HttpServlet {
                     }
                     break;
                 case "staffInfCourse":
-                    request.setAttribute("informationCourse", info);
-                    request.setAttribute("stringPrice", stringPrice);
+                    Course info2 = Dao.CourseDao.getInformationOfCourse(id);
+                    NumberFormat nf2 = NumberFormat.getInstance(new Locale("vi", "VN"));
+                    int price2 = info2.getFee_course().intValue();
+                    String stringPrice2 = nf2.format(price2);
+                    request.setAttribute("informationCourse", info2);
+                    request.setAttribute("stringPrice", stringPrice2);
                     request.getRequestDispatcher("staff/staffInforCourse.jsp").forward(request, response);
                     break;
                 case "staffClassDetail":
@@ -126,7 +130,7 @@ public class InformationServlet extends HttpServlet {
                     int trainer_id_account = Integer.parseInt(request.getParameter("acc"));
                     ClassDetail trainerinformation = Dao.ClassDetailDao.getClassDetailById(id, trainer_date, trainer_id_account);
                     ArrayList<Account> trainerlistTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformation.getTime(), trainerinformation.getClass_name(), trainerinformation.getDate(), trainerinformation.getId_course());
-                    ArrayList<AccountAttendence> listAttend = Dao.AttendenceDao.getAccountToAttendence(trainerinformation.getDate()); 
+                    ArrayList<AccountAttendence> listAttend = Dao.AttendenceDao.getAccountToAttendence(trainerinformation.getDate());
                     java.sql.Date sqlDate = new java.sql.Date(trainerinformation.getDate().getTime());
                     java.time.LocalDate localDate = sqlDate.toLocalDate();
                     boolean check = currentDate.equals(localDate);
@@ -148,6 +152,7 @@ public class InformationServlet extends HttpServlet {
                     break;
                 case "viewmore":
                     session = request.getSession();
+                    Date currentdate = new Date(System.currentTimeMillis());
                     Course viewcoure = Dao.CourseDao.getInformationOfCourse(id);
                     ArrayList<Course> top3Course = Dao.CourseDao.getTop3InformationOfCourse(viewcoure.getLevel());
                     Account account = (Account) session.getAttribute("account");
@@ -156,6 +161,7 @@ public class InformationServlet extends HttpServlet {
                         request.setAttribute("listCourseAccountActive", listCourseAccountActive);
                     }
                     request.setAttribute("information", viewcoure);
+                    request.setAttribute("currentDate", currentdate);
                     request.setAttribute("top3Course", top3Course);
                     request.getRequestDispatcher("viewMoreCourse.jsp").forward(request, response);
                     break;
@@ -190,7 +196,11 @@ public class InformationServlet extends HttpServlet {
                     }
                     break;
                 case "trainerCourseInfo":
-                    request.setAttribute("informationCourse", info);
+                    Course info3 = Dao.CourseDao.getInformationOfCourse(id);
+                    NumberFormat nf3 = NumberFormat.getInstance(new Locale("vi", "VN"));
+                    int price3 = info3.getFee_course().intValue();
+                    String stringPrice3 = nf3.format(price3);
+                    request.setAttribute("informationCourse", info3);
                     request.getRequestDispatcher("trainer/trainerViewCourseInfo.jsp").forward(request, response);
                     break;
             }

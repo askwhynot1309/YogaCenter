@@ -40,6 +40,9 @@ public class TrainerViewScheduleServlet extends HttpServlet {
             HttpSession session = request.getSession();
             List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
             Account accTrainer = (Account) session.getAttribute("Trainer");
+            if (accTrainer == null) {
+                    request.getRequestDispatcher("trainer/trainerManageSchedule.jsp").forward(request, response);
+                }
             int id = accTrainer.getIdaccount();
             System.out.println(id);
             session.setAttribute("trainerId", id);

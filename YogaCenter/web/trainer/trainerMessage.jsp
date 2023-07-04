@@ -9,6 +9,7 @@
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/admin/admin.css">
         <link rel="stylesheet" href="css/admin/admin-table.css">
+        <link rel="stylesheet" href="css/admin/admin-employee-add.css">
         <title>Message</title>
         <style>
             .overlay {
@@ -60,7 +61,13 @@
                     </div>
                     <div class="col-lg-9">
                         <h2 style="display: flex; justify-content: center; margin-bottom: 10px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Notification message</h2>
-
+                        <div style="height: 100px">
+                            <button class="btn-add" style="float: right">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg><a href="trainernewmessage" style="color: white"> New Message</a>
+                                </span>
+                            </button>
+                        </div>
                     <c:set var="listMessage" value="${requestScope.listMessage}"/>
                     <c:set var="getAllAccount" value="${requestScope.getAllAccount}"/>
                     <c:if test="${listMessage.isEmpty()}">

@@ -16,10 +16,75 @@
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/trainee/trainee-viewyourcourse.css"/>
         <link rel="stylesheet" href="css/trainee/trainee-add-message.css">
+        <style>
+        .pagination a.active {
+            background-color: #ccc;
+            color: #fff;
+        }
+        .pagination ul li {
+            display: inline-block;
+            margin: 0 4px;
+        }
+        .pagination ul li a{
+            display: inline-block;
+            padding: 4px 8px;
+            border: 1px solid #ccc;
+            text-decoration: none;
+        }
+        .pagination a.active{
+            background-color: #ccc;
+            color: #fff;
+        }
+        .menu ul li:hover{
+            background-color: wheat;
+        }
+        .menu{
+            margin-bottom: 50px;
+        }
+        .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 9999;
+            }
+            .message {
+                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+                background: #fff;
+                color: #222;
+                border: 0;
+                border-radius: 0.25rem;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                border-radius: 20px;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                z-index: 10000;
+            }
+
+            .message::backdrop {
+                background: rgb(0 0 0 / 0.5);
+                opacity: 0;
+            }
+    </style>
         <title>View Your Course</title>
     </head>
     <body>
         <c:import url="header.jsp"/>
+        <c:set var="exist" value="${sessionScope.account}"/>
+        <c:if test="${exist == null}">
+            <div id="overlay" class="overlay"></div>
+            <div class="message" id="message">
+                <h3 style="text-align: center; color: red">Message</h3>
+                <p>Your session is timeout. Back to login page to login again!</p>
+                <div style=" text-align: center">
+                    <a class="btn btn-primary" href="login.jsp">Login</a>
+                </div>
+            </div>
+        </c:if>
         <c:set var="listCourseTrainee" value="${requestScope.listCourseTrainee}"/>
         <c:set var="slotPresent" value="${requestScope.slotPresent}"/>
         <c:set var="slotAbsent" value="${requestScope.slotAbsent}"/>
@@ -37,118 +102,129 @@
 
             </c:if>
             <c:if test="${listCourseTrainee != null}">
-                <c:forEach var="course" items="${listCourseTrainee}"  varStatus="status">
-                    <div style="width: 100%; height: 220px; padding: 10px;  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <p style="margin-bottom: 20px"><strong>Date-order : </strong>${course.dateorder}</p>
-                                <img src="img/${course.img}" height="150px" width="200px" style="border-radius: 10px">
-                            </div>
-                            <div class="col-lg-8" style="margin-top: 30px">
-                                <h5><strong>Course name : </strong>${course.name_course}</h5>
-                                <div class="row">
-                                    <p class="col-lg-6"><strong>Course-start : </strong>${course.course_start}</p>
-                                    <p class="col-lg-6"><strong>Level : </strong>${course.level}</p>
-                                    <p class="col-lg-6"><strong>Slots : </strong>${course.slot}</p>
-                                    <p class="col-lg-6"><strong>Course-fee : </strong>${course.fee_course} VNĐ</p>
-                                    <c:if test="${listCoursebyTrainee != null}">
-                                        <c:forEach var="coursebyTrainee" items="${listCoursebyTrainee}">
-                                            <c:if test="${coursebyTrainee.id_course == course.id_course}">
-                                                <c:choose>
-                                                    <c:when test="${slotPresent.size() > 0 && slotAbsent.size() > 0}">
-                                                        <c:forEach var="present" items="${slotPresent}">
-                                                            <c:if test="${present.id_course == course.id_course}">
-                                                                <p style="color: green" class="col-lg-6"><strong>Present : ${present.slot}/${course.slot}</strong></p>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                        <c:forEach var="absent" items="${slotAbsent}">
-                                                            <c:if test="${absent.id_course == course.id_course}">
-                                                                <p style="color: red" class="col-lg-6"><strong>Absent : ${absent.slot}/${course.slot}</strong></p>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                    <c:when test="${slotPresent.size() > 0 && slotAbsent.size() == 0}">
-                                                        <c:forEach var="present" items="${slotPresent}">
-                                                            <c:if test="${present.id_course == course.id_course}">
-                                                                <p style="color: green" class="col-lg-6"><strong>Present : ${present.slot}/${course.slot}</strong></p>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                        <p style="color: red" class="col-lg-6"><strong>Absent : 0/${course.slot}</strong></p>
-                                                    </c:when> 
-                                                    <c:when test="${slotPresent.size() == 0 && slotAbsent.size() > 0}">
-                                                        <p style="color: green" class="col-lg-6"><strong>Present : 0/${course.slot}</strong></p>
-                                                        <c:forEach var="absent" items="${slotAbsent}">
-                                                            <c:if test="${absent.id_course == course.id_course}">
-                                                                <p style="color: red" class="col-lg-6"><strong>Absent : ${absent.slot}/${course.slot}</strong></p>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <h5 style="font-size: 700" class="col-lg-12">NOT YET</h5>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:if>
-                                        </c:forEach>
-                                    </c:if>
+                <div class="main" style="height: 1000px">
+                    <c:forEach var="course" items="${listCourseTrainee}"  varStatus="status">
+                        <div style="width: 100%; height: 220px; padding: 10px;  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <p style="margin-bottom: 20px"><strong>Date-order : </strong>${course.dateorder}</p>
+                                    <img src="img/${course.img}" height="150px" width="200px" style="border-radius: 10px">
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <a href="/YogaCenter/classbooking" class="btn btn-primary">View schedule</a>
+                                <div class="col-lg-8" style="margin-top: 30px">
+                                    <h5><strong>Course name : </strong>${course.name_course}</h5>
+                                    <div class="row">
+                                        <p class="col-lg-6"><strong>Course-start : </strong>${course.course_start}</p>
+                                        <p class="col-lg-6"><strong>Level : </strong>${course.level}</p>
+                                        <p class="col-lg-6"><strong>Slots : </strong>${course.slot}</p>
+                                        <p class="col-lg-6"><strong>Course-fee : </strong>${course.fee_course} VNĐ</p>
+                                        <c:if test="${listCoursebyTrainee != null}">
+                                            <c:forEach var="coursebyTrainee" items="${listCoursebyTrainee}">
+                                                <c:if test="${coursebyTrainee.id_course == course.id_course}">
+                                                    <c:choose>
+                                                        <c:when test="${slotPresent.size() > 0 && slotAbsent.size() > 0}">
+                                                            <c:forEach var="present" items="${slotPresent}">
+                                                                <c:if test="${present.id_course == course.id_course}">
+                                                                    <p style="color: green" class="col-lg-6"><strong>Present : ${present.slot}/${course.slot}</strong></p>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                            <c:forEach var="absent" items="${slotAbsent}">
+                                                                <c:if test="${absent.id_course == course.id_course}">
+                                                                    <p style="color: red" class="col-lg-6"><strong>Absent : ${absent.slot}/${course.slot}</strong></p>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </c:when>
+                                                        <c:when test="${slotPresent.size() > 0 && slotAbsent.size() == 0}">
+                                                            <c:forEach var="present" items="${slotPresent}">
+                                                                <c:if test="${present.id_course == course.id_course}">
+                                                                    <p style="color: green" class="col-lg-6"><strong>Present : ${present.slot}/${course.slot}</strong></p>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                            <p style="color: red" class="col-lg-6"><strong>Absent : 0/${course.slot}</strong></p>
+                                                        </c:when> 
+                                                        <c:when test="${slotPresent.size() == 0 && slotAbsent.size() > 0}">
+                                                            <p style="color: green" class="col-lg-6"><strong>Present : 0/${course.slot}</strong></p>
+                                                            <c:forEach var="absent" items="${slotAbsent}">
+                                                                <c:if test="${absent.id_course == course.id_course}">
+                                                                    <p style="color: red" class="col-lg-6"><strong>Absent : ${absent.slot}/${course.slot}</strong></p>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <h5 style="font-size: 700" class="col-lg-12">NOT YET</h5>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:if>
+                                            </c:forEach>
+                                        </c:if>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <div style=" align-items: center; justify-content: space-between">
-                                            <a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.id_course}" class="btn btn-primary">View detail course</a>
-                                            <c:if test="${course.status == 1}">
-                                                <c:if test="${current_date.before(course.course_start)}">
-                                                    <button class="btn btn-primary open" data-dialog="dialog${status.index}">Cancel</button>
-                                                    <dialog class="message" id="dialog${status.index}">
-                                                        <h3 style="text-align: center; color: red">Warning</h3>
-                                                        <p>If you cancel the course now, we will save the amount you paid in your account.</p>
-                                                        <div style="display: flex; align-items: center; justify-content: space-between">
-                                                            <form method="POST" action="/YogaCenter/request">
-                                                                <input name="id_course" value="${course.id_course}" hidden="">
-                                                                <input name="id_order" value="${course.id_order}" hidden="">
-                                                                <input name="course_fee" value="${course.fee_course}" hidden="">
-                                                                <input name="status" value="2" hidden="">
-                                                                <button class="btn btn-primary" name="action" value="Cancel">Cancel</button>
-                                                            </form>
-                                                            <button class="btn btn-primary btn-close" data-dialog="dialog${status.index}">Close</button>
-                                                        </div>
-                                                    </dialog>
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <a href="/YogaCenter/classbooking" class="btn btn-primary">View schedule</a>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div style=" align-items: center; justify-content: space-between">
+                                                <a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.id_course}" class="btn btn-primary">View detail course</a>
+                                                <c:if test="${course.status == 1}">
+                                                    <c:if test="${current_date.before(course.course_start)}">
+                                                        <button class="btn btn-primary open" data-dialog="dialog${status.index}">Cancel</button>
+                                                        <dialog class="message" id="dialog${status.index}">
+                                                            <h3 style="text-align: center; color: red">Warning</h3>
+                                                            <p>If you cancel the course now, we will save the amount you paid in your account.</p>
+                                                            <div style="display: flex; align-items: center; justify-content: space-between">
+                                                                <form method="POST" action="/YogaCenter/request">
+                                                                    <input name="id_course" value="${course.id_course}" hidden="">
+                                                                    <input name="id_order" value="${course.id_order}" hidden="">
+                                                                    <input name="course_fee" value="${course.fee_course}" hidden="">
+                                                                    <input name="status" value="2" hidden="">
+                                                                    <button class="btn btn-primary" name="action" value="Cancel">Cancel</button>
+                                                                </form>
+                                                                <button class="btn btn-primary btn-close" data-dialog="dialog${status.index}">Close</button>
+                                                            </div>
+                                                        </dialog>
+                                                    </c:if>
+                                                    <c:if test="${current_date.after(course.course_start)}">
+                                                        <button class="btn btn-primary open" data-dialog="dialog${status.index}">Cancel</button>
+                                                        <dialog class="message" id="dialog${status.index}">
+                                                            <h3 style="text-align: center; color: red">Warning</h3>
+                                                            <p>You are currently studying, if you cancel this course there will be no refund. Are you sure you want to cancel ?</p>
+                                                            <div style="display: flex; align-items: center; justify-content: space-between">
+                                                                <form method="POST" action="/YogaCenter/request">
+                                                                    <input name="id_course" value="${course.id_course}" hidden="">
+                                                                    <input name="id_order" value="${course.id_order}" hidden="">
+                                                                    <input name="status" value="0" hidden="">
+                                                                    <button class="btn btn-primary" name="action" value="Cancel">Cancel</button>
+                                                                </form>
+                                                                <button class="btn btn-primary btn-close" data-dialog="dialog${status.index}">Close</button>
+                                                            </div>
+                                                        </dialog>
+                                                    </c:if>
                                                 </c:if>
-                                                <c:if test="${current_date.after(course.course_start)}">
-                                                    <button class="btn btn-primary open" data-dialog="dialog${status.index}">Cancel</button>
-                                                    <dialog class="message" id="dialog${status.index}">
-                                                        <h3 style="text-align: center; color: red">Warning</h3>
-                                                        <p>You are currently studying, if you cancel this course there will be no refund. Are you sure you want to cancel ?</p>
-                                                        <div style="display: flex; align-items: center; justify-content: space-between">
-                                                            <form method="POST" action="/YogaCenter/request">
-                                                                <input name="id_course" value="${course.id_course}" hidden="">
-                                                                <input name="id_order" value="${course.id_order}" hidden="">
-                                                                <input name="status" value="0" hidden="">
-                                                                <button class="btn btn-primary" name="action" value="Cancel">Cancel</button>
-                                                            </form>
-                                                            <button class="btn btn-primary btn-close" data-dialog="dialog${status.index}">Close</button>
-                                                        </div>
-                                                    </dialog>
+                                                <c:if test="${course.status == 0}">
+                                                    <p style="color: red; width: 75px; margin-top: 10px"><i class="fa-solid fa-ban" style="color: #ea0606;"></i> Cancel</p>
                                                 </c:if>
-                                            </c:if>
-                                            <c:if test="${course.status == 0}">
-                                                <p style="color: red; width: 75px; margin-top: 10px"><i class="fa-solid fa-ban" style="color: #ea0606;"></i> Cancel</p>
-                                            </c:if>
-                                            <c:if test="${course.status == 2}">
-                                                <p style="color: yellowgreen; width: 75px; margin-top: 10px"><i class="fa-sharp fa-solid fa-reply" style="color: yellowgreen"></i> Refund</p>
-                                            </c:if>
-                                            <c:if test="${course.status == 3}">
-                                                <p style="color: brown; width: 150px; margin-top: 10px">Pending! Please complete order.</p>
-                                            </c:if>
+                                                <c:if test="${course.status == 2}">
+                                                    <p style="color: yellowgreen; width: 75px; margin-top: 10px"><i class="fa-sharp fa-solid fa-reply" style="color: yellowgreen"></i> Refund</p>
+                                                </c:if>
+                                                <c:if test="${course.status == 3}">
+                                                    <p style="color: brown; width: 150px; margin-top: 10px">Pending! Please complete order.</p>
+                                                </c:if>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </c:forEach>
+                    </c:forEach>
+                </div>
+                <div>
+                <div class="pagination" style="display: flex; align-items: center; margin-bottom: 50px; justify-content: space-between">
+                    <ul style="display: inline-block;list-style: none;margin: 0;padding: 0">
+                        <li><a href="#" class="prev">Previous</a></li>
+                        <li><a href="#" class="page active">1</a></li>
+                        <li><a href="#" class="next">Next</a></li>
+                    </ul>
+                </div>
+                </div>
             </c:if>
         </div>
         <c:if test="${refund != null}">
@@ -177,6 +253,80 @@
         </c:if>
     </body>
     <c:import url="footer.html"/>
+    <script>
+        const course = document.querySelector('.main');
+        const pagination = document.querySelector('.pagination ul');
+        const page = document.querySelector('.pagination ul li:nth-child(2)');
+
+        const coursesPerPage = 4;
+        let currentPage = 1;
+
+        function displayCourses() {
+            const startIndex = (currentPage - 1) * coursesPerPage;
+            const endIndex = startIndex + coursesPerPage;
+            const courses = Array.from(course.children);
+
+            courses.forEach((course, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    course.style.display = 'block';
+                } else {
+                    course.style.display = 'none';
+                }
+            });
+        }
+
+        function createPagination() {
+            const products = Array.from(course.children);
+            const pageCount = Math.ceil(products.length / coursesPerPage);
+
+            for (let i = 2; i <= pageCount; i++) {
+                const li = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = i;
+                link.classList.add('page');
+                if (i === currentPage) {
+                    link.classList.add('active');
+                }
+                li.appendChild(link);
+                pagination.insertBefore(li, pagination.lastElementChild);
+            }
+        }
+
+        createPagination();
+        displayCourses();
+
+        pagination.addEventListener('click', e => {
+            e.preventDefault();
+            if (e.target.classList.contains('page')) {
+                currentPage = parseInt(e.target.textContent);
+                displayCourses();
+                const currentLink = pagination.querySelector('.active');
+                currentLink.classList.remove('active');
+                e.target.classList.add('active');
+            } else if (e.target.classList.contains('prev')) {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayCourses();
+                    const currentLink = pagination.querySelector('.active');
+                    currentLink.classList.remove('active');
+                    const prevLink = currentLink.parentNode.previousElementSibling.querySelector('a');
+                    prevLink.classList.add('active');
+                }
+            } else if (e.target.classList.contains('next')) {
+                const courses = Array.from(course.children);
+                const pageCount = Math.ceil(courses.length / coursesPerPage);
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    displayCourses();
+                    const currentLink = pagination.querySelector('.active');
+                    currentLink.classList.remove('active');
+                    const nextLink = currentLink.parentNode.nextElementSibling.querySelector('a');
+                    nextLink.classList.add('active');
+                }
+            }
+        });
+    </script>
     <script>
         const openButtons = document.querySelectorAll(".open");
         const closeButtons = document.querySelectorAll(".btn-close");

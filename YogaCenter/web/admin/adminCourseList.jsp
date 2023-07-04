@@ -41,6 +41,26 @@
                 background: rgb(0 0 0 / 0.5);
                 opacity: 0;
             }
+            .feedbackForm {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                border-radius: 20px;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                z-index: 10000;
+            }
+            #roomForm {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                border-radius: 20px;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                z-index: 10000;
+            }
         </style>
     </head>
 
@@ -175,22 +195,42 @@
                                                     <c:if test="${course.date_close.after(currentDate)}">
                                                         <c:if test="${course.status == 0}">
                                                             <form action="/YogaCenter/request" method="POST">
-                                                                <span>Active</span>&ensp; <input type="radio" name="status" value="0" checked="">
-                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1">
-                                                                <input name="id" value="${course.idCourse}" hidden="">
-                                                                <input name="date" value="${course.date_close}" hidden="">
-                                                                <input name="option" value="courseChange" hidden="">
-                                                                <button value="comfirm" name="action" class="btn-search">Change</button>
+                                                                <span>Active</span>&ensp; <input type="radio" name="status" value="0" checked="" class ="noevent" data-index="${loop.index}">
+                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" class="feedbackButton" data-index="${loop.index}">
+                                                                <div class="hidden feedbackForm" data-index="${loop.index}">
+                                                                    <div class ="close" style="display: flex; float: right; cursor: pointer; width: 30px;height: 30px">&#10006;</div>
+                                                                    <div style="display: block; width: 500px">
+                                                                        <h3 style="text-align: center;margin-top: 30px; text-transform: uppercase; font-weight: 700; color: #00aced">Message</h3>
+                                                                        <p>The course is active. Are you sure you want to close the course ? </p>
+                                                                        <input name="id" value="${course.idCourse}" hidden="">
+                                                                        <input name="date" value="${course.date_close}" hidden="">
+                                                                        <input name="option" value="courseChange" hidden="">
+                                                                        <br>
+                                                                        <div style="display: flex; align-items: center; justify-content: space-between">
+                                                                            <button name="action" value="comfirm" class="btn-search" style="margin-left: 40%">Yes</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </form>
                                                         </c:if>
                                                         <c:if test="${course.status == 1}">
                                                             <form action="/YogaCenter/request" method="POST">
-                                                                <span>Active</span>&ensp; <input type="radio" name="status" value="0">
-                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="">
-                                                                <input name="id" value="${course.idCourse}" hidden="">
-                                                                <input name="date" value="${course.date_close}" hidden="">
-                                                                <input name="option" value="courseChange" hidden="">
-                                                                <button value="comfirm" name="action" class="btn-search">Change</button>
+                                                                 <span>Active</span>&ensp; <input type="radio" name="status" value="0" class="feedbackButton" data-index="${loop.index}">
+                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="" class ="noevent" data-index="${loop.index}">
+                                                                <div class="hidden feedbackForm" data-index="${loop.index}">
+                                                                    <div class ="close" style="display: flex; float: right; cursor: pointer; width: 30px;height: 30px">&#10006;</div>
+                                                                    <div style="display: block; width: 500px">
+                                                                        <h3 style="text-align: center;margin-top: 30px; text-transform: uppercase; font-weight: 700; color: #00aced">Message</h3>
+                                                                        <p>The course is active. Are you sure you want to close the course ? </p>
+                                                                        <input name="id" value="${course.idCourse}" hidden="">
+                                                                        <input name="date" value="${course.date_close}" hidden="">
+                                                                        <input name="option" value="courseChange" hidden="">
+                                                                        <br>
+                                                                        <div style="display: flex; align-items: center; justify-content: space-between">
+                                                                            <button name="action" value="comfirm" class="btn-search" style="margin-left: 40%">Yes</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </form>
                                                         </c:if>
                                                     </c:if>
@@ -396,7 +436,33 @@
             }
         });
     </script>
+    <script>
+        var feedbackButtons = document.getElementsByClassName("feedbackButton");
+        var feedbackForms = document.getElementsByClassName("feedbackForm");
+        var overlay = document.getElementById("overlay");
+        var noevents = document.getElementsByClassName("noevent");
 
+        for (var i = 0; i < feedbackButtons.length; i++) {
+            feedbackButtons[i].addEventListener("click", function () {
+                var index = this.getAttribute("data-index");
+                var feedbackForm = document.querySelector('.feedbackForm[data-index="' + index + '"]');
+                feedbackForm.classList.remove("hidden");
+                overlay.classList.remove("hidden");
+            });
+        }
+
+        var closeButtons = document.getElementsByClassName("close");
+        for (var i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].addEventListener("click", function () {
+                var index = this.parentNode.getAttribute("data-index");
+                var feedbackForm = document.querySelector('.feedbackForm[data-index="' + index + '"]');
+                var noevent = document.querySelector('.noevent[data-index="' + index + '"]');
+                feedbackForm.classList.add("hidden");
+                overlay.classList.add("hidden");
+                noevent.checked = "true";
+            });
+        }
+    </script>
     <script>
         var addCourseButton = document.getElementById("addCourseButton");
         var courseForm = document.getElementById("courseForm");

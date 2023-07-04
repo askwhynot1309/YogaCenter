@@ -95,6 +95,7 @@
                     <c:set var="listcourse" value="${requestScope.listcourse}"/>
                     <c:set var="nulllist" value="${requestScope.nonelist}"/>
                     <c:set var="listCourseAccountActive" value="${requestScope.listCourseAccountActive}"/>
+                    <c:set var="currentdate" value="${requestScope.currentDate}"></c:set>
                     <c:if test="${listcourse == null}">
                         <p style="text-align: center"><c:out value="${nulllist}"/></p>
                     </c:if>
@@ -112,30 +113,60 @@
                                             <c:if test="${idaccount != null}">
                                                 <input name="key" value="${idaccount}" hidden="">
                                             </c:if>
-                                            <c:if test="${listCourseAccountActive != null}">
-                                                <c:forEach var="coureactive" items="${listCourseAccountActive}">
-                                                    <c:if test="${course.idCourse == coureactive.id_course}">
-                                                        <p style="text-align: center; color: red">You bought course</p>
-                                                    </c:if>
-                                                </c:forEach>
-                                            </c:if>
-                                            <c:if test="${listCourseAccountActive == null}">
-                                                <a class="btn-search open" style="left: 35%; position: absolute; bottom: 10px">Sign up</a>
-                                                <dialog class="message" id="message">
-                                                    <h3 style="text-align: center; color: red">Payment</h3>
-                                                    <p>Bank account number : 9775030435</p>
-                                                    <p>Bank : Vietcombank</p>
-                                                    <p>Name of account bank : Nguyễn Minh Nguyên</p>
-                                                    <p>Method : <select name="method">
-                                                            <option value="0">Cash</option>
-                                                            <option value="1">Banking</option>
-                                                        </select></p>
-                                                    <div style="display: flex; align-items: center; justify-content: space-between">
-                                                        <button class="btn btn-primary" name="action" value="ButtonSignCourse">Comfirm</button>
-                                                        <a class="btn btn-primary btn-close">Close</a>
+                                            <c:choose>
+                                                <c:when test="${listCourseAccountActive == null && course.status == 0}">
+                                                    <a class="btn-search open" style="left: 35%; position: absolute; bottom: 10px">Sign up</a>
+                                                    <dialog class="message" id="message">
+                                                        <h3 style="text-align: center; color: red">Payment</h3>
+                                                        <p>Bank account number : 9775030435</p>
+                                                        <p>Bank : Vietcombank</p>
+                                                        <p>Name of account bank : Nguyễn Minh Nguyên</p>
+                                                        <p>Method : <select name="method">
+                                                                <option value="0">Cash</option>
+                                                                <option value="1">Banking</option>
+                                                            </select></p>
+                                                        <div style="display: flex; align-items: center; justify-content: space-between">
+                                                            <button class="btn btn-primary" name="action" value="ButtonSignCourse">Comfirm</button>
+                                                            <a class="btn btn-primary btn-close">Close</a>
+                                                        </div>
+                                                    </dialog>
+                                                </c:when>
+                                                <c:when test="${currentdate.after(course.date_close) || currentdate.equals(course.date_close)}">
+                                                    <div style="text-align: center">
+                                                        <p style="color: red">The course has been closed.</p>
                                                     </div>
-                                                </dialog>
-                                            </c:if>
+                                                </c:when>
+                                                <c:when test="${listCourseAccountActive != null}">
+                                                    <c:set var="courseBought" value="false" scope="page" />
+                                                    <c:forEach var="coureactive" items="${listCourseAccountActive}">
+                                                        <c:if test="${course.idCourse == coureactive.id_course}">
+                                                            <c:set var="courseBought" value="true" scope="page" />
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <c:choose>
+                                                        <c:when test="${courseBought}">
+                                                            <p style="text-align: center; color: red">You bought the course</p>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a class="btn-search open" style="left: 35%; position: absolute; bottom: 10px">Sign up</a>
+                                                            <dialog class="message" id="message">
+                                                                <h3 style="text-align: center; color: red">Payment</h3>
+                                                                <p>Bank account number : 9775030435</p>
+                                                                <p>Bank : Vietcombank</p>
+                                                                <p>Name of account bank : Nguyễn Minh Nguyên</p>
+                                                                <p>Method : <select name="method">
+                                                                        <option value="0">Cash</option>
+                                                                        <option value="1">Banking</option>
+                                                                    </select></p>
+                                                                <div style="display: flex; align-items: center; justify-content: space-between">
+                                                                    <button class="btn btn-primary" name="action" value="ButtonSignCourse">Comfirm</button>
+                                                                    <a class="btn btn-primary btn-close">Close</a>
+                                                                </div>
+                                                            </dialog>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:when>
+                                            </c:choose>
                                         </form>
                                     </div>
                                 </div>

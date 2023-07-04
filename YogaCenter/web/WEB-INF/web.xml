@@ -308,6 +308,30 @@
         <servlet-name>ClassifyMessageServlet</servlet-name>
         <servlet-class>Controller.ClassifyMessageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminCreateNewMessageServlet</servlet-name>
+        <servlet-class>Controller.AdminCreateNewMessageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ButtonAddNewMessageServlet</servlet-name>
+        <servlet-class>Controller.ButtonAddNewMessageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffCreateNewMessage</servlet-name>
+        <servlet-class>Controller.StaffCreateNewMessage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffButtonAddNewMessageServlet</servlet-name>
+        <servlet-class>Controller.StaffButtonAddNewMessageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrainerCreateNewMessage</servlet-name>
+        <servlet-class>Controller.TrainerCreateNewMessage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrainerButtonAddNewMessageServlet</servlet-name>
+        <servlet-class>Controller.TrainerButtonAddNewMessageServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -615,6 +639,30 @@
     <servlet-mapping>
         <servlet-name>ClassifyMessageServlet</servlet-name>
         <url-pattern>/ClassifyMessageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminCreateNewMessageServlet</servlet-name>
+        <url-pattern>/newmessage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ButtonAddNewMessageServlet</servlet-name>
+        <url-pattern>/ButtonAddNewMessageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffCreateNewMessage</servlet-name>
+        <url-pattern>/staffnewmessage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffButtonAddNewMessageServlet</servlet-name>
+        <url-pattern>/StaffButtonAddNewMessageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerCreateNewMessage</servlet-name>
+        <url-pattern>/trainernewmessage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerButtonAddNewMessageServlet</servlet-name>
+        <url-pattern>/TrainerButtonAddNewMessageServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

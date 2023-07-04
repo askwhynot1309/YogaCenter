@@ -50,6 +50,10 @@ public class UpdateInformationCourseServlet extends HttpServlet {
             if (!file.exists()) {
                 filePart.write(file.getAbsolutePath());
             }
+            if (fileName == "") {
+                request.setAttribute("noimage", "message");
+                request.getRequestDispatcher("managecourse").forward(request, response);
+            }
             String description = request.getParameter("course_description");
             String objective = request.getParameter("course_object");
             String summary = request.getParameter("course_summary");

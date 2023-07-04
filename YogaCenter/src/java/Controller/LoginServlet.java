@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
                                 }
                             }
                             if (!newlist.isEmpty()) {
-                                boolean insertMessage = Dao.MessageDao.createRequestChangeClass(accountLogin.getIdaccount(), "There is a course to create a class, you need to create a class now!!!!", accountLogin.getIdaccount(), 0, currentdate);
+                                boolean insertMessage = Dao.MessageDao.createRequestChangeClass(accountLogin.getIdaccount(), "There is a course to create a class, you need to create a class now!!!!", accountLogin.getIdaccount(), 0, currentdate, "Set up class");
                                 if (insertMessage) {
                                     request.setAttribute("message", "message");
                                 }

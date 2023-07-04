@@ -37,6 +37,9 @@ public class AdminMessageServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             Account account = (Account)session.getAttribute("Admin");
+            if(account == null){
+                request.getRequestDispatcher("admin/adminMessage.jsp").forward(request, response);
+            }
             ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserID(account.getIdaccount());
             ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
             request.setAttribute("getAllAccount", getAllAccount);

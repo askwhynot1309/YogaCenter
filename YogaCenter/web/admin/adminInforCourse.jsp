@@ -82,6 +82,7 @@
                     <c:set var="expired" value="${requestScope.expired}"/>
                     <c:set var="stringPrice" value="${requestScope.stringPrice}"/>
                     <c:set var="success" value="${requestScope.success}"/>
+                    <c:set var="noimage" value="${requestScope.noimage}"/>
                     <c:if test="${informationCourse != null}">
                         <form action="/YogaCenter/request" method="POST" enctype="multipart/form-data" style="padding: 20px; margin-top: 1rem">
                             <div style="float: left; width: 700px">
@@ -158,4 +159,17 @@
                             CKEDITOR.replace('course_object');
                 </script>
                 </body>
+                <c:if test="${noimage != null}">
+                    <div class="notification">
+                        <div class="content">
+                            <div class="title">Error</div>
+                            <span>Image of course does not empty !</span>
+                        </div>
+                        <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+                    </div>
+                    <script>
+                        let notification = document.querySelector('.notification');
+                        notification.timeOut = setTimeout(() => notification.remove(), 5000);
+                    </script>
+                </c:if> 
                 </html>

@@ -41,10 +41,13 @@ public class TraineeBookScheduleServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             try {
                 HttpSession session = request.getSession(true);
                 Account account = (Account) session.getAttribute("account");
+                if (account == null) {
+                    request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
+                }
                 int Course_ID = Integer.parseInt(request.getParameter("courseID"));
 
                 Course course = CourseDao.getInformationOfCourse(Course_ID);

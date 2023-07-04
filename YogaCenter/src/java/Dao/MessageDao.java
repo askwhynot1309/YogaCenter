@@ -18,19 +18,20 @@ import java.util.ArrayList;
  */
 public class MessageDao {
 
-    public static boolean createRequestChangeClass(int fromUserID, String message, int toUserID, int status, Date dateCreate) throws Exception {
+    public static boolean createRequestChangeClass(int fromUserID, String message, int toUserID, int status, Date dateCreate, String title) throws Exception {
         boolean result = false;
         Connection cn = null;
         cn = DBUtils.getConnection();
         if (cn != null) {
             String sql = "INSERT INTO [dbo].[Message]\n"
-                    + "VALUES (?, ?, ?, ?, ?)";
+                    + "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, fromUserID);
             pst.setString(2, message);
             pst.setInt(3, toUserID);
             pst.setDate(4, dateCreate);
             pst.setInt(5, status);
+            pst.setString(6, title);
             pst.executeUpdate();
             result = true;
         }
@@ -51,10 +52,11 @@ public class MessageDao {
                     int messageID = rs.getInt("ID_Message");
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
+                    String title = rs.getString("Title");
                     int toUserID = rs.getInt("ID_recieveMessage");
                     Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status);
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
                     messList.add(messObj);
                 }
             }
@@ -78,10 +80,11 @@ public class MessageDao {
                     int messageID = rs.getInt("ID_Message");
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
+                    String title = rs.getString("Title");
                     int toUserID = rs.getInt("ID_recieveMessage");
                     Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    Message messObj = new Message(messageID, fromUserID, message, toUserID,datesend, status);
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
                     messList.add(messObj);
                 }
             }
@@ -105,10 +108,11 @@ public class MessageDao {
                     int messageID = rs.getInt("ID_Message");
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
+                    String title = rs.getString("Title");
                     int toUserID = rs.getInt("ID_recieveMessage");
                     Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status);
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
                     messList.add(messObj);
                 }
             }
@@ -132,10 +136,11 @@ public class MessageDao {
                     int messageID = rs.getInt("ID_Message");
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
+                    String title = rs.getString("Title");
                     int toUserID = rs.getInt("ID_recieveMessage");
                     Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status);
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
                     messList.add(messObj);
                 }
             }
@@ -218,10 +223,11 @@ public class MessageDao {
                     int messageID = rs.getInt("ID_Message");
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
+                    String title = rs.getString("Title");
                     int toUserID = rs.getInt("ID_recieveMessage");
                     Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    kq = new Message(messageID, fromUserID, message, toUserID, datesend, status);
+                    kq = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
                 }
             }
             cn.close();

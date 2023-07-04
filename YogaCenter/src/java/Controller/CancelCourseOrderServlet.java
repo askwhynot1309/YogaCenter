@@ -42,6 +42,9 @@ public class CancelCourseOrderServlet extends HttpServlet {
             int status = Integer.parseInt(request.getParameter("status"));
             BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
             Account acc = (Account) session.getAttribute("account");
+            if(acc == null){
+                request.getRequestDispatcher("yourcourse").forward(request, response);
+            }
             Account account = Dao.UserDao.getAccountByID(acc.getIdaccount());
             BigDecimal moneycurrent = account.getAmount();
             BigDecimal total = moneycurrent.add(fee);

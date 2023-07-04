@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Object.Account;
 import Object.Course;
 import Utils.Get30SlotsByCourse;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,6 +43,11 @@ public class ButtonScheduleServlet extends HttpServlet {
             int id_room = Integer.parseInt(request.getParameter("room"));
             int option = Integer.parseInt(request.getParameter("option"));
             int id_time = Integer.parseInt(request.getParameter("time"));
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("Admin");
+            if(account == null){
+                request.getRequestDispatcher("schedule").forward(request, response);
+            }
             Course course = Dao.CourseDao.getInformationOfCourse(id_course);
             if (idaccount == 0 || id_course == 0 || id_room == 0 || id_time == 0) {
                 request.setAttribute("arrangeFail", "Fill all fields before arrange !");
