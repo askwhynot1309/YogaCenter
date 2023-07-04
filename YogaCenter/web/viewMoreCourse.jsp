@@ -356,6 +356,9 @@
                                     </a>
                                 </button>
                             </c:when>
+                                    <c:otherwise>
+                                        <p style="color: red">This course was closed.</p>
+                                    </c:otherwise>
                         </c:choose>
                     </div>
                 </div>

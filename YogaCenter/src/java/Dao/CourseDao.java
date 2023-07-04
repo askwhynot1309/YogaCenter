@@ -594,7 +594,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course\n"
-                    + "where Course_Name = ? and c.ID_Level = ? and Start_date = ? and Close_date = ?";
+                    + "where Course_Name = ? and ID_Level = ? and Start_date = ? and Close_date = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, name);
             pst.setInt(2, id_level);
@@ -850,9 +850,9 @@ public class CourseDao {
             String s = "select C.Course_ID\n"
                     + "from Course C JOIN BookingDetail BD ON C.Course_ID = BD.ID_Course\n"
                     + "JOIN BookingCourse BC ON BC.OrderID = BD.Order_ID\n"
-                    + "Where C.Close_date = ?\n"
+                    + "Where C.Close_date = ? and BD.Status_Account = 1\n"
                     + "Group by C.Course_ID\n"
-                    + "Having Count(BC.ID_Trainee) > 0";
+                    + "Having Count(BC.ID_Trainee) >= 5";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
             ResultSet table = pst.executeQuery();
@@ -867,6 +867,7 @@ public class CourseDao {
         }
         return kq;
     }
+
 
     public static ArrayList<Course> trainerGetAllCourse() throws Exception {
         ArrayList<Course> kq = new ArrayList<>();

@@ -365,6 +365,7 @@
                                             </c:when>
                                             <c:when test="${user != null && course.status == 1}">
                                                 <div style="position: absolute; bottom: 10px; width: 90%">
+                                                    <p style="color: red; text-align: center">This course was closed.</p>
                                                     <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
                                                         <span class="top-key"></span>
                                                         <span class="text">View more</span>
@@ -418,6 +419,21 @@
                                                     </button>
                                                 </div>
                                             </c:when>
+                                                <c:otherwise>
+                                                    <div style="position: absolute; bottom: 10px; width: 90%">
+                                                    <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
+                                                        <span class="top-key"></span>
+                                                        <span class="text">View more</span>
+                                                        <span class="bottom-key-1"></span>
+                                                        <span class="bottom-key-2"></span>
+                                                    </a>
+                                                    <button class="cssbuttons-io-button">Register now
+                                                        <a  href="register.jsp" class="icon">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path></svg>
+                                                        </a>
+                                                    </button>
+                                                </div>
+                                                </c:otherwise>
                                         </c:choose>
                                     </div>
                                 </div>

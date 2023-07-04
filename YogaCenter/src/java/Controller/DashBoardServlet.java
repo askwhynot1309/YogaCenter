@@ -62,8 +62,9 @@ public class DashBoardServlet extends HttpServlet {
                 data = data.subList(data.size() - 10, data.size());
                 labels = labels.subList(labels.size() - 10, labels.size());
             }
-
+            String mess = (String) request.getAttribute("message");
             request.setAttribute("labels", labels);
+            request.setAttribute("message", mess);
             request.setAttribute("data", data);
             request.setAttribute("level", levelCount);
             request.setAttribute("employeeCount", employeeCount);
