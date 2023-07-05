@@ -42,6 +42,10 @@ public class TrainerMessageServlet extends HttpServlet {
                 }
             ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserID(account.getIdaccount());
             ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
+            int check = Dao.MessageDao.CountMessage(account.getIdaccount());
+            if(check == 0){
+                session.removeAttribute("Message");
+            }
             request.setAttribute("getAllAccount", getAllAccount);
             request.setAttribute("listMessage", listMessage);
             request.getRequestDispatcher("trainer/trainerMessage.jsp").forward(request, response);

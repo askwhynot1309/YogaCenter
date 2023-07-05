@@ -790,16 +790,15 @@ public class ClassDetailDao {
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id_room);
             pst.setInt(2, id_time);
-            pst.setDate(3, date);
-            pst.setInt(4, id);
+            pst.setInt(3, id);
             kq = pst.executeUpdate();
             if (kq == 1) {
                 String s2 = "Select ClassDate_ID\n"
                         + "from ClassDate\n"
                         + "Where Class_ID = ? and DateStudy = ?";
                 PreparedStatement pst2 = cn.prepareStatement(s2);
-                pst.setInt(1, id);
-                pst.setDate(2, olddate);
+                pst2.setInt(1, id);
+                pst2.setDate(2, olddate);
                 ResultSet table = pst2.executeQuery();
                 if (table != null) {
                     while (table.next()) {
@@ -808,8 +807,8 @@ public class ClassDetailDao {
                                 + "Set DateStudy = ?\n"
                                 + "Where ClassDate_ID = ?";
                         PreparedStatement pst3 = cn.prepareStatement(s3);
-                        pst.setDate(1, date);
-                        pst.setInt(2, classDate_ID);
+                        pst3.setDate(1, date);
+                        pst3.setInt(2, classDate_ID);
                         kq = pst3.executeUpdate();
                     }
                 }

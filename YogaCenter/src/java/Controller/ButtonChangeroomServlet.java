@@ -37,12 +37,12 @@ public class ButtonChangeroomServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            int room = Integer.parseInt(request.getParameter("id-room"));
-            int time = Integer.parseInt(request.getParameter("id-time"));
+            int room = Integer.parseInt(request.getParameter("id_room"));
+            int time = Integer.parseInt(request.getParameter("id_time"));
             int id = Integer.parseInt(request.getParameter("id"));
             Account account = (Account)session.getAttribute("Staff");
             if(account == null){
-                request.getRequestDispatcher("InformationServlet?id=" + id + "&option=staffChangeClass").forward(request, response);
+                request.getRequestDispatcher("viewschedule").forward(request, response);
             }
             String date = request.getParameter("newdate");
             String date2 = request.getParameter("olddate");
@@ -64,7 +64,7 @@ public class ButtonChangeroomServlet extends HttpServlet {
                     request.setAttribute("theSame", "message");
                 }
             }
-            request.getRequestDispatcher("InformationServlet?id=" + id + "&option=staffChangeClass").forward(request, response);
+            request.getRequestDispatcher("viewschedule").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
         }

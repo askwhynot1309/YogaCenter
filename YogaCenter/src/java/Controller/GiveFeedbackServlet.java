@@ -5,6 +5,7 @@
 package Controller;
 
 import Object.Account;
+import Object.Message;
 import Object.Room;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -53,6 +54,8 @@ public class GiveFeedbackServlet extends HttpServlet {
             for (Account account : getAllStaff) {
                 boolean insertMessage = Dao.MessageDao.createRequestChangeClass(1, "You need to change the classroom in which the classes were originally proposed to the new classroom.", account.getIdaccount() , 0, currentFeedback, "Change room");
             }
+            ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserIDWithNotRead(acc.getIdaccount());
+            session.setAttribute("Message", listMessage);
             if(insertFeedback == 1 && insertStatus == 1){
                 request.setAttribute("sentsuccess", "message");
                 request.getRequestDispatcher("class").forward(request, response);

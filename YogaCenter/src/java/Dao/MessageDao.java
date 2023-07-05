@@ -92,7 +92,7 @@ public class MessageDao {
         }
         return messList;
     }
-    
+
     public static ArrayList<Message> getAllMessageByUserIDWithNotRead(int AccountID) throws Exception {
         ArrayList<Message> messList = new ArrayList<>();
         Connection cn = DBUtils.getConnection();
@@ -120,7 +120,7 @@ public class MessageDao {
         }
         return messList;
     }
-    
+
     public static ArrayList<Message> getAllMessageByUserIDAndStatus0(int AccountID) throws Exception {
         ArrayList<Message> messList = new ArrayList<>();
         Connection cn = DBUtils.getConnection();
@@ -207,8 +207,8 @@ public class MessageDao {
         }
         return isUpdated;
     }
-    
-    public static Message getMessageByIdMessage(int id) throws Exception{
+
+    public static Message getMessageByIdMessage(int id) throws Exception {
         Message kq = null;
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
@@ -228,6 +228,27 @@ public class MessageDao {
                     Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
                     kq = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static int CountMessage(int id) throws Exception {
+        int kq = 0;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "Select Count(ID_Message) As Count\n"
+                    + "From Message\n"
+                    + "Where Status = 0 And ID_recieveMessage = ?\n"
+                    + "Group by ID_recieveMessage";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    kq = rs.getInt("Count");    
                 }
             }
             cn.close();

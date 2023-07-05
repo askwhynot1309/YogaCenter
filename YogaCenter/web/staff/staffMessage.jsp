@@ -79,9 +79,10 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 50px">No.</th>
-                                        <th>Name</th>
+                                        <th style="width: 200px">Name</th>
+                                        <th style="width: 350px">Title</th>
                                         <th style="width: 150px">Date-send</th>
-                                        <th style="width: 450px">Status</th>
+                                        <th style="width: 200px">Status</th>
                                         <th>Detail</th>
                                     </tr>
                                 </thead>
@@ -93,15 +94,16 @@
                                     <c:forEach var="message" items="${listMessage}" varStatus="loop">
                                         <tr>
                                             <td style="width: 50px">${loop.count}</td>
-                                            <td>
+                                            <td style="width: 200px">
                                                 <c:forEach var="account" items="${getAllAccount}">
                                                     <c:if test="${account.idaccount == message.fromUserID}">
-                                                        <p>${account.email}</p>
+                                                        ${account.email}
                                                     </c:if>
                                                 </c:forEach>
                                             </td>
-                                            <td>${message.dateSend}</td>
-                                            <td>
+                                            <td style="width: 350px">${message.title}</td>
+                                            <td style="width: 150px">${message.dateSend}</td>
+                                            <td style="width: 200px">
                                                 <c:if test="${message.status == 0}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" height="0.625em" viewBox="0 0 512 512" style="fill:#fa0000"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{
                                                             width: 20px;
@@ -115,7 +117,7 @@
                                                         }</style><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
                                                     </c:if>
                                             </td>
-                                            <td><a href="/YogaCenter/request?action=inf&option=staffdetailmessage&id=${message.messageID}" class="btn btn-primary">View message</a></td>
+                                            <td><a href="/YogaCenter/request?action=inf&option=detailmessage&id=${message.messageID}" class="btn btn-primary">View message</a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

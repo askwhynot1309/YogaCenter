@@ -13,6 +13,7 @@
     <body>
         <div class="sidebar">
             <h3>Staff Dashboard</h3>
+            <c:set var="notification" value="${sessionScope.Message}"/>
             <ul>
                 <li>
                     <a href="/YogaCenter/staffmessage">
