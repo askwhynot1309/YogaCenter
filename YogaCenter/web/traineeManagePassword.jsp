@@ -103,7 +103,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Current password</label>
-                                    <input type="text" class="form-control" name="txtCurrentPassword">
+                                    <input type="password" class="form-control" name="txtOldPassword">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -116,13 +116,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>New password</label>
-                                    <input type="text" class="form-control" name="txtEmail" value="${acc.email}">
+                                    <input type="password" class="form-control" name="txtNewPassword">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Confirm password</label>
-                                    <input type="text" class="form-control" name="txtPhone" value="${acc.phone}">
+                                    <input type="password" class="form-control" name="txtConfirmPassword">
                                 </div>
                             </div>
                         </div>
