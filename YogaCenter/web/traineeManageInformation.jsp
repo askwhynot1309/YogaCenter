@@ -1,4 +1,3 @@
-
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -73,9 +72,6 @@
                 </div>
                 <div class="w3-col s8 w3-bar">
                     <span>Welcome,<strong>${acc.name}</strong></span><br>
-                    <!--                    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
-                                        <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
-                                        <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>-->
                 </div>
             </div>
             <hr>
