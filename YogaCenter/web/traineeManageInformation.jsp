@@ -1,4 +1,3 @@
-
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -111,7 +110,6 @@
                 </div>
                 <div class="w3-col s8 w3-bar">
                     <span>Welcome,<strong>${acc.name}</strong></span><br>
-                    
                 </div>
             </div>
             <hr>
