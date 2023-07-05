@@ -45,10 +45,9 @@ public class TraineeChangePasswordServlet extends HttpServlet {
                     String encryptNewConfirmPassword = HexPassword.HexPassword(confirmPassword);
                     int updated = UserDao.updatePasswordByID(encryptNewConfirmPassword, ID_Account);
                     if (updated == 1 ) {
-                        request.setAttribute("Message", "Change password success");
-
+                        request.setAttribute("changeSuccess", "Change password success");
                     }else{
-                        request.setAttribute("Message", "Something error");
+                        request.setAttribute("changeFail", "Something error");
                         request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
                     }                    
                 } else {
@@ -56,9 +55,7 @@ public class TraineeChangePasswordServlet extends HttpServlet {
                     request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
                 }
             }else{
-                request.setAttribute("Fail", "The confirm password and new password are the not same");
-                request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
-
+                request.setAttribute("changeFail", "The confirm password and new password are the not same");
             }
             request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
 

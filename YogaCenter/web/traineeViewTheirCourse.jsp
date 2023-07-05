@@ -45,38 +45,39 @@
             background-color: #f1f1f1!important;
             transition: .1s;
         }
-            .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 9999;
-            }
-            .message {
-                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
-                background: #fff;
-                color: #222;
-                border: 0;
-                border-radius: 0.25rem;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                border-radius: 20px;
-                transform: translate(-50%, -50%);
-                padding: 20px;
-                z-index: 10000;
-            }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        .message {
+            box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+            background: #fff;
+            color: #222;
+            border: 0;
+            border-radius: 0.25rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            z-index: 10000;
+        }
 
-            .message::backdrop {
-                background: rgb(0 0 0 / 0.5);
-                opacity: 0;
-            }
+        .message::backdrop {
+            background: rgb(0 0 0 / 0.5);
+            opacity: 0;
+        }
     </style>
-  <c:import url="header.jsp"></c:import>
-    <body class="w3-light-grey">
+    <c:import url="header.jsp"></c:import>
+        <body class="w3-light-grey">
         <c:set var="exist" value="${sessionScope.account}"/>
+        <c:set var="courseList" value="${requestScope.courseList}"></c:set>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
             <div class="message" id="message">
@@ -136,40 +137,49 @@
                 <div style="padding: 0">
                     <div class="container">
                         <h2 style="text-align: center">My Learning</h2>
-                        <div class="container mt-10">
-                            <div class="d-flex justify-content-center row">
-                                <div class="col-lg-12">
-                                    <div class="rounded">
-                                        <div class="table-responsive table-borderless">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Course Name</th>
-                                                        <th>Start Date</th>
-                                                        <th>Slot</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="table-body">
-                                                    <c:forEach var="course" items="${requestScope.courseList}">
-                                                        <tr class="cell-1">
-                                                            <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">${course.name_course}</a></th>
-                                                            <th>${course.date_start}</th>
-                                                            <th>${course.slot}</th>
-                                                            <th><a href="/YogaCenter/request?action=EditSchedule&courseID=${course.idCourse}">Edit Schedule</a></th>
+                        <c:if test="${courseList.size() == 0}">
+                            <div style="text-align: center">
+                                <h4>
+                                    <p>You are not currently taking any courses</p>
+                                    <p>Taking course  <a style="color: blue;" href="#">View course list</a></p>
+                                </h4>
+                            </div>
+                        </c:if>
+                        <c:if test="${courseList.size() > 0}">
+                            <div class="container mt-10">
+                                <div class="d-flex justify-content-center row">
+                                    <div class="col-lg-12">
+                                        <div class="rounded">
+                                            <div class="table-responsive table-borderless">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Course Name</th>
+                                                            <th>Start Date</th>
+                                                            <th>Slot</th>
+                                                            <th>Action</th>
                                                         </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody class="table-body">
+                                                        <c:forEach var="course" items="${requestScope.courseList}">
+                                                            <tr class="cell-1">
+                                                                <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">${course.name_course}</a></th>
+                                                                <th>${course.date_start}</th>
+                                                                <th>${course.slot}</th>
+                                                                <th><a href="/YogaCenter/request?action=EditSchedule&courseID=${course.idCourse}">Edit Schedule</a></th>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:if>
                     </div>
                 </div>
             </div>
         </div>
-
     </body>
 </html>
