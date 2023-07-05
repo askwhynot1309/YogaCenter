@@ -87,38 +87,38 @@
         a:hover{
             text-decoration: none;
         }
-      .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 9999;
-            }
-            .message {
-                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
-                background: #fff;
-                color: #222;
-                border: 0;
-                border-radius: 0.25rem;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                border-radius: 20px;
-                transform: translate(-50%, -50%);
-                padding: 20px;
-                z-index: 10000;
-            }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        .message {
+            box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+            background: #fff;
+            color: #222;
+            border: 0;
+            border-radius: 0.25rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            z-index: 10000;
+        }
 
-            .message::backdrop {
-                background: rgb(0 0 0 / 0.5);
-                opacity: 0;
-            }
+        .message::backdrop {
+            background: rgb(0 0 0 / 0.5);
+            opacity: 0;
+        }
     </style>
     <c:import url="header.jsp"/>
     <body class="w3-light-grey">
-      <c:set var="exist" value="${sessionScope.account}"/>
+        <c:set var="exist" value="${sessionScope.account}"/>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
             <div class="message" id="message">
@@ -135,7 +135,7 @@
                     <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
                 </div>
                 <div class="w3-col s8 w3-bar">
-                    <span>Welcome, <strong>${acc.name}</strong></span>
+                    <span>Welcome, <strong>${exist.name}</strong></span>
                 </div>
             </div>
             <hr>
@@ -159,10 +159,6 @@
         <!-- !PAGE CONTENT! -->
         <div class="w3-main" style="margin-left:300px;">
             <div class="container">
-                <h2>Purchase history</h2>
-            <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
-            <c:set var="money" value="${requestScope.money}"></c:set>
-                <div class="container">
                 <h2>Purchase history</h2>
                 <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
                 <c:set var="money" value="${requestScope.money}"></c:set>
@@ -282,7 +278,6 @@
                 </div>
             </div>
         </div>
-
         <c:if test="${addsuccess != null}">
             <div class="notification-success" style="z-index: 1000">
                 <div class="content">

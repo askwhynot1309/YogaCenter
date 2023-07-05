@@ -43,7 +43,7 @@ public class TraineeViewNotificationServlet extends HttpServlet {
             if (account == null) {
                     request.getRequestDispatcher("traineeViewNotification.jsp").forward(request, response);
                 }
-            int Account_ID = Integer.parseInt(request.getParameter("accountID"));
+            int Account_ID = account.getIdaccount();
             ArrayList<Message> notificationList = MessageDao.getAllMessageByUserIDWithNotRead(Account_ID);
             if (notificationList != null) {
                 request.setAttribute("notiList", notificationList);

@@ -6,14 +6,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/trainee/trainee-inf.css"/>
+        <link rel="stylesheet" href="css/trainee/trainee-add-message.css">
+        <link rel="stylesheet" href="css/admin/admin-course.css">
+        <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
-        <title>Manage Information</title>
-        <link rel="stylesheet" href="css/trainee/trainee-inf.css"/>
-        <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
+        <title>Manage Information</title>
+        
     </head>
     <style>
         @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
@@ -60,14 +63,18 @@
         a:hover{
             text-decoration: none;
         }
-        
+
         .form-group input{
             width: 440.200px;
         }
+        .cart {
+                z-index: 2;
+            }
     </style>
     <c:import url="header.jsp"/>
     <body>
-
+        <c:set var="changeSuccess" value="${requestScope.Success}"></c:set>
+        <c:set var="changeFail" value="${requestScope.changeFail}"></c:set>
         <c:set var="acc" value="${sessionScope.account}"/>
 
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
@@ -128,7 +135,7 @@
                         </div>
 
                         <div style="margin-top: 100px;">
-                            <button class="btn btn-primary" type="submit" name="action" value="UpdatePassword">Update</button>
+                            <button class="btn btn-primary cart" type="submit" name="action" value="UpdatePassword">Update</button>
                         </div>
                     </form>
 
@@ -136,22 +143,47 @@
                 </div>
             </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+
+        <c:if test="${changeSuccess != null}">
+            <div class="notification-success" style="z-index: 1000">
+                <div class="content">
+                    <div class="title">Success</div>
+                    <span>${changeSuccess}</span>
+                </div>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification-success');
+                notification.timeOut = setTimeout(() => notification.remove(), 2000);
+            </script>
+        </c:if>
+            <c:if test="${changeFail != null}">
+            <div class="notification-success" style="z-index: 1000">
+                <div class="content">
+                    <div class="title">Fail</div>
+                    <span>${changeFail}</span>
+                </div>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification-success');
+                notification.timeOut = setTimeout(() => notification.remove(), 2000);
+            </script>
+        </c:if>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
         <script>
-                       function selectMenuItem(event, item) {
-                           event.preventDefault(); // Prevent the default behavior of the anchor tag
-                           // Remove 'li-active' class from all <li> elements
-                           var listItems = document.querySelectorAll('.sidebar li');
-                           for (var i = 0; i < listItems.length; i++) {
-                               listItems[i].classList.remove('li-active');
-                           }
+                function selectMenuItem(event, item) {
+                    event.preventDefault(); // Prevent the default behavior of the anchor tag
+                    // Remove 'li-active' class from all <li> elements
+                    var listItems = document.querySelectorAll('.sidebar li');
+                    for (var i = 0; i < listItems.length; i++) {
+                        listItems[i].classList.remove('li-active');
+                    }
 
-                           // Add 'li-active' class to the parent <li> element of the clicked anchor tag
-                           item.parentNode.classList.add('li-active');
+                    // Add 'li-active' class to the parent <li> element of the clicked anchor tag
+                    item.parentNode.classList.add('li-active');
 
-                           // Reload the page
-                           window.location.reload();
-                       }
+                    // Reload the page
+                    window.location.reload();
+                }
 
 
 

@@ -122,17 +122,7 @@
             </div>
         </c:if>
         <c:set var="acc" value="${sessionScope.account}"/>
-        <c:set var="exist" value="${sessionScope.account}"/>
-        <c:if test="${exist == null}">
-            <div id="overlay" class="overlay"></div>
-            <div class="message" id="message">
-                <h3 style="text-align: center; color: red">Message</h3>
-                <p>Your session is timeout. Back to login page to login again!</p>
-                <div style=" text-align: center">
-                    <a class="btn btn-primary" href="login.jsp">Login</a>
-                </div>
-            </div>
-        </c:if>
+
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
             <div class="w3-container w3-row">
                 <div class="w3-col s4">
@@ -151,7 +141,7 @@
                 <a href="information" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
                 <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding  w3-blue"><i class="fas fa-calendar-alt icon"></i>  My Learning</a>
                 <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i> Purchase History</a>
-                <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+                <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
             </div>
         </nav>
         <div class="w3-main" style="margin-left:300px;">
