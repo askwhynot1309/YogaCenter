@@ -6,6 +6,7 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,17 +33,22 @@ public class TraineeCheckOutCart extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int method = Integer.parseInt(request.getParameter("method"));
-            int totalMoney = Integer.parseInt(request.getParameter("txtPrice"));
+            int totalmoney = Integer.parseInt(request.getParameter("txtPrice"));
             switch (method) {
                 case 0:
+                    request.setAttribute("totalmoney", totalmoney);
+                    request.setAttribute("method", method);
                     request.getRequestDispatcher("TraineeSaveOrderServlet").forward(request, response);
                     break;
                 case 1:
-                    request.setAttribute("txtPrice", totalMoney);
+                    request.setAttribute("txtPrice", totalmoney);
                     request.getRequestDispatcher("TraineeBankPaymentServlet").forward(request, response);
                     break;
-                default:
-                    throw new AssertionError();
+                case 2:
+                    request.setAttribute("totalmoney", totalmoney);
+                    request.setAttribute("method", method);
+                    request.getRequestDispatcher("TraineeSaveOrderServlet").forward(request, response);
+                    break;      
             }
         }
     }

@@ -73,10 +73,10 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 50px">No.</th>
-                                        <th>Course name</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Status</th>
+                                        <th style="width: 250px">Course name</th>
+                                        <th style="width: 75px">Quantity</th>
+                                        <th style="width: 100px">Price</th>
+                                        <th style="width: 100px">Status</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -87,23 +87,27 @@
                                     <c:forEach var="order" items="${listinf}" varStatus="loop">
                                         <tr>
                                             <td style="width: 50px">${loop.count}</td>
-                                            <td>${order.name_course}</td>
-                                            <td>${order.quantity}</td>
-                                            <td>${order.fee_course}</td>
+                                            <td style="width: 250px">${order.name_course}</td>
+                                            <td style="width: 75px">${order.quantity}</td>
+                                            <td style="width: 100px">${order.fee_course}</td>
+                                            <td style="width: 100px">
+                                                <c:if test="${order.status_account == 1}">
+                                                    <p style="color: green">Active</p>
+                                                    <c:set var="total" value="${total + order.fee_course}"/>
+                                                </c:if>
+                                                <c:if test="${order.status_account == 0}">
+                                                    <p style="color: red">Cancel</p>
+                                                </c:if>
+                                                <c:if test="${order.status_account == 2}">
+                                                    <p style="color: yellowgreen">Refund</p>
+                                                </c:if>
+                                                <c:if test="${order.status_account == 3}">
+                                                    <p style="color: black">Not paid</p>
+                                                    <c:set var="total" value="${total + order.fee_course}"/>
+                                                </c:if>
+                                            </td>
                                         </tr>
-                                    <td>
-                                        <c:if test="${order.status_account == 1}">
-                                            <p style="color: green">Active</p>
-                                            <c:set var="total" value="${total + order.fee_course}"/>
-                                        </c:if>
-                                        <c:if test="${order.status_account == 0}">
-                                            <p style="color: red">Cancel</p>
-                                        </c:if>
-                                        <c:if test="${order.status_account == 2}">
-                                            <p style="color: yellowgreen">Refund</p>
-                                        </c:if>
-                                    </td>
-                                </c:forEach>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>

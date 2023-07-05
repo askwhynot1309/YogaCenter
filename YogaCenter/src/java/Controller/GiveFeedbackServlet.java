@@ -5,6 +5,7 @@
 package Controller;
 
 import Object.Account;
+import Object.Message;
 import Object.Room;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,6 +39,9 @@ public class GiveFeedbackServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("Staff");
+            if(acc == null){
+                request.getRequestDispatcher("class").forward(request, response);
+            }
             int id = Integer.parseInt(request.getParameter("id"));
             String feedback = request.getParameter("txt_feedback");
             Date currentFeedback = new Date(System.currentTimeMillis());
@@ -46,10 +50,12 @@ public class GiveFeedbackServlet extends HttpServlet {
             int insertFeedback = Dao.RoomDao.insertNewFeedbackRoom(id, feedback, currentFeedback, 1);
             int insertStatus = Dao.RoomDao.updateSatusRoom(id, status);
             ArrayList<Account> getAllStaff = Dao.AccountDao.getAllStaff();
-            boolean sendMessageToAdmin = Dao.MessageDao.createRequestChangeClass(acc.getIdaccount(), getRoom + " : " + feedback, id, 1, currentFeedback);
+            boolean sendMessageToAdmin = Dao.MessageDao.createRequestChangeClass(acc.getIdaccount(), getRoom + " : " + feedback, id, 1, currentFeedback, "Change room");
             for (Account account : getAllStaff) {
-                boolean insertMessage = Dao.MessageDao.createRequestChangeClass(1, "You need to change the classroom in which the classes were originally proposed to the new classroom.", account.getIdaccount() , 0, currentFeedback);
+                boolean insertMessage = Dao.MessageDao.createRequestChangeClass(1, "You need to change the classroom in which the classes were originally proposed to the new classroom.", account.getIdaccount() , 0, currentFeedback, "Change room");
             }
+            ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserIDWithNotRead(acc.getIdaccount());
+            session.setAttribute("Message", listMessage);
             if(insertFeedback == 1 && insertStatus == 1){
                 request.setAttribute("sentsuccess", "message");
                 request.getRequestDispatcher("class").forward(request, response);

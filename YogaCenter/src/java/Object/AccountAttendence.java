@@ -1,12 +1,13 @@
 package Object;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  *
  * @author ADMIN
  */
-public class AccountAttendence {
+public class AccountAttendence implements Serializable{
     private int id_attendence;
     private int id_trainee;
     private int id_class;

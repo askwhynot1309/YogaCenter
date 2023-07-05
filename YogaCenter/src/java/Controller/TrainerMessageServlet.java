@@ -37,8 +37,15 @@ public class TrainerMessageServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             Account account = (Account) session.getAttribute("Trainer");
+            if (account == null) {
+                    request.getRequestDispatcher("trainer/trainerMessage.jsp").forward(request, response);
+                }
             ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserID(account.getIdaccount());
             ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
+            int check = Dao.MessageDao.CountMessage(account.getIdaccount());
+            if(check == 0){
+                session.removeAttribute("Message");
+            }
             request.setAttribute("getAllAccount", getAllAccount);
             request.setAttribute("listMessage", listMessage);
             request.getRequestDispatcher("trainer/trainerMessage.jsp").forward(request, response);

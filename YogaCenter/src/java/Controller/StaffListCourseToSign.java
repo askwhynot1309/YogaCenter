@@ -9,12 +9,12 @@ import Object.Level;
 import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -38,15 +38,18 @@ public class StaffListCourseToSign extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */  
             int idaccount = Integer.parseInt(request.getParameter("key"));
             ArrayList<Course> listcourse = Dao.CourseDao.staffGetAllCourse();
+            Date currentdate = new Date(System.currentTimeMillis());
             ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(idaccount);
             ArrayList<Level> listlevel = Dao.LevelDao.getAllLevel();
             if(listcourse != null && !listcourse.isEmpty()){
                 request.setAttribute("listcourse", listcourse);
                 request.setAttribute("listCourseAccountActive", listCourseAccountActive);
                 request.setAttribute("key", idaccount);
+                request.setAttribute("currentDate", currentdate);
                 request.setAttribute("listlevel", listlevel);
             }else{
                 request.setAttribute("listlevel", listlevel);
+                request.setAttribute("currentDate", currentdate);
                 request.setAttribute("key", idaccount);
                 request.setAttribute("nonelist", "There are any courses in data.");
             }

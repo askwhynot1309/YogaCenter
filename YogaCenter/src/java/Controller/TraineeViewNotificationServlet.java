@@ -40,6 +40,9 @@ public class TraineeViewNotificationServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(true);
             Account account = (Account) session.getAttribute("account");
+            if (account == null) {
+                    request.getRequestDispatcher("traineeViewNotification.jsp").forward(request, response);
+                }
             int Account_ID = Integer.parseInt(request.getParameter("accountID"));
             ArrayList<Message> notificationList = MessageDao.getAllMessageByUserIDWithNotRead(Account_ID);
             if (notificationList != null) {

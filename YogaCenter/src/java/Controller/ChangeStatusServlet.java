@@ -4,9 +4,12 @@
  */
 package Controller;
 
+import Object.Account;
+import Object.Course;
 import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -59,6 +62,17 @@ public class ChangeStatusServlet extends HttpServlet {
                         if(newdate.equals(currentdate)){
                             request.setAttribute("errorDate", "message");
                             request.getRequestDispatcher("managecourse").forward(request, response);
+                        }
+                    }
+                    if(status == 1){
+                        ArrayList<OrderCourse> listTraineeBoughtCourse = Dao.OrderCourseDao.getTraineeBoughtCourse(id);
+                        Course course = Dao.CourseDao.getInformationOfCourse(id);
+                        for (OrderCourse orderCourse : listTraineeBoughtCourse) {
+                            boolean createMessageForTrainee = Dao.MessageDao.createRequestChangeClass(1, "The course is unactive, the money that you paid will refund in your account. If you want to take money, go to center, please. You should bring your citizen ID when you come to the center for verification.", orderCourse.getId_account(), 0, new Date(System.currentTimeMillis()), "Unactive Course Message");
+                            Account account = Dao.UserDao.getAccountByID(orderCourse.getId_account());
+                            BigDecimal money = account.getAmount().add(course.getFee_course());
+                            int changeStatusRefund = Dao.OrderDao.changeStatusAccountOrder(orderCourse.getId_order(), id, 2);
+                            int updateFee = Dao.AccountDao.updateMoneyOfAccount(account.getIdaccount(), money);
                         }
                     }
                     int changeStatusCourse = Dao.CourseDao.changeStatusCourse(status, id);

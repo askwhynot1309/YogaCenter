@@ -4,13 +4,17 @@
  */
 package Controller;
 
+import Object.Account;
 import Object.Course;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.NumberFormat;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,9 +38,13 @@ public class ViewPreviousServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.parseInt(request.getParameter("id"));
             Course viewcoure = Dao.CourseDao.getInformationOfCourse(id);
-                     request.setAttribute("information", viewcoure);
-                     request.getRequestDispatcher("admin/adminViewPreviousCourse.jsp").forward(request, response);
-        }catch(Exception e){
+            NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
+            int price = viewcoure.getFee_course().intValue();
+            String stringPrice = nf.format(price);
+            request.setAttribute("information", viewcoure);
+            request.setAttribute("stringPrice", stringPrice);
+            request.getRequestDispatcher("admin/adminViewPreviousCourse.jsp").forward(request, response);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -18,19 +18,20 @@ import java.util.ArrayList;
  */
 public class MessageDao {
 
-    public static boolean createRequestChangeClass(int fromUserID, String message, int toUserID, int status, Date dateCreate) throws Exception {
+    public static boolean createRequestChangeClass(int fromUserID, String message, int toUserID, int status, Date dateCreate, String title) throws Exception {
         boolean result = false;
         Connection cn = null;
         cn = DBUtils.getConnection();
         if (cn != null) {
             String sql = "INSERT INTO [dbo].[Message]\n"
-                    + "VALUES (?, ?, ?, ?, ?)";
+                    + "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, fromUserID);
             pst.setString(2, message);
             pst.setInt(3, toUserID);
             pst.setDate(4, dateCreate);
             pst.setInt(5, status);
+            pst.setString(6, title);
             pst.executeUpdate();
             result = true;
         }
@@ -51,10 +52,11 @@ public class MessageDao {
                     int messageID = rs.getInt("ID_Message");
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
+                    String title = rs.getString("Title");
                     int toUserID = rs.getInt("ID_recieveMessage");
                     Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status);
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
                     messList.add(messObj);
                 }
             }
@@ -78,10 +80,11 @@ public class MessageDao {
                     int messageID = rs.getInt("ID_Message");
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
+                    String title = rs.getString("Title");
                     int toUserID = rs.getInt("ID_recieveMessage");
                     Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    Message messObj = new Message(messageID, fromUserID, message, toUserID,datesend, status);
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
                     messList.add(messObj);
                 }
             }
@@ -89,7 +92,7 @@ public class MessageDao {
         }
         return messList;
     }
-    
+
     public static ArrayList<Message> getAllMessageByUserIDWithNotRead(int AccountID) throws Exception {
         ArrayList<Message> messList = new ArrayList<>();
         Connection cn = DBUtils.getConnection();
@@ -105,10 +108,11 @@ public class MessageDao {
                     int messageID = rs.getInt("ID_Message");
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
+                    String title = rs.getString("Title");
                     int toUserID = rs.getInt("ID_recieveMessage");
                     Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status);
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
                     messList.add(messObj);
                 }
             }
@@ -116,7 +120,7 @@ public class MessageDao {
         }
         return messList;
     }
-    
+
     public static ArrayList<Message> getAllMessageByUserIDAndStatus0(int AccountID) throws Exception {
         ArrayList<Message> messList = new ArrayList<>();
         Connection cn = DBUtils.getConnection();
@@ -132,9 +136,11 @@ public class MessageDao {
                     int messageID = rs.getInt("ID_Message");
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
+                    String title = rs.getString("Title");
                     int toUserID = rs.getInt("ID_recieveMessage");
+                    Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    Message messObj = new Message(messageID, fromUserID, message, toUserID, status);
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
                     messList.add(messObj);
                 }
             }
@@ -201,8 +207,8 @@ public class MessageDao {
         }
         return isUpdated;
     }
-    
-    public static Message getMessageByIdMessage(int id) throws Exception{
+
+    public static Message getMessageByIdMessage(int id) throws Exception {
         Message kq = null;
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
@@ -217,10 +223,32 @@ public class MessageDao {
                     int messageID = rs.getInt("ID_Message");
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
+                    String title = rs.getString("Title");
                     int toUserID = rs.getInt("ID_recieveMessage");
                     Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");
-                    kq = new Message(messageID, fromUserID, message, toUserID, datesend, status);
+                    kq = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static int CountMessage(int id) throws Exception {
+        int kq = 0;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "Select Count(ID_Message) As Count\n"
+                    + "From Message\n"
+                    + "Where Status = 0 And ID_recieveMessage = ?\n"
+                    + "Group by ID_recieveMessage";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    kq = rs.getInt("Count");    
                 }
             }
             cn.close();

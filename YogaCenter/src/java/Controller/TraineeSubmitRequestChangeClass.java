@@ -59,7 +59,7 @@ public class TraineeSubmitRequestChangeClass extends HttpServlet {
             String message = "Course " + CourseID + " " + courseName + " change Class " + fromClassID + " to Class " + toClassName;
             Date dateCreate = new Date(System.currentTimeMillis());
 
-            boolean result = MessageDao.createRequestChangeClass(fromTraineeID, message, toTraineeID, 0, dateCreate);
+            boolean result = MessageDao.createRequestChangeClass(fromTraineeID, message, toTraineeID, 0, dateCreate, "Change class");
             if (result == true) {
                 ArrayList<Message> messList = MessageDao.getAllMessage();
 //                out.print("messList size is: " + messList.size());

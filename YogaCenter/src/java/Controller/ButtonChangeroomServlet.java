@@ -37,10 +37,13 @@ public class ButtonChangeroomServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            Account account = (Account)session.getAttribute("Staff");
-            int room = Integer.parseInt(request.getParameter("id-room"));
-            int time = Integer.parseInt(request.getParameter("id-time"));
+            int room = Integer.parseInt(request.getParameter("id_room"));
+            int time = Integer.parseInt(request.getParameter("id_time"));
             int id = Integer.parseInt(request.getParameter("id"));
+            Account account = (Account)session.getAttribute("Staff");
+            if(account == null){
+                request.getRequestDispatcher("viewschedule").forward(request, response);
+            }
             String date = request.getParameter("newdate");
             String date2 = request.getParameter("olddate");
             Date newdate = Date.valueOf(date);
@@ -53,7 +56,7 @@ public class ButtonChangeroomServlet extends HttpServlet {
                 if(check == null){
                     ArrayList<Account> listTrainerAndTrainee = Dao.AccountDao.GetAllTraineeAndTrainerinThisClass(id, olddate);
                     for (Account account1 : listTrainerAndTrainee) {
-                        boolean insertMessageForTrainerAndTraineeToChangeClass = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "Your classroom must be changed new classroom because of some problems. Please view your schedule to join clasroom.", account1.getIdaccount(), 0, new Date(System.currentTimeMillis()));
+                        boolean insertMessageForTrainerAndTraineeToChangeClass = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "Your classroom must be changed new classroom because of some problems. Please view your schedule to join clasroom.", account1.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Message");
                     }
                     int update = Dao.ClassDetailDao.updateDateTimeRoomWithProblem(id, room, time, newdate, olddate);
                     request.setAttribute("success", "message");
@@ -61,7 +64,7 @@ public class ButtonChangeroomServlet extends HttpServlet {
                     request.setAttribute("theSame", "message");
                 }
             }
-            request.getRequestDispatcher("InformationServlet?id=" + id + "&option=staffChangeClass").forward(request, response);
+            request.getRequestDispatcher("viewschedule").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
         }

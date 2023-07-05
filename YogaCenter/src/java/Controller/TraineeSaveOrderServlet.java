@@ -40,8 +40,8 @@ public class TraineeSaveOrderServlet extends HttpServlet {
             if (session != null) {
                 Account account = (Account) session.getAttribute("account");
                 int ID_Trainee = account.getIdaccount();
-                int method = Integer.parseInt(request.getParameter("method"));
-                BigDecimal totalmoney = BigDecimal.valueOf(Double.parseDouble(request.getParameter("total")));
+                int method = (int) request.getAttribute("method");
+                BigDecimal totalmoney = (BigDecimal) request.getAttribute("totalmoney");
                 int status;
                 if (method == 0) {
                     status = 0;
