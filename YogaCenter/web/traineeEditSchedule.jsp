@@ -60,7 +60,7 @@
                         %>
                         <h4 style="text-align: center; color: red;">Starting date: <%=startDate%>. Due date: before <%=endDate%></h4>
                         <%
-                            if (!hashClassDetail.isEmpty() && overdue != null) {
+                            if (!hashClassDetail.isEmpty() && overdue == null) {
 
                         %>
                         <div class="container mt-5">
@@ -171,7 +171,7 @@
                             </div>
                         </div>
                         <%
-                        } else if (!hashClassDetail.isEmpty() && overdue == null) {
+                        } else if (!hashClassDetail.isEmpty() && overdue != null) {
                         %>
                         <div style="text-align: center">
                             <h4>

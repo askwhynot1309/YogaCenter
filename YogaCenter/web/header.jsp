@@ -34,7 +34,7 @@
                 <c:set var="notiList" value="${MessageDao.getAllMessageByUserIDWithNotRead(account.idaccount)}"></c:set>
                     <div class="iconTrainee">
                         <div class="dropdown" style="cursor: pointer">
-                            <span class="fa-solid fa-user fa-2xl"></span>
+                            <a class="fa-solid fa-user fa-2xl" href="traineeGeneralDashboard.jsp"></a>
                             <div class="dropdown-content" style="width: 200px; z-index: -1; background: #d0efe1">
                                 <p style="text-align: center; margin-top: 50px">${account.name}</p>
                             <p style="font-weight: 900">
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div class='custom-cart-wrapper'>
-                        <a href="/YogaCenter/request?action=viewNotification&accountID=${account.idaccount}" class="fa-solid fa-bell fa-2xl"></a>
+                        <a href="/YogaCenter/request?action=viewNotification" class="fa-solid fa-bell fa-2xl"></a>
                         <c:choose>
                             <c:when test="${notiList.size() > 0}">
                                 <div id='cartQuantity' class='custom-cart'>${notiList.size()}</div>
