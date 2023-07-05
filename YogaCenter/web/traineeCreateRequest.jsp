@@ -66,20 +66,21 @@
                         <c:choose>
                             <c:when test="${registered == null}">
                                 <c:set var="overdue" value="${requestScope.overdue}"></c:set>
+                                <c:set var="startDate" value="${requestScope.startDate}"></c:set>
+                                <c:set var="endDate" value="${requestScope.endDate}"></c:set>
+                                <c:set var="courseList" value="${requestScope.courseList}"></c:set>
+
+                                <c:set var="classDetails" value="${requestScope.classDetails}"></c:set>
+                                <c:set var="dayChoice" value="${requestScope.dayChoice}"></c:set>
+                                <c:set var="time" value="${requestScope.Time}"></c:set>
+                                <c:set var="toTraineeRegistered" value="${requestScope.toTraineeRegistered}"></c:set>
+                                <c:set var="Course_ID" value="${requestScope.Course_ID}"></c:set>
+
+                                    <h2 style="text-align: center;">Request to change class</h2>
+                                    <h4 style="text-align: center; color: red;">Starting date: ${startDate}. Due date: before ${endDate}</h4>
+
                                 <c:choose>
                                     <c:when test="${overdue != null}">
-                                        <c:set var="startDate" value="${requestScope.startDate}"></c:set>
-                                        <c:set var="endDate" value="${requestScope.endDate}"></c:set>
-                                        <c:set var="courseList" value="${requestScope.courseList}"></c:set>
-
-                                        <c:set var="classDetails" value="${requestScope.classDetails}"></c:set>
-                                        <c:set var="dayChoice" value="${requestScope.dayChoice}"></c:set>
-                                        <c:set var="time" value="${requestScope.Time}"></c:set>
-                                        <c:set var="toTraineeRegistered" value="${requestScope.toTraineeRegistered}"></c:set>
-                                        <c:set var="Course_ID" value="${requestScope.Course_ID}"></c:set>
-
-                                            <h2 style="text-align: center;">Request to change class</h2>
-                                            <h4 style="text-align: center; color: red;">Starting date: ${startDate}. Due date: before ${endDate}</h4>
 
                                         <div class="container mt-5">
                                             <div class="d-flex justify-content-center row">
@@ -111,7 +112,7 @@
                                                                             Trainee No. <input type="number" id="txtToTraineeID" name="txtToTraineeID" required="" value="${classDetails.idaccount}">
                                                                             <button type="submit" name="action" value="checkTrainee">Check Trainee</button>
                                                                             <c:if test="${classDetails.class_name != null && classDetails.idaccount != null}">
-                                                                                <p>${classDetails.idaccount}</p>
+                                                                                <p>${classDetails.account}</p>
                                                                             </c:if>
                                                                         </th>
                                                                     </tr>
@@ -130,10 +131,10 @@
                                                                 </table>
                                                                 <c:if test="${classDetails.class_name != null && classDetails.idaccount != null}">
                                                                     <c:set var="currentRoomName" value="${requestScope.currentRoomName}"/>
-                                                                    <input type="text" name="txtFromTraineeID" value="${trainee.idaccount}">
-                                                                    <input type="text" name="txtToTraineeID" value="${classDetails.idaccount}">
-                                                                    <input type="text" name="txtFromRoomName" value="${currentRoomName}">
-                                                                    <input type="text" name="txtToRoomName" value="${classDetails.id_class}">
+                                                                    <input type="hidden" name="txtFromTraineeID" value="${trainee.idaccount}">
+                                                                    <input type="hidden" name="txtToTraineeID" value="${classDetails.idaccount}">
+                                                                    <input type="hidden" name="txtFromRoomName" value="${currentRoomName}">
+                                                                    <input type="hidden" name="txtToRoomName" value="${classDetails.id_class}">
                                                                     <button type="submit" name="action" value="createRequest">Submit</button> 
                                                                 </c:if>
                                                                 <c:if test="${toTraineeRegistered != null}">
