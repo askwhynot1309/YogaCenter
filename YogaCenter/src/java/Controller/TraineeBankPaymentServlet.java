@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -35,10 +34,10 @@ public class TraineeBankPaymentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int totalMoney = Integer.parseInt(request.getParameter("txtPrice"));
-            long amount = totalMoney * 100000;
+            int totalmoney = (int) request.getAttribute("txtPrice");
+            long amount = totalmoney * 100000;
 
             String vnp_TxnRef = Config.getRandomNumber(8);
             String vnp_TmnCode = Config.vnp_TmnCode;
@@ -52,6 +51,7 @@ public class TraineeBankPaymentServlet extends HttpServlet {
             vnp_Params.put("vnp_BankCode", "NCB");
             vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
             vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
+            vnp_Params.put("vnp_OrderType", "other");
             vnp_Params.put("vnp_Locale", "vn");
             vnp_Params.put("vnp_ReturnUrl", Config.vnp_Returnurl);
             vnp_Params.put("vnp_IpAddr", Config.getIpAddress(request));

@@ -105,11 +105,12 @@
                     <c:if test="${getDetailMessage != null}">
                         <c:forEach var="account" items="${getAllAccount}">
                             <c:if test="${account.idaccount == getDetailMessage.fromUserID}">
-                                <h5>Email : ${account.email}</h5>
-                                <h5>Name : ${account.name}</h5>
+                                <h5><strong>Email :</strong> ${account.email}</h5>
+                                <h5><strong>Name :</strong> ${account.name}</h5>
                             </c:if>
                         </c:forEach>
-                        <h4>Context of message :</h4>
+                        <h4><strong>Title :</strong><span>${getDetailMessage.title}</span></h4>
+                        <h4><strong>Context of message :</strong></h4>
                         <p>${getDetailMessage.message}</p>
                     </c:if>
                 </div>

@@ -5,21 +5,18 @@
 package Controller;
 
 import Object.Account;
-import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ADMIN
+ * @author CCLaptop
  */
-public class AdminViewBookingServlet extends HttpServlet {
+public class TrainerViewTraineeDetails extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,20 +32,10 @@ public class AdminViewBookingServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-            Account account = (Account) session.getAttribute("Admin");
-            if(account == null){
-                request.getRequestDispatcher("admin/adminviewBooking.jsp").forward(request, response);
-            }
-            ArrayList<OrderCourse> listorder = Dao.OrderDao.getAllOrder();
-            if(listorder == null){
-                request.setAttribute("nulllist", "There are any order of trainee.");
-            }else{
-                request.setAttribute("listOrder", listorder);
-            }
-            request.getRequestDispatcher("admin/adminviewBooking.jsp").forward(request, response);
-        }catch(Exception e){
-            e.printStackTrace();
+            int id = Integer.parseInt(request.getParameter("id"));
+            Account trainee = Dao.UserDao.getAccountByID(id);
+            request.setAttribute("user", trainee);
+            request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
         }
     }
 

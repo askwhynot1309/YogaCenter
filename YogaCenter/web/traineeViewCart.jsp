@@ -218,9 +218,39 @@
                 margin: 0 0 0.5rem 0;
             }
         }
+        .mess {
+                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+                background: #fff;
+                color: #222;
+                border: 0;
+                border-radius: 0.25rem;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                border-radius: 20px;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                z-index: 10000;
+            }
+
+            .mess::backdrop {
+                background: rgb(0 0 0 / 0.5);
+                opacity: 0;
+            }
     </style>
     <body>
         <c:import url="header.jsp"/>
+        <c:set var="exist" value="${sessionScope.account}"/>
+        <c:if test="${exist == null}">
+            <div id="overlay" class="overlay"></div>
+            <div class="mess" id="mess">
+                <h3 style="text-align: center; color: red">Message</h3>
+                <p>Your session is timeout. Back to login page to login again!</p>
+                <div style=" text-align: center">
+                    <a class="btn btn-primary" href="login.jsp">Login</a>
+                </div>
+            </div>
+        </c:if>
         <%
             HashMap<String, Integer> cart = (HashMap) session.getAttribute("cart");
             int totalMoney = 0;

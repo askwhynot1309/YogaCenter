@@ -40,6 +40,9 @@ public class TraineeViewTheirCouse extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(true);
             Account account = (Account) session.getAttribute("account");
+            if (account == null) {
+                    request.getRequestDispatcher("traineeViewTheirCourse.jsp").forward(request, response);
+                }
             ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
             request.setAttribute("courseList", courseList);
             request.getRequestDispatcher("traineeViewTheirCourse.jsp").forward(request, response);

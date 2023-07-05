@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -39,6 +40,26 @@
             .message::backdrop {
                 background: rgb(0 0 0 / 0.5);
                 opacity: 0;
+            }
+            .feedbackForm {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                border-radius: 20px;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                z-index: 10000;
+            }
+            #roomForm {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                border-radius: 20px;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                z-index: 10000;
             }
         </style>
     </head>
@@ -111,7 +132,7 @@
                             <form action="/YogaCenter/request" method="POST" enctype="multipart/form-data">
                                 <div style="display: flex; align-items: center; justify-content: space-between">
                                     <p>Name of course : <input type="text" name="course_name" value="${param.course_name}" required="" class="input-course"></p>
-                                    <p>Fee of course : <input type="number" name="course_fee" value="${param.course_fee}" required="" class="input-course"></p>
+                                    <p>Fee of course : <input type="number" name="course_fee" value="${param.course_fee}" required="" class="input-course"> .000 VNĐ</p>
                                     <p>Start-date of course : <input type="date" name="course_start" value="${param.course_start}" required="" class="input-course"></p>
                                     <p>Slots : <input type="number" name="slot" value="${param.slot}" required="" class="input-course"></p>
                                 </div>
@@ -158,7 +179,12 @@
                                             <tr>
                                                 <td>${loop.count}</td>
                                                 <td style="width: 395px">${course.name_course}</td>
-                                                <td>${course.fee_course} VNĐ</td>
+                                                <td>
+                                                    <fmt:setLocale value="vi_VN" />
+                                                    <fmt:setBundle basename="java.text.resources.LocaleElements" />
+                                                    <fmt:formatNumber value="${course.fee_course}" var="stringPrice" />
+                                                    ${stringPrice}.000 VNĐ
+                                                </td>
                                                 <td>
                                                     <c:if test="${course.date_close.before(currentDate)}">
                                                         <form action="/YogaCenter/request" method="POST">
@@ -169,22 +195,42 @@
                                                     <c:if test="${course.date_close.after(currentDate)}">
                                                         <c:if test="${course.status == 0}">
                                                             <form action="/YogaCenter/request" method="POST">
-                                                                <span>Active</span>&ensp; <input type="radio" name="status" value="0" checked="">
-                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1">
-                                                                <input name="id" value="${course.idCourse}" hidden="">
-                                                                <input name="date" value="${course.date_close}" hidden="">
-                                                                <input name="option" value="courseChange" hidden="">
-                                                                <button value="comfirm" name="action" class="btn-search">Change</button>
+                                                                <span>Active</span>&ensp; <input type="radio" name="status" value="0" checked="" class ="noevent" data-index="${loop.index}">
+                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" class="feedbackButton" data-index="${loop.index}">
+                                                                <div class="hidden feedbackForm" data-index="${loop.index}">
+                                                                    <div class ="close" style="display: flex; float: right; cursor: pointer; width: 30px;height: 30px">&#10006;</div>
+                                                                    <div style="display: block; width: 500px">
+                                                                        <h3 style="text-align: center;margin-top: 30px; text-transform: uppercase; font-weight: 700; color: #00aced">Message</h3>
+                                                                        <p>The course is active. Are you sure you want to close the course ? </p>
+                                                                        <input name="id" value="${course.idCourse}" hidden="">
+                                                                        <input name="date" value="${course.date_close}" hidden="">
+                                                                        <input name="option" value="courseChange" hidden="">
+                                                                        <br>
+                                                                        <div style="display: flex; align-items: center; justify-content: space-between">
+                                                                            <button name="action" value="comfirm" class="btn-search" style="margin-left: 40%">Yes</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </form>
                                                         </c:if>
                                                         <c:if test="${course.status == 1}">
                                                             <form action="/YogaCenter/request" method="POST">
-                                                                <span>Active</span>&ensp; <input type="radio" name="status" value="0">
-                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="">
-                                                                <input name="id" value="${course.idCourse}" hidden="">
-                                                                <input name="date" value="${course.date_close}" hidden="">
-                                                                <input name="option" value="courseChange" hidden="">
-                                                                <button value="comfirm" name="action" class="btn-search">Change</button>
+                                                                 <span>Active</span>&ensp; <input type="radio" name="status" value="0" class="feedbackButton" data-index="${loop.index}">
+                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="" class ="noevent" data-index="${loop.index}">
+                                                                <div class="hidden feedbackForm" data-index="${loop.index}">
+                                                                    <div class ="close" style="display: flex; float: right; cursor: pointer; width: 30px;height: 30px">&#10006;</div>
+                                                                    <div style="display: block; width: 500px">
+                                                                        <h3 style="text-align: center;margin-top: 30px; text-transform: uppercase; font-weight: 700; color: #00aced">Message</h3>
+                                                                        <p>The course is active. Are you sure you want to close the course ? </p>
+                                                                        <input name="id" value="${course.idCourse}" hidden="">
+                                                                        <input name="date" value="${course.date_close}" hidden="">
+                                                                        <input name="option" value="courseChange" hidden="">
+                                                                        <br>
+                                                                        <div style="display: flex; align-items: center; justify-content: space-between">
+                                                                            <button name="action" value="comfirm" class="btn-search" style="margin-left: 40%">Yes</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </form>
                                                         </c:if>
                                                     </c:if>
@@ -226,7 +272,7 @@
                 notification.timeOut = setTimeout(() => notification.remove(), 5000);
             </script>
         </c:if> 
-            <c:if test="${wrong != null}">
+        <c:if test="${wrong != null}">
             <div class="notification">
                 <div class="content">
                     <div class="title">Error</div>
@@ -252,7 +298,7 @@
                 notification.timeOut = setTimeout(() => notification.remove(), 5000);
             </script>
         </c:if> 
-            <c:if test="${noimage != null}">
+        <c:if test="${noimage != null}">
             <div class="notification">
                 <div class="content">
                     <div class="title">Error</div>
@@ -390,7 +436,33 @@
             }
         });
     </script>
+    <script>
+        var feedbackButtons = document.getElementsByClassName("feedbackButton");
+        var feedbackForms = document.getElementsByClassName("feedbackForm");
+        var overlay = document.getElementById("overlay");
+        var noevents = document.getElementsByClassName("noevent");
 
+        for (var i = 0; i < feedbackButtons.length; i++) {
+            feedbackButtons[i].addEventListener("click", function () {
+                var index = this.getAttribute("data-index");
+                var feedbackForm = document.querySelector('.feedbackForm[data-index="' + index + '"]');
+                feedbackForm.classList.remove("hidden");
+                overlay.classList.remove("hidden");
+            });
+        }
+
+        var closeButtons = document.getElementsByClassName("close");
+        for (var i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].addEventListener("click", function () {
+                var index = this.parentNode.getAttribute("data-index");
+                var feedbackForm = document.querySelector('.feedbackForm[data-index="' + index + '"]');
+                var noevent = document.querySelector('.noevent[data-index="' + index + '"]');
+                feedbackForm.classList.add("hidden");
+                overlay.classList.add("hidden");
+                noevent.checked = "true";
+            });
+        }
+    </script>
     <script>
         var addCourseButton = document.getElementById("addCourseButton");
         var courseForm = document.getElementById("courseForm");

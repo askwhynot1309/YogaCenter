@@ -17,6 +17,7 @@ public class Message implements Serializable {
     private int messageID;
     private int fromUserID;
     private String message;
+    private String title;
     private int toUserID;
     private int fromClassID;
     private int toClassID;
@@ -34,21 +35,22 @@ public class Message implements Serializable {
         this.dateSend = dateSend;
     }
 
-    public Message(int messageID, int fromUserID, String message, int toUserID, Date datesend, int status) {
+    public Message(int messageID, int fromUserID, String message, int toUserID, Date datesend, int status, String title) {
         this.messageID = messageID;
         this.fromUserID = fromUserID;
         this.message = message;
         this.toUserID = toUserID;
         this.dateSend = datesend;
         this.status = status;
+        this.title = title;
     }
     
-    public Message(int messageID,int fromUserID, String message, int toUserID, int status) {
-        this.messageID = messageID;
-        this.fromUserID = fromUserID;
-        this.message = message;
-        this.toUserID = toUserID;
-        this.status = status;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getCourse_ID() {

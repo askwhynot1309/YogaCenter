@@ -139,4 +139,54 @@ public class OrderCourseDao {
         }
         return kq;
     }
+
+    public static ArrayList<OrderCourse> getTraineeBoughtCourse(int id) throws Exception {
+        ArrayList<OrderCourse> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select BC.ID_Trainee, BC.OrderID\n"
+                    + "from BookingDetail BD JOIN BookingCourse BC ON BD.Order_ID = BC.OrderID\n"
+                    + "Where ID_Course = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_account = table.getInt("ID_Trainee");
+                    int id_order = table.getInt("OrderID");
+                    OrderCourse coursedetail = new OrderCourse(id_order, id_account, new Date(System.currentTimeMillis()), id, id);
+                    kq.add(coursedetail);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
+     public static ArrayList<OrderCourse> getCourseHaveTraineeSignInCourseSmallerThan5(Date date) throws Exception {
+        ArrayList<OrderCourse> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select C.Course_ID, BC.ID_Trainee, BC.OrderID\n"
+                    + "from Course C JOIN BookingDetail BD ON C.Course_ID = BD.ID_Course\n"
+                    + "JOIN BookingCourse BC ON BC.OrderID = BD.Order_ID\n"
+                    + "Where C.Close_date = ? and BD.Status_Account = 1\n"
+                    + "Group by C.Course_ID, BC.ID_Trainee, BC.OrderID\n"
+                    + "Having Count(BC.ID_Trainee) < 5";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setDate(1, date);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int course_id = table.getInt("Course_ID");
+                    int account_id = table.getInt("ID_Trainee");
+                    int order_id = table.getInt("OrderID");
+                    OrderCourse course = new OrderCourse(order_id, account_id, "", course_id, "", date, order_id, order_id, order_id, BigDecimal.ZERO, account_id);
+                    kq.add(course);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
 }

@@ -67,11 +67,10 @@
                 </div>
                 <div class="col-lg-9">
                     <h2 style="display: flex; justify-content: center; margin-bottom: 50px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Class Information</h2>
-                    <c:set var="ListTrainee" value="${sessionScope.ListTrainee}"/>
-                    <c:set var="inforClass" value="${sessionScope.InforClass}"/>
-                    <c:set var="listAttend" value="${sessionScope.listAttend}"/>
-                    <c:set var="currentDate" value="${sessionScope.currentDate}"/>
-                    <c:set var="status" value="${sessionScope.status}"/>
+                    <c:set var="ListTrainee" value="${requestScope.ListTrainee}"/>
+                    <c:set var="inforClass" value="${requestScope.InforClass}"/>
+                    <c:set var="listAttend" value="${requestScope.listAttend}"/>
+                    <c:set var="status" value="${requestScope.status}"/>
                     <c:set var="currentDate" value="${requestScope.currentDate}"/>
                     <c:if test="${InforClass != null}">
                         <table class="table">
@@ -138,7 +137,7 @@
                                                             <a href="/YogaCenter/request?action=inf&id=${trainee.idaccount}&option=trainerUserDetail" class="btn btn-primary">Details</a>
                                                         </td>
                                                         <td>
-                                                            <c:if test="${currentDate.equals(inforClass.date)}">
+                                                            <c:if test="${currentDate == true}">
                                                                 <c:forEach var="attend" items="${listAttend}">
                                                                     <c:if test="${attend.id_trainee == trainee.idaccount}">
                                                                         <c:if test="${attend.status == 0}">

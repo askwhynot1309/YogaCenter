@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -34,6 +35,10 @@ public class ButtonSignCourseServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("Staff");
+            if(account == null){
+                request.getRequestDispatcher("trainee").forward(request, response);
+            }
             int idcourse = Integer.parseInt(request.getParameter("id"));
             int idaccount = Integer.parseInt(request.getParameter("key"));
             int method = Integer.parseInt(request.getParameter("method"));

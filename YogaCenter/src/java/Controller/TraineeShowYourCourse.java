@@ -45,6 +45,9 @@ public class TraineeShowYourCourse extends HttpServlet {
             int statusPresent = 1;
             int statusAbsent = 0;
             Account trainee = (Account)session.getAttribute("account");
+            if (trainee == null) {
+                    request.getRequestDispatcher("traineeViewYourCourse.jsp").forward(request, response);
+                }
             ArrayList<OrderCourse> listCourseTrainee = Dao.OrderCourseDao.getAllCourseTraineeLearn(trainee.getIdaccount());
             ArrayList<ClassDetail> listCoursebyTrainee = Dao.ClassDetailDao.getAllSlotInClassWhenBuyCourses(trainee.getIdaccount());
             for (OrderCourse orderCoursePresent : listCourseTrainee) {

@@ -46,7 +46,9 @@ public class TraineeCheckTraineeRequested extends HttpServlet {
             try {
                 HttpSession session = request.getSession(true);
                 Account trainee = (Account) session.getAttribute("account");
-
+                if (trainee == null) {
+                    request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
+                }
                 int Course_ID = Integer.parseInt(request.getParameter("txtCourseID"));
                 int toTraineeID = Integer.parseInt(request.getParameter("txtToTraineeID"));
 

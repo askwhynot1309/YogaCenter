@@ -106,7 +106,7 @@
                                             <td>${user.phone}</td>
                                             <td>${user.address}</td>
                                             <td style="width: 75px;height: 75px">
-                                                <a href="/YogaCenter/request?action=inf&id=${user.idaccount}&option=trainerUserDetail" class="btn btn-primary">Details</a>
+                                                <a href="/YogaCenter/TrainerViewTraineeDetails?id=${user.idaccount}" class="btn btn-primary">Details</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

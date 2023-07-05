@@ -9,6 +9,7 @@
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/admin/admin.css">
         <link rel="stylesheet" href="css/admin/admin-table.css">
+        <link rel="stylesheet" href="css/admin/admin-employee-add.css">
         <title>Message</title>
         <style>
             .overlay {
@@ -60,7 +61,13 @@
                     </div>
                     <div class="col-lg-9">
                         <h2 style="display: flex; justify-content: center; margin-bottom: 10px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Notification message</h2>
-
+                        <div style="height: 100px">
+                            <button class="btn-add" style="float: right">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg><a href="trainernewmessage" style="color: white"> New Message</a>
+                                </span>
+                            </button>
+                        </div>
                     <c:set var="listMessage" value="${requestScope.listMessage}"/>
                     <c:set var="getAllAccount" value="${requestScope.getAllAccount}"/>
                     <c:if test="${listMessage.isEmpty()}">
@@ -72,9 +79,10 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 50px">No.</th>
-                                        <th>Name</th>
+                                        <th style="width: 200px">Name</th>
+                                        <th style="width: 350px">Title</th>
                                         <th style="width: 150px">Date-send</th>
-                                        <th style="width: 450px">Status</th>
+                                        <th style="width: 200px">Status</th>
                                         <th>Detail</th>
                                     </tr>
                                 </thead>
@@ -86,15 +94,16 @@
                                     <c:forEach var="message" items="${listMessage}" varStatus="loop">
                                         <tr>
                                             <td style="width: 50px">${loop.count}</td>
-                                            <td>
+                                            <td style="width: 200px">
                                                 <c:forEach var="account" items="${getAllAccount}">
                                                     <c:if test="${account.idaccount == message.fromUserID}">
-                                                        <p>${account.email}</p>
+                                                        ${account.email}
                                                     </c:if>
                                                 </c:forEach>
                                             </td>
-                                            <td>${message.dateSend}</td>
-                                            <td>
+                                            <td style="width: 350px">${message.title}</td>
+                                            <td style="width: 150px">${message.dateSend}</td>
+                                            <td style="width: 200px">
                                                 <c:if test="${message.status == 0}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" height="0.625em" viewBox="0 0 512 512" style="fill:#fa0000"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{
                                                             width: 20px;
@@ -108,7 +117,7 @@
                                                         }</style><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
                                                     </c:if>
                                             </td>
-                                            <td><a href="/YogaCenter/request?action=inf&option=trainerdetailmessage&id=${message.messageID}" class="btn btn-primary">View message</a></td>
+                                            <td><a href="/YogaCenter/request?action=inf&option=detailmessage&id=${message.messageID}" class="btn btn-primary">View message</a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

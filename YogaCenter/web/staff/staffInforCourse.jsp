@@ -65,6 +65,7 @@
                         </a>
                         <h2 style="display: flex; justify-content: center; margin-bottom: 10px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Information of course</h2>
                     <c:set var="informationCourse" value="${requestScope.informationCourse}"/>
+                    <c:set var="stringPrice" value="${requestScope.stringPrice}"/>
                     <c:set var="expired" value="${requestScope.expired}"/>
                     <c:set var="success" value="${requestScope.success}"/>
                     <c:if test="${informationCourse != null}">
@@ -77,7 +78,7 @@
                             <div style="float: right; width: 700px">
                                 <div style="height: 270px">
                                     <h4><span style="font-weight: 700">Name of course : </span><span style="font-size: 20px">${informationCourse.name_course}</span></h4>
-                                    <p><span style="font-weight: 700; font-size: 18px">Fee of course : </span> ${informationCourse.fee_course} VNĐ</p>
+                                    <p><span style="font-weight: 700; font-size: 18px">Fee of course : </span> ${stringPrice}.000 VNĐ</p>
                                     <p><span style="font-weight: 700; font-size: 18px">Start-date of course : </span>${informationCourse.date_start}</p>
                                     <p><span style="font-weight: 700; font-size: 18px">Slots : </span>${informationCourse.slot} slots</p>
                                 </div>

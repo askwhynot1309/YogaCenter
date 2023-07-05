@@ -43,6 +43,9 @@ public class TraineeManagePurchaseServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(true);
             Account account = (Account) session.getAttribute("account");
+            if (account == null) {
+                    request.getRequestDispatcher("traineeManagePurchase.jsp").forward(request, response);
+                }
             HashMap<Integer, ArrayList<OrderCourse>> purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
             for (Map.Entry<Integer, ArrayList<OrderCourse>> entry : purchase.entrySet()) {
                 int orderID = entry.getKey();

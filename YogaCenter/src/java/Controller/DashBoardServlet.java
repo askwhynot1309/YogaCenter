@@ -43,6 +43,9 @@ public class DashBoardServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             Account account = (Account) session.getAttribute("Admin");
+            if(account == null){
+                request.getRequestDispatcher("admin/adminDashboard.jsp").forward(request, response);
+            }
             HashMap<String, List<?>> orderChartData = DashboardDao.getOrderChart();
             ArrayList<Integer> levelCount = DashboardDao.getLevelCount();
             int employeeCount = DashboardDao.getTotalEmployee();
@@ -59,8 +62,9 @@ public class DashBoardServlet extends HttpServlet {
                 data = data.subList(data.size() - 10, data.size());
                 labels = labels.subList(labels.size() - 10, labels.size());
             }
-
+            String mess = (String) request.getAttribute("message");
             request.setAttribute("labels", labels);
+            request.setAttribute("message", mess);
             request.setAttribute("data", data);
             request.setAttribute("level", levelCount);
             request.setAttribute("employeeCount", employeeCount);

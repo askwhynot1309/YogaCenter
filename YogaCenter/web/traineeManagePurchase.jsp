@@ -87,9 +87,48 @@
         a:hover{
             text-decoration: none;
         }
+      .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 9999;
+            }
+            .message {
+                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+                background: #fff;
+                color: #222;
+                border: 0;
+                border-radius: 0.25rem;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                border-radius: 20px;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                z-index: 10000;
+            }
+
+            .message::backdrop {
+                background: rgb(0 0 0 / 0.5);
+                opacity: 0;
+            }
     </style>
     <c:import url="header.jsp"/>
     <body class="w3-light-grey">
+      <c:set var="exist" value="${sessionScope.account}"/>
+        <c:if test="${exist == null}">
+            <div id="overlay" class="overlay"></div>
+            <div class="message" id="message">
+                <h3 style="text-align: center; color: red">Message</h3>
+                <p>Your session is timeout. Back to login page to login again!</p>
+                <div style=" text-align: center">
+                    <a class="btn btn-primary" href="login.jsp">Login</a>
+                </div>
+            </div>
+        </c:if>
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
             <div class="w3-container w3-row">
                 <div class="w3-col s4">
@@ -120,6 +159,10 @@
         <!-- !PAGE CONTENT! -->
         <div class="w3-main" style="margin-left:300px;">
             <div class="container">
+                <h2>Purchase history</h2>
+            <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
+            <c:set var="money" value="${requestScope.money}"></c:set>
+                <div class="container">
                 <h2>Purchase history</h2>
                 <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
                 <c:set var="money" value="${requestScope.money}"></c:set>

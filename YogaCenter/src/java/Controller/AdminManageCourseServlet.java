@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Object.Account;
 import Object.Course;
 import Object.Level;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,6 +38,11 @@ public class AdminManageCourseServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("Admin");
+            if(account == null){
+                request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+            }
             ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
             Date date = new Date(System.currentTimeMillis());
