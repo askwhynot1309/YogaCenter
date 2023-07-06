@@ -9,6 +9,7 @@ import Object.ClassDetail;
 import Object.Course;
 import Object.Message;
 import Object.OrderCourse;
+import Object.Room;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -82,10 +83,13 @@ public class LoginServlet extends HttpServlet {
                             request.getRequestDispatcher("dashboard").forward(request, response);
                             break;
                         case 1:
+                            if (Dao.ClassDetailDao.checkAnyRoomsUnactiveHasClassInDate(new Date(System.currentTimeMillis())).size() > 0) {
+                                boolean insertMessage = Dao.MessageDao.createRequestChangeClass(1, "You need to change the classroom in which the classes were originally proposed to the new classroom.", accountLogin.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Change room");
+                            }
                             ArrayList<Message> listMessageStaff = Dao.MessageDao.getAllMessageByUserIDWithNotRead(accountLogin.getIdaccount());
                             session.setAttribute("Message", listMessageStaff);
                             session.setAttribute("Staff", accountLogin);
-                            request.getRequestDispatcher("staffmessage").forward(request, response);
+                            request.getRequestDispatcher("staffdashboard").forward(request, response);
                             break;
                         case 2:
                             ArrayList<Message> listMessageTrainer = Dao.MessageDao.getAllMessageByUserIDWithNotRead(accountLogin.getIdaccount());

@@ -140,36 +140,6 @@ public class DashboardDao {
         return 0;
     }
 
-    public static ArrayList<MessageInfo> getMessage() {
-        ArrayList<MessageInfo> listMessage = new ArrayList<>();
-        Connection con = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-
-        String sql = "SELECT M.Message, A.Name AS SenderName\n"
-                + "FROM Message M\n"
-                + "INNER JOIN Account A ON M.ID_sendMessage = A.ID_Account\n"
-                + "WHERE M.ID_sendMessage = ID_sendMessage\n"
-                + "ORDER BY M.ID_Message DESC;";
-        try {
-            con = DBUtils.getConnection();
-            pst = con.prepareStatement(sql);
-            rs = pst.executeQuery();
-
-            while (rs.next()) {
-                String message = rs.getString("Message");
-                String sender = rs.getString("SenderName");
-                MessageInfo messageInfo = new MessageInfo(message, sender);
-                listMessage.add(messageInfo);
-            }
-            rs.close();
-            pst.close();
-            con.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listMessage;
-    }
 
     public static class MessageInfo {
 

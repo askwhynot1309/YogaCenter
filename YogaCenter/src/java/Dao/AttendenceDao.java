@@ -129,6 +129,29 @@ public class AttendenceDao {
         return attendanceStatus;
     }
 
+    public static Date checkFinishCourse(int id) throws Exception {
+        Date getdate = new Date(System.currentTimeMillis());
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select top 1 CDATE.DateStudy\n"
+                    + "from Class C JOIN ClassDate CDATE ON C.Class_ID = CDATE.Class_ID\n"
+                    + "JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
+                    + "Where C.Class_ID = ?\n"
+                    + "Order by CDATE.DateStudy desc";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    Date newdate = table.getDate("DateStudy");
+                    getdate = newdate;
+                }
+            }
+            cn.close();
+        }
+        return getdate;
+    }
+
     public static float getProgressByAttendance(int Course_ID, int Trainee_ID) throws Exception {
         int progess = 0;
         int total = 1;

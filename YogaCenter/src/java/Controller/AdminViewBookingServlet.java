@@ -41,8 +41,8 @@ public class AdminViewBookingServlet extends HttpServlet {
                 request.getRequestDispatcher("admin/adminviewBooking.jsp").forward(request, response);
             }
             ArrayList<OrderCourse> listorder = Dao.OrderDao.getAllOrder();
-            if(listorder == null){
-                request.setAttribute("nulllist", "There are any order of trainee.");
+            if(listorder.size() == 0){
+                request.setAttribute("nullist", "There are any order of trainee.");
             }else{
                 request.setAttribute("listOrder", listorder);
             }

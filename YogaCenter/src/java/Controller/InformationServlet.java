@@ -150,6 +150,16 @@ public class InformationServlet extends HttpServlet {
                     request.setAttribute("user", trainee);
                     request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
                     break;
+                case "infUser":
+                    Account user = Dao.UserDao.getAccountByID(id);
+                    request.setAttribute("user", user);
+                    request.getRequestDispatcher("admin/adminInforTrainee.jsp").forward(request, response);
+                    break;
+                case "staffInfUser":
+                    Account trainees = Dao.UserDao.getAccountByID(id);
+                    request.setAttribute("user", trainees);
+                    request.getRequestDispatcher("staff/staffInforTrainee.jsp").forward(request, response);
+                    break;
                 case "viewmore":
                     session = request.getSession();
                     Date currentdate = new Date(System.currentTimeMillis());

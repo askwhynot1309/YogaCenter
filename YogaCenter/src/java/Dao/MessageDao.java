@@ -93,6 +93,35 @@ public class MessageDao {
         }
         return messList;
     }
+    
+    public static ArrayList<Message> getAllMessageByUserIDAndFilterDate(int AccountID, Date date) throws Exception {
+        ArrayList<Message> messList = new ArrayList<>();
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Message]\n"
+                    + "WHERE ID_recieveMessage = ? And DateCreate = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, AccountID);
+            pst.setDate(2, date);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int messageID = rs.getInt("ID_Message");
+                    int fromUserID = rs.getInt("ID_sendMessage");
+                    String message = rs.getString("Message");
+                    String title = rs.getString("Title");
+                    int toUserID = rs.getInt("ID_recieveMessage");
+                    Date datesend = rs.getDate("DateCreate");
+                    int status = rs.getInt("Status");
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
+                    messList.add(messObj);
+                }
+            }
+            cn.close();
+        }
+        return messList;
+    }
 
     public static ArrayList<Message> getAllMessageByUserIDWithNotRead(int AccountID) throws Exception {
         ArrayList<Message> messList = new ArrayList<>();

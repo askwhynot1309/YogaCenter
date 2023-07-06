@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="css/admin/admin.css">
         <link rel="stylesheet" href="css/admin/admin-table.css">
         <link rel="stylesheet" href="css/admin/admin-employee-add.css">
+        <link rel="stylesheet" href="css/admin/admin-course.css">
         <title>Message</title>
         <style>
             .overlay {
@@ -61,13 +62,22 @@
                     </div>
                     <div class="col-lg-9">
                         <h2 style="display: flex; justify-content: center; margin-bottom: 10px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Notification message</h2>
-                        <div style="height: 100px">
+                        <div style="height: 40px">
                             <button class="btn-add" style="float: right">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg><a href="trainernewmessage" style="color: white"> New Message</a>
                                 </span>
                             </button>
                         </div>
+                        <div style="display: flex; margin-left: 30%; margin-bottom: 2rem; margin-top: 2rem; width: 300px">
+                            <form action="/YogaCenter/request" method="POST" class="form-search">
+                                <div class="group">
+                                <input name="option" value="trainerSearchMessage" hidden="">
+                                <input name="date" type="date">
+                                <button name="action" value="search" class="btn-search">Filter</button>
+                            </div>
+                        </form>
+                    </div>
                     <c:set var="listMessage" value="${requestScope.listMessage}"/>
                     <c:set var="getAllAccount" value="${requestScope.getAllAccount}"/>
                     <c:if test="${listMessage.isEmpty()}">
@@ -88,7 +98,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="tbl-content" style="height: 500px">
+                        <div class="tbl-content" style="height: 400px">
                             <table cellpadding="0" cellspacing="0" border="0">
                                 <tbody>
                                     <c:forEach var="message" items="${listMessage}" varStatus="loop">
@@ -117,7 +127,7 @@
                                                         }</style><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
                                                     </c:if>
                                             </td>
-                                            <td><a href="/YogaCenter/request?action=inf&option=detailmessage&id=${message.messageID}" class="btn btn-primary">View message</a></td>
+                                            <td><a href="/YogaCenter/request?action=inf&option=trainerdetailmessage&id=${message.messageID}" class="btn btn-primary">View message</a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

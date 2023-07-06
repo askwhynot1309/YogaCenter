@@ -4,12 +4,19 @@
  */
 package Controller;
 
+import Dao.DashboardDao;
+import Object.Account;
+import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,7 +38,35 @@ public class StaffDashBoardServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-           request.getRequestDispatcher("staffDashboard.jsp").forward(request, response);
+           HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("Staff");
+            if(account == null){
+                request.getRequestDispatcher("staff/staffDashboard.jsp").forward(request, response);
+            }
+            HashMap<String, List<?>> orderChartData = DashboardDao.getOrderChart();
+            int customerCount = DashboardDao.getTotalCustomer();
+            int courseCount = DashboardDao.getTotalCourse();
+            int pendingOrders = DashboardDao.getPendingOrders();
+            ArrayList<Message> message = Dao.MessageDao.getAllMessageByUserIDWithNotRead(account.getIdaccount());
+            request.setAttribute("msg", message);
+
+            List<?> labels = orderChartData.get("labels");
+            List<?> data = orderChartData.get("data");
+
+            if (data.size() > 10) {
+                data = data.subList(data.size() - 10, data.size());
+                labels = labels.subList(labels.size() - 10, labels.size());
+            }
+            String mess = (String) request.getAttribute("message");
+            request.setAttribute("labels", labels);
+            request.setAttribute("message", mess);
+            request.setAttribute("data", data);
+            request.setAttribute("customerCount", customerCount);
+            request.setAttribute("courseCount", courseCount);
+            request.setAttribute("pendingOrders", pendingOrders);
+            request.getRequestDispatcher("staff/staffDashboard.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

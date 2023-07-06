@@ -94,8 +94,8 @@
                                         <th>Email</th>
                                         <th>Name</th>
                                         <th style="width: 100px">Phone</th>
-                                        <th>Address</th>
                                         <th style="width: 300px">Status</th>
+                                        <th>Details</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -109,7 +109,6 @@
                                             <td>${user.email}</td>
                                             <td>${user.name}</td>
                                             <td style="width: 100px">${user.phone}</td>
-                                            <td>${user.address}</td>
                                             <td style="width: 300px">
                                                 <c:if test="${user.status == 0}">
                                                     <form action="/YogaCenter/request" method="POST">
@@ -130,6 +129,7 @@
                                                     </form>
                                                 </c:if>
                                             </td>
+                                            <td><a class="btn btn-primary" href="/YogaCenter/request?action=inf&id=${user.idaccount}&option=infUser">More detail</a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

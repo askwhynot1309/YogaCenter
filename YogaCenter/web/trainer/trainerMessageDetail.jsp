@@ -109,7 +109,7 @@
                                 <h5><strong>Name :</strong> ${account.name}</h5>
                             </c:if>
                         </c:forEach>
-                        <h4><strong>Title :</strong><span>${getDetailMessage.title}</span></h4>
+                        <h4><strong>Title : </strong><span>${getDetailMessage.title}</span></h4>
                         <h4><strong>Context of message :</strong></h4>
                         <p>${getDetailMessage.message}</p>
                     </c:if>

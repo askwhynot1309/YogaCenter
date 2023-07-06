@@ -39,36 +39,28 @@ public class TraineeShowYourCourse extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            ArrayList<SlotsTrainee> slotPresent = new ArrayList<>();
-            ArrayList<SlotsTrainee> slotAbsent = new ArrayList<>();
             Date current_date = new Date(System.currentTimeMillis());
-            int statusPresent = 1;
-            int statusAbsent = 0;
-            Account trainee = (Account)session.getAttribute("account");
+            Account trainee = (Account) session.getAttribute("account");
             if (trainee == null) {
-                    request.getRequestDispatcher("traineeViewYourCourse.jsp").forward(request, response);
-                }
+                request.getRequestDispatcher("traineeViewYourCourse.jsp").forward(request, response);
+            }           
             ArrayList<OrderCourse> listCourseTrainee = Dao.OrderCourseDao.getAllCourseTraineeLearn(trainee.getIdaccount());
-            ArrayList<ClassDetail> listCoursebyTrainee = Dao.ClassDetailDao.getAllSlotInClassWhenBuyCourses(trainee.getIdaccount());
-            for (OrderCourse orderCoursePresent : listCourseTrainee) {
-                SlotsTrainee countPresent = Dao.OrderCourseDao.getSlotTraineeLearn(trainee.getIdaccount(), current_date, statusPresent, orderCoursePresent.getId_course());
-                if(countPresent != null){
-                    slotPresent.add(countPresent);
-                }
+            ArrayList<ClassDetail> listClassTraineeLearn = Dao.ClassDetailDao.getAllClassDetailsByTraineeLearn(trainee.getIdaccount());
+            for (ClassDetail classDetail : listClassTraineeLearn) {
+                Date getDate = Dao.AttendenceDao.checkFinishCourse(classDetail.getId_class());
+                    if(getDate.equals(current_date) || getDate.before(current_date)){
+                        for (OrderCourse orderCourse : listCourseTrainee) {
+                            if(classDetail.getId_course() == orderCourse.getId_course()){
+                                int changeStatus = Dao.OrderDao.changeStatusAccountOrder(orderCourse.getId_order(), orderCourse.getId_account(), 4);
+                            }
+                        }
+                    }
             }
-            for (OrderCourse orderCourseAbsent : listCourseTrainee) {
-                SlotsTrainee countAbsent = Dao.OrderCourseDao.getSlotTraineeLearn(trainee.getIdaccount(), current_date, statusAbsent, orderCourseAbsent.getId_course());
-                if(countAbsent != null){
-                    slotAbsent.add(countAbsent);
-                }
-            }
-            request.setAttribute("listCourseTrainee", listCourseTrainee);
+            ArrayList<OrderCourse> listCourseTraineee = Dao.OrderCourseDao.getAllCourseTraineeLearn(trainee.getIdaccount());
+            request.setAttribute("listCourseTrainee", listCourseTraineee);
             request.setAttribute("current_date", current_date);
-            request.setAttribute("slotPresent", slotPresent);
-            request.setAttribute("listCoursebyTrainee", listCoursebyTrainee);
-            request.setAttribute("slotAbsent", slotAbsent);
             request.getRequestDispatcher("traineeViewYourCourse.jsp").forward(request, response);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

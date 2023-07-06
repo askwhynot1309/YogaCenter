@@ -62,10 +62,21 @@
                     </div>
                     <div class="col-lg-9">
                         <h2 style="display: flex; justify-content: center; margin-bottom: 10px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">View booking</h2>
+                        <div style="display: flex; margin-left: 30%; margin-bottom: 2rem; margin-top: 2rem">
+                            <form action="/YogaCenter/request" method="POST" class="form-search">
+                                <div class="group">
+                                    <svg class="icon-search" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+                                    <input placeholder="Search email order" type="text" name="txtsearch" value="${param.txtsearch}" class="input">
+                                <input name="option" value="searchOrder" hidden="">
+                                <input name="date" type="date" style="margin-left: 20px">
+                                <button name="action" value="search" class="btn-search" style="margin-left: 20px">Search</button>
+                            </div>
+                        </form>
+                    </div>
                     <c:set var="listOrder" value="${requestScope.listOrder}"/>
-                    <c:set var="nulllist" value="${requestScope.nulllist}"/>
+                    <c:set var="nullist" value="${requestScope.nullist}"/>
                     <c:if test="${listOrder == null}">
-                        <p style="text-align: center"><c:out value="${nulllist}"/></p>
+                        <p style="text-align: center"><c:out value="${nullist}"/></p>
                     </c:if>
                     <c:if test="${listOrder != null && !listOrder.isEmpty()}">
                         <div class="tbl-header">
@@ -76,7 +87,7 @@
                                         <th>Name</th>
                                         <th style="width: 150px">Order-date</th>
                                         <th style="width: 150px">Method</th>
-                                        <th style="width: 450px">Status</th>
+                                        <th style="width: 200px">Status</th>
                                         <th>Detail</th>
                                     </tr>
                                 </thead>
@@ -98,7 +109,7 @@
                                                     Banking 
                                                 </c:if>
                                             </td>
-                                            <td style="width: 450px">
+                                            <td style="width: 200px">
                                                 <form action="/YogaCenter/request" method="POST">
                                                     <c:if test="${order.status == 0}">
                                                         <p style="color: yellowgreen">Processing</p>

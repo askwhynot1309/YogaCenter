@@ -337,6 +337,10 @@
         <servlet-class>Controller.TrainerViewTraineeDetails</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>StaffDashBoardServlet</servlet-name>
+        <servlet-class>Controller.StaffDashBoardServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>TraineeGeneralDashboard</servlet-name>
         <servlet-class>Controller.TraineeGeneralDashboard</servlet-class>
     </servlet>
@@ -394,7 +398,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddNewEmployeeServlet</servlet-name>
-        <url-pattern>/AddNewEmployeeServlet</url-pattern>
+        <url-pattern>/addemployee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ButtonAddNewEmployeeServet</servlet-name>
@@ -679,6 +683,10 @@
     <servlet-mapping>
         <servlet-name>TrainerViewTraineeDetails</servlet-name>
         <url-pattern>/TrainerViewTraineeDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffDashBoardServlet</servlet-name>
+        <url-pattern>/staffdashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeGeneralDashboard</servlet-name>

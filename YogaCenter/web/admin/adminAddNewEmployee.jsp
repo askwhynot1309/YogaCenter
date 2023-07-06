@@ -120,15 +120,23 @@
                                 <p>Phone : &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input type="text" name="phone" class="input-course" value="${param.phone}" required=""></p>
                                 <p>Citizen Identity Card : <input type="number" name="cccd" class="input-course" value="${param.cccd}" required=""></p>
                             </div>
-                            <p>Address : <input type="text" name="address" class="input-course" value="${param.address}" required=""></p>
-                            <p>Account : <input type="text" name="account" class="input-course" required=""></p>
-                            <p>Password : <input type="password" name="password" class="input-course" required=""></p>
-                            <p>Role : &ensp;&ensp;&ensp;
-                                <select name="role" id="select-box">
-                                    <option value="1">Staff</option>
-                                    <option value="2">Trainer</option>
-                                </select>
-                            </p>
+                            <div style="display: flex; align-items: center; justify-content: space-between">
+                                <div>
+                                    <p>Address : <input type="text" name="address" class="input-course" value="${param.address}" required=""></p>
+                                    <p>Account : <input type="text" name="account" class="input-course" required=""></p>
+                                    <p>Password : <input type="password" name="password" class="input-course" required=""></p>
+                                    <p>Role : &ensp;&ensp;&ensp;
+                                        <select name="role" id="select-box">
+                                            <option value="1">Staff</option>
+                                            <option value="2">Trainer</option>
+                                        </select>
+                                    </p>
+                                </div>
+                                <div style="width: 350px; border: 5px solid black; padding: 10px">
+                                    <img src="" height="200px" width="200px" id="img" style="margin-left: 20%"><br><br>
+                                    <input type="file" name="img" id="img-input">
+                                </div>
+                            </div>
                             <button name="action" value="ButtonAdd" class="btn-add">Add new Employee</button>
                         </div>
                     </form>
@@ -239,4 +247,17 @@
                     </script>
                 </c:if>
                 </body>
+                <script>
+                    const inputFile = document.getElementById('img-input');
+                    const image = document.getElementById('img');
+                    inputFile.addEventListener('change', function () {
+                        if (inputFile.files && inputFile.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function (e) {
+                                image.src = e.target.result;
+                            };
+                            reader.readAsDataURL(inputFile.files[0]);
+                        }
+                    });
+                </script>
                 </html>
