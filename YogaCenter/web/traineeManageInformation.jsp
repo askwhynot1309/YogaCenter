@@ -6,14 +6,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
+        <link rel="stylesheet" href="css/trainee/trainee-inf.css"/>
+        <link rel="stylesheet" href="css/trainee/trainee-add-message.css">
+        <link rel="stylesheet" href="css/admin/admin-course.css">
+        <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
-        <title>Manage Information</title>
-        <link rel="stylesheet" href="css/trainee/trainee-inf.css"/>
-        <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <title>Manage Information</title>
     </head>
     <style>
         @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
@@ -60,36 +62,38 @@
         a:hover{
             text-decoration: none;
         }
-                  .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 9999;
-            }
-            .message {
-                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
-                background: #fff;
-                color: #222;
-                border: 0;
-                border-radius: 0.25rem;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                border-radius: 20px;
-                transform: translate(-50%, -50%);
-                padding: 20px;
-                z-index: 10000;
-            }
-            .message::backdrop {
-                background: rgb(0 0 0 / 0.5);
-                opacity: 0;
-            }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        .message {
+            box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+            background: #fff;
+            color: #222;
+            border: 0;
+            border-radius: 0.25rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            z-index: 10000;
+        }
+        .message::backdrop {
+            background: rgb(0 0 0 / 0.5);
+            opacity: 0;
+        }
     </style>
     <c:import url="header.jsp"/>
     <body>
+        <c:set var="changeSuccess" value="${requestScope.changeSuccess}"></c:set>
+        <c:set var="changeFail" value="${requestScope.changeFail}"></c:set>
         <c:set var="exist" value="${sessionScope.account}"/>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
@@ -179,25 +183,46 @@
                 </div>
             </div>
         </div>
+        <c:if test="${changeSuccess != null}">
+            <div class="notification-success" style="z-index: 1000">
+                <div class="content">
+                    <div class="title">Success</div>
+                    <span>${changeSuccess}</span>
+                </div>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification-success');
+                notification.timeOut = setTimeout(() => notification.remove(), 2000);
+            </script>
+        </c:if>
+        <c:if test="${changeFail != null}">
+            <div class="notification" style="z-index: 1000">
+                <div class="content">
+                    <div class="title">Fail</div>
+                    <span>${changeFail}</span>
+                </div>
+            </div>s
+            <script>
+                let notification = document.querySelector('.notification');
+                notification.timeOut = setTimeout(() => notification.remove(), 2000);
+            </script>
+        </c:if>            
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
         <script>
-                       function selectMenuItem(event, item) {
-                           event.preventDefault(); // Prevent the default behavior of the anchor tag
-                           // Remove 'li-active' class from all <li> elements
-                           var listItems = document.querySelectorAll('.sidebar li');
-                           for (var i = 0; i < listItems.length; i++) {
-                               listItems[i].classList.remove('li-active');
-                           }
+                function selectMenuItem(event, item) {
+                    event.preventDefault(); // Prevent the default behavior of the anchor tag
+                    // Remove 'li-active' class from all <li> elements
+                    var listItems = document.querySelectorAll('.sidebar li');
+                    for (var i = 0; i < listItems.length; i++) {
+                        listItems[i].classList.remove('li-active');
+                    }
 
-                           // Add 'li-active' class to the parent <li> element of the clicked anchor tag
-                           item.parentNode.classList.add('li-active');
+                    // Add 'li-active' class to the parent <li> element of the clicked anchor tag
+                    item.parentNode.classList.add('li-active');
 
-                           // Reload the page
-                           window.location.reload();
-                       }
-
-
-
+                    // Reload the page
+                    window.location.reload();
+                }
         </script>
         <script>
             // Get the Sidebar

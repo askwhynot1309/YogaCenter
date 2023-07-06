@@ -32,7 +32,7 @@ public class TraineeChangeInformationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int txtAccountID = Integer.parseInt(request.getParameter("txtAccountID"));
             String txtFullname = request.getParameter("txtFullname");
@@ -41,11 +41,11 @@ public class TraineeChangeInformationServlet extends HttpServlet {
             String txtAddress = request.getParameter("txtAddress");
             int isUpdated = UserDao.updateInformationTrainee(txtAccountID, txtEmail, txtFullname, txtPhone, txtAddress);
             if (isUpdated > 0) {
-                request.setAttribute("updateSuccess", "Update information successfully");
-                request.getRequestDispatcher("information").forward(request, response);
-            }else{
-                request.setAttribute("updateFail", "Update information fail");
+                request.setAttribute("changeSuccess", "Update information successfully");
+            } else {
+                request.setAttribute("changeFail", "Update information fail");
             }
+            request.getRequestDispatcher("traineeManageInformation.jsp").forward(request, response);
         }
     }
 
