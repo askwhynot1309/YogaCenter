@@ -34,15 +34,17 @@ public class TraineeChangeInformationServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int ID_Account = Integer.parseInt(request.getParameter("txtAccountID"));
-            String fullname = request.getParameter("txtFullname");
-            String email = request.getParameter("txtEmail");
-            String phone = request.getParameter("txtPhone");
-            String address = request.getParameter("txtAddress");
-            HttpSession session = request.getSession();
-            int updated = UserDao.updateInformationTrainee(ID_Account, email, fullname, phone, address);
-            if (updated == 1) {
+            int txtAccountID = Integer.parseInt(request.getParameter("txtAccountID"));
+            String txtFullname = request.getParameter("txtFullname");
+            String txtEmail = request.getParameter("txtEmail");
+            String txtPhone = request.getParameter("txtPhone");
+            String txtAddress = request.getParameter("txtAddress");
+            int isUpdated = UserDao.updateInformationTrainee(txtAccountID, txtEmail, txtFullname, txtPhone, txtAddress);
+            if (isUpdated > 0) {
+                request.setAttribute("updateSuccess", "Update information successfully");
                 request.getRequestDispatcher("information").forward(request, response);
+            }else{
+                request.setAttribute("updateFail", "Update information fail");
             }
         }
     }
