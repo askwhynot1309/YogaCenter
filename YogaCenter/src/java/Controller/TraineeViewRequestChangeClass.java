@@ -44,37 +44,33 @@ public class TraineeViewRequestChangeClass extends HttpServlet {
 
                 ArrayList<Message> messRequest = new ArrayList<>();
                 for (Message messageList : messList) {
-                    int ID_Message = messageList.getMessageID();
-                    int ID_sendMessage = messageList.getFromUserID();
-                    int ID_recieveMessage = messageList.getToUserID();
+                    if (messageList.getTitle().equals("Change class")) {
+                        int ID_Message = messageList.getMessageID();
+                        int ID_sendMessage = messageList.getFromUserID();
+                        int ID_recieveMessage = messageList.getToUserID();
 //                    
-                    String mess = messageList.getMessage();
+                        String mess = messageList.getMessage();
 
-                    Pattern pattern = Pattern.compile("^Course (\\d+) (.*) change Class (\\d+) to Class (\\d+)$");
-                    Matcher matcher = pattern.matcher(mess);
+                        Pattern pattern = Pattern.compile("^Course (\\d+) (.*) change Class (\\d+) to Class (\\d+)$");
+                        Matcher matcher = pattern.matcher(mess);
 
-                    int courseNumber = 0;
-                    String course_Name = "";
-                    int fromClass = 0;
-                    int toClass = 0;
+                        int courseNumber = 0;
+                        String course_Name = "";
+                        int fromClass = 0;
+                        int toClass = 0;
 
-                    if (matcher.matches()) {
-                        // Extract the four parts using group indices
-                        courseNumber = Integer.parseInt(matcher.group(1));
-                        course_Name = matcher.group(2);
-                        fromClass = Integer.parseInt(matcher.group(3));
-                        toClass = Integer.parseInt(matcher.group(4));
-
-                        out.print("<p>" + courseNumber + "</p>");
-                        out.print("<p>" + course_Name + "</p>");
-                        out.print("<p>" + fromClass + "</p>");
-                        out.print("<p>" + toClass + "</p>");
+                        if (matcher.matches()) {
+                            // Extract the four parts using group indices
+                            courseNumber = Integer.parseInt(matcher.group(1));
+                            course_Name = matcher.group(2);
+                            fromClass = Integer.parseInt(matcher.group(3));
+                            toClass = Integer.parseInt(matcher.group(4));
+                        }
+                        int status = messageList.getStatus();
+                        Date dateSend = messageList.getDateSend();
+                        String title = messageList.getTitle();
+                        messRequest.add(new Message(courseNumber, ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status, dateSend, title));
                     }
-                    out.print("test");
-                    int status = messageList.getStatus();
-                    Date dateSend = messageList.getDateSend();
-                    messRequest.add(new Message(courseNumber, ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status, dateSend));
-//                    
                 }
                 request.setAttribute("messRequest", messRequest);
                 request.getRequestDispatcher("traineeViewRequestChangeClass.jsp").forward(request, response);
