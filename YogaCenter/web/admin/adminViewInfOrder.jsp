@@ -128,6 +128,10 @@
                                                 <c:if test="${order.status_account == 2}">
                                                     <p style="color: yellowgreen">Refund</p>
                                                 </c:if>
+                                                <c:if test="${order.status_account == 3}">
+                                                    <p style="color: black">Not paid</p>
+                                                    <c:set var="total" value="${total + order.fee_course}"/>
+                                                </c:if>
                                             </td>
                                         </tr>
                                     </c:forEach>

@@ -264,13 +264,13 @@ public class AccountDao {
         return kq;
     }
 
-    public static int insertNewEmployee(String name, String email, String phone, String cccd, String address, String account, String password, int role) throws Exception {
+    public static int insertNewEmployee(String name, String email, String phone, String cccd, String address, String account, String password, int role, String img) throws Exception {
         int kq = 0;
         double money = 0.00;
         BigDecimal amout = BigDecimal.valueOf(money);
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "insert into Account(Name, Email, Phone, CCCD, Address, Account, Password, Role, Status, Money) values (?,?,?,?,?,?,?,?,?,?)";
+            String s = "insert into Account(Name, Email, Phone, CCCD, Address, Account, Password, Role, Status, Money, Img) values (?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, name);
             pst.setString(2, email);
@@ -282,6 +282,7 @@ public class AccountDao {
             pst.setInt(8, role);
             pst.setInt(9, 0);
             pst.setBigDecimal(10, amout);
+            pst.setString(11, img);
             kq = pst.executeUpdate();
             cn.close();
         }

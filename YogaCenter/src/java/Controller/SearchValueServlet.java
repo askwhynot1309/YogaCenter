@@ -7,6 +7,7 @@ package Controller;
 import Object.Account;
 import Object.Course;
 import Object.Level;
+import Object.Message;
 import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,6 +39,7 @@ public class SearchValueServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
             String search = request.getParameter("txtsearch");
             String option = request.getParameter("option");
             switch (option) {
@@ -305,8 +308,8 @@ public class SearchValueServlet extends HttpServlet {
                         }
                     }
                 }
-                
-                 case "TrainerSearchCourse" -> {
+
+                case "TrainerSearchCourse" -> {
                     int level = Integer.parseInt(request.getParameter("level"));
                     if (level == 0) {
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
@@ -334,7 +337,7 @@ public class SearchValueServlet extends HttpServlet {
                         }
                     }
                 }
-                
+
                 case "traineeSearchCourse" -> {
                     int level = Integer.parseInt(request.getParameter("level"));
                     int status = Integer.parseInt(request.getParameter("status"));
@@ -362,7 +365,7 @@ public class SearchValueServlet extends HttpServlet {
                             request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
                             request.getRequestDispatcher("courseList.jsp").forward(request, response);
                         }
-                    }else if(level != 0 && status == 1){
+                    } else if (level != 0 && status == 1) {
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevelAndNewest(search, level);
                         if (listCourse != null && !listCourse.isEmpty()) {
@@ -374,7 +377,7 @@ public class SearchValueServlet extends HttpServlet {
                             request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
                             request.getRequestDispatcher("courseList.jsp").forward(request, response);
                         }
-                    }else if (level != 0 && status == 2){
+                    } else if (level != 0 && status == 2) {
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevelAndOldest(search, level);
                         if (listCourse != null && !listCourse.isEmpty()) {
@@ -386,7 +389,7 @@ public class SearchValueServlet extends HttpServlet {
                             request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
                             request.getRequestDispatcher("courseList.jsp").forward(request, response);
                         }
-                    }else if(level == 0 && status == 1){
+                    } else if (level == 0 && status == 1) {
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
                         if (listCourse != null && !listCourse.isEmpty()) {
@@ -398,7 +401,7 @@ public class SearchValueServlet extends HttpServlet {
                             request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
                             request.getRequestDispatcher("courseList.jsp").forward(request, response);
                         }
-                    }else{
+                    } else {
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchOldest(search);
                         if (listCourse != null && !listCourse.isEmpty()) {
@@ -410,6 +413,169 @@ public class SearchValueServlet extends HttpServlet {
                             request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
                             request.getRequestDispatcher("courseList.jsp").forward(request, response);
                         }
+                    }
+                }
+                case "searchOrder" -> {
+                    String getDate = request.getParameter("date");
+                    if ("".equals(getDate) && !"".equals(search)) {
+                        ArrayList<OrderCourse> listOrder = Dao.OrderCourseDao.getOrderByEmail(search);
+                        if (listOrder.size() == 0) {
+                            request.setAttribute("nullist", "There are any order of trainee.");
+                        } else {
+                            request.setAttribute("listOrder", listOrder);
+                        }
+                        request.getRequestDispatcher("admin/adminviewBooking.jsp").forward(request, response);
+                    } else if ("".equals(search) && !"".equals(getDate)) {
+                        Date date = Date.valueOf(getDate);
+                        ArrayList<OrderCourse> listOrder = Dao.OrderCourseDao.getOrderFilterByDate(date);
+                        if (listOrder.size() == 0) {
+                            request.setAttribute("nullist", "There are any order of trainee.");
+                        } else {
+                            request.setAttribute("listOrder", listOrder);
+                        }
+                        request.getRequestDispatcher("admin/adminviewBooking.jsp").forward(request, response);
+                    } else if (!"".equals(search) && !"".equals(getDate)) {
+                        Date date = Date.valueOf(getDate);
+                        ArrayList<OrderCourse> listOrder = Dao.OrderCourseDao.getOrderFilterByDateAndEmail(search, date);
+                        if (listOrder.size() == 0) {
+                            request.setAttribute("nullist", "There are any order of trainee.");
+                        } else {
+                            request.setAttribute("listOrder", listOrder);
+                        }
+                        request.getRequestDispatcher("admin/adminviewBooking.jsp").forward(request, response);
+                    } else {
+                        ArrayList<OrderCourse> listorder = Dao.OrderDao.getAllOrder();
+                        if (listorder.size() == 0) {
+                            request.setAttribute("nullist", "There are any order of trainee.");
+                        } else {
+                            request.setAttribute("listOrder", listorder);
+                        }
+                        request.getRequestDispatcher("admin/adminviewBooking.jsp").forward(request, response);
+                    }
+                }
+                case "staffSearchOrder" -> {
+                    String getDate = request.getParameter("date");
+                    if ("".equals(getDate) && !"".equals(search)) {
+                        ArrayList<OrderCourse> listOrder = Dao.OrderCourseDao.getOrderByEmail(search);
+                        if (listOrder.size() == 0) {
+                            request.setAttribute("nullist", "There are any order of trainee.");
+                        } else {
+                            request.setAttribute("listOrder", listOrder);
+                        }
+                        request.getRequestDispatcher("staff/staffviewBooking.jsp").forward(request, response);
+                    } else if ("".equals(search) && !"".equals(getDate)) {
+                        Date date = Date.valueOf(getDate);
+                        ArrayList<OrderCourse> listOrder = Dao.OrderCourseDao.getOrderFilterByDate(date);
+                        if (listOrder.size() == 0) {
+                            request.setAttribute("nullist", "There are any order of trainee.");
+                        } else {
+                            request.setAttribute("listOrder", listOrder);
+                        }
+                        request.getRequestDispatcher("staff/staffviewBooking.jsp").forward(request, response);
+                    } else if (!"".equals(search) && !"".equals(getDate)) {
+                        Date date = Date.valueOf(getDate);
+                        ArrayList<OrderCourse> listOrder = Dao.OrderCourseDao.getOrderFilterByDateAndEmail(search, date);
+                        if (listOrder.size() == 0) {
+                            request.setAttribute("nullist", "There are any order of trainee.");
+                        } else {
+                            request.setAttribute("listOrder", listOrder);
+                        }
+                        request.getRequestDispatcher("staff/staffviewBooking.jsp").forward(request, response);
+                    } else {
+                        ArrayList<OrderCourse> listorder = Dao.OrderDao.getAllOrder();
+                        if (listorder.size() == 0) {
+                            request.setAttribute("nullist", "There are any order of trainee.");
+                        } else {
+                            request.setAttribute("listOrder", listorder);
+                        }
+                        request.getRequestDispatcher("staff/staffviewBooking.jsp").forward(request, response);
+                    }
+                }
+                case "searchMessage" -> {
+                    String getDate = request.getParameter("date");
+                    Account account = (Account) session.getAttribute("Admin");
+                    if (account == null) {
+                        request.getRequestDispatcher("admin/adminMessage.jsp").forward(request, response);
+                    }
+                    if ("".equals(getDate)) {
+                        ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserID(account.getIdaccount());
+                        ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
+                        int check = Dao.MessageDao.CountMessage(account.getIdaccount());
+                        if (check == 0) {
+                            session.removeAttribute("Message");
+                        }
+                        request.setAttribute("getAllAccount", getAllAccount);
+                        request.setAttribute("listMessage", listMessage);
+                        request.getRequestDispatcher("admin/adminMessage.jsp").forward(request, response);
+                    } else {
+                        Date date = Date.valueOf(getDate);
+                        ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserIDAndFilterDate(account.getIdaccount(), date);
+                        ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
+                        int check = Dao.MessageDao.CountMessage(account.getIdaccount());
+                        if (check == 0) {
+                            session.removeAttribute("Message");
+                        }
+                        request.setAttribute("getAllAccount", getAllAccount);
+                        request.setAttribute("listMessage", listMessage);
+                        request.getRequestDispatcher("admin/adminMessage.jsp").forward(request, response);
+                    }
+                }
+                case "staffSearchMessage" -> {
+                    String getDate = request.getParameter("date");
+                    Account account = (Account) session.getAttribute("Staff");
+                    if (account == null) {
+                        request.getRequestDispatcher("staff/staffMessage.jsp").forward(request, response);
+                    }
+                    if ("".equals(getDate)) {
+                        ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserID(account.getIdaccount());
+                        ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
+                        int check = Dao.MessageDao.CountMessage(account.getIdaccount());
+                        if (check == 0) {
+                            session.removeAttribute("Message");
+                        }
+                        request.setAttribute("getAllAccount", getAllAccount);
+                        request.setAttribute("listMessage", listMessage);
+                        request.getRequestDispatcher("staff/staffMessage.jsp").forward(request, response);
+                    } else {
+                        Date date = Date.valueOf(getDate);
+                        ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserIDAndFilterDate(account.getIdaccount(), date);
+                        ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
+                        int check = Dao.MessageDao.CountMessage(account.getIdaccount());
+                        if (check == 0) {
+                            session.removeAttribute("Message");
+                        }
+                        request.setAttribute("getAllAccount", getAllAccount);
+                        request.setAttribute("listMessage", listMessage);
+                        request.getRequestDispatcher("staff/staffMessage.jsp").forward(request, response);
+                    }
+                }
+                case "trainerSearchMessage" -> {
+                    String getDate = request.getParameter("date");
+                    Account account = (Account) session.getAttribute("Trainer");
+                    if (account == null) {
+                        request.getRequestDispatcher("trainer/trainerMessage.jsp").forward(request, response);
+                    }
+                    if ("".equals(getDate)) {
+                        ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserID(account.getIdaccount());
+                        ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
+                        int check = Dao.MessageDao.CountMessage(account.getIdaccount());
+                        if (check == 0) {
+                            session.removeAttribute("Message");
+                        }
+                        request.setAttribute("getAllAccount", getAllAccount);
+                        request.setAttribute("listMessage", listMessage);
+                        request.getRequestDispatcher("trainer/trainerMessage.jsp").forward(request, response);
+                    } else {
+                        Date date = Date.valueOf(getDate);
+                        ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserIDAndFilterDate(account.getIdaccount(), date);
+                        ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
+                        int check = Dao.MessageDao.CountMessage(account.getIdaccount());
+                        if (check == 0) {
+                            session.removeAttribute("Message");
+                        }
+                        request.setAttribute("getAllAccount", getAllAccount);
+                        request.setAttribute("listMessage", listMessage);
+                        request.getRequestDispatcher("trainer/trainerMessage.jsp").forward(request, response);
                     }
                 }
             }

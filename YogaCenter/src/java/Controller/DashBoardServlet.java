@@ -52,7 +52,7 @@ public class DashBoardServlet extends HttpServlet {
             int customerCount = DashboardDao.getTotalCustomer();
             int courseCount = DashboardDao.getTotalCourse();
             int pendingOrders = DashboardDao.getPendingOrders();
-            ArrayList<MessageInfo> message = DashboardDao.getMessage();
+            ArrayList<Message> message = Dao.MessageDao.getAllMessageByUserIDWithNotRead(account.getIdaccount());
             request.setAttribute("msg", message);
 
             List<?> labels = orderChartData.get("labels");

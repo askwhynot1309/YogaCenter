@@ -162,8 +162,8 @@ public class OrderCourseDao {
         }
         return kq;
     }
-    
-     public static ArrayList<OrderCourse> getCourseHaveTraineeSignInCourseSmallerThan5(Date date) throws Exception {
+
+    public static ArrayList<OrderCourse> getCourseHaveTraineeSignInCourseSmallerThan5(Date date) throws Exception {
         ArrayList<OrderCourse> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -183,6 +183,85 @@ public class OrderCourseDao {
                     int order_id = table.getInt("OrderID");
                     OrderCourse course = new OrderCourse(order_id, account_id, "", course_id, "", date, order_id, order_id, order_id, BigDecimal.ZERO, account_id);
                     kq.add(course);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ArrayList<OrderCourse> getOrderByEmail(String txt) throws Exception {
+        ArrayList<OrderCourse> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Select bc.OrderID, bc.ID_Trainee, bc.Method, bc.DateOrder, sp.Status, a.Name\n"
+                    + "from BookingCourse bc JOIN Account a ON a.ID_Account = bc.ID_Trainee JOIN StatusPayment sp ON sp.ID_Order = bc.OrderID\n"
+                    + "Where a.Email like ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, "%" + txt + "%");
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_order = table.getInt("OrderID");
+                    String name_account = table.getNString("Name");
+                    Date dateorder = table.getDate("DateOrder");
+                    int status = table.getInt("Status");
+                    int method = table.getInt("Method");
+                    OrderCourse order = new OrderCourse(id_order, name_account, dateorder, status, method);
+                    kq.add(order);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
+    public static ArrayList<OrderCourse> getOrderFilterByDate(Date date) throws Exception {
+        ArrayList<OrderCourse> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Select bc.OrderID, bc.ID_Trainee, bc.Method, bc.DateOrder, sp.Status, a.Name\n"
+                    + "from BookingCourse bc JOIN Account a ON a.ID_Account = bc.ID_Trainee JOIN StatusPayment sp ON sp.ID_Order = bc.OrderID\n"
+                    + "Where bc.DateOrder = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setDate(1, date);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_order = table.getInt("OrderID");
+                    String name_account = table.getNString("Name");
+                    Date dateorder = table.getDate("DateOrder");
+                    int status = table.getInt("Status");
+                    int method = table.getInt("Method");
+                    OrderCourse order = new OrderCourse(id_order, name_account, dateorder, status, method);
+                    kq.add(order);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+    
+    public static ArrayList<OrderCourse> getOrderFilterByDateAndEmail(String txt, Date date) throws Exception {
+        ArrayList<OrderCourse> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Select bc.OrderID, bc.ID_Trainee, bc.Method, bc.DateOrder, sp.Status, a.Name\n"
+                    + "from BookingCourse bc JOIN Account a ON a.ID_Account = bc.ID_Trainee JOIN StatusPayment sp ON sp.ID_Order = bc.OrderID\n"
+                    + "Where bc.DateOrder = ? And a.Email like ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setDate(1, date);
+            pst.setString(2, "%" + txt + "%");
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_order = table.getInt("OrderID");
+                    String name_account = table.getNString("Name");
+                    Date dateorder = table.getDate("DateOrder");
+                    int status = table.getInt("Status");
+                    int method = table.getInt("Method");
+                    OrderCourse order = new OrderCourse(id_order, name_account, dateorder, status, method);
+                    kq.add(order);
                 }
             }
             cn.close();

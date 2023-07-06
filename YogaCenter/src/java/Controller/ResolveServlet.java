@@ -4,9 +4,12 @@
  */
 package Controller;
 
+import Object.Account;
+import Object.Room;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,8 +39,13 @@ public class ResolveServlet extends HttpServlet {
             int status = 0;
             String date = request.getParameter("date");
             Date datefeedback = Date.valueOf(date);
+            Room getRoom = Dao.RoomDao.getRoomByID(id);
             int updateRoom = Dao.RoomDao.updateSatusRoom(id, status);
             int updatestatus = Dao.RoomDao.updateSatusRoomFeedback(id, datefeedback);
+            ArrayList<Account> getAllStaff = Dao.AccountDao.getAllStaff();
+            for (Account account : getAllStaff) {
+                boolean sendMessageToStaff = Dao.MessageDao.createRequestChangeClass(1, getRoom.getRoom() + " : Resolved!!", account.getIdaccount() , 0, datefeedback, "Resolve room");
+            }
             if(updateRoom == 1 && updatestatus == 1){
                 request.setAttribute("sovlesuccess", "message");
             }

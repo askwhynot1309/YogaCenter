@@ -106,9 +106,9 @@
                                         <th>Email</th>
                                         <th>Name</th>
                                         <th>Phone</th>
-                                        <th>Address</th>
                                         <th>Status</th>
                                         <th>Action</th>
+                                        <th>Details</th>
                                     </tr>
                                 </thead>
                                 <tbody class="font">
@@ -118,7 +118,6 @@
                                             <td>${user.email}</td>
                                             <td>${user.name}</td>
                                             <td>${user.phone}</td>
-                                            <td>${user.address}</td>
                                             <td>
                                                 <c:if test="${user.status == 0}">
                                                     <p style="color: green">Active</p>
@@ -128,6 +127,7 @@
                                                 </c:if>  
                                             </td>
                                             <td><a href="/YogaCenter/signcourse?key=${user.idaccount}" class="btn btn-primary">Sign up course</a></td>
+                                            <td><a class="btn btn-primary" href="/YogaCenter/request?action=inf&id=${user.idaccount}&option=staffInfUser">More detail</a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

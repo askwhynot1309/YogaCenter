@@ -5,7 +5,7 @@
 <html style="overflow-y: scroll">
 
     <head>
-        <title>Admin Dashboard</title>
+        <title>Satff Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
@@ -52,7 +52,7 @@
     </head>
 
     <body>
-        <c:set var="exist" value="${sessionScope.Admin}"/>
+        <c:set var="exist" value="${sessionScope.Staff}"/>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
             <div class="message" id="message">
@@ -66,7 +66,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3" style="padding: 0; position: fixed">
-                    <c:import url="adminMenu.jsp"/>
+                    <c:import url="staffMenu.jsp"/>
                 </div>
                 <div class="col-lg-9" style="padding-right: 100px; margin-left: 350px">
                     <c:set var="message" value="${message}"/>
@@ -84,18 +84,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="dashboard-item mb-4">
-                                    <div class="card-body border d-flex align-items-center" style="height: 150px">
-                                        <i class="fas fa-users-cog fa-3x text-success" style="margin-right: 5px;"></i>
-                                        <div>
-                                            <h5 class="card-title mb-1">Total Employee</h5>
-                                            <h2 class="card-title mb-0">${requestScope.employeeCount}</h2>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="dashboard-item mb-4">
                                     <div class="card-body border d-flex align-items-center" style="height: 150px">
                                         <i class="fas fa-book fa-3x text-info" style="margin-right: 5px;"></i>
@@ -106,7 +95,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="dashboard-item mb-4">
                                     <div class="card-body border d-flex align-items-center" style="height: 150px">
                                         <i class="fas fa-shopping-cart fa-3x text-warning" style="margin-right: 5px;"></i>
@@ -121,13 +110,7 @@
                                 <hr class="my-4">
                             </div>
 
-                            <div class="col-md-3">
-                                <h3 class="text-center" style="margin-top: 20px;">Yoga Course Level Statistics</h3>
-                                <div class="d-flex justify-content-center align-items-center" style="height: 500px;">
-                                    <canvas id="pieChart" width="350" height="350"></canvas>
-                                </div>
-                            </div>
-                            <div class="col-md-5">
+                            <div class="col-md-7">
                                 <h3 class="text-center" style="margin-top: 20px;">Yoga Course Order Statistics</h3>
                                 <div class="d-flex justify-content-center align-items-center" style="height: 500px;">
                                     <canvas id="lineChart" width="500" height="500"></canvas>
@@ -139,7 +122,7 @@
                                         <div class="card-body">
                                             <i class="fas fa-envelope fa-3x text-success d-flex align-self-left"></i>
                                             <div>
-                                                <h5 class="card-title mb-1 text-left feedback-heading">Latest feedback message</h5>
+                                                <h5 class="card-title mb-1 text-left feedback-heading">Not read feedback message</h5>
 
                                                 <c:forEach var="msg" items="${requestScope.msg}" varStatus="loop">
                                                     <c:if test="${loop.index < 3}">
@@ -159,19 +142,6 @@
                     </div>
                 </div>
             </div>
-            <c:if test="${message != null}">
-                <div class="notification-success" style="height: 100px">
-                    <div class="content">
-                        <div class="title">Notification</div>
-                        <span>There is a course to create a class, you need to create a class now!!!!</span>
-                    </div>
-                    <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
-                </div>
-                <script>
-                    let notification = document.querySelector('.notification-success');
-                    notification.timeOut = setTimeout(() => notification.remove(), 5000);
-                </script>
-            </c:if>
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
     </body>

@@ -175,7 +175,7 @@ public class RoomDao {
         return kq;
     }
 
-    public static Room getRoomByID(int id) throws Exception{
+    public static Room getRoomByID(int id) throws Exception {
         Room kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -191,6 +191,29 @@ public class RoomDao {
                     String room = table.getString("Room_Name");
                     int status = table.getInt("Status");
                     kq = new Room(id_room, room, status);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ArrayList<Room> getAllRoomUnacive() throws Exception {
+        ArrayList<Room> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select * \n"
+                    + "from Room\n"
+                    + "where Status = 1";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_room = table.getInt("Room_ID");
+                    String room = table.getString("Room_Name");
+                    int status = table.getInt("Status");
+                    Room space = new Room(id_room, room, status);
+                    kq.add(space);
                 }
             }
             cn.close();

@@ -336,6 +336,10 @@
         <servlet-name>TrainerViewTraineeDetails</servlet-name>
         <servlet-class>Controller.TrainerViewTraineeDetails</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StaffDashBoardServlet</servlet-name>
+        <servlet-class>Controller.StaffDashBoardServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -386,7 +390,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddNewEmployeeServlet</servlet-name>
-        <url-pattern>/AddNewEmployeeServlet</url-pattern>
+        <url-pattern>/addemployee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ButtonAddNewEmployeeServet</servlet-name>
@@ -668,9 +672,13 @@
         <servlet-name>TrainerButtonAddNewMessageServlet</servlet-name>
         <url-pattern>/TrainerButtonAddNewMessageServlet</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>    
+    <servlet-mapping>
         <servlet-name>TrainerViewTraineeDetails</servlet-name>
         <url-pattern>/TrainerViewTraineeDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffDashBoardServlet</servlet-name>
+        <url-pattern>/staffdashboard</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

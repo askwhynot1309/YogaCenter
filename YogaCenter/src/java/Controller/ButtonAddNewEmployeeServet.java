@@ -5,6 +5,7 @@
 package Controller;
 
 import Object.Account;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -36,11 +38,16 @@ public class ButtonAddNewEmployeeServet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             Account admin = (Account) session.getAttribute("Admin");
-            if(admin == null){
+            if (admin == null) {
                 request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
             }
             String name = request.getParameter("name");
             String email = request.getParameter("email");
+            String fileName = request.getParameter("img");
+            if (fileName == "") {
+                request.setAttribute("noimage", "message");
+                request.getRequestDispatcher("addemployee").forward(request, response);
+            }
             String phone = request.getParameter("phone");
             String cccd = request.getParameter("cccd");
             String address = request.getParameter("address");
@@ -71,15 +78,14 @@ public class ButtonAddNewEmployeeServet extends HttpServlet {
                 request.setAttribute("addUnsuccess", "addUnsuccess");
                 request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
             } else {
-                int insertNewEmployee = Dao.AccountDao.insertNewEmployee(name, email, phone, cccd, address, account, newpassword, role);
+                int insertNewEmployee = Dao.AccountDao.insertNewEmployee(name, email, phone, cccd, address, account, newpassword, role, fileName);
                 if (insertNewEmployee == 1) {
                     request.setAttribute("addSuccess", "addSuccess");
                     request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
                 }
             }
         } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            e.printStackTrace();
         }
     }
 
