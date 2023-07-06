@@ -156,7 +156,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Phone number</label>
-                                    <input type="text" class="form-control" name="txtPhone" value="${acc.phone}">
+                                    <input type="tel" class="form-control" name="txtPhone" value="${acc.phone}">
                                 </div>
                             </div>
 
@@ -170,7 +170,6 @@
 
                         <div style="margin-top: 100px;">
                             <button class="btn btn-primary" type="submit" name="action" value="ChangeInformation">Update</button>
-                            <button class="btn btn-light">Cancel</button>
                         </div>
                     </form>
 
