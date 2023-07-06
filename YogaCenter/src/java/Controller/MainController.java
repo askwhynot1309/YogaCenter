@@ -29,7 +29,7 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String action = request.getParameter("action");
             if (action == null) {
@@ -54,6 +54,9 @@ public class MainController extends HttpServlet {
                         break;
                     case "OTPRegister":
                         url = "SubmitOTPRegisterServlet";
+                        break;
+                    case "OTPChangePassword":
+                        url = "SubmitOTPChangePasswordServlet";
                         break;
                     case "Reset":
                         url = "ResetPasswordServlet";
