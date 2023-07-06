@@ -6,6 +6,7 @@ package Controller;
 
 import Dao.UserDao;
 import Object.Account;
+import Utils.EmailUtils;
 import Utils.HexPassword;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,35 +35,37 @@ public class TraineeChangePasswordServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            int ID_Account = Integer.parseInt(request.getParameter("txtAccountID"));
-            String oldPassword = request.getParameter("txtOldPassword");
-            String newPassword = request.getParameter("txtNewPassword");
-            String confirmPassword = request.getParameter("txtConfirmPassword");
-            Account account = UserDao.getAccountByID(ID_Account);
-            String encryptOldPassword = HexPassword.HexPassword(oldPassword);
-            if (newPassword.equals(confirmPassword)) {
-                if (encryptOldPassword.equals(account.getPassword())) { //check if old password is correct with the password inputted
-                    String encryptNewConfirmPassword = HexPassword.HexPassword(confirmPassword);
-                    int updated = UserDao.updatePasswordByID(encryptNewConfirmPassword, ID_Account);
-                    if (updated == 1 ) {
-                        request.setAttribute("Message", "Change password success");
+            try {
+                /* TODO output your page here. You may use following sample code. */
+                HttpSession session = request.getSession(true);
+                Account account = (Account) session.getAttribute("account");
+                String email = account.getEmail();
+                String oldPassword = request.getParameter("txtOldPassword");
+                String newPassword = request.getParameter("txtNewPassword");
+                String confirmPassword = request.getParameter("txtConfirmPassword");
+                String encryptOldPassword = HexPassword.HexPassword(oldPassword);
+                if (newPassword.equals(confirmPassword)) {
+                    if (encryptOldPassword.equals(account.getPassword())) { //check if old password is correct with the password inputted
+                        String encryptNewConfirmPassword = HexPassword.HexPassword(confirmPassword);
+                        String otp = EmailUtils.generateOtp();
+                        Utils.EmailUtils.sendOtpEmail(email, otp);
+                        session.setAttribute("newPassword", encryptNewConfirmPassword);
+                        session.setAttribute("otp", otp);
+                        session.setAttribute("ID_Account", account.getIdaccount());
+                        request.getRequestDispatcher("traineeConfirmOTPChangePassword.jsp").forward(request, response);
 
-                    }else{
-                        request.setAttribute("Message", "Something error");
+                    } else {
+                        request.setAttribute("changeFail", "This password is not correct. Please try again.");
                         request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
-                    }                    
+                    }
                 } else {
-                    request.setAttribute("Loginfail", "This password is not correct. Please try again.");
+                    request.setAttribute("changeFail", "The confirm password and new password are the not same");
                     request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
                 }
-            }else{
-                request.setAttribute("Fail", "The confirm password and new password are the not same");
-                request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
-
-            }
             request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
-
+            } catch (Exception e) {
+                out.print(e);
+            }
         }
     }
 

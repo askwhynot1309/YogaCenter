@@ -20,6 +20,9 @@
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/trainee/trainee-add-message">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Purchase History</title>
     </head>
     <style>
@@ -69,37 +72,52 @@
         .alternate-row{
             background-color: #f1f3f4;
         }
+        html,
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: "Raleway", sans-serif
+        }
+        body{
+            font-size: 100%;
+        }
+        a:hover{
+            text-decoration: none;
+        }
         .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 9999;
-            }
-            .message {
-                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
-                background: #fff;
-                color: #222;
-                border: 0;
-                border-radius: 0.25rem;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                border-radius: 20px;
-                transform: translate(-50%, -50%);
-                padding: 20px;
-                z-index: 10000;
-            }
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        .message {
+            box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+            background: #fff;
+            color: #222;
+            border: 0;
+            border-radius: 0.25rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            z-index: 10000;
+        }
 
-            .message::backdrop {
-                background: rgb(0 0 0 / 0.5);
-                opacity: 0;
-            }
+        .message::backdrop {
+            background: rgb(0 0 0 / 0.5);
+            opacity: 0;
+        }
     </style>
     <c:import url="header.jsp"/>
-    <body>
+    <body class="w3-light-grey">
         <c:set var="exist" value="${sessionScope.account}"/>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
@@ -111,119 +129,150 @@
                 </div>
             </div>
         </c:if>
-        <div class="container">
-            <h2>Purchase history</h2>
-            <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
-            <c:set var="money" value="${requestScope.money}"></c:set>
-                <div class="container mt-5">
-                    <div class="d-flex justify-content-center row">
-                        <div class="col-md-12">
-                            <div class="rounded">
-                                <div class="table-responsive table-borderless">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Order #</th>
-                                                <th>Course name</th>
-                                                <th>Date</th>
-                                                <th>Total</th>
-                                                <th>Payment method</th>
-                                                <th>Status</th>
-                                                <th>Note</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-body">
-                                        <%
-                                            Account account = (Account) session.getAttribute("account");
-                                            HashMap<Integer, ArrayList<OrderCourse>> purchase = (HashMap<Integer, ArrayList<OrderCourse>>) request.getAttribute("purchase");
-                                            if (purchase != null) {
-                                                TreeMap<Integer, ArrayList<OrderCourse>> sortedPurchase = new TreeMap<>(purchase);
-                                                boolean isFirstRow = true;
-                                                int rowNumber = 0;
-                                                for (Map.Entry<Integer, ArrayList<OrderCourse>> entry : sortedPurchase.entrySet()) {
-                                                    int OrderID = entry.getKey();
-                                                    ArrayList<OrderCourse> orderDetail = entry.getValue();
-                                                    int totalPrice = 0;
-                                                    for (OrderCourse order : orderDetail) {
-                                                        totalPrice += order.getFee_course().intValue();
-                                                    }
-                                                    NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
+        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+            <div class="w3-container w3-row">
+                <div class="w3-col s4">
+                    <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+                </div>
+                <div class="w3-col s8 w3-bar">
+                    <span>Welcome, <strong>${exist.name}</strong></span>
+                </div>
+            </div>
+            <hr>
+            <div class="w3-container">
+                <h5>Dashboard</h5>
+            </div>
+            <div class="w3-bar-block">
+                <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
+                   onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close</a>
+                <a href="traineeGeneralDashboard.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  General</a>
+                <a href="information" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
+                <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding"><i class="fas fa-calendar-alt icon"></i>  My learning</a>
+                <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-history fa-fw"></i> Purchase History</a>
+                <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+                <a href="/YogaCenter/request?action=Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
+            </div>
+        </nav>
+        <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+             title="close side menu" id="myOverlay">
+        </div>
 
-                                                    for (OrderCourse order : orderDetail) {
-
-                                        %>
-                                        <tr class="cell-1 <%= rowNumber % 2 == 0 ? "alternate-row" : ""%>">
-
-                                            <% if (isFirstRow) {%>
-                                            <th rowspan="<%= orderDetail.size()%>"><%= rowNumber + 1%></td>
-                                                <% }%>
-                                            <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=<%=order.getId_course()%>"><%= order.getName_course()%></a> </th>
-                                                <% if (isFirstRow) {%>
-                                            <th rowspan="<%= orderDetail.size()%>"><%= order.getDateorder()%></td>
-                                                <% }
-                                                    if (isFirstRow) {%>
-                                                    <c:if test="${money == null}">
-                                            <th rowspan="<%= orderDetail.size()%>"><%= nf.format(totalPrice)%>.000 VNĐ</td>
-                                            </c:if>
-                                                <c:if test="${money != null}">
-                                                <th rowspan="<%= orderDetail.size()%>">${money} VNĐ</td>
-                                            </c:if>
-                                                <% }
-                                                    switch (order.getMethod()) {
-                                                        case 0:
-                                                            if (isFirstRow) {%>
-                                            <th rowspan="<%= orderDetail.size()%>">Cash</td>
-                                                <% }
-                                                        break;
-                                                    case 1:
-                                                        if (isFirstRow) {%>
-                                            <th rowspan="<%= orderDetail.size()%>">Bank Transfer</td>
-                                                <% }
-                                                            break;
-                                                    }
-
-                                                    switch (order.getStatus()) {
-                                                        case 0:
-                                                            if (isFirstRow) {%>
-                                            <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-primary">Pending</span></th>
-                                                <% }
-                                                        break;
-                                                    case 1:
-                                                        if (isFirstRow) {%>
-                                            <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-success">Success</span></th>
-                                                <% }
-                                                        break;
-                                                    case 2:
-                                                        if (isFirstRow) {%>
-                                            <th rowspan="<%= orderDetail.size()%>"><a class="badge badge-danger" href="/YogaCenter/request?action=TraineeReoder&oID=<%=OrderID%>">Cancel</a></th>
-                                                <% }
-                                                            break;
-                                                    }
-                                                    if (isFirstRow) {
-
-                                                %>
-                                            <th style="color: red; font-weight: 900;" rowspan="<%= orderDetail.size()%>">
-                                                <%
-                                                    if (order.getStatus() == 0) {
-                                                %>Please complete order in 10 days<%
-                                                                }
-                                                %>
-                                            </th>
+        <!-- !PAGE CONTENT! -->
+        <div class="w3-main" style="margin-left:300px;">
+            <div class="container">
+                <h2>Purchase history</h2>
+                <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
+                <c:set var="money" value="${requestScope.money}"></c:set>
+                    <div class="container mt-5">
+                        <div class="d-flex justify-content-center row">
+                            <div class="col-md-12">
+                                <div class="rounded">
+                                    <div class="table-responsive table-borderless">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order #</th>
+                                                    <th>Course name</th>
+                                                    <th>Date</th>
+                                                    <th>Total</th>
+                                                    <th>Payment method</th>
+                                                    <th>Status</th>
+                                                    <th>Note</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-body">
                                             <%
+                                                Account account = (Account) session.getAttribute("account");
+                                                HashMap<Integer, ArrayList<OrderCourse>> purchase = (HashMap<Integer, ArrayList<OrderCourse>>) request.getAttribute("purchase");
+                                                if (purchase != null) {
+                                                    TreeMap<Integer, ArrayList<OrderCourse>> sortedPurchase = new TreeMap<>(purchase);
+                                                    boolean isFirstRow = true;
+                                                    int rowNumber = 0;
+                                                    for (Map.Entry<Integer, ArrayList<OrderCourse>> entry : sortedPurchase.entrySet()) {
+                                                        int OrderID = entry.getKey();
+                                                        ArrayList<OrderCourse> orderDetail = entry.getValue();
+                                                        int totalPrice = 0;
+                                                        for (OrderCourse order : orderDetail) {
+                                                            totalPrice += order.getFee_course().intValue();
+                                                        }
+                                                        NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
+
+                                                        for (OrderCourse order : orderDetail) {
+
+                                            %>
+                                            <tr class="cell-1 <%= rowNumber % 2 == 0 ? "alternate-row" : ""%>">
+
+                                                <% if (isFirstRow) {%>
+                                                <th rowspan="<%= orderDetail.size()%>"><%= rowNumber + 1%></td>
+                                                    <% }%>
+                                                <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=<%=order.getId_course()%>"><%= order.getName_course()%></a> </th>
+                                                    <% if (isFirstRow) {%>
+                                                <th rowspan="<%= orderDetail.size()%>"><%= order.getDateorder()%></td>
+                                                    <% }
+                                                        if (isFirstRow) {%>
+                                                    <c:if test="${money == null}">
+                                                    <th rowspan="<%= orderDetail.size()%>"><%= nf.format(totalPrice)%>.000 VNĐ</td>
+                                                    </c:if>
+                                                    <c:if test="${money != null}">
+                                                    <th rowspan="<%= orderDetail.size()%>">${money} VNĐ</td>
+                                                    </c:if>
+                                                    <% }
+                                                        switch (order.getMethod()) {
+                                                            case 0:
+                                                                if (isFirstRow) {%>
+                                                <th rowspan="<%= orderDetail.size()%>">Cash</td>
+                                                    <% }
+                                                            break;
+                                                        case 1:
+                                                            if (isFirstRow) {%>
+                                                <th rowspan="<%= orderDetail.size()%>">Bank Transfer</td>
+                                                    <% }
+                                                                break;
+                                                        }
+
+                                                        switch (order.getStatus()) {
+                                                            case 0:
+                                                                if (isFirstRow) {%>
+                                                <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-primary">Pending</span></th>
+                                                    <% }
+                                                            break;
+                                                        case 1:
+                                                            if (isFirstRow) {%>
+                                                <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-success">Success</span></th>
+                                                    <% }
+                                                            break;
+                                                        case 2:
+                                                            if (isFirstRow) {%>
+                                                <th rowspan="<%= orderDetail.size()%>"><a class="badge badge-danger" href="/YogaCenter/request?action=TraineeReoder&oID=<%=OrderID%>">Cancel</a></th>
+                                                    <% }
+                                                                break;
+                                                        }
+                                                        if (isFirstRow) {
+
+                                                    %>
+                                                <th style="color: red; font-weight: 900;" rowspan="<%= orderDetail.size()%>">
+                                                    <%
+                                                        if (order.getStatus() == 0) {
+                                                    %>Please complete order in 10 days<%
+                                                        }
+                                                    %>
+                                                </th>
+                                                <%
+                                                    }
+                                                %>
+
+                                                <%isFirstRow = false;%>
+                                            </tr>
+                                            <%
+                                                        }
+                                                        isFirstRow = true;
+                                                        rowNumber++;
+                                                    }
                                                 }
                                             %>
-
-                                            <%isFirstRow = false;%>
-                                        </tr>
-                                        <%
-                                                    }
-                                                    isFirstRow = true;
-                                                    rowNumber++;
-                                                }
-                                            }
-                                        %>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -243,5 +292,5 @@
             </script>
         </c:if>
     </body>
-    <c:import url="footer.html"></c:import>
+    <%--<c:import url="footer.html"></c:import>--%>
 </html>

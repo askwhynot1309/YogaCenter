@@ -23,6 +23,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/style.css"/>
         <title>Schedule Editing</title>
@@ -40,35 +42,62 @@
             background-color: #f1f3f4;
         }
         .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 9999;
-            }
-            .message {
-                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
-                background: #fff;
-                color: #222;
-                border: 0;
-                border-radius: 0.25rem;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                border-radius: 20px;
-                transform: translate(-50%, -50%);
-                padding: 20px;
-                z-index: 10000;
-            }
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        .message {
+            box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+            background: #fff;
+            color: #222;
+            border: 0;
+            border-radius: 0.25rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            z-index: 10000;
+        }
 
-            .message::backdrop {
-                background: rgb(0 0 0 / 0.5);
-                opacity: 0;
-            }
+        .message::backdrop {
+            background: rgb(0 0 0 / 0.5);
+            opacity: 0;
+        }
+        html,
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: "Raleway", sans-serif
+        }
+        body{
+            font-size: 100%;
+        }
+        .w3-bar-block a:hover{
+            text-decoration: none;
+        }
+        .head a:hover{
+            text-decoration: none;
+            color: orange!important;
+            background-color: #f1f1f1!important;
+            transition: .1s;
+        }
+        .w3-button:hover{
+            text-decoration: none;
+            color: orange!important;
+            background-color: #f1f1f1!important;
+            transition: 1s;
+        }
     </style>
-    <body>
+    <body class="w3-light-grey">
         <c:import url="header.jsp"></c:import>
         <c:set var="exist" value="${sessionScope.account}"/>
         <c:if test="${exist == null}">
@@ -81,15 +110,53 @@
                 </div>
             </div>
         </c:if>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-2" style="margin-right: 50px; padding: 0;">
-                    <c:import url="traineeClassMenu.jsp"></c:import>
+        <c:set var="acc" value="${sessionScope.account}"/>
+        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+            <div class="w3-container w3-row">
+                <div class="w3-col s4">
+                    <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+                </div>
+                <div class="w3-col s8 w3-bar">
+                    <span>Welcome,<strong>${acc.name}</strong></span><br>
+                </div>
+            </div>
+            <hr>
+            <div class="w3-container">
+                <h5>Dashboard</h5>
+            </div>
+            <div class="w3-bar-block">
+                <a href="traineeGeneralDashboard.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  General</a>
+                <a href="information" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
+                <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding  w3-blue"><i class="fas fa-calendar-alt icon"></i>  My Learning</a>
+                <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i> Purchase History</a>
+                <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+                <a href="/YogaCenter/request?action=Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
+            </div>
+        </nav>
+        <div class="w3-main" style="margin-left:300px;">
+            <header class="w3-container w3-row-padding w3-margin-bottom head" style="padding-top:22px">
+                <a href="/YogaCenter/classbooking" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                    <div class="w3-container  w3-padding">
+                        <div class="w3-middle"><i class="fas fa-calendar-alt icon w3-xxlarge"><h6>Schedule</h6></i></div>
                     </div>
+                </a>
 
-                    <div class="col-lg-9" style="padding: 0">
-                        <div class="container">
-                            <h2 style="text-align: center">Class Schedule</h2>
+                <a href="/YogaCenter/myCourses" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                    <div class="w3-container  w3-padding">
+                        <div class="w3-middle"><i class="fas fa-users w3-xxlarge"><h6>My courses</h6></i></div>
+                    </div>
+                </a>
+
+                <a href="/YogaCenter/viewRequest" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                    <div class="w3-container  w3-padding">
+                        <div class="w3-middle"><i class="fas fa-exchange w3-xxlarge"><h6>Request to change classes</h6></i></div>
+                    </div>
+                </a>
+            </header>
+            <div class="container">
+                <div style="padding: 0">
+                    <div class="container">
+                        <h2 style="text-align: center">Class Schedule</h2>
                         <%
                             HashMap<Integer, ArrayList<ClassDetail>> hashClassDetail = (HashMap<Integer, ArrayList<ClassDetail>>) request.getAttribute("hashClassDetail");
                             String overdue = (String) request.getAttribute("overdue");
@@ -102,20 +169,20 @@
                             if (!hashClassDetail.isEmpty() && overdue != null) {
 
                         %>
-                        <div class="container mt-5">
+                        <div class="container mt-12">
                             <div class="d-flex justify-content-center row">
                                 <div class="col-md-10">
                                     <div class="rounded">
                                         <div class="table-responsive table-borderless">
                                             <table class="table">
                                                 <thead>
-                                                    <tr>
-                                                        <th>Trainer</th>
-                                                        <th>Class ID</th>
-                                                        <th>Day</th>
-                                                        <th>Time</th>
-                                                        <th>Room</th>
-                                                        <th>Action</th>
+                                                    <tr class="cell-1">
+                                                        <th class="col-lg-2">Trainer</th>
+                                                        <th class="col-lg-1">Class ID</th>
+                                                        <th class="col-lg-4">Day</th>
+                                                        <th class="col-lg-1">Time</th>
+                                                        <th class="col-lg-1">Room</th>
+                                                        <th class="col-lg-1">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="table-body">
@@ -142,10 +209,10 @@
                                                                     isFirstRow = false;
                                                                 }
                                                             %>
-                                                        <th class="col-lg-2">
+                                                        <th class="col-lg-1">
                                                             <a href="/YogaCenter/request?action=ClassDetail&id=<%=classDetails.getId_class()%>&option=classDetail"><%=classDetails.getId_class()%></a>
                                                         </th>
-                                                        <th class="col-lg-3">
+                                                        <th class="col-lg-4">
                                                             <%
                                                                 if (classDetails.getChoice() == 1) {
                                                             %>Monday - Wednesday - Friday<%
@@ -161,23 +228,23 @@
                                                         %>
                                                         <%                                                                switch (classDetails.getTime()) {
                                                                 case 1:
-                                                        %><th class="col-lg-2">9h - 11h</th><%
+                                                        %><th class="col-lg-1">9h - 11h</th><%
                                                                 break;
                                                             case 2:
-                                                            %><th class="col-lg-2">13h - 15h</th><%
+                                                            %><th class="col-lg-1">13h - 15h</th><%
                                                                     break;
                                                                 case 3:
-                                                            %><th class="col-lg-2">16h - 18h</th><%
+                                                            %><th class="col-lg-1">16h - 18h</th><%
                                                                     break;
                                                                 case 4:
-                                                            %><th class="col-lg-2">19h - 21h</th><%
+                                                            %><th class="col-lg-1">19h - 21h</th><%
                                                                         break;
                                                                     default:
                                                                         throw new AssertionError();
                                                                 }
                                                             %>
-                                                        <th class="col-lg-2"><%=classDetails.getClass_name()%></th>
-                                                        <th class="col-lg-2">
+                                                        <th class="col-lg-1"><%=classDetails.getClass_name()%></th>
+                                                        <th class="col-lg-1">
                                                             <%
                                                                 int AccountID = ClassDetailDao.checkTraineeIDInClass(classDetails.getId_course(), trainee.getIdaccount(), classDetails.getTime(), classDetails.getId_room(), classDetails.getChoice());
                                                                 if (AccountID == 0) {
@@ -188,7 +255,7 @@
                                                                 <input type="hidden" name="id_room" value="<%=classDetails.getId_room()%>">
                                                                 <input type="hidden" name="option" value="<%=classDetails.getChoice()%>">
                                                                 <input type="hidden" name="id_time" value="<%=classDetails.getTime()%>">
-                                                                <button type="submit" name="action" value="traineeChooseClass">Change</button>
+                                                                <button class="w3-button" type="submit" name="action" value="traineeChooseClass">Choose</button>
                                                             </form>
                                                             <%
                                                                 }
@@ -218,9 +285,9 @@
                             </h4>
                         </div>
                         <%
-                        } else if (hashClassDetail.isEmpty()) {
-                        %><h1>title</h1><%
-                                    }
+                        } else if (hashClassDetail.size() == 0) {
+                        %><h1>Your course currently has no classes</h1><%
+                            }
                         %>
                     </div>
                 </div>

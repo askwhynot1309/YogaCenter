@@ -4,16 +4,13 @@
  */
 package Controller;
 
-import Dao.ClassDetailDao;
 import Dao.CourseDao;
 import Object.Account;
 import Object.ClassDetail;
 import Object.Course;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,60 +49,64 @@ public class TraineeCheckTraineeRequested extends HttpServlet {
                 int Course_ID = Integer.parseInt(request.getParameter("txtCourseID"));
                 int toTraineeID = Integer.parseInt(request.getParameter("txtToTraineeID"));
 
-                ArrayList<ClassDetail> classes = Dao.ClassDetailDao.getAllClassDetailsByTrainee(toTraineeID);
-                ClassDetail classDetails = null;
-                int Choice = 0;
-                int Time_ID = 0;
-                for (ClassDetail classe : classes) {
-                    if (classe.getId_course() == Course_ID) {
-                        classDetails = classe;
-                        Choice = classe.getChoice();
-                        Time_ID = classe.getTime();
+                if (toTraineeID == trainee.getIdaccount()) {
+                    request.setAttribute("toTraineeRegistered", "You can not change class with you");
+                } else {
+                    ArrayList<ClassDetail> classes = Dao.ClassDetailDao.getAllClassDetailsByTrainee(toTraineeID);
+                    ClassDetail classDetails = null;
+                    int Choice = 0;
+                    int Time_ID = 0;
+                    for (ClassDetail classe : classes) {
+                        if (classe.getId_course() == Course_ID) {
+                            classDetails = classe;
+                            Choice = classe.getChoice();
+                            Time_ID = classe.getTime();
+                        }
                     }
-                }
-                if (classDetails != null) {
-                    String dayChoice = "";
-                    switch (Choice) {
-                        case 1:
-                            dayChoice = "Monday - Wednesday - Friday";
-                            break;
-                        case 2:
-                            dayChoice = "Tuesday - Thurday - Saturday";
-                            break;
-                        case 3:
-                            dayChoice = "Sunday";
-                            break;
-                        default:
-                            throw new AssertionError();
+                    if (classDetails != null) {
+                        String dayChoice = "";
+                        switch (Choice) {
+                            case 1:
+                                dayChoice = "Monday - Wednesday - Friday";
+                                break;
+                            case 2:
+                                dayChoice = "Tuesday - Thurday - Saturday";
+                                break;
+                            case 3:
+                                dayChoice = "Sunday";
+                                break;
+                            default:
+                                throw new AssertionError();
+                        }
+
+                        String Time = "";
+                        switch (Time_ID) {
+                            case 1:
+                                Time = "9h - 11h";
+                                break;
+                            case 2:
+                                Time = "13h - 15h";
+                                break;
+                            case 3:
+                                Time = "16h - 18h";
+                                break;
+                            case 4:
+                                Time = "19h - 21h";
+                                break;
+                            default:
+                                throw new AssertionError();
+                        }
+
+                        request.setAttribute("dayChoice", dayChoice);
+                        request.setAttribute("Time", Time);
+                        request.setAttribute("classDetails", classDetails);
+
+                        int currentRoomName = Dao.ClassDetailDao.getCurrentClassID(trainee.getIdaccount(), Course_ID);
+                        request.setAttribute("currentRoomName", currentRoomName);
+                        out.print(currentRoomName);
+                    } else {
+                        request.setAttribute("toTraineeRegistered", "This Trainee doesn't registered in this course");
                     }
-
-                    String Time = "";
-                    switch (Time_ID) {
-                        case 1:
-                            Time = "9h - 11h";
-                            break;
-                        case 2:
-                            Time = "13h - 15h";
-                            break;
-                        case 3:
-                            Time = "16h - 18h";
-                            break;
-                        case 4:
-                            Time = "19h - 21h";
-                            break;
-                        default:
-                            throw new AssertionError();
-                    }
-
-                    request.setAttribute("dayChoice", dayChoice);
-                    request.setAttribute("Time", Time);
-                    request.setAttribute("classDetails", classDetails);
-
-                    int currentRoomName = Dao.ClassDetailDao.getCurrentClassID(trainee.getIdaccount(), Course_ID);
-                    request.setAttribute("currentRoomName", currentRoomName);
-                    out.print(currentRoomName);
-                }else{
-                    request.setAttribute("toTraineeRegistered", "This Trainee doesn't registered in this course");
                 }
                 LocalDate startDate = CourseDao.getCourseStartDate(trainee.getIdaccount());
                 LocalDate endDate = CourseDao.getCourseEndDate(trainee.getIdaccount());
@@ -113,7 +114,7 @@ public class TraineeCheckTraineeRequested extends HttpServlet {
                 ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(trainee.getIdaccount());
 
                 request.setAttribute("Course_ID", Course_ID);
-                
+
                 if (currentDate.isAfter(endDate)) {
                     request.setAttribute("overdue", "Overdue for form application and registration");
                     request.setAttribute("startDate", startDate);
@@ -130,7 +131,6 @@ public class TraineeCheckTraineeRequested extends HttpServlet {
             } catch (Exception e) {
                 out.print(e);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

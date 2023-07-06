@@ -5,9 +5,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="css/trainee/trainee-add-message">
         <title>Create Request</title>
         <style>
             .overlay {
@@ -38,9 +41,35 @@
                 background: rgb(0 0 0 / 0.5);
                 opacity: 0;
             }
+            html,
+            body,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5 {
+                font-family: "Raleway", sans-serif
+            }
+            #btn-create:hover {
+                background-color: #3b82f6;
+                box-shadow: 0 0 0 5px #3b83f65f;
+                color: #fff;
+            }
+            body{
+                font-size: 100%;
+            }
+            .w3-bar-block a:hover{
+                text-decoration: none;
+            }
+            .head a:hover{
+                text-decoration: none;
+                color: orange!important;
+                background-color: #f1f1f1!important;
+                transition: .1s;
+            }
         </style>
     </head>
-    <body>
+    <body class="w3-light-grey">
         <c:import url="header.jsp"></c:import>
         <c:set var="exist" value="${sessionScope.account}"/>
         <c:if test="${exist == null}">
@@ -53,21 +82,60 @@
                 </div>
             </div>
         </c:if>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-2" style="margin-right: 50px; padding: 0;">
-                    <c:import url="traineeClassMenu.jsp"></c:import>
-                    </div>
+        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+            <div class="w3-container w3-row">
+                <div class="w3-col s4">
+                    <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+                </div>
+                <div class="w3-col s8 w3-bar">
+                    <span>Welcome,<strong>${acc.name}</strong></span><br>
+                </div>
+            </div>
+            <hr>
+            <div class="w3-container">
+                <h5>Dashboard</h5>
+            </div>
+            <div class="w3-bar-block">
+                <a href="traineeGeneralDashboard.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  General</a>
+                <a href="information" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
+                <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding  w3-blue"><i class="fas fa-calendar-alt icon"></i>  My learning</a>
+                <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i> Purchase History</a>
+                <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+                <a href="/YogaCenter/request?action=Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
+            </div>
+        </nav>
+        <div class="w3-main" style="margin-left:300px;">
+            <header class="w3-container w3-row-padding w3-margin-bottom head" style="padding-top:22px">
 
-                    <div class="col-lg-9" style="padding: 0">
-                        <div class="container">
-                        <c:set var="trainee" value="${sessionScope.account}"></c:set>
-                        <c:set var="registered" value="${requestScope.registered}"></c:set>
-                        <c:choose>
-                            <c:when test="${registered == null}">
-                                <c:set var="overdue" value="${requestScope.overdue}"></c:set>
+                <a href="/YogaCenter/classbooking" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                    <div class="w3-container  w3-padding">
+                        <div class="w3-middle"><i class="fas fa-calendar-alt icon w3-xxlarge"><h6>Schedule</h6></i></div>
+
+                    </div>
+                </a>
+                <a href="/YogaCenter/myCourses" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                    <div class="w3-container  w3-padding">
+                        <div class="w3-middle"><i class="fas fa-users w3-xxlarge"><h6>My courses</h6></i></div>
+
+                    </div>
+                </a>
+                <a href="/YogaCenter/viewRequest" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                    <div class="w3-container  w3-padding">
+                        <div class="w3-middle"><i class="fas fa-exchange w3-xxlarge"><h6>Request to change classes</h6></i></div>
+
+                    </div>
+                </a>
+            </header>
+            <div class="container">
+                <div class="container mt-5">
+                    <div class="d-flex justify-content-center row">
+                        <div class="col-md-12">
+                            <div class="rounded">
+                                <c:set var="trainee" value="${sessionScope.account}"></c:set>
+                                <c:set var="registered" value="${requestScope.registered}"></c:set>
                                 <c:choose>
-                                    <c:when test="${overdue != null}">
+                                    <c:when test="${registered == null}">
+                                        <c:set var="overdue" value="${requestScope.overdue}"></c:set>
                                         <c:set var="startDate" value="${requestScope.startDate}"></c:set>
                                         <c:set var="endDate" value="${requestScope.endDate}"></c:set>
                                         <c:set var="courseList" value="${requestScope.courseList}"></c:set>
@@ -81,86 +149,90 @@
                                             <h2 style="text-align: center;">Request to change class</h2>
                                             <h4 style="text-align: center; color: red;">Starting date: ${startDate}. Due date: before ${endDate}</h4>
 
-                                        <div class="container mt-5">
-                                            <div class="d-flex justify-content-center row">
-                                                <div class="col-md-10">
-                                                    <div class="rounded">
-                                                        <div class="table-responsive table-borderless">
-                                                            <form action="/YogaCenter/request" method="post">
-                                                                <table class="table" style="border: solid 1px;">
-                                                                    <tr>
-                                                                        <th>Course</th>
-                                                                        <th>
-                                                                            <select name="txtCourseID">
-                                                                                <c:forEach var="course" items="${requestScope.courseList}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${course.idCourse == Course_ID}">
-                                                                                            <option value="${course.idCourse}" selected>${course.name_course}</option>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <option value="${course.idCourse}">${course.name_course}</option>
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:forEach>                                                                        
-                                                                            </select>
-                                                                        </th>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>To Trainee ID</th>
-                                                                        <th>
-                                                                            Trainee No. <input type="number" id="txtToTraineeID" name="txtToTraineeID" required="" value="${classDetails.idaccount}">
-                                                                            <button type="submit" name="action" value="checkTrainee">Check Trainee</button>
+                                        <c:choose>
+                                            <c:when test="${overdue != null}">
+
+                                                <div class="container mt-5">
+                                                    <div class="d-flex justify-content-center row">
+                                                        <div class="col-md-10">
+                                                            <div class="rounded">
+                                                                <div class="table-responsive table-borderless">
+                                                                    <form action="/YogaCenter/request" method="post">
+                                                                        <table class="table" style="border: solid 1px;">
+                                                                            <tr>
+                                                                                <th>Course</th>
+                                                                                <th>
+                                                                                    <select name="txtCourseID">
+                                                                                        <c:forEach var="course" items="${requestScope.courseList}">
+                                                                                            <c:choose>
+                                                                                                <c:when test="${course.idCourse == Course_ID}">
+                                                                                                    <option value="${course.idCourse}" selected>${course.name_course}</option>
+                                                                                                </c:when>
+                                                                                                <c:otherwise>
+                                                                                                    <option value="${course.idCourse}">${course.name_course}</option>
+                                                                                                </c:otherwise>
+                                                                                            </c:choose>
+                                                                                        </c:forEach>                                                                        
+                                                                                    </select>
+                                                                                </th>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>To Trainee ID</th>
+                                                                                <th>
+                                                                                    Trainee No. <input type="number" id="txtToTraineeID" name="txtToTraineeID" required="" value="${classDetails.idaccount}">
+                                                                                    <button type="submit" name="action" value="checkTrainee">Check Trainee</button>
+                                                                                    <c:if test="${classDetails.class_name != null && classDetails.idaccount != null}">
+                                                                                        <p>${classDetails.account}</p>
+                                                                                    </c:if>
+                                                                                </th>
+                                                                            </tr>
+
                                                                             <c:if test="${classDetails.class_name != null && classDetails.idaccount != null}">
-                                                                                <p>${classDetails.idaccount}</p>
+                                                                                <tr>
+                                                                                    <th>Class</th>
+                                                                                    <th>
+                                                                                        <p>${classDetails.class_name}</p>
+                                                                                        <p>${dayChoice}</p>
+                                                                                        <p>${time}</p>
+                                                                                    </th>
+
+                                                                                </tr>
                                                                             </c:if>
-                                                                        </th>
-                                                                    </tr>
-
-                                                                    <c:if test="${classDetails.class_name != null && classDetails.idaccount != null}">
-                                                                        <tr>
-                                                                            <th>Class</th>
-                                                                            <th>
-                                                                                <p>${classDetails.class_name}</p>
-                                                                                <p>${dayChoice}</p>
-                                                                                <p>${time}</p>
-                                                                            </th>
-
-                                                                        </tr>
-                                                                    </c:if>
-                                                                </table>
-                                                                <c:if test="${classDetails.class_name != null && classDetails.idaccount != null}">
-                                                                    <c:set var="currentRoomName" value="${requestScope.currentRoomName}"/>
-                                                                    <input type="text" name="txtFromTraineeID" value="${trainee.idaccount}">
-                                                                    <input type="text" name="txtToTraineeID" value="${classDetails.idaccount}">
-                                                                    <input type="text" name="txtFromRoomName" value="${currentRoomName}">
-                                                                    <input type="text" name="txtToRoomName" value="${classDetails.id_class}">
-                                                                    <button type="submit" name="action" value="createRequest">Submit</button> 
-                                                                </c:if>
-                                                                <c:if test="${toTraineeRegistered != null}">
-                                                                    <h4 style="color: red">${toTraineeRegistered}</h4>
-                                                                </c:if>   
-                                                            </form>
+                                                                        </table>
+                                                                        <c:if test="${classDetails.class_name != null && classDetails.idaccount != null}">
+                                                                            <c:set var="currentRoomName" value="${requestScope.currentRoomName}"/>
+                                                                            <input type="hidden" name="txtFromTraineeID" value="${trainee.idaccount}">
+                                                                            <input type="hidden" name="txtToTraineeID" value="${classDetails.idaccount}">
+                                                                            <input type="hidden" name="txtFromRoomName" value="${currentRoomName}">
+                                                                            <input type="hidden" name="txtToRoomName" value="${classDetails.id_class}">
+                                                                            <button type="submit" name="action" value="createRequest">Submit</button> 
+                                                                        </c:if>
+                                                                        <c:if test="${toTraineeRegistered != null}">
+                                                                            <h4 style="color: red">${toTraineeRegistered}</h4>
+                                                                        </c:if>   
+                                                                    </form>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </c:when>
+                                            <c:when test="${overdue == null}">
+                                                <div style="text-align: center">
+                                                    <h4 style="color: red">
+                                                        <span>${overdue}</span>
+                                                    </h4>
+                                                </div>
+                                            </c:when>
+                                        </c:choose>
                                     </c:when>
-                                    <c:when test="${overdue == null}">
-                                        <div style="text-align: center">
-                                            <h4 style="color: red">
-                                                <span>${overdue}</span>
-                                            </h4>
-                                        </div>
+
+                                    <c:when test="${registered != null}">
+                                        <h4>${registered}</h4>
                                     </c:when>
                                 </c:choose>
-                            </c:when>
-
-                            <c:when test="${registered != null}">
-                                <h4>${registered}</h4>
-                            </c:when>
-                        </c:choose>
-
+                            </div>
+                        </div>
 
                     </div>
                 </div>

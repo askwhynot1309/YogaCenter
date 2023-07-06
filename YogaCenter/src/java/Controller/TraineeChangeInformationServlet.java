@@ -32,18 +32,20 @@ public class TraineeChangeInformationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            int ID_Account = Integer.parseInt(request.getParameter("txtAccountID"));
-            String fullname = request.getParameter("txtFullname");
-            String email = request.getParameter("txtEmail");
-            String phone = request.getParameter("txtPhone");
-            String address = request.getParameter("txtAddress");
-            HttpSession session = request.getSession();
-            int updated = UserDao.updateInformationTrainee(ID_Account, email, fullname, phone, address);
-            if (updated == 1) {
-                request.getRequestDispatcher("information").forward(request, response);
+            int txtAccountID = Integer.parseInt(request.getParameter("txtAccountID"));
+            String txtFullname = request.getParameter("txtFullname");
+            String txtEmail = request.getParameter("txtEmail");
+            String txtPhone = request.getParameter("txtPhone");
+            String txtAddress = request.getParameter("txtAddress");
+            int isUpdated = UserDao.updateInformationTrainee(txtAccountID, txtEmail, txtFullname, txtPhone, txtAddress);
+            if (isUpdated > 0) {
+                request.setAttribute("changeSuccess", "Update information successfully");
+            } else {
+                request.setAttribute("changeFail", "Update information fail");
             }
+            request.getRequestDispatcher("traineeManageInformation.jsp").forward(request, response);
         }
     }
 

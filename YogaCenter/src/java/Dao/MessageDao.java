@@ -44,7 +44,8 @@ public class MessageDao {
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
             String sql = "SELECT *\n"
-                    + "FROM [dbo].[Message]\n";
+                    + "FROM [dbo].[Message]\n"
+                    + "WHERE Title = 'Change class'";
             PreparedStatement pst = cn.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             if (rs != null) {
@@ -277,7 +278,7 @@ public class MessageDao {
             ResultSet rs = pst.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
-                    kq = rs.getInt("Count");    
+                    kq = rs.getInt("Count");
                 }
             }
             cn.close();

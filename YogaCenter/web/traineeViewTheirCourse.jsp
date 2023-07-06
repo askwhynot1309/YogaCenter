@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <title>My Course</title>
     </head>
     <style>
@@ -22,37 +24,60 @@
         .cell-1 th{
             vertical-align: middle;
         }
+        html,
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: "Raleway", sans-serif
+        }
+        body{
+            font-size: 100%;
+        }
+        .w3-bar-block a:hover{
+            text-decoration: none;
+        }
+        .head a:hover{
+            text-decoration: none;
+            color: orange!important;
+            background-color: #f1f1f1!important;
+            transition: .1s;
+        }
         .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 9999;
-            }
-            .message {
-                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
-                background: #fff;
-                color: #222;
-                border: 0;
-                border-radius: 0.25rem;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                border-radius: 20px;
-                transform: translate(-50%, -50%);
-                padding: 20px;
-                z-index: 10000;
-            }
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        .message {
+            box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+            background: #fff;
+            color: #222;
+            border: 0;
+            border-radius: 0.25rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            z-index: 10000;
+        }
 
-            .message::backdrop {
-                background: rgb(0 0 0 / 0.5);
-                opacity: 0;
-            }
+        .message::backdrop {
+            background: rgb(0 0 0 / 0.5);
+            opacity: 0;
+        }
     </style>
-    <body>
+    <c:import url="header.jsp"></c:import>
+        <body class="w3-light-grey">
         <c:set var="exist" value="${sessionScope.account}"/>
+        <c:set var="courseList" value="${requestScope.courseList}"></c:set>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
             <div class="message" id="message">
@@ -62,17 +87,66 @@
                     <a class="btn btn-primary" href="login.jsp">Login</a>
                 </div>
             </div>
-        </c:if>
-        <c:import url="header.jsp"></c:import>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-2" style="margin-right: 50px; padding: 0;">
-                        <c:import url="traineeClassMenu.jsp"></c:import>
-                    </div>
+        </c:if>        
+        <c:set var="acc" value="${sessionScope.account}"/>
+        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+            <div class="w3-container w3-row">
+                <div class="w3-col s4">
+                    <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+                </div>
+                <div class="w3-col s8 w3-bar">
+                    <span>Welcome,<strong>${acc.name}</strong></span><br>
+                </div>
+            </div>
+            <hr>
+            <div class="w3-container">
+                <h5>Dashboard</h5>
+            </div>
+            <div class="w3-bar-block">
+                <a href="traineeGeneralDashboard.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  General</a>
+                <a href="information" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
+                <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding  w3-blue"><i class="fas fa-calendar-alt icon"></i>  My learning</a>
+                <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i> Purchase History</a>
+                <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+                <a href="/YogaCenter/request?action=Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
+            </div>
+        </nav>
 
-                    <div class="col-lg-9" style="padding: 0">
-                        <div class="container">
-                            <h2 style="text-align: center">My Learning</h2>
+        <div class="w3-main" style="margin-left:300px;">
+            <header class="w3-container w3-row-padding w3-margin-bottom head" style="padding-top:22px">
+
+                <a href="/YogaCenter/classbooking" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                    <div class="w3-container  w3-padding">
+                        <div class="w3-middle"><i class="fas fa-calendar-alt icon w3-xxlarge"><h6>Schedule</h6></i></div>
+
+                    </div>
+                </a>
+                <a href="/YogaCenter/myCourses" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                    <div class="w3-container  w3-padding">
+                        <div class="w3-middle"><i class="fas fa-users w3-xxlarge"><h6>My courses</h6></i></div>
+
+                    </div>
+                </a>
+                <a href="/YogaCenter/viewRequest" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                    <div class="w3-container  w3-padding">
+                        <div class="w3-middle"><i class="fas fa-exchange w3-xxlarge"><h6>Request to change classes</h6></i></div>
+
+                    </div>
+                </a>
+            </header>
+            <div class="container">
+                <div style="padding: 0">
+                    <div class="container">
+                        <h2 style="text-align: center">My Learning</h2>
+                        <c:if test="${courseList.size() == 0}">
+                            <div style="text-align: center">
+                                <h4>
+                                    <p>You are not currently taking any courses</p>
+                                    <p>Taking course  <a style="color: blue;" href="#">View course list</a></p>
+                                </h4>
+                            </div>
+                        </c:if>
+                        <c:if test="${courseList.size() > 0}">
                             <div class="container mt-10">
                                 <div class="d-flex justify-content-center row">
                                     <div class="col-lg-12">
@@ -88,21 +162,22 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="table-body">
-                                                    <c:forEach var="course" items="${requestScope.courseList}">
-                                                        <tr class="cell-1">
-                                                            <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">${course.name_course}</a></th>
-                                                            <th>${course.date_start}</th>
-                                                            <th>${course.slot}</th>
-                                                            <th><a href="/YogaCenter/request?action=EditSchedule&courseID=${course.idCourse}">Edit Schedule</a></th>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                                        <c:forEach var="course" items="${requestScope.courseList}">
+                                                            <tr class="cell-1">
+                                                                <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">${course.name_course}</a></th>
+                                                                <th>${course.date_start}</th>
+                                                                <th>${course.slot}</th>
+                                                                <th><a href="/YogaCenter/request?action=EditSchedule&courseID=${course.idCourse}">Edit Schedule</a></th>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:if>
                     </div>
                 </div>
             </div>

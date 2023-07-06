@@ -24,7 +24,7 @@ public class Message implements Serializable {
     private int status;
     private Date dateSend;
 
-    public Message(int course_ID, int messageID, int fromUserID, int toUserID, int fromClassID, int toClassID, int status, Date dateSend) {
+    public Message(int course_ID, int messageID, int fromUserID, int toUserID, int fromClassID, int toClassID, int status, Date dateSend, String title) {
         this.course_ID = course_ID;
         this.messageID = messageID;
         this.fromUserID = fromUserID;

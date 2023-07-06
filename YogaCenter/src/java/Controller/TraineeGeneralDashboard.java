@@ -4,14 +4,12 @@
  */
 package Controller;
 
-import Dao.MessageDao;
+import Dao.CourseDao;
 import Object.Account;
-import Object.Message;
+import Object.Course;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ngmin
  */
-public class TraineeViewNotificationServlet extends HttpServlet {
+public class TraineeGeneralDashboard extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,21 +32,19 @@ public class TraineeViewNotificationServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(true);
-            Account account = (Account) session.getAttribute("account");
-            if (account == null) {
-                    request.getRequestDispatcher("traineeViewNotification.jsp").forward(request, response);
-                }
-            int Account_ID = account.getIdaccount();
-            ArrayList<Message> notificationList = MessageDao.getAllMessageByUserIDWithNotRead(Account_ID);
-            if (notificationList != null) {
-                request.setAttribute("notiList", notificationList);
+            try {
+                HttpSession session = request.getSession(true);
+                Account account = (Account) session.getAttribute("account");
+                ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
+                request.setAttribute("courseList", courseList);
+                request.getRequestDispatcher("traineeGeneralDashboard.jsp").forward(request, response);
+            } catch (Exception e) {
+                out.print(e);
             }
-            request.getRequestDispatcher("traineeViewNotification.jsp").forward(request, response);
         }
     }
 
@@ -64,11 +60,7 @@ public class TraineeViewNotificationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(TraineeViewNotificationServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -82,11 +74,7 @@ public class TraineeViewNotificationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(TraineeViewNotificationServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
