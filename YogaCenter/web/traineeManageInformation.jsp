@@ -1,5 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Dao.UserDao"%>
 <!DOCTYPE html>
 
 <html>
@@ -101,7 +102,7 @@
             </div>
         </c:if>
 
-        <c:set var="acc" value="${sessionScope.account}"/>
+        <c:set var="acc" value="${UserDao.getAccountByID(exist.idaccount)}"/>
 
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
             <div class="w3-container w3-row">
@@ -150,7 +151,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="text" class="form-control" name="txtEmail" value="${acc.email}">
+                                    <input type="email" class="form-control" name="txtEmail" value="${acc.email}">
                                 </div>
                             </div>
                             <div class="col-md-6">
