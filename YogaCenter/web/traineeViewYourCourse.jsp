@@ -17,31 +17,31 @@
         <link rel="stylesheet" href="css/trainee/trainee-viewyourcourse.css"/>
         <link rel="stylesheet" href="css/trainee/trainee-add-message.css">
         <style>
-        .pagination a.active {
-            background-color: #ccc;
-            color: #fff;
-        }
-        .pagination ul li {
-            display: inline-block;
-            margin: 0 4px;
-        }
-        .pagination ul li a{
-            display: inline-block;
-            padding: 4px 8px;
-            border: 1px solid #ccc;
-            text-decoration: none;
-        }
-        .pagination a.active{
-            background-color: #ccc;
-            color: #fff;
-        }
-        .menu ul li:hover{
-            background-color: wheat;
-        }
-        .menu{
-            margin-bottom: 50px;
-        }
-        .overlay {
+            .pagination a.active {
+                background-color: #ccc;
+                color: #fff;
+            }
+            .pagination ul li {
+                display: inline-block;
+                margin: 0 4px;
+            }
+            .pagination ul li a{
+                display: inline-block;
+                padding: 4px 8px;
+                border: 1px solid #ccc;
+                text-decoration: none;
+            }
+            .pagination a.active{
+                background-color: #ccc;
+                color: #fff;
+            }
+            .menu ul li:hover{
+                background-color: wheat;
+            }
+            .menu{
+                margin-bottom: 50px;
+            }
+            .overlay {
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -69,7 +69,7 @@
                 background: rgb(0 0 0 / 0.5);
                 opacity: 0;
             }
-    </style>
+        </style>
         <title>View Your Course</title>
     </head>
     <body>
@@ -86,13 +86,38 @@
             </div>
         </c:if>
         <c:set var="listCourseTrainee" value="${requestScope.listCourseTrainee}"/>
-        <c:set var="slotPresent" value="${requestScope.slotPresent}"/>
-        <c:set var="slotAbsent" value="${requestScope.slotAbsent}"/>
         <c:set var="current_date" value="${requestScope.current_date}"/>
-        <c:set var="listCoursebyTrainee" value="${requestScope.listCoursebyTrainee}"/>
         <c:set var="refund" value="${requestScope.refund}"/>
         <c:set var="cancel" value="${requestScope.cancel}"/>
-        <div class="container">
+        <c:set var="acc" value="${UserDao.getAccountByID(exist.idaccount)}"/>
+
+        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+            <div class="w3-container w3-row">
+                <div class="w3-col s4">
+                    <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+                </div>
+                <div class="w3-col s8 w3-bar">
+                    <span>Welcome,<strong>${acc.name}</strong></span><br>
+                </div>
+            </div>
+            <hr>
+            <div class="w3-container">
+                <h5>Dashboard</h5>
+            </div>
+            <div class="w3-bar-block">
+                <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
+                   onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close</a>
+                <a href="GeneralDashboard" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  General</a>
+                <a href="yourcourse" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  My courses</a>
+                <a href="information" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
+                <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding"><i class="fas fa-calendar-alt icon"></i>  My learning</a>
+                <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i> Purchase History</a>
+                <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+                <a href="/YogaCenter/request?action=Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
+            </div>
+        </nav>
+
+        <div class="w3-main" style="margin-left:300px;margin-top:43px;">
             <div id="overlay" class="overlay hidden"></div>
             <div style="padding: 10px; color: white; background: #00FF00; margin-top: 50px; margin-bottom: 20px">
                 <h2 style="text-transform: uppercase; font-size: 700">Your course</h2>
@@ -116,46 +141,7 @@
                                         <p class="col-lg-6"><strong>Course-start : </strong>${course.course_start}</p>
                                         <p class="col-lg-6"><strong>Level : </strong>${course.level}</p>
                                         <p class="col-lg-6"><strong>Slots : </strong>${course.slot}</p>
-                                        <p class="col-lg-6"><strong>Course-fee : </strong>${course.fee_course} VNĐ</p>
-                                        <c:if test="${listCoursebyTrainee != null}">
-                                            <c:forEach var="coursebyTrainee" items="${listCoursebyTrainee}">
-                                                <c:if test="${coursebyTrainee.id_course == course.id_course}">
-                                                    <c:choose>
-                                                        <c:when test="${slotPresent.size() > 0 && slotAbsent.size() > 0}">
-                                                            <c:forEach var="present" items="${slotPresent}">
-                                                                <c:if test="${present.id_course == course.id_course}">
-                                                                    <p style="color: green" class="col-lg-6"><strong>Present : ${present.slot}/${course.slot}</strong></p>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <c:forEach var="absent" items="${slotAbsent}">
-                                                                <c:if test="${absent.id_course == course.id_course}">
-                                                                    <p style="color: red" class="col-lg-6"><strong>Absent : ${absent.slot}/${course.slot}</strong></p>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                        </c:when>
-                                                        <c:when test="${slotPresent.size() > 0 && slotAbsent.size() == 0}">
-                                                            <c:forEach var="present" items="${slotPresent}">
-                                                                <c:if test="${present.id_course == course.id_course}">
-                                                                    <p style="color: green" class="col-lg-6"><strong>Present : ${present.slot}/${course.slot}</strong></p>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <p style="color: red" class="col-lg-6"><strong>Absent : 0/${course.slot}</strong></p>
-                                                        </c:when> 
-                                                        <c:when test="${slotPresent.size() == 0 && slotAbsent.size() > 0}">
-                                                            <p style="color: green" class="col-lg-6"><strong>Present : 0/${course.slot}</strong></p>
-                                                            <c:forEach var="absent" items="${slotAbsent}">
-                                                                <c:if test="${absent.id_course == course.id_course}">
-                                                                    <p style="color: red" class="col-lg-6"><strong>Absent : ${absent.slot}/${course.slot}</strong></p>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <h5 style="font-size: 700" class="col-lg-12">NOT YET</h5>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:if>
-                                            </c:forEach>
-                                        </c:if>
+                                        <p class="col-lg-6"><strong>Course-fee : </strong>${course.fee_course} VNĐ</p>        
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-8">
@@ -208,6 +194,9 @@
                                                 <c:if test="${course.status == 3}">
                                                     <p style="color: brown; width: 150px; margin-top: 10px">Pending! Please complete order.</p>
                                                 </c:if>
+                                                <c:if test="${course.status == 4}">
+                                                    <p style="color: green; width: 150px; margin-top: 10px">Finished!</p>
+                                                </c:if>
                                             </div>
                                         </div>
                                     </div>
@@ -217,13 +206,13 @@
                     </c:forEach>
                 </div>
                 <div>
-                <div class="pagination" style="display: flex; align-items: center; margin-bottom: 50px; justify-content: space-between">
-                    <ul style="display: inline-block;list-style: none;margin: 0;padding: 0">
-                        <li><a href="#" class="prev">Previous</a></li>
-                        <li><a href="#" class="page active">1</a></li>
-                        <li><a href="#" class="next">Next</a></li>
-                    </ul>
-                </div>
+                    <div class="pagination" style="display: flex; align-items: center; margin-bottom: 50px; justify-content: space-between">
+                        <ul style="display: inline-block;list-style: none;margin: 0;padding: 0">
+                            <li><a href="#" class="prev">Previous</a></li>
+                            <li><a href="#" class="page active">1</a></li>
+                            <li><a href="#" class="next">Next</a></li>
+                        </ul>
+                    </div>
                 </div>
             </c:if>
         </div>

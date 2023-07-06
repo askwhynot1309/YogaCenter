@@ -600,6 +600,35 @@ public class ClassDetailDao {
         }
         return kq;
     }
+    
+    public static ArrayList<ClassDetail> getAllClassDetailsByTraineeLearn(int ID_Account) throws Exception {
+
+        ArrayList<ClassDetail> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "select c.Class_ID, c.IDCourse\n"
+                    + "from Class c JOIN ClassDetail cd ON c.Class_ID = cd.Class_ID\n"
+                    + "JOIN Account a ON cd.ID_Account =a.ID_Account\n"
+                    + "JOIN ClassDate cdate ON c.Class_ID = cdate.Class_ID\n"
+                    + "JOIN Room r ON c.Room_ID = r.Room_ID\n"
+                    + "JOIN Course cou ON cou.Course_ID = c.IDCourse\n"
+                    + "Where a.Role = 3 AND cd.ID_Account = ?\n"
+                    + "Group by c.Class_ID";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, ID_Account);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int Class_ID = table.getInt("Class_ID");
+                    int id_course = table.getInt("IDCourse");
+                    ClassDetail classdetails = new ClassDetail(Class_ID, 0, "", 0, "", 0, "", id_course, 0, "", 0);
+                    kq.add(classdetails);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
 
     public static String getCurrentRoomName(int Trainee_ID, int Course_ID) throws Exception {
         String Room_name = "";
@@ -901,31 +930,6 @@ public class ClassDetailDao {
         return num;
     }
 
-    public static ArrayList<ClassDetail> getAllSlotInClassWhenBuyCourses(int id_account) throws Exception {
-        ArrayList<ClassDetail> kq = new ArrayList<>();
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "select *\n"
-                    + "from Class c Join ClassDetail cd ON cd.Class_ID = c.Class_ID\n"
-                    + "Where cd.ID_Account = ?";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, id_account);
-            ResultSet table = pst.executeQuery();
-            if (table != null) {
-                while (table.next()) {
-                    int class_id = table.getInt("Class_ID");
-                    int room_id = table.getInt("Room_ID");
-                    int id_time = table.getInt("IDtime");
-                    int idacc = table.getInt("ID_Account");
-                    int id_course = table.getInt("IDCourse");
-                    ClassDetail cd = new ClassDetail(class_id, room_id, id_time, idacc, id_course);
-                    kq.add(cd);
-                }
-            }
-            cn.close();
-        }
-        return kq;
-    }
 
     public static ArrayList<ClassDetail> checkAnyRoomUnactiveHasClass(Date date, int id_room) throws Exception {
         ArrayList<ClassDetail> kq = new ArrayList<>();
