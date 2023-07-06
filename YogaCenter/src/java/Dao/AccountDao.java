@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -524,4 +525,28 @@ public class AccountDao {
         }
         return kq;
     }
+
+    public static boolean updateTrainerInfo(int accountId, String email, String name, String cccd, String phone, String cv, String address) throws SQLException, Exception {
+        boolean check = false;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "update Account set Name=?, Email=?, Phone=?, CCCD=?, Address=?, CV=? where ID_Account=?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setString(1, name);
+            pst.setString(2, email);
+            pst.setString(3, phone);
+            pst.setString(4, cccd);
+            pst.setString(5, address);
+            pst.setString(6, cv);
+            pst.setInt(7, accountId);
+            int kq = pst.executeUpdate();
+            cn.close();
+
+            if (kq > 0) {
+                check = true;
+            }
+        }
+        return check;
+    }
+
 }
