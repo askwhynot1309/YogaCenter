@@ -18,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,15 +41,17 @@ public class TraineeViewRequestChangeClass extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             try {
                 /* TODO output your page here. You may use following sample code. */
+                HttpSession session = request.getSession();
+                String createSuccess = (String)session.getAttribute("success");
+                session.removeAttribute("success");
                 ArrayList<Message> messList = MessageDao.getAllMessage();
-
                 ArrayList<Message> messRequest = new ArrayList<>();
                 for (Message messageList : messList) {
                     if (messageList.getTitle().equals("Change class")) {
                         int ID_Message = messageList.getMessageID();
                         int ID_sendMessage = messageList.getFromUserID();
                         int ID_recieveMessage = messageList.getToUserID();
-//                    
+
                         String mess = messageList.getMessage();
 
                         Pattern pattern = Pattern.compile("^Course (\\d+) (.*) change Class (\\d+) to Class (\\d+)$");
@@ -72,6 +75,7 @@ public class TraineeViewRequestChangeClass extends HttpServlet {
                         messRequest.add(new Message(courseNumber, ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status, dateSend, title));
                     }
                 }
+                request.setAttribute("createSuccess", createSuccess);
                 request.setAttribute("messRequest", messRequest);
                 request.getRequestDispatcher("traineeViewRequestChangeClass.jsp").forward(request, response);
             } catch (Exception e) {
