@@ -6,12 +6,14 @@ package Object;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.mail.Address;
 
 /**
  *
  * @author ADMIN
  */
-public class Account implements Serializable{
+public class Account implements Serializable {
+
     private int idaccount;
     private String email;
     private BigDecimal amount;
@@ -27,6 +29,16 @@ public class Account implements Serializable{
     private int status;
 
     public Account() {
+    }
+
+    public Account(int idaccount, String email, String name, String cccd, String phone, String cv, String address) {
+        this.idaccount = idaccount;
+        this.email = email;
+        this.name = name;
+        this.cccd = cccd;
+        this.cv = cv;
+        this.phone = phone;
+        this.address = address;
     }
 
     public Account(String email, BigDecimal amount, String account, String password, String name, String cccd, String cv, String phone, String address, String image, int role, int status) {
@@ -90,8 +102,6 @@ public class Account implements Serializable{
     public void setCv(String cv) {
         this.cv = cv;
     }
-
-    
 
     public int getIdaccount() {
         return idaccount;
@@ -181,6 +191,4 @@ public class Account implements Serializable{
         this.status = status;
     }
 
-    
-    
 }
