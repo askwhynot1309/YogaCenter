@@ -6,8 +6,6 @@ package Controller;
 
 import Dao.UserDao;
 import Object.Account;
-import Utils.EmailUtils;
-import Utils.HexPassword;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -20,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ngmin
  */
-public class TraineeChangePasswordServlet extends HttpServlet {
+public class SubmitOTPChangePasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,35 +35,31 @@ public class TraineeChangePasswordServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             try {
                 /* TODO output your page here. You may use following sample code. */
-                HttpSession session = request.getSession(true);
-                Account account = (Account) session.getAttribute("account");
-                String email = account.getEmail();
-                String oldPassword = request.getParameter("txtOldPassword");
-                String newPassword = request.getParameter("txtNewPassword");
-                String confirmPassword = request.getParameter("txtConfirmPassword");
-                String encryptOldPassword = HexPassword.HexPassword(oldPassword);
-                if (newPassword.equals(confirmPassword)) {
-                    if (encryptOldPassword.equals(account.getPassword())) { //check if old password is correct with the password inputted
-                        String encryptNewConfirmPassword = HexPassword.HexPassword(confirmPassword);
-                        String otp = EmailUtils.generateOtp();
-                        Utils.EmailUtils.sendOtpEmail(email, otp);
-                        session.setAttribute("newPassword", encryptNewConfirmPassword);
-                        session.setAttribute("otp", otp);
-                        session.setAttribute("ID_Account", account.getIdaccount());
-                        request.getRequestDispatcher("traineeConfirmOTPChangePassword.jsp").forward(request, response);
+                HttpSession session = request.getSession();
+                String enteredOtp = request.getParameter("txtOTP");
+                String encryptNewConfirmPassword = (String) session.getAttribute("newPassword");
+                int ID_Account = (Integer) session.getAttribute("ID_Account");
 
+                String storedOtp = (String) request.getSession().getAttribute("otp");
+                if (enteredOtp.equals(storedOtp)) {
+                    int updated = UserDao.updatePasswordByID(encryptNewConfirmPassword, ID_Account);
+                    if (updated == 1) {
+                        request.setAttribute("changeSuccess", "Change password success");
+                        Account account = UserDao.getAccountByID(ID_Account);
+                        session.removeAttribute("account");
+                        session.setAttribute("account", account);
+                        request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("changeFail", "This password is not correct. Please try again.");
+                        request.setAttribute("changeFail", "Something error");
                         request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
                     }
                 } else {
-                    request.setAttribute("changeFail", "The confirm password and new password are the not same");
-                    request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
+                    response.sendRedirect("error.html");
                 }
-            request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
             } catch (Exception e) {
                 out.print(e);
             }
+
         }
     }
 

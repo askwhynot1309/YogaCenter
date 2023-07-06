@@ -1,6 +1,7 @@
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Dao.UserDao"%>
 <!DOCTYPE html>
 
 <html>
@@ -16,7 +17,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <title>Manage Information</title>
-        
+
     </head>
     <style>
         @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
@@ -68,14 +69,15 @@
             width: 440.200px;
         }
         .cart {
-                z-index: 2;
-            }
+            z-index: 2;
+        }
     </style>
     <c:import url="header.jsp"/>
     <body>
-        <c:set var="changeSuccess" value="${requestScope.Success}"></c:set>
+        <c:set var="changeSuccess" value="${requestScope.changeSuccess}"></c:set>
         <c:set var="changeFail" value="${requestScope.changeFail}"></c:set>
-        <c:set var="acc" value="${sessionScope.account}"/>
+        <c:set var="account" value="${sessionScope.account}"></c:set>
+        <c:set var="acc" value="${UserDao.getAccountByID(exist.idaccount)}"/>
 
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
             <div class="w3-container w3-row">
@@ -98,13 +100,14 @@
                 <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding"><i class="fas fa-calendar-alt icon"></i>  My learning</a>
                 <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i> Purchase History</a>
                 <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+                <a href="/YogaCenter/request?action=Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
             </div>
         </nav>
 
         <div class="w3-main" style="margin-left:300px;margin-top:43px;">
             <div class="container">
                 <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-                    <h3 class="mb-4">Manage</h3>
+                    <h3 class="mb-4">Manage password</h3>
                     <form action="/YogaCenter/request" method="POST">
                         <div class="row">
                             <div class="col-md-6">
@@ -135,7 +138,7 @@
                         </div>
 
                         <div style="margin-top: 100px;">
-                            <button class="btn btn-primary cart" type="submit" name="action" value="UpdatePassword">Update</button>
+                            <button class="btn btn-primary" type="submit" name="action" value="UpdatePassword">Update</button>
                         </div>
                     </form>
 
@@ -156,15 +159,15 @@
                 notification.timeOut = setTimeout(() => notification.remove(), 2000);
             </script>
         </c:if>
-            <c:if test="${changeFail != null}">
-            <div class="notification-success" style="z-index: 1000">
+        <c:if test="${changeFail != null}">
+            <div class="notification" style="z-index: 1000">
                 <div class="content">
                     <div class="title">Fail</div>
                     <span>${changeFail}</span>
                 </div>
             </div>
             <script>
-                let notification = document.querySelector('.notification-success');
+                let notification = document.querySelector('.notification');
                 notification.timeOut = setTimeout(() => notification.remove(), 2000);
             </script>
         </c:if>

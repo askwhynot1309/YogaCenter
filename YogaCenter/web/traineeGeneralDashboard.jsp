@@ -65,6 +65,7 @@
                     <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding"><i class="fas fa-calendar-alt icon"></i>  My learning</a>
                     <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i> Purchase History</a>
                     <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
+                    <a href="/YogaCenter/request?action=Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
                 </div>
             </nav>
             <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
@@ -176,17 +177,17 @@
                             </div>
                         </c:forEach>
                     </c:if>
-<!--
-
-                    <p>Course 2</p>
-                    <div class="w3-grey">
-                        <div class="w3-container w3-center w3-padding w3-orange" style="width:50%">50%</div>
-                    </div>
-
-                    <p>Course 3</p>
-                    <div class="w3-grey">
-                        <div class="w3-container w3-center w3-padding w3-red" style="width:75%">75%</div>
-                    </div>-->
+                    <!--
+                    
+                                        <p>Course 2</p>
+                                        <div class="w3-grey">
+                                            <div class="w3-container w3-center w3-padding w3-orange" style="width:50%">50%</div>
+                                        </div>
+                    
+                                        <p>Course 3</p>
+                                        <div class="w3-grey">
+                                            <div class="w3-container w3-center w3-padding w3-red" style="width:75%">75%</div>
+                                        </div>-->
                 </div>
                 <hr>
 

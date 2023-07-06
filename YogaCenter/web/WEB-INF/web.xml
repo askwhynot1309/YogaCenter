@@ -340,6 +340,10 @@
         <servlet-name>TraineeGeneralDashboard</servlet-name>
         <servlet-class>Controller.TraineeGeneralDashboard</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SubmitOTPChangePasswordServlet</servlet-name>
+        <servlet-class>Controller.SubmitOTPChangePasswordServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -679,6 +683,10 @@
     <servlet-mapping>
         <servlet-name>TraineeGeneralDashboard</servlet-name>
         <url-pattern>/GeneralDashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitOTPChangePasswordServlet</servlet-name>
+        <url-pattern>/SubmitOTPChangePasswordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
