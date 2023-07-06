@@ -5,15 +5,19 @@
 package Controller;
 
 import Dao.CourseDao;
+import Dao.MessageDao;
 import Object.Account;
 import Object.ClassDetail;
 import Object.Course;
+import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,63 +53,84 @@ public class TraineeCheckTraineeRequested extends HttpServlet {
                 int Course_ID = Integer.parseInt(request.getParameter("txtCourseID"));
                 int toTraineeID = Integer.parseInt(request.getParameter("txtToTraineeID"));
 
-                if (toTraineeID == trainee.getIdaccount()) {
-                    request.setAttribute("toTraineeRegistered", "You can not change class with you");
-                } else {
-                    ArrayList<ClassDetail> classes = Dao.ClassDetailDao.getAllClassDetailsByTrainee(toTraineeID);
-                    ClassDetail classDetails = null;
-                    int Choice = 0;
-                    int Time_ID = 0;
-                    for (ClassDetail classe : classes) {
-                        if (classe.getId_course() == Course_ID) {
-                            classDetails = classe;
-                            Choice = classe.getChoice();
-                            Time_ID = classe.getTime();
-                        }
+                boolean isExisted = false;
+                ArrayList<Message> messList = MessageDao.getAllMessage();
+                for (Message mess : messList) {
+                    String message = mess.getMessage();
+                    Pattern pattern = Pattern.compile("^Course (\\d+) (.*) change Class (\\d+) to Class (\\d+)$");
+                    Matcher matcher = pattern.matcher(message);
+                    int courseNumber = 0;
+                    if (matcher.matches()) {
+                        courseNumber = Integer.parseInt(matcher.group(1));
                     }
-                    if (classDetails != null) {
-                        String dayChoice = "";
-                        switch (Choice) {
-                            case 1:
-                                dayChoice = "Monday - Wednesday - Friday";
-                                break;
-                            case 2:
-                                dayChoice = "Tuesday - Thurday - Saturday";
-                                break;
-                            case 3:
-                                dayChoice = "Sunday";
-                                break;
-                            default:
-                                throw new AssertionError();
-                        }
 
-                        String Time = "";
-                        switch (Time_ID) {
-                            case 1:
-                                Time = "9h - 11h";
-                                break;
-                            case 2:
-                                Time = "13h - 15h";
-                                break;
-                            case 3:
-                                Time = "16h - 18h";
-                                break;
-                            case 4:
-                                Time = "19h - 21h";
-                                break;
-                            default:
-                                throw new AssertionError();
-                        }
+                    if (mess.getToUserID() == toTraineeID && courseNumber == Course_ID) {
+                        isExisted = true;
+                        break;
+                    }
+                }
 
-                        request.setAttribute("dayChoice", dayChoice);
-                        request.setAttribute("Time", Time);
-                        request.setAttribute("classDetails", classDetails);
-
-                        int currentRoomName = Dao.ClassDetailDao.getCurrentClassID(trainee.getIdaccount(), Course_ID);
-                        request.setAttribute("currentRoomName", currentRoomName);
-                        out.print(currentRoomName);
+                if (isExisted) {
+                    request.setAttribute("toTraineeRegistered", "You already has a request change this class with this trainee");
+                } else {
+                    if (toTraineeID == trainee.getIdaccount()) {
+                        request.setAttribute("toTraineeRegistered", "You can not change class with you");
                     } else {
-                        request.setAttribute("toTraineeRegistered", "This Trainee doesn't registered in this course");
+                        ArrayList<ClassDetail> classes = Dao.ClassDetailDao.getAllClassDetailsByTrainee(toTraineeID);
+                        ClassDetail classDetails = null;
+                        int Choice = 0;
+                        int Time_ID = 0;
+                        for (ClassDetail classe : classes) {
+                            if (classe.getId_course() == Course_ID) {
+                                classDetails = classe;
+                                Choice = classe.getChoice();
+                                Time_ID = classe.getTime();
+                            }
+                        }
+                        if (classDetails != null) {
+                            String dayChoice = "";
+                            switch (Choice) {
+                                case 1:
+                                    dayChoice = "Monday - Wednesday - Friday";
+                                    break;
+                                case 2:
+                                    dayChoice = "Tuesday - Thurday - Saturday";
+                                    break;
+                                case 3:
+                                    dayChoice = "Sunday";
+                                    break;
+                                default:
+                                    throw new AssertionError();
+                            }
+
+                            String Time = "";
+                            switch (Time_ID) {
+                                case 1:
+                                    Time = "9h - 11h";
+                                    break;
+                                case 2:
+                                    Time = "13h - 15h";
+                                    break;
+                                case 3:
+                                    Time = "16h - 18h";
+                                    break;
+                                case 4:
+                                    Time = "19h - 21h";
+                                    break;
+                                default:
+                                    throw new AssertionError();
+                            }
+
+                            request.setAttribute("dayChoice", dayChoice);
+                            request.setAttribute("Time", Time);
+                            request.setAttribute("classDetails", classDetails);
+
+                            int currentRoomName = Dao.ClassDetailDao.getCurrentClassID(trainee.getIdaccount(), Course_ID);
+                            request.setAttribute("currentRoomName", currentRoomName);
+                            out.print(currentRoomName);
+                        } else {
+                            request.setAttribute("toTraineeRegistered", "This Trainee doesn't registered in this course");
+                        }
                     }
                 }
                 LocalDate startDate = CourseDao.getCourseStartDate(trainee.getIdaccount());
