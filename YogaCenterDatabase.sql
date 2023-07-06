@@ -92,7 +92,7 @@ CREATE TABLE BookingDetail(
 BookingDetail_ID int IDENTITY(1,1) PRIMARY KEY,
 Order_ID int FOREIGN KEY REFERENCES BookingCourse(OrderID),
 ID_Course int FOREIGN KEY REFERENCES Course(Course_ID),
-Status_Account int CHECK(Status_Account = 0 OR Status_Account = 1 OR Status_Account = 2 OR Status_Account = 3), --0:cancel, 1:active, 2: refund, 3: pending
+Status_Account int CHECK(Status_Account = 0 OR Status_Account = 1 OR Status_Account = 2 OR Status_Account = 3 OR Status_Account = 4), --0:cancel, 1:active, 2: refund, 3: pending, 4: finish
 Quantity int NOT NULL
 )
 
