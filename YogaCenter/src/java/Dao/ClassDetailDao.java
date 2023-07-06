@@ -613,7 +613,7 @@ public class ClassDetailDao {
                     + "JOIN Room r ON c.Room_ID = r.Room_ID\n"
                     + "JOIN Course cou ON cou.Course_ID = c.IDCourse\n"
                     + "Where a.Role = 3 AND cd.ID_Account = ?\n"
-                    + "Group by c.Class_ID";
+                    + "Group by c.Class_ID, c.IDCourse";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, ID_Account);
             ResultSet table = pst.executeQuery();
