@@ -40,12 +40,11 @@ public class ClassifyMessageServlet extends HttpServlet {
             int messageID = Integer.parseInt(request.getParameter("messID"));
             Message message = MessageDao.getMessageByIdMessage(messageID);
             Account account = UserDao.getAccountByID(message.getFromUserID());
-            switch (account.getRole()) {
-                case 3:
-                    request.getRequestDispatcher("viewRequest").forward(request, response);
-                    break;
-                default:
-                    throw new AssertionError();
+            
+            if (account.getRole() == 3) {
+                request.getRequestDispatcher("viewRequest").forward(request, response);
+            }else{
+                request.getRequestDispatcher("notificationDetail.jsp").forward(request, response);
             }
         }
     }

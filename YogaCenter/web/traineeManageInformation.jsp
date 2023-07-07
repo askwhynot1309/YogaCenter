@@ -89,12 +89,25 @@
             background: rgb(0 0 0 / 0.5);
             opacity: 0;
         }
+/*        .image:hover{
+            background: #008000;
+        }*/
+        .notificate{
+            /*position: absolute;*/
+            background: red;
+            color: white;
+            border-radius: 9999em;
+            padding: 0% 2% !important;
+            top: -100%;
+            right: 0;
+        }
     </style>
     <c:import url="header.jsp"/>
-    <body>
+    <body class="w3-light-grey">
         <c:set var="changeSuccess" value="${requestScope.changeSuccess}"></c:set>
         <c:set var="changeFail" value="${requestScope.changeFail}"></c:set>
         <c:set var="exist" value="${sessionScope.account}"/>
+        <c:set var="requestList" value="${sessionScope.requestList}"></c:set>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
             <div class="message" id="message">
@@ -109,12 +122,13 @@
         <c:set var="acc" value="${UserDao.getAccountByID(exist.idaccount)}"/>
 
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-            <div class="w3-container w3-row">
-                <div class="w3-col s4">
-                    <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+            <div style="text-align: center" class="w3-container w3-row">
+                <div class="w3-col image">
+                    <img src="${acc.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
                 </div>
-                <div class="w3-col s8 w3-bar">
-                    <span>Welcome,<strong>${acc.name}</strong></span><br>
+                <div class="w3-col w3-bar">
+                    <br>
+                    <span>Welcome <strong>${acc.name}</strong></span><br>
                 </div>
             </div>
             <hr>
@@ -127,7 +141,11 @@
                 <a href="GeneralDashboard" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  General</a>
                 <a href="yourcourse" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  My courses</a>
                 <a href="information" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-eye fa-fw"></i>  Views</a>
-                <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding"><i class="fas fa-calendar-alt icon"></i>  My learning</a>
+                <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding"><i class="fas fa-calendar-alt icon"></i>  My learning
+                    <c:if test="${requestList.size() > 0}">
+                        <div class="w3-right notificate">${requestList.size()}</div>
+                    </c:if>
+                </a>
                 <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i> Purchase History</a>
                 <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
                 <a href="/YogaCenter/request?action=Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
@@ -175,7 +193,7 @@
                             </div>
                         </div>
 
-                        <div style="margin-top: 100px;">
+                        <div style="margin-top: 50px;">
                             <button class="btn btn-primary" type="submit" name="action" value="ChangeInformation">Update</button>
                         </div>
                     </form>

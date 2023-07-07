@@ -64,7 +64,7 @@ public class TraineeCheckTraineeRequested extends HttpServlet {
                         courseNumber = Integer.parseInt(matcher.group(1));
                     }
 
-                    if (mess.getToUserID() == toTraineeID && courseNumber == Course_ID) {
+                    if (mess.getToUserID() == toTraineeID && courseNumber == Course_ID && mess.getStatus() == 0) {
                         isExisted = true;
                         break;
                     }

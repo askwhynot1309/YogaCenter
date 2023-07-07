@@ -70,8 +70,8 @@
                         <table>
                             <c:forEach var="noti" items="${requestScope.notiList}">
                                 <tr>
-                                    <th class="col-2">${noti.dateSend}:</th>
-                                    <th><a href="/YogaCenter/request?action=classify&messID=${noti.messageID}">${noti.message}</a></th>
+                                    <th class="col-3"><h4>${noti.dateSend}:</h4></th>
+                                    <th><a href="/YogaCenter/request?action=classify&messID=${noti.messageID}"><h4>${noti.title}</h4></a></th>
                                 </tr>
                             </c:forEach>
                         </table>

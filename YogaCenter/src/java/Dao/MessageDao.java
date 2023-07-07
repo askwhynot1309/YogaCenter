@@ -129,7 +129,7 @@ public class MessageDao {
         if (cn != null) {
             String sql = "SELECT *\n"
                     + "FROM [dbo].[Message]\n"
-                    + "WHERE ID_recieveMessage = ? and Status = 0";
+                    + "WHERE ID_recieveMessage = ? and Status = 0 AND Title NOT LIKE 'Change class'";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, AccountID);
             ResultSet rs = pst.executeQuery();
@@ -151,13 +151,13 @@ public class MessageDao {
         return messList;
     }
 
-    public static ArrayList<Message> getAllMessageByUserIDAndStatus0(int AccountID) throws Exception {
+    public static ArrayList<Message> getAllRequestByTrainerIDAndStatus0(int AccountID) throws Exception {
         ArrayList<Message> messList = new ArrayList<>();
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
             String sql = "SELECT *\n"
                     + "FROM [dbo].[Message]\n"
-                    + "WHERE ID_recieveMessage = ? AND Status = 0";
+                    + "WHERE ID_recieveMessage = ? AND Status = 0 AND Title LIKE 'Change class'" ;
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, AccountID);
             ResultSet rs = pst.executeQuery();
