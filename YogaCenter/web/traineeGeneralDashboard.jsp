@@ -35,23 +35,34 @@
         body{
             font-size: 100%;
         }
+        .notificate{
+            /*position: absolute;*/
+            background: red;
+            color: white;
+            border-radius: 9999em;
+            padding: 0% 2% !important;
+            top: -100%;
+            right: 0;
+        }
     </style>
     <c:import url="header.jsp"/>
     <body class="w3-light-grey">
         <c:set var="acc" value="${sessionScope.account}"/>
         <c:set var="cart" value="${sessionScope.cart}"/>
         <c:set var="courseList" value="${requestScope.courseList}"></c:set>
+        <c:set var="requestList" value="${sessionScope.requestList}"></c:set>
 
         <c:if test="${acc != null}">
             <c:set var="notiList" value="${MessageDao.getAllMessageByUserIDWithNotRead(acc.idaccount)}"></c:set>
 
                 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-                    <div class="w3-container w3-row">
-                        <div class="w3-col s4">
-                            <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
-                        </div>
-                        <div class="w3-col s8 w3-bar">
-                            <span>Welcome, <strong>${acc.name}</strong></span>
+                    <div style="text-align: center" class="w3-container w3-row">
+                        <div class="w3-col image">
+                            <img src="${acc.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
+                    </div>
+                    <div class="w3-col w3-bar">
+                        <br>
+                        <span>Welcome <strong>${acc.name}</strong></span><br>
                     </div>
                 </div>
                 <hr>
@@ -64,8 +75,12 @@
                     <a href="GeneralDashboard" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  General</a>
                     <a href="yourcourse" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  My courses</a>
                     <a href="information" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
-                    <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding"><i class="fas fa-calendar-alt icon"></i>  My learning</a>
-                    <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i> Purchase History</a>
+                    <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding"><i class="fas fa-calendar-alt fa-fw"></i>  My learning
+                        <c:if test="${requestList.size() > 0}">
+                            <div class="w3-right notificate">${requestList.size()}</div>
+                        </c:if>
+                    </a>
+                    <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  Purchase History</a>
                     <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
                     <a href="/YogaCenter/request?action=Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
                 </div>
@@ -115,58 +130,18 @@
                         </div>
                     </a>
 
-                    <a href="#" class="w3-third">
-                        <div class="w3-container w3-orange w3-text-white w3-padding-16">
-                            <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
-                            <div class="w3-right">
-                                <h3>1</h3>
-                            </div>
-                            <div class="w3-clear"></div>
-                            <h4>Users</h4>
-                        </div>
-                    </a>
+                    <!--                    <a href="#" class="w3-third">
+                                            <div class="w3-container w3-orange w3-text-white w3-padding-16">
+                                                <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+                                                <div class="w3-right">
+                                                    <h3>1</h3>
+                                                </div>
+                                                <div class="w3-clear"></div>
+                                                <h4>Users</h4>
+                                            </div>
+                                        </a>-->
                 </div>
 
-                <div class="w3-panel">
-                    <div class="w3-row-padding" style="margin:0 -16px">
-                        <!-- <div class="w3-third">
-                            <h5>Regions</h5>
-                            <img src="https://www.w3schools.com/w3images/region.jpg" style="width:100%"
-                                alt="Google Regional Map">
-                        </div> -->
-                        <div class="w3-twothird">
-                            <h5>Feeds</h5>
-                            <table class="w3-table w3-striped w3-white">
-                                <tr>
-                                    <td><i class="fa fa-shopping-cart w3-text-blue w3-large"></i></td>
-                                    <td>Checkout your cart.</td>
-                                    <td><i>10 mins</i></td>
-                                </tr>
-                                <!-- <tr>
-                                    <td><i class="fa fa-bell w3-text-teal w3-large"></i></td>
-                                    <td>Database error.</td>
-                                    <td><i>15 mins</i></td>
-                                </tr> -->
-                                <tr>
-                                    <td><i class="fa fa-users w3-text-orange w3-large"></i></td>
-                                    <td>A trainee request you to change class.</td>
-                                    <td><i>17 mins</i></td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fa fa-comment w3-text-red w3-large"></i></td>
-                                    <td>The course you signed up for has classes.</td>
-                                    <td><i>25 mins</i></td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fa fa-history w3-text-blue w3-large"></i></td>
-                                    <td>Check transactions.</td>
-                                    <td><i>28 mins</i></td>
-                                </tr>
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
                 <hr>
                 <div class="w3-container">
                     <h5>Process Tracking</h5>

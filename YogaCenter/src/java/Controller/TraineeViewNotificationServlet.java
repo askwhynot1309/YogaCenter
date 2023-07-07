@@ -45,8 +45,14 @@ public class TraineeViewNotificationServlet extends HttpServlet {
                 }
             int Account_ID = account.getIdaccount();
             ArrayList<Message> notificationList = MessageDao.getAllMessageByUserIDWithNotRead(Account_ID);
+            ArrayList<Message> notiList = new ArrayList<>();
+            for (Message message : notificationList) {
+                if (!message.getTitle().equals("Change class")) {
+                    notiList.add(message);
+                }
+            }
             if (notificationList != null) {
-                request.setAttribute("notiList", notificationList);
+                request.setAttribute("notiList", notiList);
             }
             request.getRequestDispatcher("traineeViewNotification.jsp").forward(request, response);
         }

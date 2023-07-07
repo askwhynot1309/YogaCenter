@@ -5,8 +5,10 @@
 package Controller;
 
 import Dao.CourseDao;
+import Dao.MessageDao;
 import Object.Account;
 import Object.Course;
+import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -41,6 +43,11 @@ public class TraineeGeneralDashboard extends HttpServlet {
                 Account account = (Account) session.getAttribute("account");
                 ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
                 request.setAttribute("courseList", courseList);
+
+                ArrayList<Message> requestList = MessageDao.getAllRequestByTrainerIDAndStatus0(account.getIdaccount());
+
+                session.setAttribute("requestList", requestList);
+
                 request.getRequestDispatcher("traineeGeneralDashboard.jsp").forward(request, response);
             } catch (Exception e) {
                 out.print(e);

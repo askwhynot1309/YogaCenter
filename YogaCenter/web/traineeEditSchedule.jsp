@@ -97,10 +97,20 @@
             background-color: #f1f1f1!important;
             transition: 1s;
         }
+        .notificate{
+            /*position: absolute;*/
+            background: red;
+            color: white;
+            border-radius: 9999em;
+            padding: 0% 2% !important;
+            /*top: -100%;*/
+            /*right: 0;*/
+        }
     </style>
     <body class="w3-light-grey">
         <c:import url="header.jsp"></c:import>
         <c:set var="exist" value="${sessionScope.account}"/>
+        <c:set var="requestList" value="${sessionScope.requestList}"></c:set>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
             <div class="message" id="message">
@@ -113,12 +123,13 @@
         </c:if>
         <c:set var="acc" value="${sessionScope.account}"/>
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-            <div class="w3-container w3-row">
-                <div class="w3-col s4">
-                    <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+            <div style="text-align: center" class="w3-container w3-row">
+                <div class="w3-col image">
+                    <img src="${acc.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
                 </div>
-                <div class="w3-col s8 w3-bar">
-                    <span>Welcome,<strong>${acc.name}</strong></span><br>
+                <div class="w3-col w3-bar">
+                    <br>
+                    <span>Welcome <strong>${acc.name}</strong></span><br>
                 </div>
             </div>
             <hr>
@@ -129,7 +140,11 @@
                 <a href="traineeGeneralDashboard.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  General</a>
                 <a href="yourcourse" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  My courses</a>
                 <a href="information" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
-                <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding  w3-blue"><i class="fas fa-calendar-alt icon"></i>  My Learning</a>
+                <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding  w3-blue"><i class="fas fa-calendar-alt icon"></i>  My Learning
+                    <c:if test="${requestList.size() > 0}">
+                        <div class="w3-right notificate">${requestList.size()}</div>
+                    </c:if>
+                </a>
                 <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i> Purchase History</a>
                 <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
                 <a href="/YogaCenter/request?action=Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
@@ -137,19 +152,29 @@
         </nav>
         <div class="w3-main" style="margin-left:300px;">
             <header class="w3-container w3-row-padding w3-margin-bottom head" style="padding-top:22px">
-                <a href="/YogaCenter/classbooking" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                <a href="/YogaCenter/classbooking" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0"><br><br>
                     <div class="w3-container  w3-padding">
                         <div class="w3-middle"><i class="fas fa-calendar-alt icon w3-xxlarge"><h6>Schedule</h6></i></div>
                     </div>
                 </a>
 
-                <a href="/YogaCenter/myCourses" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                <a href="/YogaCenter/myCourses" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0"><br><br>
                     <div class="w3-container  w3-padding">
                         <div class="w3-middle"><i class="fas fa-users w3-xxlarge"><h6>My courses</h6></i></div>
                     </div>
                 </a>
 
                 <a href="/YogaCenter/viewRequest" class="w3-third w3-bar-item w3-button w3-padding" style="padding: 0">
+                    <c:if test="${requestList.size() > 0}">
+                        <div style="display: flex; flex-direction: column; align-items: center;" class="w3-container  w3-padding">
+                            <div style="width: 24.525px;" class="w3-middle notificate">
+                                ${requestList.size()}
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${requestList.size() == 0}">
+                        <br><br>
+                    </c:if>
                     <div class="w3-container  w3-padding">
                         <div class="w3-middle"><i class="fas fa-exchange w3-xxlarge"><h6>Request to change classes</h6></i></div>
                     </div>
