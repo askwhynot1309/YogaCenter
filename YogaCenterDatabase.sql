@@ -111,7 +111,7 @@ Message nvarchar(max),
 Title nvarchar(max),
 ID_recieveMessage int FOREIGN KEY REFERENCES Account(ID_Account),
 DateCreate DATE,
-Status int CHECK(Status = 0 or Status = 1 or Status = 2)--0:default, 1:not yet , 2: read
+Status int CHECK(Status = 0 or Status = 1 or Status = 2 or Status = 3)--0:default, 1:not yet , 2: read
 )
 
 insert into Account(Account,Password,Role,Status) values ('admin','202CB962AC59075B964B07152D234B70',0,0)
