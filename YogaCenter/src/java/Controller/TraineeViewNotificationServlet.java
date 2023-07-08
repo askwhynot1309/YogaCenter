@@ -7,6 +7,7 @@ package Controller;
 import Dao.MessageDao;
 import Object.Account;
 import Object.Message;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -41,8 +42,8 @@ public class TraineeViewNotificationServlet extends HttpServlet {
             HttpSession session = request.getSession(true);
             Account account = (Account) session.getAttribute("account");
             if (account == null) {
-                    request.getRequestDispatcher("traineeViewNotification.jsp").forward(request, response);
-                }
+                request.getRequestDispatcher("traineeViewNotification.jsp").forward(request, response);
+            }
             int Account_ID = account.getIdaccount();
             ArrayList<Message> notificationList = MessageDao.getAllMessageByUserIDWithNotRead(Account_ID);
             ArrayList<Message> notiList = new ArrayList<>();

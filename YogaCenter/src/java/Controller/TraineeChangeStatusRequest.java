@@ -5,9 +5,12 @@
 package Controller;
 
 import Dao.MessageDao;
+import Object.Account;
+import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -15,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,9 +41,11 @@ public class TraineeChangeStatusRequest extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession(true);
+            Account account = (Account) session.getAttribute("account");
+
             String action = request.getParameter("action");
             int messageID = Integer.parseInt(request.getParameter("txtMessageID"));
-
             int txtFromTraineeID = Integer.parseInt(request.getParameter("txtFromTraineeID"));
             int txtFromClassID = Integer.parseInt(request.getParameter("txtFromClassID"));
             int txtToUserID = Integer.parseInt(request.getParameter("txtToUserID"));
@@ -50,23 +56,21 @@ public class TraineeChangeStatusRequest extends HttpServlet {
             switch (action) {
                 case "rejectRequest":
                     isUpdate = MessageDao.updateStatusRequest(2, messageID);
-                    
-                    if (isUpdate) {
-                        response.sendRedirect("viewRequest");
-                    }
                     break;
                 case "approveRequest":
                     isUpdate = MessageDao.changeClassByRequest(txtFromTraineeID, txtFromClassID, txtToUserID, txtToClassID);
-                    
                     isUpdate = false;
                     isUpdate = MessageDao.updateStatusRequest(1, messageID);
-                    
-                    if (isUpdate) {
-                        response.sendRedirect("viewRequest");
-                    }
                     break;
                 default:
                     throw new AssertionError();
+            }
+            ArrayList<Message> requestList = MessageDao.getAllRequestByTrainerIDAndStatus0(account.getIdaccount());
+            session.removeAttribute("requestList");
+            session.setAttribute("requestList", requestList);
+
+            if (isUpdate) {
+                response.sendRedirect("viewRequest");
             }
         }
     }
