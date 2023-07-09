@@ -47,41 +47,42 @@ public class ButtonAddNewEmployeeServet extends HttpServlet {
             if (fileName == "") {
                 request.setAttribute("noimage", "message");
                 request.getRequestDispatcher("addemployee").forward(request, response);
-            }
-            String phone = request.getParameter("phone");
-            String cccd = request.getParameter("cccd");
-            String address = request.getParameter("address");
-            String account = request.getParameter("account");
-            String password = request.getParameter("password");
-            int role = Integer.parseInt(request.getParameter("role"));
-            String newpassword = Utils.HexPassword.HexPassword(password);
-            Account acc = Dao.AccountDao.checkAccountToInsertNewEmployee(account, role);
-            if (Utils.CheckEmailExist.isAddressValid(email) == false) {
-                request.setAttribute("Invalid", "Invalid");
-                request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
-            } else if (Utils.CheckValidation.isValidCCCD(cccd) == false) {
-                request.setAttribute("InvalidCCCD", "Invalid");
-                request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
-            } else if (Utils.CheckValidation.checkPhone(phone) == false) {
-                request.setAttribute("InvalidPhone", "Invalid");
-                request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
-            } else if (Dao.AccountDao.checkTheSameCCCD(role, cccd) != null) {
-                request.setAttribute("CCCDUnsuccess", "CCCDUnsuccess");
-                request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
-            } else if (Dao.AccountDao.checkTheSameEmail(role, email) != null) {
-                request.setAttribute("EmailUnsuccess", "EmailUnsuccess");
-                request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
-            } else if (Dao.AccountDao.checkTheSamePhone(role, phone) != null) {
-                request.setAttribute("PhoneUnsuccess", "PhoneUnsuccess");
-                request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
-            } else if (acc != null) {
-                request.setAttribute("addUnsuccess", "addUnsuccess");
-                request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
             } else {
-                int insertNewEmployee = Dao.AccountDao.insertNewEmployee(name, email, phone, cccd, address, account, newpassword, role, fileName);
-                if (insertNewEmployee == 1) {
-                    request.setAttribute("addSuccess", "addSuccess");
+                String phone = request.getParameter("phone");
+                String cccd = request.getParameter("cccd");
+                String address = request.getParameter("address");
+                String account = request.getParameter("account");
+                String password = request.getParameter("password");
+                int role = Integer.parseInt(request.getParameter("role"));
+                String newpassword = Utils.HexPassword.HexPassword(password);
+                Account acc = Dao.AccountDao.checkAccountToInsertNewEmployee(account, role);
+                if (Utils.CheckEmailExist.isAddressValid(email) == false) {
+                    request.setAttribute("Invalid", "Invalid");
                     request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
+                } else if (Utils.CheckValidation.isValidCCCD(cccd) == false) {
+                    request.setAttribute("InvalidCCCD", "Invalid");
+                    request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
+                } else if (Utils.CheckValidation.checkPhone(phone) == false) {
+                    request.setAttribute("InvalidPhone", "Invalid");
+                    request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
+                } else if (Dao.AccountDao.checkTheSameCCCD(role, cccd) != null) {
+                    request.setAttribute("CCCDUnsuccess", "CCCDUnsuccess");
+                    request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
+                } else if (Dao.AccountDao.checkTheSameEmail(role, email) != null) {
+                    request.setAttribute("EmailUnsuccess", "EmailUnsuccess");
+                    request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
+                } else if (Dao.AccountDao.checkTheSamePhone(role, phone) != null) {
+                    request.setAttribute("PhoneUnsuccess", "PhoneUnsuccess");
+                    request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
+                } else if (acc != null) {
+                    request.setAttribute("addUnsuccess", "addUnsuccess");
+                    request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
+                } else {
+                    int insertNewEmployee = Dao.AccountDao.insertNewEmployee(name, email, phone, cccd, address, account, newpassword, role, fileName);
+                    if (insertNewEmployee == 1) {
+                        request.setAttribute("addSuccess", "addSuccess");
+                        request.getRequestDispatcher("admin/adminAddNewEmployee.jsp").forward(request, response);
+                    }
                 }
             }
         } catch (Exception e) {
