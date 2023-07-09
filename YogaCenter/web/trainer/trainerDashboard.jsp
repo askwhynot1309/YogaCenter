@@ -42,6 +42,12 @@
                         Course List
                     </a>
                 </li>
+                <li>
+                    <a href="/YogaCenter/TrainerDisplayInfo?id=${sessionScope.Trainer.idaccount}">
+                        <i class="fas fa-tools icon" style="margin-right: 17px"></i>
+                        Trainer Info
+                    </a>
+                </li>
             </ul>
             <div class="divider"></div>
             <h4>Settings</h4>

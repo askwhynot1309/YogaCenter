@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="css/admin/admin-course-add.css">
     </head>
     <body>
-        <c:set var="exist" value="${sessionScope.Staff}"/>
+        <c:set var="exist" value="${sessionScope.Trainer}"/>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
             <div class="message" id="message">
