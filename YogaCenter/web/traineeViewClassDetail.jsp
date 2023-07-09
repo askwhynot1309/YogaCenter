@@ -55,7 +55,9 @@
                                     </tr>
                                     <tr>
                                         <td style="padding: 20px; font-weight: 700">Trainer : </td>
-                                        <td style="padding: 20px">${inforClass.account}</td>
+                                        <td style="padding: 20px">
+                                            <a style="color: blue" href="/YogaCenter/request?action=inf&id=${inforClass.idaccount}&option=infEmployee" class="">${inforClass.account}</a>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 20px; font-weight: 700">Date : </td>
