@@ -110,6 +110,7 @@
                     <c:set var="Invalid" value="${requestScope.Invalid}"/>
                     <c:set var="InvalidPhone" value="${requestScope.InvalidPhone}"/>
                     <c:set var="InvalidCCCD" value="${requestScope.InvalidCCCD}"/>
+                    <c:set var="noimage" value="${requestScope.noimage}"/>
                     <form action="/YogaCenter/request" method="POST">
                         <div style="margin-top: 10%">
                             <div style="display: flex; align-items: center; justify-content: space-between">
@@ -147,6 +148,19 @@
                         <div class="content">
                             <div class="title">Error</div>
                             <span>Account already exists. Please fill in the account details again!</span>
+                        </div>
+                        <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+                    </div>
+                    <script>
+                        let notification = document.querySelector('.notification');
+                        notification.timeOut = setTimeout(() => notification.remove(), 5000);
+                    </script>
+                </c:if>
+                <c:if test="${noimage != null}">
+                    <div class="notification">
+                        <div class="content">
+                            <div class="title">Error</div>
+                            <span>You should upload image of employee</span>
                         </div>
                         <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
                     </div>
