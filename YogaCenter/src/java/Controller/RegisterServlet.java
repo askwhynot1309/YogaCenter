@@ -44,7 +44,7 @@ public class RegisterServlet extends HttpServlet {
             String cccd = request.getParameter("cccd");
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
-            String img = "images.png";
+            String img = "img/images.jpg";
             String newpassword = Utils.HexPassword.HexPassword(password);
             boolean checkValid = true;
             if (Utils.CheckEmailExist.isAddressValid(email) == false) {

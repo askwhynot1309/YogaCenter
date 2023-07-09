@@ -175,7 +175,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" name="txtEmail" value="${acc.email}">
+                                    <input type="email" class="form-control" name="txtEmail" value="${acc.email}" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6">

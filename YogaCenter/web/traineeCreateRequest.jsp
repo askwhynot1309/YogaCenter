@@ -177,7 +177,7 @@
                                             <h4 style="text-align: center; color: red;">Starting date: ${startDate}. Due date: before ${endDate}</h4>
 
                                         <c:choose>
-                                            <c:when test="${overdue != null}">
+                                            <c:when test="${overdue == null}">
 
                                                 <div class="container mt-5">
                                                     <div class="d-flex justify-content-center row">
@@ -244,7 +244,7 @@
                                                     </div>
                                                 </div>
                                             </c:when>
-                                            <c:when test="${overdue == null}">
+                                            <c:when test="${overdue != null}">
                                                 <div style="text-align: center">
                                                     <h4 style="color: red">
                                                         <span>${overdue}</span>
