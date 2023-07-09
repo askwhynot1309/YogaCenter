@@ -83,7 +83,7 @@
                         <div class="col-md-4">
                             <div>
                                 <div style="font-size: 60px;">2</div>
-                                <div style="font-size: 40px;">Club</div>
+                                <div style="font-size: 40px;">Center</div>
                             </div>
                         </div>
                         <div class="col-md-4">

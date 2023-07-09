@@ -36,6 +36,12 @@
                         Trainer Info
                     </a>
                 </li>
+                <li>
+                    <a href="/YogaCenter/TrainerShowCourseList">
+                        <i class="fas fa-book icon" style="margin-right: 17px"></i>
+                        Course List
+                    </a>
+                </li>
             </ul>
             <div class="divider"></div>
             <h4>Settings</h4>

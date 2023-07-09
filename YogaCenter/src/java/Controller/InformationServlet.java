@@ -200,6 +200,14 @@ public class InformationServlet extends HttpServlet {
                         request.getRequestDispatcher("trainer/trainerMessageDetail.jsp").forward(request, response);
                     }
                     break;
+                case "trainerCourseInfo":
+                    Course info3 = Dao.CourseDao.getInformationOfCourse(id);
+                    NumberFormat nf3 = NumberFormat.getInstance(new Locale("vi", "VN"));
+                    int price3 = info3.getFee_course().intValue();
+                    String stringPrice3 = nf3.format(price3);
+                    request.setAttribute("informationCourse", info3);
+                    request.getRequestDispatcher("trainer/trainerViewCourseInfo.jsp").forward(request, response);
+                    break;    
             }
         } catch (Exception e) {
             e.printStackTrace();
