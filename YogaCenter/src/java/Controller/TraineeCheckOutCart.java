@@ -31,25 +31,30 @@ public class TraineeCheckOutCart extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            int method = Integer.parseInt(request.getParameter("method"));
-            int totalmoney = Integer.parseInt(request.getParameter("txtPrice"));
-            switch (method) {
-                case 0:
-                    request.setAttribute("totalmoney", totalmoney);
-                    request.setAttribute("method", method);
-                    request.getRequestDispatcher("TraineeSaveOrderServlet").forward(request, response);
-                    break;
-                case 1:
-                    request.setAttribute("txtPrice", totalmoney);
-                    request.getRequestDispatcher("TraineeBankPaymentServlet").forward(request, response);
-                    break;
-                case 2:
-                    request.setAttribute("totalmoney", totalmoney);
-                    request.setAttribute("method", method);
-                    request.getRequestDispatcher("TraineeSaveOrderServlet").forward(request, response);
-                    break;      
+            try {
+                /* TODO output your page here. You may use following sample code. */
+                int method = Integer.parseInt(request.getParameter("method"));
+                int totalmoney = Integer.parseInt(request.getParameter("txtPrice"));
+                switch (method) {
+                    case 0:
+                        request.setAttribute("totalmoney", totalmoney);
+                        request.setAttribute("method", method);
+                        request.getRequestDispatcher("TraineeSaveOrderServlet").forward(request, response);
+                        break;
+                    case 1:
+                        request.setAttribute("txtPrice", totalmoney);
+                        request.getRequestDispatcher("TraineeBankPaymentServlet").forward(request, response);
+                        break;
+                    case 2:
+                        request.setAttribute("totalmoney", totalmoney);
+                        request.setAttribute("method", method);
+                        request.getRequestDispatcher("TraineeSaveOrderServlet").forward(request, response);
+                        break;
+                }
+            } catch (Exception e) {
+                out.print(e);
             }
+
         }
     }
 
