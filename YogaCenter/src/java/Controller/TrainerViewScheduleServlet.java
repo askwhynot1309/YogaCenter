@@ -37,6 +37,7 @@ public class TrainerViewScheduleServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            String notification = (String) request.getAttribute("notification");
             HttpSession session = request.getSession();
             List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
             Account accTrainer = (Account) session.getAttribute("Trainer");
@@ -53,6 +54,8 @@ public class TrainerViewScheduleServlet extends HttpServlet {
                 session.setAttribute("listClass", listClass);
             }
             request.setAttribute("listDay", list);
+            request.setAttribute("noty", notification);
+            System.out.println(notification);
             request.getRequestDispatcher("trainer/trainerManageSchedule.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

@@ -145,11 +145,6 @@ public class InformationServlet extends HttpServlet {
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
                     }
                     break;
-                case "trainerUserDetail":
-                    Account trainee = Dao.UserDao.getAccountByID(id);
-                    request.setAttribute("user", trainee);
-                    request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
-                    break;
                 case "infUser":
                     Account user = Dao.UserDao.getAccountByID(id);
                     request.setAttribute("user", user);
@@ -212,6 +207,11 @@ public class InformationServlet extends HttpServlet {
                     String stringPrice3 = nf3.format(price3);
                     request.setAttribute("informationCourse", info3);
                     request.getRequestDispatcher("trainer/trainerViewCourseInfo.jsp").forward(request, response);
+                    break;
+                case "trainerUserDetail":
+                    Account trainee = Dao.UserDao.getAccountByID(id);
+                    request.setAttribute("user", trainee);
+                    request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
                     break;
             }
         } catch (Exception e) {

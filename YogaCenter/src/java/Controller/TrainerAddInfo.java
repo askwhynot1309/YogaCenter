@@ -35,37 +35,34 @@ public class TrainerAddInfo extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.parseInt(request.getParameter("id"));
-            String name = request.getParameter("name");
-            String email = request.getParameter("email");
-            String cccd = request.getParameter("cccd");
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
-            String cv = request.getParameter("cv");
+            String img = request.getParameter("img");
+            String oldimg = request.getParameter("oldimg");
+            String bio = request.getParameter("bio");
             boolean checkValid = true;
-            if (name.isEmpty() || email.isEmpty() || cccd.isEmpty() || phone.isEmpty() || address.isEmpty() || cv.isEmpty()) {
+            if (phone.isEmpty() || address.isEmpty() || bio.isEmpty()) {
                 checkValid = false;
                 request.setAttribute("ErrorMessage", "Please fill in all the information");
-
-            } else if (Utils.CheckEmailExist.isAddressValid(email) == false) {
-                request.setAttribute("ErrorMessageEmail", "Email is invalid");
-                checkValid = false;
 
             } else if (Utils.CheckValidation.checkPhone(phone) == false) {
                 request.setAttribute("ErrorMessagePhone", "Phone is invalid");
                 checkValid = false;
 
-            } else if (Utils.CheckValidation.isValidCCCD(cccd) == false) {
-                request.setAttribute("ErrorMessageCccd", "Citizen identity card is invalid");
-                checkValid = false;
-
             }
             if (checkValid) {
-
-                boolean update = Dao.AccountDao.updateTrainerInfo(id, email, name, cccd, phone, cv, address);
-                if (update) {
-
-                    request.setAttribute("Success", "Update Information complete");
-                    request.getRequestDispatcher("TrainerDisplayInfo").forward(request, response);
+                if ("".equals(img)) {
+                    boolean update = Dao.AccountDao.updateTrainerInfo(id, oldimg, phone, bio, address);
+                    if (update == true) {
+                        request.setAttribute("Success", "Update Information complete");
+                        request.getRequestDispatcher("TrainerDisplayInfo").forward(request, response);
+                    }
+                } else {
+                    boolean update = Dao.AccountDao.updateTrainerInfo(id, img, phone, bio, address);
+                    if (update == true) {
+                        request.setAttribute("Success", "Update Information complete");
+                        request.getRequestDispatcher("TrainerDisplayInfo").forward(request, response);
+                    }
                 }
             } else {
                 request.getRequestDispatcher("TrainerDisplayInfo").forward(request, response);

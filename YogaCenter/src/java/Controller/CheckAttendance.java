@@ -100,8 +100,7 @@ public class CheckAttendance extends HttpServlet {
                     }
                 }
             }
-            //request.setAttribute("id", id);
-            request.getRequestDispatcher("/trainerviewschedule").forward(request, response);
+            //request.getRequestDispatcher("/trainerviewschedule").forward(request, response);
         }
     }
 

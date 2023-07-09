@@ -12,27 +12,26 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
         <link rel="stylesheet" href="css/staff/staff.css">
         <link rel="stylesheet" href="css/staff/staff-schedule.css">
         <style>
-            .alert-popup {
+            .popup-container {
                 position: fixed;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                width: 300px;
+                background-color: #f9f9f9;
+                border: 1px solid #ccc;
                 padding: 20px;
-                background-color: #fff;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                text-align: center;
-                font-size: 18px;
+                z-index: 9999;
             }
 
-            .alert-popup .close-btn {
+            .popup-container .close-btn {
                 position: absolute;
                 top: 10px;
                 right: 10px;
-                color: #999;
                 cursor: pointer;
             }
             .overlay {
@@ -681,6 +680,12 @@
                 </div>
             </div>
         </div>
+        <c:if test="${not empty requestScope.noty}">
+            <div id="popupContainer" class="popup-container">
+                <span class="close-btn" onclick="closePopup()">&times;</span>
+                <p id="notificationText">${requestScope.noty}</p>
+            </div>
+        </c:if>
         <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
             <div class="toast-header">
                 <strong class="mr-auto">Notification</strong>
@@ -726,32 +731,17 @@
 
         </script>
         <script>
-            // Retrieve the notification message from the request attribute
-            var notification = "${requestScope.notification}";
-
-            // Check if the notification message is not empty
+            // Check if notification exists and display the popup
+            var notification = "${requestScope.noty}";
             if (notification.trim() !== "") {
-                // Create the alert pop-up element
-                var alertPopup = document.createElement("div");
-                alertPopup.classList.add("alert-popup");
+                var popup = document.getElementById("popupContainer");
+                popup.style.display = "block";
+            }
 
-                // Create the close button element
-                var closeBtn = document.createElement("span");
-                closeBtn.classList.add("close-btn");
-                closeBtn.innerHTML = "&times;";
-
-                alertPopup.appendChild(closeBtn);
-
-                var notificationText = document.createElement("p");
-                notificationText.textContent = notification;
-
-                alertPopup.appendChild(notificationText);
-                document.body.appendChild(alertPopup);
-
-                // Add event listener to the close button
-                closeBtn.addEventListener("click", function () {
-                    document.body.removeChild(alertPopup);
-                });
+            // Function to close the popup
+            function closePopup() {
+                var popup = document.getElementById("popupContainer");
+                popup.style.display = "none";
             }
         </script>
 

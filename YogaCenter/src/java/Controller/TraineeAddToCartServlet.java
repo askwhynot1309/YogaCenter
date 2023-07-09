@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -34,28 +35,50 @@ public class TraineeAddToCartServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String ID_Course = request.getParameter("cid");
-
             HttpSession session = request.getSession(true);
+            Account trainee = (Account) session.getAttribute("account");
+            int count = Dao.OrderCourseDao.checkNumberCourseToBuy(trainee.getIdaccount());
             if (session != null) {
-                HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                if (cart == null) {
-                    cart = new HashMap<>();
-                    cart.put(ID_Course, 1);
-                    request.setAttribute("addsuccess", "message");
-                } else {
-                    if (cart.containsKey(ID_Course)) {
-                        request.setAttribute("wrong", "message");
-                    } else {
-                        Integer tmp = cart.get(ID_Course);
-                        if (tmp == null) {
-                            cart.put(ID_Course, 1);
+                if (count <= 3) {
+                    HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
+                    if (cart == null) {
+                        cart = new HashMap<>();
+                        cart.put(ID_Course, 1);
+                        count++;
+                        if (count <= 3) {
                             request.setAttribute("addsuccess", "message");
+                            session.setAttribute("cart", cart);
+                            request.getRequestDispatcher("course").forward(request, response);
+                        } else {
+                            request.setAttribute("message", "System limit you to sign 3 courses.");
+                            request.getRequestDispatcher("course").forward(request, response);
+                        }
+                    } else {
+                        if (cart.containsKey(ID_Course)) {
+                            request.setAttribute("wrong", "message");
+                        } else {
+                            Integer tmp = cart.get(ID_Course);
+                            if (tmp == null) {
+                                cart.put(ID_Course, 1);
+                                count++;
+                                if (count <= 3) {
+                                    request.setAttribute("addsuccess", "message");
+                                    session.setAttribute("cart", cart);
+                                    request.getRequestDispatcher("course").forward(request, response);
+                                } else {
+                                    request.setAttribute("message", "System limit you to sign 3 courses.");
+                                    request.getRequestDispatcher("course").forward(request, response);
+                                }
+                            }
                         }
                     }
+                } else {
+                    request.setAttribute("message", "System limit you to sign 3 courses.");
+                    request.getRequestDispatcher("course").forward(request, response);
                 }
-                session.setAttribute("cart", cart);
-                request.getRequestDispatcher("course").forward(request, response);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

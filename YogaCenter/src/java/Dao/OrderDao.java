@@ -93,7 +93,7 @@ public class OrderDao {
         if (cn != null) {
             String s = "update StatusPayment\n"
                     + "set Status = ?\n"
-                    + "where OrderID = ?";
+                    + "where ID_Order = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, status);
             pst.setInt(2, id);

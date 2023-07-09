@@ -25,27 +25,21 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/YogaCenter/manageuser">
-                        <i class="fas fa-user icon"></i>
-                        Manage Trainee
-                    </a>
-                </li>
-                <li>
                     <a href="/YogaCenter/trainerviewschedule">
                         <i class="fas fa-calendar-alt icon"></i>
                         View Schedule
                     </a>
                 </li>
                 <li>
-                    <a href="/YogaCenter/TrainerShowCourseList">
-                        <i class="fas fa-book icon" style="margin-right: 17px"></i>
-                        Course List
-                    </a>
-                </li>
-                <li>
                     <a href="/YogaCenter/TrainerDisplayInfo?id=${sessionScope.Trainer.idaccount}">
                         <i class="fas fa-tools icon" style="margin-right: 17px"></i>
                         Trainer Info
+                    </a>
+                </li>
+                <li>
+                    <a href="/YogaCenter/TrainerShowCourseList">
+                        <i class="fas fa-book icon" style="margin-right: 17px"></i>
+                        Course List
                     </a>
                 </li>
             </ul>

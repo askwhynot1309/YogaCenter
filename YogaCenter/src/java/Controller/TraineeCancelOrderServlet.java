@@ -5,11 +5,8 @@
 package Controller;
 
 import Object.Account;
-import Object.ClassDetail;
-import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +17,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ADMIN
  */
-public class CancelCourseOrderServlet extends HttpServlet {
+public class TraineeCancelOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,35 +31,20 @@ public class CancelCourseOrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-            int id_course = Integer.parseInt(request.getParameter("id_course"));
-            int id_order = Integer.parseInt(request.getParameter("id_order"));
-            int status = Integer.parseInt(request.getParameter("status"));
-            Account acc = (Account) session.getAttribute("account");
-            if (acc == null) {
-                request.getRequestDispatcher("yourcourse").forward(request, response);
+            HttpSession session = request.getSession(true);
+            Account account = (Account) session.getAttribute("account");
+            if (account == null) {
+                request.getRequestDispatcher("traineeManagePurchase.jsp").forward(request, response);
             }
-            Account account = Dao.UserDao.getAccountByID(acc.getIdaccount());
-            switch (status) {
-                case 2:
-                    BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
-                    BigDecimal moneycurrent = account.getAmount();
-                    BigDecimal total = moneycurrent.add(fee);
-                    int changeStatusRefund = Dao.OrderDao.changeStatusAccountOrder(id_order, id_course, status);
-                    int updateFee = Dao.AccountDao.updateMoneyOfAccount(acc.getIdaccount(), total);
-                    request.setAttribute("refund", "message");
-                    break;
-                case 0:
-                    int changeStatusCancel = Dao.OrderDao.changeStatusAccountOrder(id_order, id_course, status);
-                    ClassDetail getTraineeInThisClassWithCourse = Dao.ClassDetailDao.getAccountInClassWhenCancelCourse(id_course, acc.getIdaccount());
-                    boolean deleteTraineeWhenCancelCourse = Dao.ClassDetailDao.deleteTraineeInClass(acc.getIdaccount(), getTraineeInThisClassWithCourse.getId_class());
-                    request.setAttribute("cancel", "message");
-                    break;
+            int orderID = Integer.parseInt(request.getParameter("oID"));
+            int changeStatusOrder = Dao.OrderDao.changeStatusBooking(orderID, 2);
+            if(changeStatusOrder == 1){
+                request.setAttribute("message", "Cancel order successfully!");
+                request.getRequestDispatcher("purchase").forward(request, response);
             }
-            request.getRequestDispatcher("yourcourse").forward(request, response);
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
     }
