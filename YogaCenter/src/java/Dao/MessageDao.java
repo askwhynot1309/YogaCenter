@@ -138,7 +138,7 @@ public class MessageDao {
                     int messageID = rs.getInt("ID_Message");
                     int fromUserID = rs.getInt("ID_sendMessage");
                     String message = rs.getString("Message");
-                    String title = rs.getString("Titl e");
+                    String title = rs.getString("Title");
                     int toUserID = rs.getInt("ID_recieveMessage");
                     Date datesend = rs.getDate("DateCreate");
                     int status = rs.getInt("Status");

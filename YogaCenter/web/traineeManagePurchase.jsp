@@ -124,10 +124,73 @@
             top: -100%;
             right: 0;
         }
+        .notification-success{
+            position: fixed;
+            top: 20px;
+            right: 0px;
+            padding: 5px;
+            padding-left: 10px;
+            color: white;
+            margin-bottom: 10px;
+            width: 300px;
+            height: 80px;
+            border-radius: 5px;
+            background-color: #008000;
+            animation: show 0.3s ease 1 forwards
+        }
+
+        .notification-success .title{
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .notification-success span, .notification-success i:nth-child(3){
+            color: white;
+            opacity: 0.9;
+        }
+        .notification-success .content {
+            padding: 5px 0;
+        }
+        @keyframes show{
+            0%{
+                transform: translateX(100%);
+            }
+            40%{
+                transform: translateX(-5%);
+            }
+            80%{
+                transform: translateX(0%);
+            }
+            100%{
+                transform: translateX(-10%);
+            }
+        }
+        .notification-success::before{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: var(--color);
+            width: 100%;
+            height: 3px;
+            content: '';
+            box-shadow: 0 0 10px var(--color);
+            animation: timeOut 2s linear 1 forwards
+        }
+        @keyframes timeOut{
+            to{
+                width: 0;
+            }
+        }
+        .notification-success{
+            --color: #FFFFFF;
+            background-image:
+                linear-gradient(
+                to right, #00FF00, #00CC00 30%
+                );
+        }
     </style>
     <c:import url="header.jsp"/>
     <body class="w3-light-grey">
-        <c:set var="exist" value="${sessionScope.account}"/>
+        <c:set var="exist" value="${sessionScope.account}"/> 
         <c:set var="requestList" value="${sessionScope.requestList}"></c:set>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
@@ -139,7 +202,7 @@
                 </div>
             </div>
         </c:if>
-        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:-1;width:300px;" id="mySidebar"><br>
             <div style="text-align: center" class="w3-container w3-row">
                 <div class="w3-col image">
                     <img src="${account.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
@@ -159,12 +222,12 @@
                 <a href="GeneralDashboard" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  General</a>
                 <a href="yourcourse" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  My courses</a>
                 <a href="information" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
-                <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding"><i class="fas fa-calendar-alt icon"></i>  My learning
+                <a href="/YogaCenter/classbooking" class="w3-bar-item w3-button w3-padding"><i class="fas fa-calendar-alt fa-fw"></i>  My learning
                     <c:if test="${requestList.size() > 0}">
                         <div class="w3-right notificate">${requestList.size()}</div>
                     </c:if>
                 </a>
-                <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-history fa-fw"></i> Purchase History</a>
+                <a href="/YogaCenter/purchase" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-history fa-fw"></i>  Purchase History</a>
                 <a href="/YogaCenter/request?action=ChangePassword" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>
                 <a href="/YogaCenter/request?action=Logout" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
             </div>
@@ -175,9 +238,23 @@
 
         <!-- !PAGE CONTENT! -->
         <div class="w3-main" style="margin-left:300px;">
+            <c:set var="message" value="${requestScope.message}"/>
+            <c:if test="${message != null}">
+                <div class="notification-success" style="z-index: 1000">
+                    <div class="content">
+                        <div class="title">Success</div>
+                        <span>Cancel order successfully!</span>
+                    </div>
+                </div>
+                <script>
+                    let notification = document.querySelector('.notification-success');
+                    notification.timeOut = setTimeout(() => notification.remove(), 3000);
+                </script>
+            </c:if>
             <div class="container">
                 <h2>Purchase history</h2>
                 <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
+                <c:set var="message" value="${requestScope.message}"/>
                 <c:set var="money" value="${requestScope.money}"></c:set>
                     <div class="container mt-5">
                         <div class="d-flex justify-content-center row">
@@ -249,7 +326,7 @@
                                                         switch (order.getStatus()) {
                                                             case 0:
                                                                 if (isFirstRow) {%>
-                                                <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-primary">Pending</span></th>
+                                                <th rowspan="<%= orderDetail.size()%>"><span class="badge badge-primary">Pending</span><br><a class="badge badge-danger" href="/YogaCenter/request?action=CancelOrder&oID=<%=OrderID%>">Cancel</a></th>
                                                     <% }
                                                             break;
                                                         case 1:
@@ -306,7 +383,7 @@
                 let notification = document.querySelector('.notification-success');
                 notification.timeOut = setTimeout(() => notification.remove(), 3000);
             </script>
-        </c:if>
+        </c:if> 
     </body>
     <%--<c:import url="footer.html"></c:import>--%>
 </html>

@@ -261,7 +261,6 @@
             </script>
         </c:if>
     </body>
-    <c:import url="footer.html"/>
     <script>
         const course = document.querySelector('.main');
         const pagination = document.querySelector('.pagination ul');

@@ -281,6 +281,7 @@
         <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
         <c:set var="ErrorMessage" value="${requestScope.ErrorMessage}"></c:set>
         <c:set var="wrong" value="${requestScope.wrong}"></c:set>
+        <c:set var="message" value="${requestScope.message}"></c:set>
         <c:set var="currentdate" value="${requestScope.currentDate}"></c:set>
         <c:set var="user" value="${sessionScope.account}"/>
         <c:set var="listCourseAccountActive" value="${requestScope.listCourseAccountActive}"/>
@@ -460,6 +461,18 @@
                 <div class="content">
                     <div class="title">Error</div>
                     <span>You had added this course already.</span>
+                </div>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification');
+                notification.timeOut = setTimeout(() => notification.remove(), 2000);
+            </script>
+        </c:if>
+            <c:if test="${message != null}">
+            <div class="notification" style="z-index: 1000">
+                <div class="content">
+                    <div class="title">Error</div>
+                    <span>${message}</span>
                 </div>
             </div>
             <script>

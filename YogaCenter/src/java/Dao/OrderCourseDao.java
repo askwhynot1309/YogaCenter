@@ -114,7 +114,6 @@ public class OrderCourseDao {
         return kq;
     }
 
-
     public static ArrayList<OrderCourse> getTraineeBoughtCourse(int id) throws Exception {
         ArrayList<OrderCourse> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -190,7 +189,7 @@ public class OrderCourseDao {
         }
         return kq;
     }
-    
+
     public static ArrayList<OrderCourse> getOrderFilterByDate(Date date) throws Exception {
         ArrayList<OrderCourse> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -216,7 +215,7 @@ public class OrderCourseDao {
         }
         return kq;
     }
-    
+
     public static ArrayList<OrderCourse> getOrderFilterByDateAndEmail(String txt, Date date) throws Exception {
         ArrayList<OrderCourse> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -237,6 +236,27 @@ public class OrderCourseDao {
                     int method = table.getInt("Method");
                     OrderCourse order = new OrderCourse(id_order, name_account, dateorder, status, method);
                     kq.add(order);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static int checkNumberCourseToBuy(int id) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Select Count(BC.ID_Trainee) AS Count\n"
+                    + "from BookingCourse BC JOIN BookingDetail BD ON BC.OrderID = BD.Order_ID\n"
+                    + "Where BC.ID_Trainee = ? And (BD.Status_Account = 1 OR BD.Status_Account = 3)\n"
+                    + "Group By BC.ID_Trainee";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    kq = table.getInt("Count");
                 }
             }
             cn.close();

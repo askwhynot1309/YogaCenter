@@ -73,37 +73,43 @@ public class TraineeSaveOrderServlet extends HttpServlet {
                         BigDecimal moneycurrent = accountTrainee.getAmount();
                         BigDecimal decimalValue = new BigDecimal(totalmoney);
                         BigDecimal money = moneycurrent.subtract(decimalValue);
-                        if (money.compareTo(BigDecimal.ZERO) == 0) {
-                            int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
-                            status = 1;
-                            method = 1;
-                            HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                            boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
-                            cart.clear();
-                            if (inserted == true) {
-                                session.removeAttribute("cart");
-                                request.setAttribute("addsuccess", "message");
-                                request.getRequestDispatcher("purchase").forward(request, response);
-                            } else {
-                                response.sendRedirect("error.html");
-                            }
-                        } else if (money.compareTo(BigDecimal.ZERO) == -1) {
-                            request.setAttribute("message", decimalValue.subtract(moneycurrent));
-                            request.getRequestDispatcher("viewcart").forward(request, response);
-                        } else {
-                            int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
-                            status = 1;
-                            method = 1;
-                            HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                            boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
-                            cart.clear();
-                            if (inserted == true) {
-                                session.removeAttribute("cart");
-                                request.setAttribute("addsuccess", "message");
-                                request.getRequestDispatcher("purchase").forward(request, response);
-                            } else {
-                                response.sendRedirect("error.html");
-                            }
+                        switch (money.compareTo(BigDecimal.ZERO)) {
+                            case 0:
+                                {
+                                    int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
+                                    status = 1;
+                                    method = 1;
+                                    HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
+                                    boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
+                                    cart.clear();
+                                    if (inserted == true) {
+                                        session.removeAttribute("cart");
+                                        request.setAttribute("addsuccess", "message");
+                                        request.getRequestDispatcher("purchase").forward(request, response);
+                                    } else {
+                                        response.sendRedirect("error.html");
+                                    }       break;
+                                }
+                            case -1:
+                                request.setAttribute("message", decimalValue.subtract(moneycurrent));
+                                request.getRequestDispatcher("viewcart").forward(request, response);
+                                break;
+                            default:
+                                {
+                                        int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
+                                        status = 1;
+                                        method = 1;
+                                        HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
+                                        boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
+                                        cart.clear();
+                                        if (inserted == true) {
+                                                session.removeAttribute("cart");
+                                                request.setAttribute("addsuccess", "message");
+                                                request.getRequestDispatcher("purchase").forward(request, response);
+                                                } else {
+                                                        response.sendRedirect("error.html");
+                                                        }       break;
+                                }
                         }
                     }
                 }
