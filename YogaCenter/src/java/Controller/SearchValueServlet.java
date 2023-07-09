@@ -525,6 +525,35 @@ public class SearchValueServlet extends HttpServlet {
                     }
                 }
                 break;
+                case "TrainerSearchCourse": {
+                    int lvl = Integer.parseInt(request.getParameter("level"));
+                    if (lvl == 0) {
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("listCourse", listCourse);
+                            request.setAttribute("listLevel", listLevel);
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("listLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        }
+                    } else {
+                        ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                        ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearchWithLevel(search, lvl);
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            request.setAttribute("listCourse", listCourse);
+                            request.setAttribute("listLevel", listLevel);
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        } else {
+                            request.setAttribute("listLevel", listLevel);
+                            request.setAttribute("nulllist", "There are no courses in the data that match the data you searched for.");
+                            request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+                        }
+                    }
+                }
+                break;
             }
         } catch (Exception e) {
             e.printStackTrace();
