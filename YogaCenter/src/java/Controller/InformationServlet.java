@@ -207,7 +207,12 @@ public class InformationServlet extends HttpServlet {
                     String stringPrice3 = nf3.format(price3);
                     request.setAttribute("informationCourse", info3);
                     request.getRequestDispatcher("trainer/trainerViewCourseInfo.jsp").forward(request, response);
-                    break;    
+                    break;
+                case "trainerUserDetail":
+                    Account trainee = Dao.UserDao.getAccountByID(id);
+                    request.setAttribute("user", trainee);
+                    request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
