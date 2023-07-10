@@ -101,11 +101,13 @@
         </c:if>        
         <c:set var="acc" value="${sessionScope.account}"/>
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-            <div class="w3-container w3-row">
-                <div class="w3-col s4">
-                    <img src="${acc.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">                </div>
-                <div class="w3-col s8 w3-bar">
-                    <span>Welcome,<strong>${acc.name}</strong></span><br>
+            <div style="text-align: center" class="w3-container w3-row">
+                <div class="w3-col image">
+                    <img src="${acc.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
+                </div>
+                <div class="w3-col w3-bar">
+                    <br>
+                    <span>Welcome <strong>${acc.name}</strong></span><br>
                 </div>
             </div>
             <hr>
@@ -150,7 +152,7 @@
                             </div>
                         </div>
                     </c:if>
-                    <c:if test="${requestList.size() == 0}">
+                    <c:if test="${requestList == null or requestList.size() == 0}">
                         <br><br>
                     </c:if>
                     <div class="w3-container  w3-padding">

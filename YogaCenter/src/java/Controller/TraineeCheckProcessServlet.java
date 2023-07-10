@@ -4,19 +4,12 @@
  */
 package Controller;
 
-import Dao.ClassDetailDao;
 import Dao.CourseDao;
 import Object.Account;
-import Object.ClassDetail;
 import Object.Course;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ngmin
  */
-public class TraineeBookScheduleServlet extends HttpServlet {
+public class TraineeCheckProcessServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,46 +32,26 @@ public class TraineeBookScheduleServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             try {
+                /* TODO output your page here. You may use following sample code. */
                 HttpSession session = request.getSession(true);
                 Account account = (Account) session.getAttribute("account");
-                if (account == null) {
-                    request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
+                String course_ID = request.getParameter("Course_ID");
+                int idCourse = 0;
+                ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
+                if (course_ID == null) {
+                    Course firstCourse = courseList.get(0);
+                    idCourse = firstCourse.getIdCourse();
+                }else{
+                    idCourse = Integer.parseInt(course_ID);
                 }
-
-                int Course_ID = Integer.parseInt(request.getParameter("courseID"));
-
-                Course course = CourseDao.getInformationOfCourse(Course_ID);
-                HashMap<Integer, ArrayList<Integer>> hashChoise = ClassDetailDao.getChoiceWithAllTrainerInCourseID(Course_ID);
-                HashMap<Integer, ArrayList<ClassDetail>> hashClassDetail = ClassDetailDao.getClassDetailWithAllTrainerInCourseID(Course_ID);
-
-                Date courseDate = course.getDate_start();
-                LocalDate courseDateStart = courseDate.toLocalDate();
-                LocalDate startDate = courseDateStart.minusDays(10);
-                LocalDate endDate = courseDateStart.minusDays(7);
-
-                LocalDate currentDate = LocalDate.now();
-                request.setAttribute("hashChoise", hashChoise);
-                request.setAttribute("hashClassDetail", hashClassDetail);
-                request.setAttribute("Course_ID", Course_ID);
-                request.setAttribute("startDate", startDate);
-                request.setAttribute("endDate", endDate);
-                if (currentDate.isAfter(endDate)) {
-
-                    request.setAttribute("overdue", "Overdue for form application and registration");
-                } else if (currentDate.isBefore(startDate)) {
-
-                    request.setAttribute("overdue", "It's not time to registration");
-                }
-                request.getRequestDispatcher("traineeEditSchedule.jsp").forward(request, response);
-
+                
             } catch (Exception e) {
                 out.print(e);
             }
-            /* TODO output your page here. You may use following sample code. */
         }
     }
 
@@ -94,11 +67,7 @@ public class TraineeBookScheduleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(TraineeBookScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -112,11 +81,7 @@ public class TraineeBookScheduleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(TraineeBookScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

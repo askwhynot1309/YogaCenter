@@ -152,39 +152,56 @@ public class AttendenceDao {
         return getdate;
     }
 
-    public static float getProgressByAttendance(int Course_ID, int Trainee_ID) throws Exception {
-        int progess = 0;
-        int total = 1;
-        int current = 0;
+    public static int getTotalSlot(int Course_ID) throws Exception {
+        int total = 0;
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
-            String sql1 = "  SELECT Slot\n"
-                    + "  FROM Course\n"
-                    + "  WHERE Course_ID = ?";
-            PreparedStatement pst = cn.prepareStatement(sql1);
+            String sql = "SELECT *\n"
+                    + "FROM Course\n"
+                    + "WHERE Course_ID = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, Course_ID);
             ResultSet rs = pst.executeQuery();
-            if (rs != null) {
-                while (rs.next()) {
-                    total = rs.getInt("Slot");
-                }
+            if (rs != null && rs.next()) {
+                total = rs.getInt("Slot");
             }
-
-            String sql2 = "SELECT COUNT(Status) AS Progress\n"
-                    + "FROM [dbo].[CheckAttendance] CA\n"
-                    + "JOIN [dbo].[Class] C ON CA.ID_Class = C.Class_ID\n"
-                    + "WHERE CA.ID_Trainee = ? AND C.IDCourse = ? AND CA.Status = 1";
-            PreparedStatement pst2 = cn.prepareStatement(sql2);
-            pst2.setInt(1, Trainee_ID);
-            pst2.setInt(2, Course_ID);
-            ResultSet count = pst2.executeQuery();
-            if (count != null) {
-                while (count.next()) {
-                    current = count.getInt("Progress");
-                }
-            }
-            progess = current / total * 100;
         }
-        return progess;
+        cn.close();
+        return total;
+    }
+
+    public static int getProgressByAttendance(int Course_ID, int Trainee_ID) throws Exception {
+        int progress = 0;
+        int total = getTotalSlot(Course_ID);
+        int current = 0;
+        try (Connection cn = DBUtils.getConnection()) {
+            if (cn != null) {
+
+                String sql = "SELECT COUNT(Status) AS Progress\n"
+                        + "FROM [dbo].[CheckAttendance] CA\n"
+                        + "JOIN [dbo].[Class] C ON CA.ID_Class = C.Class_ID\n"
+                        + "WHERE CA.ID_Trainee = ? AND C.IDCourse = ? AND CA.Status = 1";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, Trainee_ID);
+                pst.setInt(2, Course_ID);
+                ResultSet count = pst.executeQuery();
+                if (count != null) {
+                    while (count.next()) {
+                        current = count.getInt("Progress");
+                        progress = (int) ((double) current / total * 100);
+                    }
+                }
+            }
+            cn.close();
+        }
+
+        return progress;
+    }
+    
+    public static ArrayList<AccountAttendence> getAttendanceByTraineeIDAndCourseID(int CourseID, int TraineeID) throws Exception{
+        ArrayList<AccountAttendence> attendList = new ArrayList<>();
+        Connection cn = DBUtils.getConnection();
+        String sql = "";
+        return attendList;
     }
 }
