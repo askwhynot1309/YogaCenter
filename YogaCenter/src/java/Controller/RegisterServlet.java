@@ -46,7 +46,7 @@ public class RegisterServlet extends HttpServlet {
             String cccd = request.getParameter("cccd");
             String phone = request.getParameter("phone");
             String address = request.getParameter("address");
-            String img = "img/images.jpg";
+            String img = "images.jpg";
             String newpassword = Utils.HexPassword.HexPassword(password);
             String normalizedAccount = Normalizer.normalize(account, Normalizer.Form.NFD);
             boolean containsNonLatin = Pattern.compile("\\p{InCombiningDiacriticalMarks}|[^\\p{ASCII}]")

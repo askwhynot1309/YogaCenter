@@ -365,10 +365,6 @@
         <servlet-class>Controller.TraineeCancelOrderServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TraineeCheckProcessServlet</servlet-name>
-        <servlet-class>Controller.TraineeCheckProcessServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ChangeAvatarServlet</servlet-name>
         <servlet-class>Controller.ChangeAvatarServlet</servlet-class>
     </servlet>
@@ -737,11 +733,7 @@
         <url-pattern>/TraineeCancelOrderServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>TraineeCheckProcessServlet</servlet-name>
-        <url-pattern>/checkingProcess</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-         <servlet-name>ChangeAvatarServlet</servlet-name>
+        <servlet-name>ChangeAvatarServlet</servlet-name>
         <url-pattern>/ChangeAvatarServlet</url-pattern>
     </servlet-mapping>
     <session-config>
