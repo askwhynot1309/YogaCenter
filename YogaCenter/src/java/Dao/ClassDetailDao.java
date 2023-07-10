@@ -853,7 +853,7 @@ public class ClassDetailDao {
         boolean updated = false;
         Connection con = DBUtils.getConnection();
 
-        String query = "INSERT INTO dbo.CheckAttendance (ID_Trainee, Class_ID, AttendanceDate, Status) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO dbo.CheckAttendance (ID_Trainee, ID_Class, AttendanceDate, Status) VALUES (?, ?, ?, ?)";
 
         try ( PreparedStatement statement = con.prepareStatement(query)) {
             statement.setInt(1, traineeId);
