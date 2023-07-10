@@ -9,8 +9,10 @@ import Utils.EmailUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.text.Normalizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +48,10 @@ public class RegisterServlet extends HttpServlet {
             String address = request.getParameter("address");
             String img = "img/images.jpg";
             String newpassword = Utils.HexPassword.HexPassword(password);
+            String normalizedAccount = Normalizer.normalize(account, Normalizer.Form.NFD);
+            boolean containsNonLatin = Pattern.compile("\\p{InCombiningDiacriticalMarks}|[^\\p{ASCII}]")
+                    .matcher(normalizedAccount)
+                    .find();
             boolean checkValid = true;
             if (Utils.CheckEmailExist.isAddressValid(email) == false) {
                 request.setAttribute("ErrorMessageEmail", "Email is invalid");
@@ -74,17 +80,20 @@ public class RegisterServlet extends HttpServlet {
             } else if (Dao.UserDao.isPhoneExists(phone)) {
                 request.setAttribute("ErrorMessagePhone", "Phone already exists");
                 checkValid = false;
+            } else if (containsNonLatin || account.contains(" ")) {
+                request.setAttribute("ErrorMessageAccount", "Account must contain US words and no space.");
+                checkValid = false;
             }
 
             if (checkValid) {
                 Account newaccount = new Account(email, BigDecimal.valueOf(0), account, newpassword, name, cccd, "", phone, address, img, 3, 0);
-              
-                    String otp = EmailUtils.generateOtp();
-                    Utils.EmailUtils.sendOtpEmail(email, otp);
-                    HttpSession session = request.getSession();
-                    session.setAttribute("newaccount", newaccount);
-                    session.setAttribute("otp", otp);
-                    request.getRequestDispatcher("confirmOTPtoregister.jsp").forward(request, response);
+
+                String otp = EmailUtils.generateOtp();
+                Utils.EmailUtils.sendOtpEmail(email, otp);
+                HttpSession session = request.getSession();
+                session.setAttribute("newaccount", newaccount);
+                session.setAttribute("otp", otp);
+                request.getRequestDispatcher("confirmOTPtoregister.jsp").forward(request, response);
             } else {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             }
