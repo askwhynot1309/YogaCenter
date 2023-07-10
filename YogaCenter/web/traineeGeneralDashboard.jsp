@@ -185,12 +185,17 @@
 
                 <hr>
                 <div class="w3-container">
-                    <h5>Process Tracking</h5>
+                    <h5 class="w3-left">Process Tracking</h5>
+                    <h6 class="w3-right"><a style="font-weight: bold;" href="/YogaCenter/request?action=processDetail">More Detail</a></h6>
+                </div>
+                <div class="w3-container">
+
                     <c:if test="${courseList != null && courseList.size() > 0}">
                         <c:forEach var="course" items="${courseList}">
                             <p>${course.name_course}</p>
                             <div class="w3-grey">
-                                <c:set var="progress" value="${AttendenceDao.getProgressByAttendance(acc.idaccount, course.idCourse)}"></c:set>
+                                <c:set var="progress" value="${AttendenceDao.getProgressByAttendance(course.idCourse, acc.idaccount)}"></c:set>
+                                
                                 <div class="w3-container w3-center w3-green" style="width:${progress}%; padding: 8px 0;">${progress}%</div>
                             </div>
                         </c:forEach>

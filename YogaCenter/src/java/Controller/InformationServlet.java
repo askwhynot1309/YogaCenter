@@ -39,7 +39,7 @@ public class InformationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.parseInt(request.getParameter("id"));
             String option = request.getParameter("option");
@@ -212,6 +212,11 @@ public class InformationServlet extends HttpServlet {
                     Account trainee = Dao.UserDao.getAccountByID(id);
                     request.setAttribute("user", trainee);
                     request.getRequestDispatcher("trainer/trainerUserDetail.jsp").forward(request, response);
+                    break;
+                case "informationTrainer":
+                    Account trainer = Dao.AccountDao.getInformationOfEmployee(id);
+                    request.setAttribute("informationEmployee", trainer);
+                    request.getRequestDispatcher("trainerInformation.jsp").forward(request, response);
                     break;
             }
         } catch (Exception e) {

@@ -152,7 +152,7 @@
                             </div>
                         </div>
                     </c:if>
-                    <c:if test="${requestList.size() == 0}">
+                    <c:if test="${requestList == null or requestList.size() == 0}">
                         <br><br>
                     </c:if>
                     <div class="w3-container  w3-padding">

@@ -201,6 +201,9 @@ public class MainController extends HttpServlet {
                     case "TrainerAddMessage":
                         url = "TrainerButtonAddNewMessageServlet";
                         break;
+                    case "processDetail":
+                        url = "checkingProcess";
+                        break;
                     case "ChangeAvatar":
                         url = "ChangeAvatarServlet";
                         break;

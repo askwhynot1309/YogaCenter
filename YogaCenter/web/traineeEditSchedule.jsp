@@ -172,7 +172,7 @@
                             </div>
                         </div>
                     </c:if>
-                    <c:if test="${requestList.size() == 0}">
+                    <c:if test="${requestList == null or requestList.size() == 0}">
                         <br><br>
                     </c:if>
                     <div class="w3-container  w3-padding">
@@ -193,7 +193,7 @@
                         %>
                         <h4 style="text-align: center; color: red;">Starting date: <%=startDate%>. Due date: before <%=endDate%></h4>
                         <%
-                            if (!hashClassDetail.isEmpty() && overdue == null) {
+                            if (!hashClassDetail.isEmpty() && overdue != null) {
 
                         %>
                         <div class="container mt-12">
@@ -304,7 +304,7 @@
                             </div>
                         </div>
                         <%
-                        } else if (!hashClassDetail.isEmpty() && overdue != null) {
+                        } else if (!hashClassDetail.isEmpty() && overdue == null) {
                         %>
                         <div style="text-align: center">
                             <h4>
