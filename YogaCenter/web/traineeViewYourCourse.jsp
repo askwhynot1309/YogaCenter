@@ -146,7 +146,7 @@
                 <h3 style="text-align: center; margin-bottom: 400px">You don't have any course.</h3>
 
             </c:if>
-            <c:if test="${listCourseTrainee != null}">
+            <c:if test="${listCourseTrainee.size() > 0}">
                 <div class="main" style="height: 1200px">
                     <c:forEach var="course" items="${listCourseTrainee}"  varStatus="status">
                         <div style="width: 100%; height: 250px; padding: 10px;  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px">

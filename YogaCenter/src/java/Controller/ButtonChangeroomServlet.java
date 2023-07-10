@@ -55,6 +55,7 @@ public class ButtonChangeroomServlet extends HttpServlet {
                 ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(room, time, newdate);
                 if(check == null){
                     ArrayList<Account> listTrainerAndTrainee = Dao.AccountDao.GetAllTraineeAndTrainerinThisClass(id, olddate);
+                    int changeDateAttendence = Dao.AttendenceDao.changeDateToCheckAttendence(newdate, id);
                     for (Account account1 : listTrainerAndTrainee) {
                         boolean insertMessageForTrainerAndTraineeToChangeClass = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "Your classroom must be changed new classroom because of some problems. Please view your schedule to join clasroom.", account1.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Message");
                     }

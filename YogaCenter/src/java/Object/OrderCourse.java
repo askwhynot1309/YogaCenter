@@ -28,8 +28,20 @@ public class OrderCourse {
     private Date course_start;
     private String img;
     private int slot;
+    private int total;
 
     public OrderCourse() {
+    }
+
+    public OrderCourse(int id_order, int id_course, String name_course, Date dateorder, int status, int method, BigDecimal fee_course, int total) {
+        this.id_order = id_order;
+        this.id_course = id_course;
+        this.name_course = name_course;
+        this.dateorder = dateorder;
+        this.status = status;
+        this.method = method;
+        this.fee_course = fee_course;
+        this.total = total;
     }
 
     public OrderCourse(int id_course, String name_course, int status, BigDecimal fee_course, Date course_start, String img) {
@@ -92,6 +104,14 @@ public class OrderCourse {
         this.dateorder = dateorder;
         this.status = status;
         this.quantity = quantity;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public int getStatus_account() {

@@ -48,29 +48,26 @@ public class PaymentWithAmountAccountServlet extends HttpServlet {
                 BigDecimal totalmoney = BigDecimal.valueOf(Double.parseDouble(request.getParameter("total")));
                 Account accountTrainee = Dao.UserDao.getAccountByID(account.getIdaccount());
                 BigDecimal moneycurrent = accountTrainee.getAmount();
-                BigDecimal money = moneyprice.subtract(totalmoney);
-                out.print(money);
                 int status;
-//                if (method == 0) {
-//                    status = 0;
-//                    int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
-//                    HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-//                    boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
-//                    cart.clear();
-//                    if (inserted == true) {
-//                        session.removeAttribute("cart");
-//                        request.setAttribute("addsuccess", "message");
-//                        request.setAttribute("money", totalmoney);
-//                        request.getRequestDispatcher("purchase").forward(request, response);
-//                    } else {
-//                        response.sendRedirect("error.html");
-//                    }
-//                } else {
-//                    int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
-//                    int intValue = totalmoney.intValue();
-//                    request.setAttribute("txtPrice", intValue);
-//                    request.getRequestDispatcher("TraineeBankPaymentServlet").forward(request, response);
-//                }
+                if (method == 0) {
+                    status = 0;
+                    int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), BigDecimal.ZERO);
+                    HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
+                    boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status, totalmoney.intValue());
+                    cart.clear();
+                    if (inserted == true) {
+                        session.removeAttribute("cart");
+                        request.setAttribute("addsuccess", "message");
+                        request.getRequestDispatcher("purchase").forward(request, response);
+                    } else {
+                        response.sendRedirect("error.html");
+                    }
+                } else {
+                    int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), BigDecimal.ZERO);
+                    int intValue = totalmoney.intValue();
+                    request.setAttribute("txtPrice", intValue);
+                    request.getRequestDispatcher("TraineeBankPaymentServlet").forward(request, response);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

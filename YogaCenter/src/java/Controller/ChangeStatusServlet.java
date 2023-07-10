@@ -92,8 +92,7 @@ public class ChangeStatusServlet extends HttpServlet {
                     break;      
             }
         } catch (Exception e) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("error.html");
-            dispatcher.forward(request, response);
+            e.printStackTrace();
     }
 }
 

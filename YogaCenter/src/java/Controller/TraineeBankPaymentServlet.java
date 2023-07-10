@@ -15,6 +15,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,6 +38,8 @@ public class TraineeBankPaymentServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int totalmoney = (int) request.getAttribute("txtPrice");
+            HttpSession session = request.getSession();
+            session.setAttribute("totalmoneyByBanking", totalmoney);
             long amount = totalmoney * 100000;
 
             String vnp_TxnRef = Config.getRandomNumber(8);
