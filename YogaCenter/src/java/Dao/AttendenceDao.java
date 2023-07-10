@@ -197,11 +197,4 @@ public class AttendenceDao {
 
         return progress;
     }
-    
-    public static ArrayList<AccountAttendence> getAttendanceByTraineeIDAndCourseID(int CourseID, int TraineeID) throws Exception{
-        ArrayList<AccountAttendence> attendList = new ArrayList<>();
-        Connection cn = DBUtils.getConnection();
-        String sql = "";
-        return attendList;
-    }
 }

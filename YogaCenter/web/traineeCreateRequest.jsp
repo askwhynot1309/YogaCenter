@@ -82,6 +82,7 @@
     <body class="w3-light-grey">
         <c:import url="header.jsp"></c:import>
         <c:set var="exist" value="${sessionScope.account}"/>
+        <c:set var="acc" value="${requestScope.accountTrainee}"/>
         <c:set var="requestList" value="${sessionScope.requestList}"></c:set>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
@@ -96,7 +97,7 @@
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
             <div style="text-align: center" class="w3-container w3-row">
                 <div class="w3-col image">
-                    <img src="${exist.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
+                    <img src="img/${acc.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
                 </div>
                 <div class="w3-col w3-bar">
                     <br>
@@ -177,7 +178,7 @@
                                             <h4 style="text-align: center; color: red;">Starting date: ${startDate}. Due date: before ${endDate}</h4>
 
                                         <c:choose>
-                                            <c:when test="${overdue != null}">
+                                            <c:when test="${overdue == null}">
 
                                                 <div class="container mt-5">
                                                     <div class="d-flex justify-content-center row">
@@ -244,7 +245,7 @@
                                                     </div>
                                                 </div>
                                             </c:when>
-                                            <c:when test="${overdue == null}">
+                                            <c:when test="${overdue != null}">
                                                 <div style="text-align: center">
                                                     <h4 style="color: red">
                                                         <span>${overdue}</span>

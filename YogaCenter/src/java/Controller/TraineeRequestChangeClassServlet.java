@@ -44,9 +44,11 @@ public class TraineeRequestChangeClassServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(true);
             Account trainee = (Account) session.getAttribute("account");
+            Account acc = Dao.UserDao.getAccountByID(trainee.getIdaccount());
+            request.setAttribute("accountTrainee", acc);
             if (trainee == null) {
-                    request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
-                }
+                request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
+            }
             LocalDate startDate = CourseDao.getCourseStartDate(trainee.getIdaccount());
             LocalDate endDate = CourseDao.getCourseEndDate(trainee.getIdaccount());
             LocalDate currentDate = LocalDate.now();

@@ -193,7 +193,7 @@
                         %>
                         <h4 style="text-align: center; color: red;">Starting date: <%=startDate%>. Due date: before <%=endDate%></h4>
                         <%
-                            if (!hashClassDetail.isEmpty() && overdue != null) {
+                            if (!hashClassDetail.isEmpty() && overdue == null) {
 
                         %>
                         <div class="container mt-12">
@@ -304,7 +304,7 @@
                             </div>
                         </div>
                         <%
-                        } else if (!hashClassDetail.isEmpty() && overdue == null) {
+                        } else if (!hashClassDetail.isEmpty() && overdue != null) {
                         %>
                         <div style="text-align: center">
                             <h4>
@@ -313,8 +313,8 @@
                         </div>
                         <%
                         } else if (hashClassDetail.size() == 0) {
-%><h1 style="text-align: center">Your course currently has no classes</h1><%
-                            }
+                        %><h1 style="text-align: center">Your course currently has no classes</h1><%
+    }
                         %>
                     </div>
                 </div>
