@@ -174,7 +174,7 @@ public class AttendenceDao {
         int progress = 0;
         int total = getTotalSlot(Course_ID);
         int current = 0;
-        try (Connection cn = DBUtils.getConnection()) {
+        try ( Connection cn = DBUtils.getConnection()) {
             if (cn != null) {
 
                 String sql = "SELECT COUNT(Status) AS Progress\n"
@@ -197,11 +197,27 @@ public class AttendenceDao {
 
         return progress;
     }
-    
-    public static ArrayList<AccountAttendence> getAttendanceByTraineeIDAndCourseID(int CourseID, int TraineeID) throws Exception{
+
+    public static ArrayList<AccountAttendence> getAttendanceByTraineeIDAndCourseID(int CourseID, int TraineeID) throws Exception {
         ArrayList<AccountAttendence> attendList = new ArrayList<>();
         Connection cn = DBUtils.getConnection();
         String sql = "";
         return attendList;
+    }
+
+    public static int changeDateToCheckAttendence(Date date, int id) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Update CheckAttendance\n"
+                    + "Set AttendanceDate = ?\n"
+                    + "Where ID_Class = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setDate(1, date);
+            pst.setInt(2, id);
+            kq = pst.executeUpdate();
+            cn.close();
+        }
+        return kq;
     }
 }
