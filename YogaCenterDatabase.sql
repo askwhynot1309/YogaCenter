@@ -80,6 +80,7 @@ OrderID int IDENTITY(1,1) PRIMARY KEY,
 ID_Trainee int FOREIGN KEY REFERENCES Account(ID_Account),
 DateOrder DATE,
 Method int CHECK(Method = 0 or Method = 1) --0:cash,1:onlinebanking
+Total DECIMAL(10,3)
 )
 
 CREATE TABLE StatusPayment(
