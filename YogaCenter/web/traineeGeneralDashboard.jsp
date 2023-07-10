@@ -186,7 +186,6 @@
                 <hr>
                 <div class="w3-container">
                     <h5 class="w3-left">Process Tracking</h5>
-                    <h6 class="w3-right"><a style="font-weight: bold;" href="/YogaCenter/request?action=processDetail">More Detail</a></h6>
                 </div>
                 <div class="w3-container">
 
