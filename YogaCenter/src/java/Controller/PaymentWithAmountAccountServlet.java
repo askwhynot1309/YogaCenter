@@ -46,12 +46,12 @@ public class PaymentWithAmountAccountServlet extends HttpServlet {
                 BigDecimal moneyprice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtPrice")));
                 int method = Integer.parseInt(request.getParameter("method"));
                 BigDecimal totalmoney = BigDecimal.valueOf(Double.parseDouble(request.getParameter("total")));
+                Account accountTrainee = Dao.UserDao.getAccountByID(account.getIdaccount());
+                BigDecimal moneycurrent = accountTrainee.getAmount();
+                BigDecimal money = moneyprice.subtract(totalmoney);
                 int status;
                 if (method == 0) {
                     status = 0;
-                    Account accountTrainee = Dao.UserDao.getAccountByID(account.getIdaccount());
-                    BigDecimal moneycurrent = accountTrainee.getAmount();
-                    BigDecimal money = moneyprice.subtract(totalmoney);
                     int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
                     HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
                     boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
@@ -65,6 +65,7 @@ public class PaymentWithAmountAccountServlet extends HttpServlet {
                         response.sendRedirect("error.html");
                     }
                 } else {
+                    int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
                     request.setAttribute("txtPrice", totalmoney);
                     request.getRequestDispatcher("TraineeBankPaymentServlet").forward(request, response);
                 }
