@@ -364,6 +364,10 @@
         <servlet-name>TraineeCancelOrderServlet</servlet-name>
         <servlet-class>Controller.TraineeCancelOrderServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChangeAvatarServlet</servlet-name>
+        <servlet-class>Controller.ChangeAvatarServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -727,6 +731,10 @@
     <servlet-mapping>
         <servlet-name>TraineeCancelOrderServlet</servlet-name>
         <url-pattern>/TraineeCancelOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeAvatarServlet</servlet-name>
+        <url-pattern>/ChangeAvatarServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

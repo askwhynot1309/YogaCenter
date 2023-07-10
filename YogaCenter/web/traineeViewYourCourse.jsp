@@ -104,16 +104,16 @@
         <c:set var="current_date" value="${requestScope.current_date}"/>
         <c:set var="refund" value="${requestScope.refund}"/>
         <c:set var="cancel" value="${requestScope.cancel}"/>
-        <c:set var="acc" value="${UserDao.getAccountByID(exist.idaccount)}"/>
+        <c:set var="acc" value="${requestScope.accountTrainee}"/>
 
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
             <div style="text-align: center" class="w3-container w3-row">
                     <div class="w3-col image">
-                        <img src="${account.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
+                        <img src="img/${acc.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
                 </div>
                 <div class="w3-col w3-bar">
                     <br>
-                    <span>Welcome <strong>${account.name}</strong></span><br>
+                    <span>Welcome <strong>${acc.name}</strong></span><br>
                 </div>
             </div>
             <hr>
@@ -137,19 +137,19 @@
             </div>
         </nav>
 
-        <div class="w3-main" style="margin-left:300px;margin-top:43px;">
+        <div class="w3-main" style="margin-left:350px;margin-top:43px;">
             <div id="overlay" class="overlay hidden"></div>
-            <div style="padding: 10px; color: white; background: #00FF00; margin-top: 50px; margin-bottom: 20px">
-                <h2 style="text-transform: uppercase; font-size: 700">Your course</h2>
+            <div style="padding: 10px; color: black; background: #d0efe1; margin-top: 50px; margin-bottom: 20px">
+                <h2 style="text-transform: uppercase; font-size: 900">Your course</h2>
             </div>
             <c:if test="${listCourseTrainee.size() == 0}">
                 <h3 style="text-align: center; margin-bottom: 400px">You don't have any course.</h3>
 
             </c:if>
             <c:if test="${listCourseTrainee != null}">
-                <div class="main" style="height: 1000px">
+                <div class="main" style="height: 1200px">
                     <c:forEach var="course" items="${listCourseTrainee}"  varStatus="status">
-                        <div style="width: 100%; height: 220px; padding: 10px;  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px">
+                        <div style="width: 100%; height: 250px; padding: 10px;  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-bottom: 20px">
                             <div class="row">
                                 <div class="col-lg-3">
                                     <p style="margin-bottom: 20px"><strong>Date-order : </strong>${course.dateorder}</p>

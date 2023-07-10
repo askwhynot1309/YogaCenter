@@ -349,6 +349,7 @@
                                         <option class="text-muted" value="1">BANK TRANSFER</option>
                                     </select><br>
                                     <input name="total" value="${message}" hidden="">
+                                    <input type="hidden" name="txtPrice" value="<%=totalMoney%>">
                                     <div style="display: flex; align-items: center; justify-content: space-between">
                                         <button class="btn btn-primary" name="action" value="Ok" style="width: 75px">Comfirm</button>
                                         <a class="btn btn-primary btn-close" style="width: 75px; color: white; text-decoration: none">Close</a>

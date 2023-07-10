@@ -26,7 +26,6 @@
                 <a href="/YogaCenter/home">Home</a>
                 <a href="/YogaCenter/course">Course</a>
                 <a href="/YogaCenter/AboutUsServlet">About</a>
-                <a href="yogaGallery.jsp">Gallery</a>
                 <a href="contactUs.jsp">Contact</a>
             </nav>
 

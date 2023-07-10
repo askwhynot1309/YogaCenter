@@ -43,7 +43,9 @@ public class TraineeChangeStatusRequest extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(true);
             Account account = (Account) session.getAttribute("account");
-
+            if(account == null){
+                request.getRequestDispatcher("viewRequest").forward(request, response);
+            }
             String action = request.getParameter("action");
             int messageID = Integer.parseInt(request.getParameter("txtMessageID"));
             int txtFromTraineeID = Integer.parseInt(request.getParameter("txtFromTraineeID"));

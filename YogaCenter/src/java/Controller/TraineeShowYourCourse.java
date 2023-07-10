@@ -41,6 +41,7 @@ public class TraineeShowYourCourse extends HttpServlet {
             HttpSession session = request.getSession();
             Date current_date = new Date(System.currentTimeMillis());
             Account trainee = (Account) session.getAttribute("account");
+            Account acc = Dao.UserDao.getAccountByID(trainee.getIdaccount());
             if (trainee == null) {
                 request.getRequestDispatcher("traineeViewYourCourse.jsp").forward(request, response);
             }           
@@ -59,6 +60,7 @@ public class TraineeShowYourCourse extends HttpServlet {
             ArrayList<OrderCourse> listCourseTraineee = Dao.OrderCourseDao.getAllCourseTraineeLearn(trainee.getIdaccount());
             request.setAttribute("listCourseTrainee", listCourseTraineee);
             request.setAttribute("current_date", current_date);
+            request.setAttribute("accountTrainee", acc);
             request.getRequestDispatcher("traineeViewYourCourse.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

@@ -202,10 +202,11 @@
                 </div>
             </div>
         </c:if>
-        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:-1;width:300px;" id="mySidebar"><br>
+        <c:set var="account" value="${requestScope.acc}"/> 
+        <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
             <div style="text-align: center" class="w3-container w3-row">
                 <div class="w3-col image">
-                    <img src="${account.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
+                    <img src="img/${account.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
                 </div>
                 <div class="w3-col w3-bar">
                     <br>
@@ -252,7 +253,9 @@
                 </script>
             </c:if>
             <div class="container">
-                <h2>Purchase history</h2>
+                <div style="padding: 10px; color: black; background: #d0efe1; margin-top: 50px; margin-bottom: 20px">
+                    <h2 style="text-transform: uppercase; font-size: 900">Purchase history</h2>
+                </div>
                 <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
                 <c:set var="message" value="${requestScope.message}"/>
                 <c:set var="money" value="${requestScope.money}"></c:set>

@@ -4,28 +4,19 @@
  */
 package Controller;
 
-import Dao.OrderCourseDao;
 import Object.Account;
-import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ngmin
+ * @author ADMIN
  */
-public class TraineeManagePurchaseServlet extends HttpServlet {
+public class ChangeAvatarServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,35 +30,28 @@ public class TraineeManagePurchaseServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(true);
-            Account account = (Account) session.getAttribute("account");
-            if (account == null) {
-                    request.getRequestDispatcher("traineeManagePurchase.jsp").forward(request, response);
+            int id = Integer.parseInt(request.getParameter("id"));
+            String img = request.getParameter("img");
+            String oldimg = request.getParameter("oldimg");
+            if("".equals(img)){
+                int changeImg = Dao.UserDao.changeAvatar(oldimg, id);
+                if(changeImg == 1){
+                    request.setAttribute("changesuccess", "message");
+                    Account account = Dao.UserDao.getAccountByID(id);
+                    request.setAttribute("accountTrainee", account);
+                    request.getRequestDispatcher("information").forward(request, response);
                 }
-            HashMap<Integer, ArrayList<OrderCourse>> purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
-            for (Map.Entry<Integer, ArrayList<OrderCourse>> entry : purchase.entrySet()) {
-                int orderID = entry.getKey();
-                ArrayList<OrderCourse> orderDetail = entry.getValue();
-                LocalDate overduaDate;
-                for (OrderCourse orderCourse : orderDetail) {
-                    if (orderCourse.getStatus() == 0) {
-                        LocalDate orderDate = orderCourse.getDateorder().toLocalDate();
-                        overduaDate = orderDate.plusDays(10);
-                        LocalDate currentDate = LocalDate.now();
-                        if (overduaDate.isBefore(currentDate)) {
-                            boolean isUpdated = OrderCourseDao.cancelStatus(orderID);
-                            boolean isDeleted = Dao.ClassDetailDao.deleteTraineeInClass(account.getIdaccount(), orderCourse.getId_course());
-                        }
-                    }
-                }
+            }else{
+              int changeImg = Dao.UserDao.changeAvatar(img, id);
+                if(changeImg == 1){
+                    request.setAttribute("changesuccess", "message");
+                    Account account = Dao.UserDao.getAccountByID(id);
+                    request.setAttribute("accountTrainee", account);
+                    request.getRequestDispatcher("information").forward(request, response);
+                }  
             }
-            purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
-            Account acc = Dao.UserDao.getAccountByID(account.getIdaccount());
-            request.setAttribute("purchase", purchase);
-            request.setAttribute("acc", acc);
-            request.getRequestDispatcher("traineeManagePurchase.jsp").forward(request, response);
         }
     }
 

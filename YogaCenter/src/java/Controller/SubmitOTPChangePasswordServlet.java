@@ -48,10 +48,10 @@ public class SubmitOTPChangePasswordServlet extends HttpServlet {
                         Account account = UserDao.getAccountByID(ID_Account);
                         session.removeAttribute("account");
                         session.setAttribute("account", account);
-                        request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
+                        request.getRequestDispatcher("ChangePasswordServlet").forward(request, response);
                     } else {
                         request.setAttribute("changeFail", "Something error");
-                        request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
+                        request.getRequestDispatcher("ChangePasswordServlet").forward(request, response);
                     }
                 } else {
                     response.sendRedirect("error.html");

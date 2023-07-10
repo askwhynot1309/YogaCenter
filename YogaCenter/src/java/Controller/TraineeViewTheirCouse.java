@@ -44,7 +44,9 @@ public class TraineeViewTheirCouse extends HttpServlet {
                     request.getRequestDispatcher("traineeViewTheirCourse.jsp").forward(request, response);
                 }
             ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
+            Account acc = Dao.UserDao.getAccountByID(account.getIdaccount());
             request.setAttribute("courseList", courseList);
+            request.setAttribute("acc", acc);
             request.getRequestDispatcher("traineeViewTheirCourse.jsp").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();

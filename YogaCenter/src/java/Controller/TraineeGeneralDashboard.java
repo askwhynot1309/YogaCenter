@@ -41,8 +41,10 @@ public class TraineeGeneralDashboard extends HttpServlet {
             try {
                 HttpSession session = request.getSession(true);
                 Account account = (Account) session.getAttribute("account");
+                Account acc = Dao.UserDao.getAccountByID(account.getIdaccount());
                 ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
                 request.setAttribute("courseList", courseList);
+                request.setAttribute("accountTrainee", acc);
 
                 ArrayList<Message> requestList = MessageDao.getAllRequestByTrainerIDAndStatus0(account.getIdaccount());
 

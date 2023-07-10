@@ -790,7 +790,7 @@ public class CourseDao {
                     + "FROM [dbo].[Course] C \n"
                     + "JOIN [dbo].[BookingDetail] BD ON C.Course_ID = BD.ID_Course\n"
                     + "JOIN [dbo].[BookingCourse] BC ON BD.Order_ID = BC.OrderID JOIN Level l ON C.ID_Level = l.Level_ID\n"
-                    + "WHERE BC.ID_Trainee = ?";
+                    + "WHERE BC.ID_Trainee = ? AND BD.Status_Account = 1";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, Trainee_ID);
             ResultSet rs = pst.executeQuery();

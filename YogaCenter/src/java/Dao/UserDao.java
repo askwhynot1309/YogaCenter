@@ -580,4 +580,24 @@ public class UserDao {
         }
         return updated;
     }
+    
+    public static int changeAvatar(String img, int ID_Account) {
+        int updated = 0;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "UPDATE [dbo].[Account]\n"
+                        + "SET [Img] = ?\n"
+                        + "WHERE [ID_Account] = ?";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setString(1, img);
+                pst.setInt(2, ID_Account);
+                updated = pst.executeUpdate();
+                cn.close();
+            }
+        } catch (Exception e) {
+        }
+        return updated;
+    }
 }

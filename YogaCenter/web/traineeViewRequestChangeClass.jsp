@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>JSP Page</title>
+        <title>Request Class</title>
     </head>
     <style>
         #btn-create {
@@ -109,11 +109,11 @@
             </div>
         </c:if>
 
-        <c:set var="acc" value="${sessionScope.account}"/>
+        <c:set var="account" value="${requestScope.acc}"/>
         <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
             <div style="text-align: center" class="w3-container w3-row">
                     <div class="w3-col image">
-                        <img src="${account.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
+                        <img src="img/${account.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
                 </div>
                 <div class="w3-col w3-bar">
                     <br>

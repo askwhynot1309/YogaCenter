@@ -39,6 +39,9 @@ public class TraineeChangePasswordServlet extends HttpServlet {
                 /* TODO output your page here. You may use following sample code. */
                 HttpSession session = request.getSession(true);
                 Account account = (Account) session.getAttribute("account");
+                if(account == null){
+                    request.getRequestDispatcher("ChangePasswordServlet").forward(request, response);
+                }
                 String email = account.getEmail();
                 String oldPassword = request.getParameter("txtOldPassword");
                 String newPassword = request.getParameter("txtNewPassword");
@@ -52,17 +55,18 @@ public class TraineeChangePasswordServlet extends HttpServlet {
                         session.setAttribute("newPassword", encryptNewConfirmPassword);
                         session.setAttribute("otp", otp);
                         session.setAttribute("ID_Account", account.getIdaccount());
+                        Account acc = Dao.UserDao.getAccountByID(account.getIdaccount());
+                        request.setAttribute("acc", acc);
                         request.getRequestDispatcher("traineeConfirmOTPChangePassword.jsp").forward(request, response);
 
                     } else {
                         request.setAttribute("changeFail", "This password is not correct. Please try again.");
-                        request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
+                        request.getRequestDispatcher("ChangePasswordServlet").forward(request, response);
                     }
                 } else {
                     request.setAttribute("changeFail", "The confirm password and new password are the not same");
-                    request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
+                    request.getRequestDispatcher("ChangePasswordServlet").forward(request, response);
                 }
-            request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
             } catch (Exception e) {
                 out.print(e);
             }

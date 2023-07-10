@@ -43,24 +43,30 @@ public class PaymentWithAmountAccountServlet extends HttpServlet {
                     request.getRequestDispatcher("traineeViewCart.jsp").forward(request, response);
                 }
                 int ID_Trainee = account.getIdaccount();
+                BigDecimal moneyprice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtPrice")));
                 int method = Integer.parseInt(request.getParameter("method"));
                 BigDecimal totalmoney = BigDecimal.valueOf(Double.parseDouble(request.getParameter("total")));
                 int status;
                 if (method == 0) {
                     status = 0;
+                    Account accountTrainee = Dao.UserDao.getAccountByID(account.getIdaccount());
+                    BigDecimal moneycurrent = accountTrainee.getAmount();
+                    BigDecimal money = moneyprice.subtract(totalmoney);
+                    int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
+                    HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
+                    boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
+                    cart.clear();
+                    if (inserted == true) {
+                        session.removeAttribute("cart");
+                        request.setAttribute("addsuccess", "message");
+                        request.setAttribute("money", totalmoney);
+                        request.getRequestDispatcher("purchase").forward(request, response);
+                    } else {
+                        response.sendRedirect("error.html");
+                    }
                 } else {
-                    status = 1;
-                }
-                HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
-                cart.clear();
-                if (inserted == true) {
-                    session.removeAttribute("cart");
-                    request.setAttribute("addsuccess", "message");
-                    request.setAttribute("money", totalmoney);
-                    request.getRequestDispatcher("purchase").forward(request, response);
-                } else {
-                    response.sendRedirect("error.html");
+                    request.setAttribute("txtPrice", totalmoney);
+                    request.getRequestDispatcher("TraineeBankPaymentServlet").forward(request, response);
                 }
             }
         } catch (Exception e) {

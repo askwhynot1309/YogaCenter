@@ -5,6 +5,7 @@
 package Controller;
 
 import Dao.MessageDao;
+import Object.Account;
 import Object.Message;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,11 +39,15 @@ public class TraineeViewRequestChangeClass extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             try {
                 /* TODO output your page here. You may use following sample code. */
                 HttpSession session = request.getSession();
-                String createSuccess = (String)session.getAttribute("success");
+                Account account = (Account) session.getAttribute("account");
+                if (account == null) {
+                    request.getRequestDispatcher("traineeViewTheirCourse.jsp").forward(request, response);
+                }
+                String createSuccess = (String) session.getAttribute("success");
                 session.removeAttribute("success");
                 ArrayList<Message> messList = MessageDao.getAllMessage();
                 ArrayList<Message> messRequest = new ArrayList<>();
@@ -75,7 +80,9 @@ public class TraineeViewRequestChangeClass extends HttpServlet {
                         messRequest.add(new Message(courseNumber, ID_Message, ID_sendMessage, ID_recieveMessage, fromClass, toClass, status, dateSend, title));
                     }
                 }
+                Account acc = Dao.UserDao.getAccountByID(account.getIdaccount());
                 request.setAttribute("createSuccess", createSuccess);
+                request.setAttribute("acc", acc);
                 request.setAttribute("messRequest", messRequest);
                 request.getRequestDispatcher("traineeViewRequestChangeClass.jsp").forward(request, response);
             } catch (Exception e) {

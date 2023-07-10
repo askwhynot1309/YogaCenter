@@ -4,12 +4,14 @@
  */
 package Controller;
 
+import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,6 +33,13 @@ public class ChangePasswordServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession(true);
+            Account account = (Account) session.getAttribute("account");
+            if(account == null){
+                request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
+            }
+            Account acc = Dao.UserDao.getAccountByID(account.getIdaccount());
+            request.setAttribute("acc", acc);
             request.getRequestDispatcher("traineeManagePassword.jsp").forward(request, response);
         }
     }

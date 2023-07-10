@@ -179,4 +179,17 @@
         notification.timeOut = setTimeout(() => notification.remove(), 5000);
     </script>
 </c:if>
+    <script>
+                            const inputFile = document.getElementById('img-input');
+                            const image = document.getElementById('img');
+                            inputFile.addEventListener('change', function () {
+                                if (inputFile.files && inputFile.files[0]) {
+                                    const reader = new FileReader();
+                                    reader.onload = function (e) {
+                                        image.src = e.target.result;
+                                    };
+                                    reader.readAsDataURL(inputFile.files[0]);
+                                }
+                            });
+                        </script>
 </html>

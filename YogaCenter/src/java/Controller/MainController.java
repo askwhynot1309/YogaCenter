@@ -201,6 +201,9 @@ public class MainController extends HttpServlet {
                     case "TrainerAddMessage":
                         url = "TrainerButtonAddNewMessageServlet";
                         break;
+                    case "ChangeAvatar":
+                        url = "ChangeAvatarServlet";
+                        break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);
             }
