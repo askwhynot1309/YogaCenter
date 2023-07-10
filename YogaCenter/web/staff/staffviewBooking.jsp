@@ -116,7 +116,9 @@
                                                             <option value="0" selected="">Processing</option>
                                                             <option value="1">Completed</option>
                                                         </select>
-                                                        <button name="action" value="change" class="btn-search">Change</button>
+                                                        <input name="option" value="orderChange" hidden="">
+                                                        <input name="id" value="${order.id_order}" hidden="">
+                                                        <button name="action" value="comfirm" class="btn-search">Change</button>
                                                     </c:if>
                                                     <c:if test="${order.status == 1}">
                                                         <select name="status">
@@ -124,6 +126,8 @@
                                                             <option value="0" disabled="">Processing</option>
                                                             <option value="1" selected="">Completed</option>
                                                         </select>
+                                                        <input name="option" value="orderChange" hidden="">
+                                                        <input name="id" value="${order.id_order}" hidden="">
                                                         <button name="action" value="comfirm" class="btn-search">Change</button>
                                                     </c:if>
                                                     <c:if test="${order.status == 2}">
@@ -132,7 +136,9 @@
                                                             <option value="0" disabled="">Processing</option>
                                                             <option value="1">Completed</option>
                                                         </select>
-                                                        <button name="action" value="change" class="btn-search">Change</button>
+                                                        <input name="option" value="orderChange" hidden="">
+                                                        <input name="id" value="${order.id_order}" hidden="">
+                                                        <button name="action" value="comfirm" class="btn-search">Change</button>
                                                     </c:if>
                                                 </form>
                                             </td>

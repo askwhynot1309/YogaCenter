@@ -177,7 +177,7 @@ public class OrderDao {
             String s = "select c.Course_ID, c.Course_Fee, c.Img, c.Course_Name, c.Start_date, bd.Status_Account\n"
                     + "from BookingCourse bc JOIN BookingDetail bd ON bc.OrderID = bd.Order_ID JOIN StatusPayment sp ON sp.ID_Order = bc.OrderID\n"
                     + "JOIN Course c ON c.Course_ID = bd.ID_Course\n"
-                    + "where c.Status = 0 and bc.ID_Trainee = ? and bd.Status_Account = 1";
+                    + "where c.Status = 0 and bc.ID_Trainee = ? and bd.Status_Account = 1 and (sp.Status = 0 or sp.Status = 1)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, acc);
             ResultSet table = pst.executeQuery();

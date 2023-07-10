@@ -29,7 +29,7 @@ public class OrderCourseDao {
             cn = DBUtils.getConnection();
             if (cn != null) {
 
-                String sql = "SELECT BC.OrderID, BC.DateOrder, BC.Method, C.Course_Name, C.Course_Fee, SP.Status, BD.ID_Course\n"
+                String sql = "SELECT BC.OrderID, BC.DateOrder, BC.Method, C.Course_Name, C.Course_Fee, SP.Status, BD.ID_Course, BC.Total\n"
                         + "FROM [dbo].[BookingCourse] BC \n"
                         + "JOIN  [dbo].[BookingDetail] BD ON BC.OrderID = BD.Order_ID\n"
                         + "JOIN  [dbo].[Course] C ON BD.ID_Course = C.Course_ID\n"
@@ -46,9 +46,10 @@ public class OrderCourseDao {
                         Date DateOrder = rs.getDate("DateOrder");
                         int method = rs.getInt("Method");
                         BigDecimal CourseFee = rs.getBigDecimal("Course_Fee");
+                        BigDecimal total = rs.getBigDecimal("Total");
                         int Status = rs.getInt("Status");
                         int courseID = rs.getInt("ID_Course");
-                        OrderCourse order = new OrderCourse(OrderID, courseID, courseName, DateOrder, Status, method, CourseFee);
+                        OrderCourse order = new OrderCourse(OrderID, courseID, courseName, DateOrder, Status, method, CourseFee, total.intValue());
                         if (!purchase.containsKey(OrderID)) {
                             purchase.put(OrderID, new ArrayList<>());
                         }
@@ -89,7 +90,7 @@ public class OrderCourseDao {
                     + "from BookingCourse bc JOIN BookingDetail bd ON bc.OrderID = bd.Order_ID JOIN StatusPayment sp ON sp.ID_Order = bc.OrderID\n"
                     + "JOIN Course c ON c.Course_ID = bd.ID_Course\n"
                     + "JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "Where bc.ID_Trainee = ?";
+                    + "Where bc.ID_Trainee = ? And (sp.Status = 0 OR sp.Status = 1)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
             ResultSet table = pst.executeQuery();
@@ -249,7 +250,8 @@ public class OrderCourseDao {
         if (cn != null) {
             String s = "Select Count(BC.ID_Trainee) AS Count\n"
                     + "from BookingCourse BC JOIN BookingDetail BD ON BC.OrderID = BD.Order_ID\n"
-                    + "Where BC.ID_Trainee = ? And (BD.Status_Account = 1 OR BD.Status_Account = 3)\n"
+                    + "JOIN StatusPayment sp ON sp.ID_Order = BC.OrderID\n"
+                    + "Where BC.ID_Trainee = ? And (sp.Status = 1 Or sp.Status = 0) And (BD.Status_Account = 1 OR BD.Status_Account = 3)\n"
                     + "Group By BC.ID_Trainee";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);

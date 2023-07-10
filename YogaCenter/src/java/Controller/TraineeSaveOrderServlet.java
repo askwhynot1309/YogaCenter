@@ -47,7 +47,7 @@ public class TraineeSaveOrderServlet extends HttpServlet {
                     if (method == 0) {
                         status = 0;
                         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                        boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
+                        boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status, totalmoney);
                         cart.clear();
                         if (inserted == true) {
                             session.removeAttribute("cart");
@@ -59,7 +59,7 @@ public class TraineeSaveOrderServlet extends HttpServlet {
                     } else if (method == 1) {
                         status = 1;
                         HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                        boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
+                        boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status, totalmoney);
                         cart.clear();
                         if (inserted == true) {
                             session.removeAttribute("cart");
@@ -79,7 +79,7 @@ public class TraineeSaveOrderServlet extends HttpServlet {
                                 status = 1;
                                 method = 1;
                                 HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                                boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
+                                boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status, totalmoney);
                                 cart.clear();
                                 if (inserted == true) {
                                     session.removeAttribute("cart");
@@ -94,12 +94,12 @@ public class TraineeSaveOrderServlet extends HttpServlet {
                                 request.setAttribute("message", decimalValue.subtract(moneycurrent));
                                 request.getRequestDispatcher("viewcart").forward(request, response);
                                 break;
-                            default: {
+                            case 1: {
                                 int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
                                 status = 1;
                                 method = 1;
                                 HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                                boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
+                                boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status, totalmoney);
                                 cart.clear();
                                 if (inserted == true) {
                                     session.removeAttribute("cart");

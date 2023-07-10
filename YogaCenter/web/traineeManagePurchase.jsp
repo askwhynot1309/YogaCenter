@@ -258,25 +258,24 @@
                 </div>
                 <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
                 <c:set var="message" value="${requestScope.message}"/>
-                <c:set var="money" value="${requestScope.money}"></c:set>
-                    <div class="container mt-5">
-                        <div class="d-flex justify-content-center row">
-                            <div class="col-md-12">
-                                <div class="rounded">
-                                    <div class="table-responsive table-borderless">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Order #</th>
-                                                    <th>Course name</th>
-                                                    <th>Date</th>
-                                                    <th>Total</th>
-                                                    <th>Payment method</th>
-                                                    <th>Status</th>
-                                                    <th>Note</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="table-body">
+                <div class="container mt-5">
+                    <div class="d-flex justify-content-center row">
+                        <div class="col-md-12">
+                            <div class="rounded">
+                                <div class="table-responsive table-borderless">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Order #</th>
+                                                <th>Course name</th>
+                                                <th>Date</th>
+                                                <th>Total</th>
+                                                <th>Payment method</th>
+                                                <th>Status</th>
+                                                <th>Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-body">
                                             <%
                                                 Account account = (Account) session.getAttribute("account");
                                                 HashMap<Integer, ArrayList<OrderCourse>> purchase = (HashMap<Integer, ArrayList<OrderCourse>>) request.getAttribute("purchase");
@@ -287,10 +286,6 @@
                                                     for (Map.Entry<Integer, ArrayList<OrderCourse>> entry : sortedPurchase.entrySet()) {
                                                         int OrderID = entry.getKey();
                                                         ArrayList<OrderCourse> orderDetail = entry.getValue();
-                                                        int totalPrice = 0;
-                                                        for (OrderCourse order : orderDetail) {
-                                                            totalPrice += order.getFee_course().intValue();
-                                                        }
                                                         NumberFormat nf = NumberFormat.getInstance(new Locale("vi", "VN"));
 
                                                         for (OrderCourse order : orderDetail) {
@@ -306,12 +301,7 @@
                                                 <th rowspan="<%= orderDetail.size()%>"><%= order.getDateorder()%></td>
                                                     <% }
                                                         if (isFirstRow) {%>
-                                                    <c:if test="${money == null}">
-                                                    <th rowspan="<%= orderDetail.size()%>"><%= nf.format(totalPrice)%>.000 VNĐ</td>
-                                                    </c:if>
-                                                    <c:if test="${money != null}">
-                                                    <th rowspan="<%= orderDetail.size()%>">${money} VNĐ</td>
-                                                    </c:if>
+                                                <th rowspan="<%= orderDetail.size()%>"><%= nf.format(order.getTotal())%>.000 VNĐ</td>
                                                     <% }
                                                         switch (order.getMethod()) {
                                                             case 0:

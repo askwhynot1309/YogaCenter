@@ -47,8 +47,9 @@ public class TraineeSaveOrderBanking extends HttpServlet {
                 if (session != null) {
                     Account account = (Account) session.getAttribute("account");
                     int ID_Trainee = account.getIdaccount();
+                    int totalmoney = (int) session.getAttribute("totalmoneyByBanking");
                     HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                    boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
+                    boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status, totalmoney);
                     cart.clear();
                     if (inserted == true) {
                         session.removeAttribute("cart");

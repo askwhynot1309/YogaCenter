@@ -692,7 +692,7 @@ public class CourseDao {
         return kq;
     }
 
-    public static boolean InsertBooking(int Trainee_ID, int method, HashMap<String, Integer> cart, int statusPayment) {
+    public static boolean InsertBooking(int Trainee_ID, int method, HashMap<String, Integer> cart, int statusPayment, int total) {
         Connection cn = null;
         boolean inserted = false;
         int orderID = 0;
@@ -705,11 +705,12 @@ public class CourseDao {
 
                 //insert to bookingCouse table
                 Date d = new Date(System.currentTimeMillis());
-                sql = "INSERT [dbo].[BookingCourse] ([ID_Trainee], [DateOrder], [Method]) VALUES(?, ?, ?)";
+                sql = "INSERT [dbo].[BookingCourse] ([ID_Trainee], [DateOrder], [Method], [Total]) VALUES(?, ?, ?, ?)";
                 pst = cn.prepareStatement(sql);
                 pst.setInt(1, Trainee_ID);
                 pst.setDate(2, d);
                 pst.setInt(3, method);
+                pst.setInt(4, total);
                 pst.executeUpdate();
 
                 sql = "SELECT TOP 1 [OrderID]\n"
@@ -786,11 +787,11 @@ public class CourseDao {
         Connection cn = null;
         cn = DBUtils.getConnection();
         if (cn != null) {
-            String sql = "SELECT DISTINCT C.Course_ID, C.Course_Name, C.Img, C.Course_Fee, C.Start_date, C.Close_date, C.Slot, C.Description, C.ID_Level, C.Status, l.Level_Name\n"
+            String sql = "SELECT C.Course_ID, C.Course_Name, C.Img, C.Course_Fee, C.Start_date, C.Close_date, C.Slot, C.Description, C.ID_Level, C.Status, l.Level_Name, BD.Status_Account\n"
                     + "FROM [dbo].[Course] C \n"
-                    + "JOIN [dbo].[BookingDetail] BD ON C.Course_ID = BD.ID_Course\n"
+                    + "JOIN [dbo].[BookingDetail] BD ON C.Course_ID = BD.ID_Course JOIN StatusPayment sp ON sp.ID_Order = BD.Order_ID\n"
                     + "JOIN [dbo].[BookingCourse] BC ON BD.Order_ID = BC.OrderID JOIN Level l ON C.ID_Level = l.Level_ID\n"
-                    + "WHERE BC.ID_Trainee = ? AND BD.Status_Account = 1";
+                    + "WHERE BC.ID_Trainee = ? AND BD.Status_Account = 1 And (sp.Status = 1 Or sp.Status = 0)";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, Trainee_ID);
             ResultSet rs = pst.executeQuery();
@@ -867,7 +868,6 @@ public class CourseDao {
         }
         return kq;
     }
-
 
     public static ArrayList<Course> trainerGetAllCourse() throws Exception {
         ArrayList<Course> kq = new ArrayList<>();
