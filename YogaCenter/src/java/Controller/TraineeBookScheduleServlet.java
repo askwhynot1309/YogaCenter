@@ -61,11 +61,15 @@ public class TraineeBookScheduleServlet extends HttpServlet {
                 LocalDate endDate = courseDateStart.minusDays(7);
 
                 LocalDate currentDate = LocalDate.now();
+                out.print(hashChoise.size());
+                Account acc = Dao.UserDao.getAccountByID(account.getIdaccount());
+              
                 request.setAttribute("hashChoise", hashChoise);
                 request.setAttribute("hashClassDetail", hashClassDetail);
                 request.setAttribute("Course_ID", Course_ID);
                 request.setAttribute("startDate", startDate);
                 request.setAttribute("endDate", endDate);
+                request.setAttribute("acc", acc);
                 if (currentDate.isAfter(endDate)) {
 
                     request.setAttribute("overdue", "Overdue for form application and registration");

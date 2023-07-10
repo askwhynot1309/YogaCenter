@@ -39,12 +39,12 @@ public class TraineeViewSchedule extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             try {
                 /* TODO output your page here. You may use following sample code. */
                 HttpSession session = request.getSession(true);
                 Account account = (Account) session.getAttribute("account");
-            if (account == null) {
+                if (account == null) {
                     request.getRequestDispatcher("traineeDashBoard.jsp").forward(request, response);
                 }
                 ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(account.getIdaccount());
@@ -59,9 +59,10 @@ public class TraineeViewSchedule extends HttpServlet {
                 ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsByTrainee(account.getIdaccount());
                 if (listClass != null && !listClass.isEmpty()) {
                     request.setAttribute("listClass", listClass);
-                    
-                }
 
+                }
+                Account acc = Dao.UserDao.getAccountByID(account.getIdaccount());
+                request.setAttribute("accountTrainee", acc);
                 request.getRequestDispatcher("traineeDashBoard.jsp").forward(request, response);
             } catch (Exception e) {
                 out.print(e);

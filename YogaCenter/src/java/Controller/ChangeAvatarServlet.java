@@ -4,23 +4,19 @@
  */
 package Controller;
 
-import Dao.CourseDao;
 import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author ADMIN
  */
-public class PaymentWithAmountAccountServlet extends HttpServlet {
+public class ChangeAvatarServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,42 +32,26 @@ public class PaymentWithAmountAccountServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                Account account = (Account) session.getAttribute("account");
-                if (account == null) {
-                    request.getRequestDispatcher("traineeViewCart.jsp").forward(request, response);
+            int id = Integer.parseInt(request.getParameter("id"));
+            String img = request.getParameter("img");
+            String oldimg = request.getParameter("oldimg");
+            if("".equals(img)){
+                int changeImg = Dao.UserDao.changeAvatar(oldimg, id);
+                if(changeImg == 1){
+                    request.setAttribute("changesuccess", "message");
+                    Account account = Dao.UserDao.getAccountByID(id);
+                    request.setAttribute("accountTrainee", account);
+                    request.getRequestDispatcher("information").forward(request, response);
                 }
-                int ID_Trainee = account.getIdaccount();
-                BigDecimal moneyprice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("txtPrice")));
-                int method = Integer.parseInt(request.getParameter("method"));
-                BigDecimal totalmoney = BigDecimal.valueOf(Double.parseDouble(request.getParameter("total")));
-                Account accountTrainee = Dao.UserDao.getAccountByID(account.getIdaccount());
-                BigDecimal moneycurrent = accountTrainee.getAmount();
-                BigDecimal money = moneyprice.subtract(totalmoney);
-                int status;
-                if (method == 0) {
-                    status = 0;
-                    int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
-                    HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
-                    boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status);
-                    cart.clear();
-                    if (inserted == true) {
-                        session.removeAttribute("cart");
-                        request.setAttribute("addsuccess", "message");
-                        request.setAttribute("money", totalmoney);
-                        request.getRequestDispatcher("purchase").forward(request, response);
-                    } else {
-                        response.sendRedirect("error.html");
-                    }
-                } else {
-                    int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
-                    request.setAttribute("txtPrice", totalmoney);
-                    request.getRequestDispatcher("TraineeBankPaymentServlet").forward(request, response);
-                }
+            }else{
+              int changeImg = Dao.UserDao.changeAvatar(img, id);
+                if(changeImg == 1){
+                    request.setAttribute("changesuccess", "message");
+                    Account account = Dao.UserDao.getAccountByID(id);
+                    request.setAttribute("accountTrainee", account);
+                    request.getRequestDispatcher("information").forward(request, response);
+                }  
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

@@ -64,7 +64,9 @@ public class TraineeManagePurchaseServlet extends HttpServlet {
                 }
             }
             purchase = OrderCourseDao.getPurchaseByTrainee(account.getIdaccount());
+            Account acc = Dao.UserDao.getAccountByID(account.getIdaccount());
             request.setAttribute("purchase", purchase);
+            request.setAttribute("acc", acc);
             request.getRequestDispatcher("traineeManagePurchase.jsp").forward(request, response);
         }
     }

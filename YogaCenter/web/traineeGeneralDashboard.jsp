@@ -17,6 +17,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="css/trainee/trainee-add-message.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="icon" type="image/x-icon" href="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png">
@@ -44,25 +46,64 @@
             top: -100%;
             right: 0;
         }
+        .overlay1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+        .message {
+            box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+            background: #fff;
+            color: #222;
+            border: 0;
+            border-radius: 0.25rem;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            border-radius: 20px;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            z-index: 10000;
+        }
+        .message::backdrop {
+            background: rgb(0 0 0 / 0.5);
+            opacity: 0;
+        }
     </style>
     <c:import url="header.jsp"/>
     <body class="w3-light-grey">
         <c:set var="acc" value="${sessionScope.account}"/>
+        <c:set var="account" value="${requestScope.accountTrainee}"/>
+        <c:set var="changesuccess" value="${requestScope.changesuccess}"/>
         <c:set var="cart" value="${sessionScope.cart}"/>
         <c:set var="courseList" value="${requestScope.courseList}"></c:set>
         <c:set var="requestList" value="${sessionScope.requestList}"></c:set>
-
+        <c:if test="${acc == null}">
+            <div id="overlay1" class="overlay1"></div>
+            <div class="message" id="message">
+                <h3 style="text-align: center; color: red">Message</h3>
+                <p>Your session is timeout. Back to login page to login again!</p>
+                <div style=" text-align: center">
+                    <a class="btn btn-primary" href="login.jsp">Login</a>
+                </div>
+            </div>
+        </c:if>
         <c:if test="${acc != null}">
+           
             <c:set var="notiList" value="${MessageDao.getAllMessageByUserIDWithNotRead(acc.idaccount)}"></c:set>
 
                 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
                     <div style="text-align: center" class="w3-container w3-row">
                         <div class="w3-col image">
-                            <img src="${acc.image}" alt="image" class="w3-circle " style="width:150px; height: 150px; margin-right: 0px;">
+                            <img src="img/${account.image}" alt="image" class="w3-circle" width="150px" height="150px" id="avatar">
                     </div>
                     <div class="w3-col w3-bar">
                         <br>
-                        <span>Welcome <strong>${acc.name}</strong></span><br>
+                        <span>Welcome <strong>${account.name}</strong></span><br>
                     </div>
                 </div>
                 <hr>
@@ -94,11 +135,11 @@
 
                 <!-- Header -->
                 <header class="w3-container" style="padding-top:22px">
-                    <h5><b><i class="fa fa-dashboard"></i>${acc.name}</b></h5>
+                    <h5><b><i class="fa fa-dashboard"></i>${account.name}</b></h5>
                 </header>
 
                 <div class="w3-row-padding w3-margin-bottom">
-                    <a href="/YogaCenter/request?action=viewNotification" class="w3-third">
+                    <a href="/YogaCenter/request?action=viewNotification" class="w3-third" style="text-decoration: none">
                         <div class="w3-container w3-red w3-padding-16">
                             <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
                             <div class="w3-right">
@@ -114,7 +155,7 @@
                         </div>
                     </a>
 
-                    <a href="/YogaCenter/viewcart" class="w3-third">
+                    <a href="/YogaCenter/viewcart" class="w3-third" style="text-decoration: none">
                         <div class="w3-container w3-blue w3-padding-16">
                             <div class="w3-left"><i class="fa fa-shopping-cart fa-fw w3-xxxlarge"></i></div>
                             <div class="w3-right">
@@ -159,81 +200,16 @@
                             </div>
                         </c:forEach>
                     </c:if>
-                    <!--
-                    
-                                        <p>Course 2</p>
-                                        <div class="w3-grey">
-                                            <div class="w3-container w3-center w3-padding w3-orange" style="width:50%">50%</div>
-                                        </div>
-                    
-                                        <p>Course 3</p>
-                                        <div class="w3-grey">
-                                            <div class="w3-container w3-center w3-padding w3-red" style="width:75%">75%</div>
-                                        </div>-->
+                            <c:if test="${courseList.size() == 0}">
+                                <h5 style="color: red; text-align: center">No course</h5>
+                            </c:if>
                 </div>
                 <hr>
-
-                <!-- <div class="w3-container">
-                    <h5>Countries</h5>
-                    <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
-                        <tr>
-                            <td>United States</td>
-                            <td>65%</td>
-                        </tr>
-                        <tr>
-                            <td>UK</td>
-                            <td>15.7%</td>
-                        </tr>
-                        <tr>
-                            <td>Russia</td>
-                            <td>5.6%</td>
-                        </tr>
-                        <tr>
-                            <td>Spain</td>
-                            <td>2.1%</td>
-                        </tr>
-                        <tr>
-                            <td>India</td>
-                            <td>1.9%</td>
-                        </tr>
-                        <tr>
-                            <td>France</td>
-                            <td>1.5%</td>
-                        </tr>
-                    </table><br>
-                    <button class="w3-button w3-dark-grey">More Countries  <i class="fa fa-arrow-right"></i></button>
-                </div> -->
-                <hr>
-                <!--            <div class="w3-container">
-                                <h5>Recent Users</h5>
-                                <ul class="w3-ul w3-card-4 w3-white">
-                                    <li class="w3-padding-16">
-                                        <img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-left w3-circle w3-margin-right"
-                                             style="width:35px">
-                                        <span class="w3-xlarge">Mike</span><br>
-                                    </li>
-                                    <li class="w3-padding-16">
-                                        <img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-left w3-circle w3-margin-right"
-                                             style="width:35px">
-                                        <span class="w3-xlarge">John</span><br>
-                                    </li>
-                                    <li class="w3-padding-16">
-                                        <img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-left w3-circle w3-margin-right"
-                                             style="width:35px">
-                                        <span class="w3-xlarge">Dave</span><br>
-                                    </li>
-                                </ul>
-                            </div>-->
+                <hr>             
                 <hr>
 
-
-                <!-- Footer -->
                 <footer class="w3-container w3-padding-16 w3-light-grey">
-                    <%--<c:import url="footer.html"/>--%>
-                    <%-- there are some error when merge the footer into the dashboard. --%>
                 </footer>
-
-                <!-- End page content -->
             </div>
         </c:if>
 

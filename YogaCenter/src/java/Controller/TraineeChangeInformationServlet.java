@@ -45,7 +45,7 @@ public class TraineeChangeInformationServlet extends HttpServlet {
             } else {
                 request.setAttribute("changeFail", "Update information fail");
             }
-            request.getRequestDispatcher("traineeManageInformation.jsp").forward(request, response);
+            request.getRequestDispatcher("information").forward(request, response);
         }
     }
 

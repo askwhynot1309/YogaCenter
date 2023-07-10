@@ -204,6 +204,9 @@ public class MainController extends HttpServlet {
                     case "processDetail":
                         url = "checkingProcess";
                         break;
+                    case "ChangeAvatar":
+                        url = "ChangeAvatarServlet";
+                        break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);
             }
