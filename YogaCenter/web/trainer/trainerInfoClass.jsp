@@ -137,7 +137,6 @@
                                                             <a href="/YogaCenter/request?action=inf&id=${trainee.idaccount}&option=trainerUserDetail" class="btn btn-primary">Details</a>
                                                         </td>
                                                         <td>
-                                                            <c:if test="${currentDate == true}">
                                                                 <c:forEach var="attend" items="${listAttend}">
                                                                     <c:if test="${attend.id_trainee == trainee.idaccount}">
                                                                         <c:if test="${attend.status == 0}">
@@ -172,7 +171,6 @@
                                                                         </c:if>
                                                                     </c:if>
                                                                 </c:forEach>
-                                                            </c:if>
                                                         </td>
                                                         <td>
                                                             <c:forEach var="attend" items="${listAttend}">
