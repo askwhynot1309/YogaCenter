@@ -103,7 +103,7 @@ public class OrderDao {
         return kq;
     }
 
-    public static int changeStatusAccount(int id_course) throws Exception {
+    public static int changeStatusAccount(int id_course, int status) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -111,7 +111,7 @@ public class OrderDao {
                     + "Set Status_Account = ?\n"
                     + "Where ID_Course = ?";
             PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, 1);
+            pst.setInt(1, status);
             pst.setInt(2, id_course);
             kq = pst.executeUpdate();
             cn.close();

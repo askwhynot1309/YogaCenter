@@ -57,8 +57,8 @@ public class TraineeBookScheduleServlet extends HttpServlet {
 
                 Date courseDate = course.getDate_start();
                 LocalDate courseDateStart = courseDate.toLocalDate();
-                LocalDate startDate = courseDateStart.minusDays(10);
-                LocalDate endDate = courseDateStart.minusDays(7);
+                LocalDate startDate = courseDateStart.minusDays(7);
+                LocalDate endDate = courseDateStart.minusDays(3);
 
                 LocalDate currentDate = LocalDate.now();
                 out.print(hashChoise.size());

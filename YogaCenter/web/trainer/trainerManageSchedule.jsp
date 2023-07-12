@@ -680,21 +680,6 @@
                 </div>
             </div>
         </div>
-        <c:if test="${not empty requestScope.noty}">
-            <div id="popupContainer" class="popup-container">
-                <span class="close-btn" onclick="closePopup()">&times;</span>
-                <p id="notificationText">${requestScope.noty}</p>
-            </div>
-        </c:if>
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
-            <div class="toast-header">
-                <strong class="mr-auto">Notification</strong>
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="toast-body"></div>
-        </div>
 
         <script>
             var scheduleTable = document.getElementsByClassName("table-con");
@@ -730,20 +715,7 @@
             }
 
         </script>
-        <script>
-            // Check if notification exists and display the popup
-            var notification = "${requestScope.noty}";
-            if (notification.trim() !== "") {
-                var popup = document.getElementById("popupContainer");
-                popup.style.display = "block";
-            }
 
-            // Function to close the popup
-            function closePopup() {
-                var popup = document.getElementById("popupContainer");
-                popup.style.display = "none";
-            }
-        </script>
 
 
 

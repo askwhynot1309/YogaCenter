@@ -37,7 +37,7 @@ public class TraineeViewNotificationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(true);
             Account account = (Account) session.getAttribute("account");
@@ -45,7 +45,12 @@ public class TraineeViewNotificationServlet extends HttpServlet {
                 request.getRequestDispatcher("traineeViewNotification.jsp").forward(request, response);
             }
             int Account_ID = account.getIdaccount();
-            ArrayList<Message> notificationList = MessageDao.getAllMessageByUserIDWithNotRead(Account_ID);
+            ArrayList<Message> notificationList = MessageDao.getAllMessageByUserID(Account_ID);
+            for (Message message : notificationList) {
+                if (message.getStatus() == 0) {
+                    boolean changeStatus = Dao.MessageDao.updateStatusRequest(2, message.getMessageID());
+                }
+            }
             ArrayList<Message> notiList = new ArrayList<>();
             for (Message message : notificationList) {
                 if (!message.getTitle().equals("Change class")) {

@@ -13,8 +13,8 @@ import Utils.DisplayAllDaysByWeek;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +43,9 @@ public class ViewScheduleServlet extends HttpServlet {
             List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
             List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
             request.setAttribute("currentweek", currentweek);
+            ArrayList<Course> newCourseList = new ArrayList<>();
             ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetails();
+            Date current = new Date(System.currentTimeMillis());
             if (listClass != null && !listClass.isEmpty()) {
                 request.setAttribute("listClass", listClass);
             }
@@ -51,7 +53,12 @@ public class ViewScheduleServlet extends HttpServlet {
             ArrayList<Room> listRoom = Dao.RoomDao.getAllRoomActive();
             ArrayList<Time> listTime = Dao.TimeDao.getAllTime();
             ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseThatTraineeOrder();
-            request.setAttribute("listCourse", listCourse);
+            for (Course course : listCourse) {
+                if(Dao.ClassDetailDao.getCourseExistInClass(course.getIdCourse()) == null && (current.equals(course.getDate_close()) || current.after(course.getDate_close()))){
+                    newCourseList.add(course);
+                }
+            }
+            request.setAttribute("listCourse", newCourseList);
             request.setAttribute("listTrainer", listTrainer);
             request.setAttribute("listRoom", listRoom);
             request.setAttribute("listTime", listTime);

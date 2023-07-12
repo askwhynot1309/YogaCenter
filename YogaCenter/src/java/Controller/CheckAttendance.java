@@ -5,6 +5,8 @@
 package Controller;
 
 import Dao.ClassDetailDao;
+import Object.Account;
+import Object.ClassDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -17,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,6 +43,13 @@ public class CheckAttendance extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             //int id = Integer.parseInt(request.getParameter("reuseId"));
             ArrayList<String> attendanceStatusList = new ArrayList<>();
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("Trainer");
+            int classid = Integer.parseInt(request.getParameter("class_id"));
+            String date = request.getParameter("Date");
+            Date newDate = Date.valueOf(date);
+            Date current = new Date(System.currentTimeMillis());
+            ClassDetail classdetail = Dao.ClassDetailDao.getCourseExistInClass(classid);
             int j = 0;
 
             while (true) {
@@ -86,17 +96,22 @@ public class CheckAttendance extends HttpServlet {
                     ClassDetailDao dao = new ClassDetailDao();
                     if (dao.checkAttendanceExistence(traineeIdInt, id_classInt, AttendanceDate)) {
                         if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, AttendanceDate, status)) {
-                            request.setAttribute("notification", "Attendance status updated successfully");
+                            if (current.equals(AttendanceDate)) {
+                                int changeStatusCourse = Dao.OrderDao.changeStatusAccount(classdetail.getId_course(), 4);
+                                request.setAttribute("notification", "Attendance status updated successfully");
+                            }
                         }
                     } else {
                         if (dao.checkAttendance(traineeIdInt, id_classInt, AttendanceDate, status)) {
                             request.setAttribute("notification", "Attendance status added successfully");
+
                         } else {
                             request.setAttribute("notification", "Attendance status updated failed");
+
                         }
                     }
                 }
-                request.getRequestDispatcher("/trainerviewschedule").forward(request, response);
+                request.getRequestDispatcher("/request?action=inf&id=" + classid + "&option=trainerClassDetail&date=" + newDate + "&acc=" + account.getIdaccount()).forward(request, response);
             }
             //request.getRequestDispatcher("/trainerviewschedule").forward(request, response);
         }

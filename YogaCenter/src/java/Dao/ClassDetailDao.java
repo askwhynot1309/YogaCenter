@@ -140,6 +140,38 @@ public class ClassDetailDao {
         }
         return kq;
     }
+    
+    public static ArrayList<ClassDetail> getAllClassDetailsForTrainerDistinct(int id) throws Exception {
+        ArrayList<ClassDetail> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name, R.Status, COU.Start_date\n"
+                    + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
+                    + "JOIN Room R ON C.Room_ID = R.Room_ID\n"
+                    + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
+                    + "Where A.Role = 2 and CD.ID_Account = ? ";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int class_id = table.getInt("Class_ID");
+                    String room_name = table.getString("Room_Name");
+                    int id_time = table.getInt("IDtime");
+                    int idaccount = table.getInt("ID_Account");
+                    String account = table.getNString("Name");
+                    int id_course = table.getInt("IDCourse");
+                    int status = table.getInt("Status");
+                    Date datestudy = table.getDate("Start_date");
+                    String course = table.getNString("Course_Name");
+                    ClassDetail classdetails = new ClassDetail(class_id, room_name, id_time, idaccount, datestudy, account, id_course, course);
+                    kq.add(classdetails);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
 
     public static ArrayList<ClassDetail> getAllClassDetailsWithRoomNotActive(Date currentDate) throws Exception {
         ArrayList<ClassDetail> kq = new ArrayList<>();
@@ -600,7 +632,7 @@ public class ClassDetailDao {
         }
         return kq;
     }
-    
+
     public static ArrayList<ClassDetail> getAllClassDetailsByTraineeLearn(int ID_Account) throws Exception {
 
         ArrayList<ClassDetail> kq = new ArrayList<>();
@@ -807,6 +839,44 @@ public class ClassDetailDao {
         }
         return isDelete;
     }
+    
+    public static boolean deleteClassDetailDateInClass(int id_class) {
+        boolean isDelete = false;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "delete ClassDate\n"
+                        + "where Class_ID = ? ";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, id_class);
+                pst.execute();
+                isDelete = true;
+            }
+            cn.close();
+        } catch (Exception e) {
+        }
+        return isDelete;
+    }
+    
+    public static boolean deleteClass(int id_class) {
+        boolean isDelete = false;
+        Connection cn = null;
+        try {
+            cn = DBUtils.getConnection();
+            if (cn != null) {
+                String sql = "delete Class\n"
+                        + "where Class_ID = ? ";
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setInt(1, id_class);
+                pst.execute();
+                isDelete = true;
+            }
+            cn.close();
+        } catch (Exception e) {
+        }
+        return isDelete;
+    }
 
     public static int updateDateTimeRoomWithProblem(int id, int id_room, int id_time, Date date, Date olddate) throws Exception {
         int kq = 0;
@@ -912,7 +982,7 @@ public class ClassDetailDao {
         try {
             cn = DBUtils.getConnection();
             if (cn != null) {
-                String sql = "  SELECT COUNT(distinct ID_Account) as Count\n"
+                String sql = "  SELECT COUNT(cd.ID_Account) as Count\n"
                         + "  FROM ClassDetail cd JOIN Account a ON cd.ID_Account = a.ID_Account\n"
                         + "  GROUP BY cd.Class_ID, a.Role\n"
                         + "  HAVING cd.Class_ID = ? AND a.Role = 3";
@@ -929,7 +999,6 @@ public class ClassDetailDao {
         }
         return num;
     }
-
 
     public static ArrayList<ClassDetail> checkAnyRoomUnactiveHasClass(Date date, int id_room) throws Exception {
         ArrayList<ClassDetail> kq = new ArrayList<>();
@@ -979,6 +1048,30 @@ public class ClassDetailDao {
                     int Choice = table.getInt("Choice");
                     ClassDetail classdetail = new ClassDetail(Class_ID, Room_ID, "", IDtime, DateStudy, Room_ID, "", IDCourse, 0, "", Choice);
                     kq.add(classdetail);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ClassDetail getClassByClassID(int idclass) throws Exception {
+        ClassDetail kq = null;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Class \n"
+                    + "Where Class_ID = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, idclass);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int Class_ID = table.getInt("Class_ID");
+                    int Room_ID = table.getInt("Room_ID");
+                    int IDtime = table.getInt("IDtime");
+                    int IDCourse = table.getInt("IDCourse");
+                    kq = new ClassDetail(Class_ID, Room_ID, IDtime, 1, IDCourse);
                 }
             }
             cn.close();

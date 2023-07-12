@@ -89,10 +89,10 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 50px">No.</th>
-                                        <th style="width: 200px">Name</th>
+                                        <th style="width: 250px">Name</th>
                                         <th style="width: 350px">Title</th>
                                         <th style="width: 150px">Date-send</th>
-                                        <th style="width: 200px">Status</th>
+                                        <th style="width: 150px">Status</th>
                                         <th>Detail</th>
                                     </tr>
                                 </thead>
@@ -104,16 +104,16 @@
                                     <c:forEach var="message" items="${listMessage}" varStatus="loop">
                                         <tr>
                                             <td style="width: 50px">${loop.count}</td>
-                                            <td style="width: 200px">
+                                            <td style="width: 250px">
                                                 <c:forEach var="account" items="${getAllAccount}">
                                                     <c:if test="${account.idaccount == message.fromUserID}">
                                                         ${account.email}
                                                     </c:if>
                                                 </c:forEach>
                                             </td>
-                                            <td style="width: 350px">${message.title}</td>
+                                            <td style="width: 350px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">${message.title}</td>
                                             <td style="width: 150px">${message.dateSend}</td>
-                                            <td style="width: 200px">
+                                            <td style="width: 150px">
                                                 <c:if test="${message.status == 0}">
                                                     <svg xmlns="http://www.w3.org/2000/svg" height="0.625em" viewBox="0 0 512 512" style="fill:#fa0000"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{
                                                             width: 20px;

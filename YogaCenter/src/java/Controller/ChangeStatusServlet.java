@@ -85,7 +85,7 @@ public class ChangeStatusServlet extends HttpServlet {
                     if (changeStatusOrder == 1) {
                         ArrayList<OrderCourse> listCourseInOrder = Dao.OrderDao.getInformationOrder(id);
                         for (OrderCourse orderCourse : listCourseInOrder) {
-                            int changeStatusAccount = Dao.OrderDao.changeStatusAccount(orderCourse.getId_course());
+                            int changeStatusAccount = Dao.OrderDao.changeStatusAccountOrder(orderCourse.getId_order(), orderCourse.getId_course(), 1);
                         }
                         request.getRequestDispatcher("viewbooking").forward(request, response);
                     }

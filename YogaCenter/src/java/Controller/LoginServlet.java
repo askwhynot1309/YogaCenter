@@ -5,11 +5,9 @@
 package Controller;
 
 import Object.Account;
-import Object.ClassDetail;
 import Object.Course;
 import Object.Message;
 import Object.OrderCourse;
-import Object.Room;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -47,11 +45,19 @@ public class LoginServlet extends HttpServlet {
             Date currentdate = new Date(System.currentTimeMillis());
             String newpassword = Utils.HexPassword.HexPassword(password);
             Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);
+            ArrayList<Account> listTrainer = Dao.AccountDao.getAllTrainer();
+            ArrayList<Account> listTrainee = Dao.UserDao.getAllTrainee();
+            for (Account account1 : listTrainee) {
+                int AutoAddInClass = Utils.AutoJoinClassIfOverDay.joinClassAutoIfOverDay(account1.getIdaccount());
+            }
+            for (Account account1 : listTrainer) {
+                int autoRemoveClass = Utils.TrainerAutoCloseClassWhenNoTraineeInCourse.TrainerAutoCloseClassWhenNoTraineeInCourse(account1.getIdaccount());
+            }
+            
             if (accountLogin != null) {
                 if (accountLogin.getStatus() == 0) {
                     switch (accountLogin.getRole()) {
                         case 0:
-                            ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserIDWithNotRead(accountLogin.getIdaccount());
                             ArrayList<Course> newlist = new ArrayList<>();
                             ArrayList<Course> listCourseTraineeSingin = Dao.CourseDao.getCourseHaveTraineeSignInCourse(currentdate);
                             if (listCourseTraineeSingin != null && !listCourseTraineeSingin.isEmpty()) {
@@ -78,6 +84,7 @@ public class LoginServlet extends HttpServlet {
                                     }
                                 }
                             }
+                            ArrayList<Message> listMessage = Dao.MessageDao.getAllMessageByUserIDWithNotRead(accountLogin.getIdaccount());
                             session.setAttribute("Message", listMessage);
                             session.setAttribute("Admin", accountLogin);
                             request.getRequestDispatcher("dashboard").forward(request, response);

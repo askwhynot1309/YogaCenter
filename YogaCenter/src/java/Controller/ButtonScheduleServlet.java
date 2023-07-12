@@ -6,12 +6,12 @@ package Controller;
 
 import Object.Account;
 import Object.Course;
+import Object.OrderCourse;
 import Utils.Get30SlotsByCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +43,7 @@ public class ButtonScheduleServlet extends HttpServlet {
             int id_room = Integer.parseInt(request.getParameter("room"));
             int option = Integer.parseInt(request.getParameter("option"));
             int id_time = Integer.parseInt(request.getParameter("time"));
+            Date current = new Date(System.currentTimeMillis());
             HttpSession session = request.getSession();
             Account account = (Account) session.getAttribute("Admin");
             if(account == null){
@@ -64,6 +65,10 @@ public class ButtonScheduleServlet extends HttpServlet {
                 int insertClass = Dao.ClassDetailDao.insertClassForTeach(id_room, id_time, idaccount, id_course, option);
                 for (Get30SlotsByCourse dateForSlot : list) {
                     int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(insertClass, dateForSlot.getDay());
+                }
+                ArrayList<OrderCourse> listTraineeInCourse = Dao.OrderCourseDao.getTraineeBoughtCourse(id_course);
+                for (OrderCourse orderCourse : listTraineeInCourse) {
+                    boolean insertMessage = Dao.MessageDao.createRequestChangeClass(1, "The admin have set up class for your course. Please choose join class. If it is overdate, the system will set you in class automatically!", orderCourse.getId_account(), 0, current, "Notification");
                 }
                 request.setAttribute("arrangesuccess", "Settup successfully !");
                 request.getRequestDispatcher("schedule").forward(request, response);

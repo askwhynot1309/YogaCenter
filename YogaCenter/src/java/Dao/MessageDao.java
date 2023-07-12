@@ -27,11 +27,11 @@ public class MessageDao {
                     + "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, fromUserID);
-            pst.setString(2, message);
-            pst.setInt(3, toUserID);
-            pst.setDate(4, dateCreate);
-            pst.setInt(5, status);
-            pst.setString(6, title);
+            pst.setString(2, title);
+            pst.setString(3, message);
+            pst.setInt(4, toUserID);
+            pst.setDate(5, dateCreate);
+            pst.setInt(6, status);
             pst.executeUpdate();
             result = true;
         }
@@ -72,7 +72,8 @@ public class MessageDao {
         if (cn != null) {
             String sql = "SELECT *\n"
                     + "FROM [dbo].[Message]\n"
-                    + "WHERE ID_recieveMessage = ?";
+                    + "WHERE ID_recieveMessage = ?\n"
+                    + "Order by ID_Message desc";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, AccountID);
             ResultSet rs = pst.executeQuery();
@@ -129,7 +130,8 @@ public class MessageDao {
         if (cn != null) {
             String sql = "SELECT *\n"
                     + "FROM [dbo].[Message]\n"
-                    + "WHERE ID_recieveMessage = ? and Status = 0 AND Title NOT LIKE 'Change class'";
+                    + "WHERE ID_recieveMessage = ? and Status = 0\n"
+                    + "Order by ID_Message desc";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, AccountID);
             ResultSet rs = pst.executeQuery();
