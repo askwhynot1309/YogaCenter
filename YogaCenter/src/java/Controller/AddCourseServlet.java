@@ -42,7 +42,7 @@ public class AddCourseServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             Account account = (Account) session.getAttribute("Admin");
-            if(account == null){
+            if (account == null) {
                 request.getRequestDispatcher("managecourse").forward(request, response);
             }
             String name = request.getParameter("course_name");
@@ -53,114 +53,113 @@ public class AddCourseServlet extends HttpServlet {
             if (fileName == "") {
                 request.setAttribute("noimage", "message");
                 request.getRequestDispatcher("managecourse").forward(request, response);
-            }
-            String description = request.getParameter("course_description");
-            String objective = request.getParameter("course_object");
-            String summary = request.getParameter("course_summary");
-            BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
-            int course_status = Integer.parseInt(request.getParameter("course_status"));
-            int level = Integer.parseInt(request.getParameter("level"));
-            String datestart = request.getParameter("course_start");
-            int slot = Integer.parseInt(request.getParameter("slot"));
-            Date start = Date.valueOf(datestart);
-            Date close = Utils.CheckDayBeforeOneWeek.getDateBeforeOneWeek(start);
-            Date create = Utils.CheckDayBeforeThreeWeek.getDateBeforeThreeWeek(start);
-            Date currentDate = new Date(System.currentTimeMillis());
-            ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
-            ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            if (Dao.CourseDao.checkTheSameCourse(name, level) != null) {
-                request.setAttribute("listCourse", listCourse);
-                request.setAttribute("listLevel", listLevel);
-                request.setAttribute("theSameName", "message");
-                request.getRequestDispatcher("managecourse").forward(request, response);
             } else {
-                if (level == 0) {
-                    if (listCourse != null && !listCourse.isEmpty()) {
-                        if (listLevel != null && !listLevel.isEmpty()) {
-                            request.setAttribute("listCourse", listCourse);
-                            request.setAttribute("listLevel", listLevel);
-                            request.setAttribute("blank", "Điền đầy đủ các thông tin.");
-                            request.getRequestDispatcher("managecourse").forward(request, response);
+                String description = request.getParameter("course_description");
+                String objective = request.getParameter("course_object");
+                String summary = request.getParameter("course_summary");
+                BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
+                int course_status = Integer.parseInt(request.getParameter("course_status"));
+                int level = Integer.parseInt(request.getParameter("level"));
+                String datestart = request.getParameter("course_start");
+                int slot = Integer.parseInt(request.getParameter("slot"));
+                Date start = Date.valueOf(datestart);
+                Date close = Utils.CheckDayBeforeOneWeek.getDateBeforeOneWeek(start);
+                Date create = Utils.CheckDayBeforeThreeWeek.getDateBefore1Week(start);
+                Date currentDate = new Date(System.currentTimeMillis());
+                ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
+                ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+                if (Dao.CourseDao.checkTheSameCourse(name, level) != null) {
+                    request.setAttribute("listCourse", listCourse);
+                    request.setAttribute("listLevel", listLevel);
+                    request.setAttribute("theSameName", "message");
+                    request.getRequestDispatcher("managecourse").forward(request, response);
+                } else {
+                    if (level == 0) {
+                        if (listCourse != null && !listCourse.isEmpty()) {
+                            if (listLevel != null && !listLevel.isEmpty()) {
+                                request.setAttribute("listCourse", listCourse);
+                                request.setAttribute("listLevel", listLevel);
+                                request.setAttribute("blank", "Điền đầy đủ các thông tin.");
+                                request.getRequestDispatcher("managecourse").forward(request, response);
+                            } else {
+                                request.getRequestDispatcher("managecourse").forward(request, response);
+                            }
                         } else {
-                            request.getRequestDispatcher("managecourse").forward(request, response);
+                            if (listLevel != null && !listLevel.isEmpty()) {
+                                request.setAttribute("listLevel", listLevel);
+                                request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
+                                request.setAttribute("blank", "Điền đầy đủ các thông tin.");
+                                request.getRequestDispatcher("managecourse").forward(request, response);
+                            } else {
+                                request.setAttribute("blank", "Điền đầy đủ các thông tin.");
+                                request.getRequestDispatcher("managecourse").forward(request, response);
+                            }
                         }
                     } else {
-                        if (listLevel != null && !listLevel.isEmpty()) {
-                            request.setAttribute("listLevel", listLevel);
-                            request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
-                            request.setAttribute("blank", "Điền đầy đủ các thông tin.");
-                            request.getRequestDispatcher("managecourse").forward(request, response);
-                        } else {
-                            request.setAttribute("blank", "Điền đầy đủ các thông tin.");
-                            request.getRequestDispatcher("managecourse").forward(request, response);
-                        }
-                    }
-                } else {
-                    if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
-                        if (listCourse != null && !listCourse.isEmpty()) {
-                            if (listLevel != null && !listLevel.isEmpty()) {
-                                request.setAttribute("listCourse", listCourse);
-                                request.setAttribute("listLevel", listLevel);
-                                request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                                request.getRequestDispatcher("managecourse").forward(request, response);
-                            } else {
-                                request.getRequestDispatcher("managecourse").forward(request, response);
-                            }
-                        } else {
-                            if (listLevel != null && !listLevel.isEmpty()) {
-                                request.setAttribute("listLevel", listLevel);
-                                request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
-                                request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                                request.getRequestDispatcher("managecourse").forward(request, response);
-                            } else {
-                                request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                                request.getRequestDispatcher("managecourse").forward(request, response);
-                            }
-                        }
-                    }
-                    else if(create.toLocalDate().isBefore(currentDate.toLocalDate())){
-                        if (listCourse != null && !listCourse.isEmpty()) {
-                            if (listLevel != null && !listLevel.isEmpty()) {
-                                request.setAttribute("listCourse", listCourse);
-                                request.setAttribute("listLevel", listLevel);
-                                request.setAttribute("wrong", "Ngày bắt đầu đã qua");
-                                request.getRequestDispatcher("managecourse").forward(request, response);
-                            } else {
-                                request.getRequestDispatcher("managecourse").forward(request, response);
-                            }
-                        } else {
-                            if (listLevel != null && !listLevel.isEmpty()) {
-                                request.setAttribute("listLevel", listLevel);
-                                request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
-                                request.setAttribute("wrong", "Ngày bắt đầu đã qua");
-                                request.getRequestDispatcher("managecourse").forward(request, response);
-                            } else {
-                                request.setAttribute("expired", "Ngày bắt đầu đã qua");
-                                request.getRequestDispatcher("managecourse").forward(request, response);
-                            }
-                        }
-                    }
-                    else {
-                        int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, objective, summary, start, close, slot, level, course_status);
-                        if (insertCourse == 1) {
+                        if (start.toLocalDate().isBefore(currentDate.toLocalDate())) { // check if start date trước  current date
                             if (listCourse != null && !listCourse.isEmpty()) {
                                 if (listLevel != null && !listLevel.isEmpty()) {
                                     request.setAttribute("listCourse", listCourse);
                                     request.setAttribute("listLevel", listLevel);
-                                    request.setAttribute("success", "Tạo mới khoá học thành công");
+                                    request.setAttribute("expired", "Ngày bắt đầu đã qua");
                                     request.getRequestDispatcher("managecourse").forward(request, response);
                                 } else {
-                                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                    request.getRequestDispatcher("managecourse").forward(request, response);
                                 }
                             } else {
                                 if (listLevel != null && !listLevel.isEmpty()) {
                                     request.setAttribute("listLevel", listLevel);
                                     request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
-                                    request.setAttribute("success", "Tạo mới khoá học thành công");
+                                    request.setAttribute("expired", "Ngày bắt đầu đã qua");
                                     request.getRequestDispatcher("managecourse").forward(request, response);
                                 } else {
-                                    request.setAttribute("success", "Tạo mới khoá học thành công");
-                                    request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                    request.setAttribute("expired", "Ngày bắt đầu đã qua");
+                                    request.getRequestDispatcher("managecourse").forward(request, response);
+                                }
+                            }
+                        } else if (create.toLocalDate().isBefore(currentDate.toLocalDate())) {
+                            if (listCourse != null && !listCourse.isEmpty()) {
+                                if (listLevel != null && !listLevel.isEmpty()) {
+                                    request.setAttribute("listCourse", listCourse);
+                                    request.setAttribute("listLevel", listLevel);
+                                    request.setAttribute("wrong", "Ngày bắt đầu đã qua");
+                                    request.getRequestDispatcher("managecourse").forward(request, response);
+                                } else {
+                                    request.getRequestDispatcher("managecourse").forward(request, response);
+                                }
+                            } else {
+                                if (listLevel != null && !listLevel.isEmpty()) {
+                                    request.setAttribute("listLevel", listLevel);
+                                    request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
+                                    request.setAttribute("wrong", "Ngày bắt đầu đã qua");
+                                    request.getRequestDispatcher("managecourse").forward(request, response);
+                                } else {
+                                    request.setAttribute("expired", "Ngày bắt đầu đã qua");
+                                    request.getRequestDispatcher("managecourse").forward(request, response);
+                                }
+                            }
+                        } else {
+                            int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, objective, summary, start, close, slot, level, course_status);
+                            if (insertCourse == 1) {
+                                if (listCourse != null && !listCourse.isEmpty()) {
+                                    if (listLevel != null && !listLevel.isEmpty()) {
+                                        request.setAttribute("listCourse", listCourse);
+                                        request.setAttribute("listLevel", listLevel);
+                                        request.setAttribute("success", "Tạo mới khoá học thành công");
+                                        request.getRequestDispatcher("managecourse").forward(request, response);
+                                    } else {
+                                        request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                    }
+                                } else {
+                                    if (listLevel != null && !listLevel.isEmpty()) {
+                                        request.setAttribute("listLevel", listLevel);
+                                        request.setAttribute("nulllist", "Không có khoá học nào trong dữ liệu data");
+                                        request.setAttribute("success", "Tạo mới khoá học thành công");
+                                        request.getRequestDispatcher("managecourse").forward(request, response);
+                                    } else {
+                                        request.setAttribute("success", "Tạo mới khoá học thành công");
+                                        request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
+                                    }
                                 }
                             }
                         }

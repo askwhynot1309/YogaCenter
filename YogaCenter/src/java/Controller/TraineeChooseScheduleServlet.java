@@ -34,7 +34,7 @@ public class TraineeChooseScheduleServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             try {
 
@@ -57,6 +57,13 @@ public class TraineeChooseScheduleServlet extends HttpServlet {
                     request.setAttribute("ChangeFail", "You are currently has another class in this time");
                 } else {
                     boolean isUpdate = Dao.ClassDetailDao.updateClassID(id_class, currentClass_ID, idaccount);
+                    int deleteCheckAttendence = Dao.AttendenceDao.deleteOldClassAttendence(currentClass_ID, idaccount);
+                    Course course = Dao.CourseDao.getInformationOfCourse(id_course);
+                    ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), option);
+                    for (Get30SlotsByCourse dateForSlot : list) {
+                        int insertCheckAttendence = Dao.AttendenceDao.insertDayToCheckAttendence(idaccount, id_class, dateForSlot.getDay(), 0);
+                    }
+                    request.setAttribute("message", "message");
                 }
             } else {
                 Course course = Dao.CourseDao.getInformationOfCourse(id_course);
@@ -65,6 +72,7 @@ public class TraineeChooseScheduleServlet extends HttpServlet {
                 for (Get30SlotsByCourse dateForSlot : list) {
                     int insertCheckAttendence = Dao.AttendenceDao.insertDayToCheckAttendence(idaccount, insertClass, dateForSlot.getDay(), 0);
                 }
+                request.setAttribute("message", "message");
             }
             request.getRequestDispatcher("classbooking").forward(request, response);
         }

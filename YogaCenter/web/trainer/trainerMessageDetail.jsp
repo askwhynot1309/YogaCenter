@@ -111,7 +111,7 @@
                         </c:forEach>
                         <h4><strong>Title : </strong><span>${getDetailMessage.title}</span></h4>
                         <h4><strong>Context of message :</strong></h4>
-                        <p>${getDetailMessage.message}</p>
+                        ${getDetailMessage.message}
                     </c:if>
                 </div>
             </div>

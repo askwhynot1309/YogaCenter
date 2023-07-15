@@ -42,21 +42,6 @@
                 z-index: 10000;
             }
 
-            .mess {
-                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
-                background: #fff;
-                color: #222;
-                border: 0;
-                border-radius: 0.25rem;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                border-radius: 20px;
-                transform: translate(-50%, -50%);
-                padding: 20px;
-                z-index: 10000;
-            }
-
             .message::backdrop {
                 background: rgb(0 0 0 / 0.5);
                 opacity: 0;
@@ -124,57 +109,6 @@
                     to right, #00FF00, #00CC00 30%
                     );
             }
-            .hidden {
-                display: none;
-            }
-
-            .mess::backdrop {
-                background: rgb(0 0 0 / 0.5);
-                opacity: 0;
-            }
-            .mess[opening] {
-                animation: slide-up 1000ms forwards, show 500ms forwards;
-            }
-            .mess[closing] {
-                animation: fade-out 500ms forwards;
-            }
-
-            @keyframes show {
-                0% {
-                    opacity: 0;
-                }
-                100% {
-                    opacity: 1;
-                }
-            }
-
-            @keyframes fade-out {
-                0% {
-                    opacity: 1;
-                }
-                100% {
-                    opacity: 0;
-                }
-            }
-
-            @keyframes slide-up {
-                0% {
-                    transform: translateY(100%);
-                }
-                100% {
-                    transform: translateY(0%);
-                }
-            }
-
-            /* extra styling */
-
-            .mess {
-                width: 400px;
-
-                & > * {
-                    margin: 0 0 0.5rem 0;
-                }
-            }
         </style>
     </head>
 
@@ -207,10 +141,7 @@
                     <c:set var="inforClass" value="${requestScope.InforClass}"/>
                     <c:set var="listAttend" value="${requestScope.listAttend}"/>
                     <c:set var="status" value="${requestScope.status}"/>
-                    <c:set var="currentDate" value="${requestScope.currentDate}"/>
-                    <c:set var="check" value="${requestScope.check}"/>
                     <c:set var="message" value="${requestScope.message}"/>
-                    <c:set var="message1" value="${requestScope.message1}"/>
                     <c:if test="${inforClass != null}">
                         <table class="table">
                             <tbody>
@@ -253,23 +184,6 @@
                         <c:if test="${ListTrainee == null}">
                             <p style="text-align: center; font-weight: 700">Do not have any trainees that learn this course !</p>
                         </c:if>
-                        <c:if test="${check == true}">
-                            <button class="btn btn-primary openButton" style="margin-bottom: 20px; float: right">Check Attendence Again</button>
-                            <div id="overlay" class="overlay hidden"></div>
-                            <dialog class="mess" id="message" style="width: 500px">
-                                <form action="/YogaCenter/request" method="POST">
-                                    <h3 style="text-align: center; color: blue">Message</h3>
-                                    <div style="margin-left: 10px"><p>Reason : </p><textarea name="reason" value="" class="input-description"></textarea></div>
-                                    <input name="id" value="${inforClass.id_class}" hidden="">
-                                    <input name="acc" value="${inforClass.idaccount}" hidden="">
-                                    <input name="date" value="${inforClass.date}" hidden="">
-                                    <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px">
-                                        <button class="btn btn-primary" name="action" value="AttendenceAgain" style="width: 100px">Comfirm</button>
-                                        <a class="btn btn-primary btn-close" style="width: 75px; color: white; text-decoration: none">Close</a>
-                                    </div>
-                                </form>
-                            </dialog>  
-                        </c:if>
                         <c:if test="${ListTrainee != null}">
                             <form action="/YogaCenter/request">
                                 <div class="tabel-container">
@@ -293,7 +207,6 @@
                                                             <a href="/YogaCenter/request?action=inf&id=${trainee.idaccount}&option=trainerUserDetail" class="btn btn-primary">Details</a>
                                                         </td>
                                                         <td>
-                                                            <c:if test="${currentDate == true}">
                                                                 <c:forEach var="attend" items="${listAttend}">
                                                                     <c:if test="${attend.id_trainee == trainee.idaccount}">
                                                                         <c:if test="${attend.status == 0}">
@@ -328,7 +241,6 @@
                                                                         </c:if>
                                                                     </c:if>
                                                                 </c:forEach>
-                                                            </c:if>
                                                         </td>
                                                         <td>
                                                             <c:forEach var="attend" items="${listAttend}">
@@ -357,7 +269,7 @@
                                     <div class="text-center mt-3">
                                         <input type="hidden" name="class_id" value="${inforClass.id_class}">
                                         <input type="hidden" name="Date" value="${inforClass.date}">
-                                        <button type="submit" name="action" value="SubmitAttendance" class="btn btn-primary">Submit</button>
+                                        <button type="submit" name="action" value="SubmitAttendanceAgain" class="btn btn-primary">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -366,32 +278,6 @@
                 </div>
             </div>
         </div>
-        <script>
-            const modal = document.querySelector("#message");
-            const closeModal = document.querySelector(".btn-close");
-            const openModal = document.querySelector(".openButton");
-            var overlay = document.getElementById("overlay");
-
-            openModal.addEventListener("click", () => {
-                modal.showModal();
-                overlay.classList.remove("hidden");
-            });
-
-            closeModal.addEventListener("click", () => {
-                modal.setAttribute("closing", "");
-
-                modal.addEventListener(
-                        "animationend",
-                        () => {
-                    modal.removeAttribute("closing");
-                    modal.close();
-                },
-                        {once: true}
-                );
-                overlay.classList.add("hidden");
-            });
-
-        </script>
         <c:if test="${message != null}">
             <div class="notification-success">
                 <div class="content">
@@ -404,21 +290,5 @@
                 notification.timeOut = setTimeout(() => notification.remove(), 5000);
             </script>
         </c:if>
-        <c:if test="${message1 != null}">
-            <div class="notification-success" style="height: 120px">
-                <div class="content">
-                    <div class="title">Success</div>
-                    <span>${message1}</span>
-                </div>
-            </div>
-            <script>
-                let notification = document.querySelector('.notification-success');
-                notification.timeOut = setTimeout(() => notification.remove(), 5000);
-            </script>
-        </c:if>
-        <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
-        <script>
-                CKEDITOR.replace('reason');
-        </script>
     </body>
 </html>

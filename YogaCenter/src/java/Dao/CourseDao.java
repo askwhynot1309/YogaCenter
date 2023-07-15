@@ -95,10 +95,10 @@ public class CourseDao {
         ArrayList<Course> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select distinct c.Course_ID, c.Course_Name, l.Level_Name, c.Close_date\n"
+            String s = "select distinct c.Course_ID, c.Course_Name, l.Level_Name, c.Close_date, c.Start_date\n"
                     + "from BookingDetail bd JOIN Course c ON bd.ID_Course=c.Course_ID JOIN Level l ON c.ID_Level = l.Level_ID\n"
                     + "Where Status_Account = 1\n"
-                    + "Group by c.Course_ID, c.Course_Name, l.Level_Name, c.Close_date\n"
+                    + "Group by c.Course_ID, c.Course_Name, l.Level_Name, c.Close_date, c.Start_date\n"
                     + "Having Count(c.Course_ID) >= 5";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
@@ -108,7 +108,8 @@ public class CourseDao {
                     String course_name = table.getNString("Course_Name");
                     String name_level = table.getNString("Level_Name");
                     Date course_close = table.getDate("Close_date");
-                    Course course = new Course(course_id, course_name, name_level, course_close);
+                    Date course_start = table.getDate("Start_date");
+                    Course course = new Course(course_id, course_name, name_level, course_close, course_start);
                     kq.add(course);
                 }
             }
@@ -745,6 +746,19 @@ public class CourseDao {
                         cn.commit();
                         cn.setAutoCommit(true);
                     }
+                } else if (method == 2) {
+                    Set<String> courseIDs = cart.keySet();
+                    for (String courseID : courseIDs) {
+                        sql = "INSERT [dbo].[BookingDetail] VALUES (?, ?, ?, ?)";
+                        pst = cn.prepareStatement(sql);
+                        pst.setInt(1, orderID);
+                        pst.setInt(2, Integer.parseInt(courseID.trim()));
+                        pst.setInt(3, cart.get(courseID));
+                        pst.setInt(4, 1);
+                        pst.executeUpdate();
+                        cn.commit();
+                        cn.setAutoCommit(true);
+                    }
                 } else {
                     Set<String> courseIDs = cart.keySet();
                     for (String courseID : courseIDs) {
@@ -853,11 +867,12 @@ public class CourseDao {
             String s = "select C.Course_ID\n"
                     + "from Course C JOIN BookingDetail BD ON C.Course_ID = BD.ID_Course\n"
                     + "JOIN BookingCourse BC ON BC.OrderID = BD.Order_ID\n"
-                    + "Where C.Close_date = ? and BD.Status_Account = 1\n"
+                    + "Where C.Close_date <= ? and C.Start_date >= ? and BD.Status_Account = 1\n"
                     + "Group by C.Course_ID\n"
                     + "Having Count(BC.ID_Trainee) >= 5";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
+            pst.setDate(2, date);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {

@@ -205,19 +205,57 @@ public class AttendenceDao {
         return attendList;
     }
 
-    public static int changeDateToCheckAttendence(Date date, int id) throws Exception {
+    public static int changeDateToCheckAttendence(Date date, int idold, Date olddate, int idnew) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "Update CheckAttendance\n"
-                    + "Set AttendanceDate = ?\n"
-                    + "Where ID_Class = ?";
+                    + "Set AttendanceDate = ?, ID_Class = ?\n"
+                    + "Where ID_Class = ? and AttendanceDate = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
-            pst.setInt(2, id);
+            pst.setInt(2, idnew);
+            pst.setInt(3, idold);
+            pst.setDate(4, olddate);
             kq = pst.executeUpdate();
             cn.close();
         }
         return kq;
+    }
+
+    public static Date getFinalDateClass(int classid) throws Exception {
+        Date newdate = new Date(System.currentTimeMillis());
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Select Top 1 DateStudy\n"
+                    + "from ClassDate\n"
+                    + "Where Class_ID = ?\n"
+                    + "Order by DateStudy desc";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, classid);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    newdate = table.getDate("DateStudy");
+                }
+            }
+            cn.close();
+        }
+        return newdate;
+    }
+
+    public static int deleteOldClassAttendence(int currentClass_ID, int idaccount) throws Exception {
+        int check = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Delete CheckAttendance\n"
+                    + "Where ID_Class = ? and  ID_Trainee = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, currentClass_ID);
+            pst.setInt(2, idaccount);
+            check = pst.executeUpdate();
+            cn.close();
+        }
+        return check;
     }
 }

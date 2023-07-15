@@ -140,7 +140,7 @@ public class ClassDetailDao {
         }
         return kq;
     }
-    
+
     public static ArrayList<ClassDetail> getAllClassDetailsForTrainerDistinct(int id) throws Exception {
         ArrayList<ClassDetail> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
@@ -252,6 +252,22 @@ public class ClassDetailDao {
             }
             cn.commit();
             cn.setAutoCommit(true);
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static int insertNewClassWhenChangeClass(int room_id, int id_time, int id_course, int choice) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "insert into Class(Room_ID, IDtime, IDCourse, Choice) values (?,?,?,?)";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, room_id);
+            pst.setInt(2, id_time);
+            pst.setInt(3, id_course);
+            pst.setInt(4, choice);
+            kq = pst.executeUpdate();
             cn.close();
         }
         return kq;
@@ -426,7 +442,7 @@ public class ClassDetailDao {
         ClassDetail kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name\n"
+            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name, C.Choice\n"
                     + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
@@ -445,8 +461,9 @@ public class ClassDetailDao {
                     int idaccount = table.getInt("ID_Account");
                     String account = table.getNString("Name");
                     int id_course = table.getInt("IDCourse");
+                    int choice = table.getInt("Choice");
                     String course = table.getNString("Course_Name");
-                    kq = new ClassDetail(class_id, room_name, id_time, idaccount, datestudy, account, id_course, course);
+                    kq = new ClassDetail(class_id, room_name, id_time, idaccount, datestudy, account, id_course, course, choice);
                 }
             }
             cn.close();
@@ -683,18 +700,17 @@ public class ClassDetailDao {
         return Room_name;
     }
 
-    public static ClassDetail checkRoomTimeDateHasTheSame(int id_room, int id_time, Date date) throws Exception {
+    public static ClassDetail checkRoomTimeDateHasTheSame(int id_class, Date date) throws Exception {
         ClassDetail kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select c.Class_ID, r.Room_Name, c.IDtime, cd.DateStudy\n"
                     + "from Class c\n"
                     + "JOIN Room r ON c.Room_ID = r.Room_ID JOIN ClassDate cd ON c.Class_ID = cd.Class_ID\n"
-                    + "Where c.Room_ID = ? and c.IDtime = ? and cd.DateStudy = ?";
+                    + "Where c.Class_ID = ? and cd.DateStudy = ?";
             PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, id_room);
-            pst.setInt(2, id_time);
-            pst.setDate(3, date);
+            pst.setInt(1, id_class);
+            pst.setDate(2, date);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
@@ -783,17 +799,6 @@ public class ClassDetailDao {
             pst.setInt(2, currentClass_ID);
             pst.setInt(3, Trainee_ID);
             pst.executeUpdate();
-
-            sql = "";
-            sql = "UPDATE [dbo].[CheckAttendance]\n"
-                    + "SET ID_Class = ?\n"
-                    + "WHERE ID_Class = ? AND ID_Trainee = ?";
-            pst = cn.prepareStatement(sql);
-            pst.setInt(1, newClass_ID);
-            pst.setInt(2, currentClass_ID);
-            pst.setInt(3, Trainee_ID);
-            pst.executeUpdate();
-
             isUpdated = true;
         }
         cn.close();
@@ -839,7 +844,7 @@ public class ClassDetailDao {
         }
         return isDelete;
     }
-    
+
     public static boolean deleteClassDetailDateInClass(int id_class) {
         boolean isDelete = false;
         Connection cn = null;
@@ -858,7 +863,7 @@ public class ClassDetailDao {
         }
         return isDelete;
     }
-    
+
     public static boolean deleteClass(int id_class) {
         boolean isDelete = false;
         Connection cn = null;
@@ -878,42 +883,19 @@ public class ClassDetailDao {
         return isDelete;
     }
 
-    public static int updateDateTimeRoomWithProblem(int id, int id_room, int id_time, Date date, Date olddate) throws Exception {
+    public static int deleteDateTimeRoomWithProblemAndChange(int id, Date olddate, int idnew, Date newdate) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
-        cn.setAutoCommit(false);
         if (cn != null) {
-            String s = "update Class\n"
-                    + "set Room_ID = ?, IDtime = ?\n"
-                    + "where Class_ID = ?";
+            String s = "Update ClassDate\n"
+                    + "Set Class_ID = ?, DateStudy = ? \n"
+                    + "where Class_ID = ? and DateStudy = ?";
             PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, id_room);
-            pst.setInt(2, id_time);
+            pst.setInt(1, idnew);
+            pst.setDate(2, newdate);
+            pst.setDate(4, olddate);
             pst.setInt(3, id);
             kq = pst.executeUpdate();
-            if (kq == 1) {
-                String s2 = "Select ClassDate_ID\n"
-                        + "from ClassDate\n"
-                        + "Where Class_ID = ? and DateStudy = ?";
-                PreparedStatement pst2 = cn.prepareStatement(s2);
-                pst2.setInt(1, id);
-                pst2.setDate(2, olddate);
-                ResultSet table = pst2.executeQuery();
-                if (table != null) {
-                    while (table.next()) {
-                        int classDate_ID = table.getInt("ClassDate_ID");
-                        String s3 = "Update ClassDate\n"
-                                + "Set DateStudy = ?\n"
-                                + "Where ClassDate_ID = ?";
-                        PreparedStatement pst3 = cn.prepareStatement(s3);
-                        pst3.setDate(1, date);
-                        pst3.setInt(2, classDate_ID);
-                        kq = pst3.executeUpdate();
-                    }
-                }
-            }
-            cn.commit();
-            cn.setAutoCommit(true);
             cn.close();
         }
         return kq;

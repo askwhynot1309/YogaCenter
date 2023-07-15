@@ -104,7 +104,7 @@
                             </table>
                         </div>
                         <div style="float: right; width: 350px; border: 5px solid black; padding: 10px">
-                            <img src="${user.image}" height="200px" width="200px" id="img" style="margin-left: 20%">
+                            <img src="img/${user.image}" height="200px" width="200px" id="img" style="margin-left: 20%">
                         </div>
                     </c:if>
                 </div>

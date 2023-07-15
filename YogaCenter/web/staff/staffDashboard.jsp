@@ -69,7 +69,7 @@
                     <c:import url="staffMenu.jsp"/>
                 </div>
                 <div class="col-lg-9" style="padding-right: 100px; margin-left: 350px">
-                    <c:set var="message" value="${message}"/>
+                    <c:set var="message" value="${requestScope.message}"/>
                     <h2 class="text-center" style="margin-top: 20px;">Yoga Center Statistics</h2>
                     <div class="d-flex justify-content-center" style="margin-top: 30px;">
                         <div class="row justify-content-between flex-wrap">
@@ -142,7 +142,19 @@
                     </div>
                 </div>
             </div>
-
+            <c:if test="${message != null}">
+                <div class="notification-success" style="height: 100px">
+                    <div class="content">
+                        <div class="title">Notification</div>
+                        <span>There are some course in not active room, you need to change class now!!!!</span>
+                    </div>
+                    <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+                </div>
+                <script>
+                    let notification = document.querySelector('.notification-success');
+                    notification.timeOut = setTimeout(() => notification.remove(), 5000);
+                </script>
+            </c:if>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
     </body>
     <script>

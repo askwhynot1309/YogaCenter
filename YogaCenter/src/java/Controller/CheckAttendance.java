@@ -48,7 +48,6 @@ public class CheckAttendance extends HttpServlet {
             int classid = Integer.parseInt(request.getParameter("class_id"));
             String date = request.getParameter("Date");
             Date newDate = Date.valueOf(date);
-            Date current = new Date(System.currentTimeMillis());
             ClassDetail classdetail = Dao.ClassDetailDao.getCourseExistInClass(classid);
             int j = 0;
 
@@ -94,19 +93,17 @@ public class CheckAttendance extends HttpServlet {
                     }
                     //System.out.println(attendanceStatus + classDate + traineeId);
                     ClassDetailDao dao = new ClassDetailDao();
-                    if (dao.checkAttendanceExistence(traineeIdInt, id_classInt, AttendanceDate)) {
+                    if (newDate.equals(Dao.AttendenceDao.getFinalDateClass(classid))) {
                         if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, AttendanceDate, status)) {
-                            if (current.equals(AttendanceDate)) {
                                 int changeStatusCourse = Dao.OrderDao.changeStatusAccount(classdetail.getId_course(), 4);
-                                request.setAttribute("notification", "Attendance status updated successfully");
-                            }
+                                request.setAttribute("message", "Attendance status updated successfully");
                         }
                     } else {
-                        if (dao.checkAttendance(traineeIdInt, id_classInt, AttendanceDate, status)) {
-                            request.setAttribute("notification", "Attendance status added successfully");
+                        if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, AttendanceDate, status)) {
+                            request.setAttribute("message", "Attendance status added successfully");
 
                         } else {
-                            request.setAttribute("notification", "Attendance status updated failed");
+                            request.setAttribute("message", "Attendance status updated failed");
 
                         }
                     }

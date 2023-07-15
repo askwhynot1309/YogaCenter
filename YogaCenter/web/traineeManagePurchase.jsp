@@ -313,6 +313,11 @@
                                                             if (isFirstRow) {%>
                                                 <th rowspan="<%= orderDetail.size()%>">Bank Transfer</td>
                                                     <% }
+                                                            break;
+                                                        case 2:
+                                                            if (isFirstRow) {%>
+                                                <th rowspan="<%= orderDetail.size()%>">Account money</td>
+                                                    <% }
                                                                 break;
                                                         }
 

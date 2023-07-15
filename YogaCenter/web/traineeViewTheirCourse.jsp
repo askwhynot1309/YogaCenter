@@ -194,7 +194,7 @@
                                                                 <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">${course.name_course}</a></th>
                                                                 <th>${course.date_start}</th>
                                                                 <th>${course.slot}</th>
-                                                                <th><a href="/YogaCenter/request?action=EditSchedule&courseID=${course.idCourse}">Edit Schedule</a></th>
+                                                                <th><a href="/YogaCenter/request?action=EditSchedule&courseID=${course.idCourse}">Enroll now</a></th>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>

@@ -77,7 +77,7 @@ public class TraineeSaveOrderServlet extends HttpServlet {
                             case 0: {
                                 int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
                                 status = 1;
-                                method = 1;
+                                method = 2;
                                 HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
                                 boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status, totalmoney);
                                 cart.clear();
@@ -97,7 +97,7 @@ public class TraineeSaveOrderServlet extends HttpServlet {
                             case 1: {
                                 int updateFee = Dao.AccountDao.updateMoneyOfAccount(accountTrainee.getIdaccount(), money);
                                 status = 1;
-                                method = 1;
+                                method = 2;
                                 HashMap<String, Integer> cart = (HashMap<String, Integer>) session.getAttribute("cart");
                                 boolean inserted = CourseDao.InsertBooking(ID_Trainee, method, cart, status, totalmoney);
                                 cart.clear();

@@ -368,6 +368,18 @@
         <servlet-name>ChangeAvatarServlet</servlet-name>
         <servlet-class>Controller.ChangeAvatarServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AttendenceAgainServlet</servlet-name>
+        <servlet-class>Controller.AttendenceAgainServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OpenFormServlet</servlet-name>
+        <servlet-class>Controller.OpenFormServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitAttendanceAgainServlet</servlet-name>
+        <servlet-class>Controller.SubmitAttendanceAgainServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -726,7 +738,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AboutUsServlet</servlet-name>
-        <url-pattern>/AboutUsServlet</url-pattern>
+        <url-pattern>/about</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeCancelOrderServlet</servlet-name>
@@ -735,6 +747,18 @@
     <servlet-mapping>
         <servlet-name>ChangeAvatarServlet</servlet-name>
         <url-pattern>/ChangeAvatarServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AttendenceAgainServlet</servlet-name>
+        <url-pattern>/AttendenceAgainServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OpenFormServlet</servlet-name>
+        <url-pattern>/OpenFormServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitAttendanceAgainServlet</servlet-name>
+        <url-pattern>/SubmitAttendanceAgainServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -39,7 +39,7 @@ public class InformationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int id = Integer.parseInt(request.getParameter("id"));
             String option = request.getParameter("option");
@@ -134,6 +134,7 @@ public class InformationServlet extends HttpServlet {
                     java.sql.Date sqlDate = new java.sql.Date(trainerinformation.getDate().getTime());
                     java.time.LocalDate localDate = sqlDate.toLocalDate();
                     boolean check = currentDate.equals(localDate);
+                    boolean checkAttendAgain = currentDate.isAfter(localDate);
                     if (trainerlistTrainee.isEmpty()) {
                         request.setAttribute("InforClass", trainerinformation);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
@@ -141,8 +142,28 @@ public class InformationServlet extends HttpServlet {
                         request.setAttribute("ListTrainee", trainerlistTrainee);
                         request.setAttribute("InforClass", trainerinformation);
                         request.setAttribute("currentDate", check);
+                        request.setAttribute("check", checkAttendAgain);
                         request.setAttribute("listAttend", listAttend);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
+                    }
+                    break;
+                case "trainerCheckAttendenceAgain":
+                    Date dateagain = Date.valueOf(request.getParameter("date"));
+                    java.time.LocalDate currentDateAgain = java.time.LocalDate.now();
+                    int trainer_id_account_again = Integer.parseInt(request.getParameter("acc"));
+                    ClassDetail trainerinformationagain = Dao.ClassDetailDao.getClassDetailById(id, dateagain, trainer_id_account_again);
+                    ArrayList<Account> trainerlistTraineeAgain = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformationagain.getTime(), trainerinformationagain.getClass_name(), trainerinformationagain.getDate(), trainerinformationagain.getId_course());
+                    ArrayList<AccountAttendence> listAttendAgain = Dao.AttendenceDao.getAccountToAttendence(trainerinformationagain.getDate());
+                    java.sql.Date sqlDateAgain = new java.sql.Date(trainerinformationagain.getDate().getTime());
+                    java.time.LocalDate localDateAgain = sqlDateAgain.toLocalDate();
+                    if (trainerlistTraineeAgain.isEmpty()) {
+                        request.setAttribute("InforClass", trainerinformationagain);
+                        request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("ListTrainee", trainerlistTraineeAgain);
+                        request.setAttribute("InforClass", trainerinformationagain);
+                        request.setAttribute("listAttend", listAttendAgain);
+                        request.getRequestDispatcher("trainer/trainerCheckAttendenceAgain.jsp").forward(request, response);
                     }
                     break;
                 case "infUser":
@@ -183,6 +204,12 @@ public class InformationServlet extends HttpServlet {
                 case "staffdetailmessage":
                     boolean staffChangeStatus = Dao.MessageDao.updateStatusRequest(2, id);
                     if (staffChangeStatus) {
+                        if ("Check Attendence Again".equals(Dao.MessageDao.getTilte(id))) {
+                            ArrayList<Account> listStaff = Dao.AccountDao.getAllStaff();
+                            for (Account account1 : listStaff) {
+                                boolean staffsChangeStatus = Dao.MessageDao.updateStatusRequestStaff(2, account1.getIdaccount());
+                            }
+                        }
                         Message getDetailMessage = Dao.MessageDao.getMessageByIdMessage(id);
                         ArrayList<Account> getAllAccount = Dao.AccountDao.getAllAccount();
                         request.setAttribute("getAllAccount", getAllAccount);

@@ -29,7 +29,6 @@
             }
             .course-card .course-image {
                 max-width: 100%;
-                height: auto;
                 object-fit: cover;
             }
             .course-card .course-details {
@@ -326,7 +325,7 @@
                         <div class="col-md-4">
                             <div class="course-card-container">
                                 <div class="course-card" style="height: 480px; position: relative">
-                                    <img src="img/${course.img_course}" alt="Course Image" class="course-image">
+                                    <img src="img/${course.img_course}" alt="Course Image" class="course-image" height="175px" width="310px">
                                     <div class="course-details">
                                         <h4 class="course-title">${course.name_course}</h4>
                                         <p><strong>Fee:</strong> ${course.fee_course}</p>

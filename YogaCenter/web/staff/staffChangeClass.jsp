@@ -141,8 +141,14 @@
                                 </div>
                             </div>
                             <input name="id" value="${InforClass.id_class}" hidden="">
+                            <input name="id_course" value="${InforClass.id_course}" hidden="">
+                            <input name="choice" value="${InforClass.choice}" hidden="">
+                            <input name="idaccount" value="${InforClass.idaccount}" hidden="">
                             <button value="ButtonChangeroom" name="action" class="btn-update">Change class</button>
                         </form>
+                    </c:if>
+                    <c:if test="${InforClass == null}">
+                        <h3 style="text-align: center; color: #00CC00">You had changed this class in new class. Return back to view schedule.</h3>
                     </c:if>
                 </div>
             </div>
@@ -177,7 +183,7 @@
             <div class="notification">
                 <div class="content">
                     <div class="title">Error</div>
-                    <span>Some fields has the same time or room !</span>
+                    <span>In that date has had class !</span>
                 </div>
                 <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
             </div>

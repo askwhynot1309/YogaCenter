@@ -12,10 +12,10 @@ import java.util.Calendar;
  * @author ADMIN
  */
 public class CheckDayBeforeThreeWeek {
-    public static Date getDateBeforeThreeWeek(Date datestatrt){
+    public static Date getDateBefore1Week(Date datestatrt){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(datestatrt);
-        calendar.add(Calendar.DAY_OF_YEAR, -21);
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
         Date sevenDaysBefore = new Date(calendar.getTimeInMillis());
         return sevenDaysBefore;
     }

@@ -65,6 +65,33 @@ public class MessageDao {
         }
         return messList;
     }
+    
+    public static ArrayList<Message> getAllMessageToUpdateWhenTheSameTitleCheckAttendenceAgain() throws Exception {
+        ArrayList<Message> messList = new ArrayList<>();
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "SELECT *\n"
+                    + "FROM [dbo].[Message]\n"
+                    + "WHERE Title = 'Check Attendence Again'";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    int messageID = rs.getInt("ID_Message");
+                    int fromUserID = rs.getInt("ID_sendMessage");
+                    String message = rs.getString("Message");
+                    String title = rs.getString("Title");
+                    int toUserID = rs.getInt("ID_recieveMessage");
+                    Date datesend = rs.getDate("DateCreate");
+                    int status = rs.getInt("Status");
+                    Message messObj = new Message(messageID, fromUserID, message, toUserID, datesend, status, title);
+                    messList.add(messObj);
+                }
+            }
+            cn.close();
+        }
+        return messList;
+    }
 
     public static ArrayList<Message> getAllMessageByUserID(int AccountID) throws Exception {
         ArrayList<Message> messList = new ArrayList<>();
@@ -196,6 +223,22 @@ public class MessageDao {
         }
         return isUpdated;
     }
+    
+    public static boolean updateStatusRequestStaff(int newStatus, int receive) throws Exception {
+        boolean isUpdated = false;
+        Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "  UPDATE [dbo].[Message]\n"
+                    + "  SET [Status] = ?\n"
+                    + "  WHERE [ID_recieveMessage] = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, newStatus);
+            pst.setInt(2, receive);
+            pst.executeUpdate();
+            isUpdated = true;
+        }
+        return isUpdated;
+    }
 
     public static boolean changeClassByRequest(int fromTraineeID, int fromClassID, int toTraineeID, int toClassID) throws Exception {
         boolean isUpdated = false;
@@ -286,5 +329,25 @@ public class MessageDao {
             cn.close();
         }
         return kq;
+    }
+    
+    public static String getTilte(int id) throws Exception{
+        String check = "";
+         Connection cn = DBUtils.getConnection();
+        if (cn != null) {
+            String sql = "Select Title\n"
+                    + "From Message\n"
+                    + "Where ID_Message = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    check = rs.getNString("Title");
+                }
+            }
+            cn.close();
+        }
+        return check;
     }
 }

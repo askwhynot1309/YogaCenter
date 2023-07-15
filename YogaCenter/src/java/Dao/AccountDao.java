@@ -503,16 +503,18 @@ public class AccountDao {
         return kq;
     }
 
-    public static ArrayList<Account> GetAllTraineeAndTrainerinThisClass(int id, Date olddate) throws Exception {
+    public static ArrayList<Account> GetAllTraineeinThisClass(int id, Date olddate) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select *\n"
-                    + "from ClassDetail CD JOIN ClassDate CDATE ON CD.Class_ID = CDATE.Class_ID\n"
-                    + "Where CD.Class_ID = ? AND CDATE.DateStudy = ?";
+            String s = "select CDE.ID_Account\n"
+                    + "from Class C JOIN ClassDate CD ON C.Class_ID = CD.Class_ID\n"
+                    + "JOIN ClassDetail CDE ON CDE.Class_ID = C.Class_ID\n"
+                    + "Join Account A ON A.ID_Account = CDE.ID_Account\n"
+                    + "Where A.Role = 3 And CD.DateStudy = ? and C.Class_ID = ?";
             PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, id);
-            pst.setDate(2, olddate);
+            pst.setInt(2, id);
+            pst.setDate(1, olddate);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {

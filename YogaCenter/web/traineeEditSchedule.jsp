@@ -282,7 +282,7 @@
                                                                 <input type="hidden" name="id_room" value="<%=classDetails.getId_room()%>">
                                                                 <input type="hidden" name="option" value="<%=classDetails.getChoice()%>">
                                                                 <input type="hidden" name="id_time" value="<%=classDetails.getTime()%>">
-                                                                <button class="w3-button" type="submit" name="action" value="traineeChooseClass">Choose</button>
+                                                                <button class="w3-button" type="submit" name="action" value="traineeChooseClass">Join</button>
                                                             </form>
                                                             <%
                                                                 }

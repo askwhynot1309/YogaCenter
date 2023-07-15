@@ -8,7 +8,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="Dao.AttendenceDao"%>
 <!DOCTYPE html>
-<html>
+<html style="overflow-y: scroll">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="css/admin/admin-schedule.css">
         <link rel="stylesheet" href="css/admin/admin-schedule-setup.css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="css/admin/admin-employee-add.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <title>Trainee Page</title>
     </head>
@@ -200,7 +201,8 @@
                         <div class="row">
                             <c:set var="listDays" value="${requestScope.listDay}" />
                             <c:set var="listClass" value="${requestScope.listClass}" />
-                            <c:set var="currentweek" value="${requestScope.currentweek}" />
+                            <c:set var="currentweek" value="${requestScope.currentweek}"/>
+                            <c:set var="message" value="${message}"/>
                             <c:if test="${listDays != null}">
                                 <c:if test="${currentweek != null}">
                                     <c:if test="${listClass != null}">
@@ -303,7 +305,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -325,7 +327,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -347,7 +349,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -369,7 +371,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if> 
                                                                                 </c:when>
@@ -391,7 +393,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -413,7 +415,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -440,7 +442,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -462,7 +464,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if> 
                                                                                 </c:when>
@@ -484,7 +486,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -506,7 +508,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -528,7 +530,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -550,7 +552,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -572,7 +574,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -600,7 +602,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -622,7 +624,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -644,7 +646,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -666,7 +668,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if> 
                                                                                 </c:when>
@@ -688,7 +690,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -710,7 +712,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -732,7 +734,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -759,7 +761,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -781,7 +783,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -803,7 +805,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -825,7 +827,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -847,7 +849,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -869,7 +871,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -891,7 +893,7 @@
                                                                                     <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                   <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -1040,7 +1042,18 @@
                 </div>
             </div>
         </div>
-
+        <c:if test="${message != null}">
+            <div class="notification-success" style="height: 100px; margin-top: 100px">
+                <div class="content">
+                    <div class="title">Notification</div>
+                    <span>Join class successfully.</span>
+                </div>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification-success');
+                notification.timeOut = setTimeout(() => notification.remove(), 5000);
+            </script>
+        </c:if>
         <script>
             var scheduleTable = document.getElementsByClassName("table-con");
             var currentWeek = findCurrentWeek();

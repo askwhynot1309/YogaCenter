@@ -7,14 +7,10 @@ package Controller;
 import Object.Account;
 import Object.ClassDetail;
 import Object.Course;
-import Object.Room;
-import Object.Time;
-import Utils.DisplayAllDaysByWeek;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.sql.Date;
-import java.util.List;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ADMIN
  */
-public class ViewScheduleServlet extends HttpServlet {
+public class AttendenceAgainServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,30 +36,18 @@ public class ViewScheduleServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            List<List<DisplayAllDaysByWeek>> list = Utils.DisplayAllDaysByWeek.generateCalendarDates(2023, 5, 2023, 12);
-            List<DisplayAllDaysByWeek> currentweek = Utils.GetWeekCurrent.getWeekCurrent(list);
-            request.setAttribute("currentweek", currentweek);
-            ArrayList<Course> newCourseList = new ArrayList<>();
-            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetails();
-            Date current = new Date(System.currentTimeMillis());
-            if (listClass != null && !listClass.isEmpty()) {
-                request.setAttribute("listClass", listClass);
+            int classid = Integer.parseInt(request.getParameter("id"));
+            Date date = Date.valueOf(request.getParameter("date"));
+            int idaccount = Integer.parseInt(request.getParameter("acc"));
+            String reason = request.getParameter("reason");
+            ClassDetail classdetail = Dao.ClassDetailDao.getClassByClassID(classid);
+            Course course = Dao.CourseDao.getInformationOfCourse(classdetail.getId_course());
+            ArrayList<Account> listStaff = Dao.AccountDao.getAllStaff();
+            for (Account account : listStaff) {
+                boolean insertMessageToStaff = Dao.MessageDao.createRequestChangeClass(idaccount, "I need to check attendence again in class : " + course.getName_course() + ".</p><br><p>Idclass : " + classdetail.getId_class() + ".</p><br><p>Date : " + date + ".</p><br><p>Reason : " + reason + ".</p>", account.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Check Attendence Again");
             }
-            ArrayList<Account> listTrainer = Dao.AccountDao.getAllTrainer();
-            ArrayList<Room> listRoom = Dao.RoomDao.getAllRoomActive();
-            ArrayList<Time> listTime = Dao.TimeDao.getAllTime();
-            ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseThatTraineeOrder();
-            for (Course course : listCourse) {
-                if(current.equals(course.getDate_close()) || current.after(course.getDate_close()) && current.before(course.getDate_start())){
-                    newCourseList.add(course);
-                }
-            }
-            request.setAttribute("listCourse", newCourseList);
-            request.setAttribute("listTrainer", listTrainer);
-            request.setAttribute("listRoom", listRoom);
-            request.setAttribute("listTime", listTime);
-            request.setAttribute("listDay", list);
-            request.getRequestDispatcher("admin/adminManageSchedule.jsp").forward(request, response);
+            request.setAttribute("message1", "The system has sent your requirement to staff. Please waiting to check attendence again.");
+            request.getRequestDispatcher("/request?action=inf&id=" + classid + "&option=trainerClassDetail&date=" + date + "&acc=" + idaccount).forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

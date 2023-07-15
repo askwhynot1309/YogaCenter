@@ -25,7 +25,7 @@
             <nav class="navbar" style="font-size: 25px; font-weight: 700;">
                 <a href="/YogaCenter/home">Home</a>
                 <a href="/YogaCenter/course">Course</a>
-                <a href="/YogaCenter/AboutUsServlet">About</a>
+                <a href="/YogaCenter/about">About</a>
                 <a href="contactUs.jsp">Contact</a>
             </nav>
 

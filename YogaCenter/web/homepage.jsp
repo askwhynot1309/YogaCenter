@@ -183,7 +183,9 @@
                     <div class="inner-content">
                         <h1>Yoga class</h1>
                         <p>As a prestigious Yoga studio in Vietnam with more than 60,000 students to choose from.</p>
+                        <c:if test="${account == null}">
                         <a href="register.jsp">Register now</a>
+                        </c:if>
                     </div>
                 </div>
             </div>
@@ -194,8 +196,8 @@
             <div class="slider">
                 <div class="list">
                     <c:forEach var="course" items="${list4Course}">
-                        <div style="background-image: url('img/${course.img_course}'); background-size: cover; opacity: 0.8" class="item">
-                            <div style="margin-top: 350px; color: white; padding: 20px; width: 500px; background-color: rgba(0, 0, 0, 0.61); backdrop-filter: blur(5px); height: 270px">
+                        <div style="background-image: url('img/${course.img_course}'); background-size: 1300px 650px; background-repeat: no-repeat; opacity: 0.8" class="item">
+                            <div style="margin-top: 350px; color: white; padding: 20px; width: 600px; background-color: rgba(0, 0, 0, 0.61); backdrop-filter: blur(5px); height: 270px">
                                 <h5><strong>${course.name_course}</strong></h5>
                                 <p>${course.summary}</p>
                                 <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}" style="width: 200px; float: left" >
@@ -250,7 +252,7 @@
                         <h2>BEST <br> INSTRUCTOR</h2>
                         <p>The company itself is a very successful company. Rejecting, when not! 
                             It will happen that he who suffers the thing itself, the fault of the truth </p>
-                        <a href="AboutUs.jsp">Read more</a>
+                        <a href="/YogaCenter/about">Read more</a>
                     </div>
 
                 </div>
@@ -273,7 +275,7 @@
                         <h2>NEW<br> EXPERIENCE</h2>
                         <p>The company itself is a very successful company. Rejecting, when not! It will happen who
                             the thing itself, the fault of the truth </p>
-                        <a href="homepage/aboutUs.jsp">Read more</a>
+                        <a href="/YogaCenter/about">Read more</a>
                     </div>
 
                 </div>

@@ -20,9 +20,9 @@ public class AutoJoinClassIfOverDay {
         int kq = 0;
         ArrayList<ClassDetail> listClassDetail = Dao.ClassDetailDao.getAllClassDetails();
         ArrayList<OrderCourse> listCourseThatAdminSetUp = Dao.OrderCourseDao.getAllCourseTraineeLearn(idaccount);
-        for (ClassDetail classDetail : listClassDetail) {
-            for (OrderCourse orderCourse : listCourseThatAdminSetUp) {
-                if (orderCourse.getCourse_start().equals(currentDate) && Dao.ClassDetailDao.checkTraineeIDInClass(orderCourse.getId_course(), idaccount, classDetail.getTime(), classDetail.getId_room(), classDetail.getChoice()) == 0) {
+        for (OrderCourse orderCourse : listCourseThatAdminSetUp) {
+            for (ClassDetail classDetail : listClassDetail) {
+                if (orderCourse.getCourse_start().equals(currentDate) && Dao.ClassDetailDao.checkTraineeIDInClass(orderCourse.getId_course(), idaccount, classDetail.getTime(), classDetail.getId_room(), classDetail.getChoice()) == 0 && Dao.ClassDetailDao.checkNumTraineeInAClass(classDetail.getId_class()) <= 30) {
                     int insertAutoTraineeInClass = Dao.ClassDetailDao.insertClassForLearn(classDetail.getId_room(), classDetail.getTime(), idaccount, orderCourse.getId_course(), classDetail.getChoice());
                     boolean insertMessage = Dao.MessageDao.createRequestChangeClass(1, "The system added you in class with course name : " + orderCourse.getName_course() + " automatically. Please view schedule to know your schedule.", idaccount, 0, currentDate, "Join class");
                     kq = 1;

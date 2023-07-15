@@ -24,7 +24,7 @@ public class ClassDetail implements Serializable{
     private int id_course;
     private int status;
     private String course;
-    private int Choice;
+    private int choice;
     
     public ClassDetail() {
     }
@@ -67,6 +67,18 @@ public class ClassDetail implements Serializable{
         this.course = course;
     }
 
+    public ClassDetail(int id_detail, String class_name, int time, int idaccount, Date date, String account, int id_course, String course, int choice) {
+        this.id_class = id_detail;
+        this.class_name = class_name;
+        this.time = time;
+        this.idaccount = idaccount;
+        this.date = date;
+        this.account = account;
+        this.id_course = id_course;
+        this.course = course;
+        this.choice = choice;
+    }
+
     public ClassDetail(int id_detail, String class_name, int time, int idaccount, Date date, String account, int id_course, String course) {
         this.id_class = id_detail;
         this.class_name = class_name;
@@ -77,7 +89,6 @@ public class ClassDetail implements Serializable{
         this.id_course = id_course;
         this.course = course;
     }
-
     
     public ClassDetail(int id_detail, String class_name, int time, String datestudy, int idaccount, String account, int id_course, String course) {
         this.id_class = id_detail;
@@ -101,7 +112,7 @@ public class ClassDetail implements Serializable{
         this.id_course = Course_ID;
         this.status = status;
         this.course = Course_name;
-        this.Choice = choice;
+        this.choice = choice;
     }
 
     public int getStatus() {
@@ -193,15 +204,15 @@ public class ClassDetail implements Serializable{
     }
 
     public int getChoice() {
-        return Choice;
+        return choice;
     }
 
-    public void setChoice(int Choice) {
-        this.Choice = Choice;
+    public void setChoice(int choice) {
+        this.choice = choice;
     }
 
     @Override
     public String toString() {
-        return "ClassDetail{" + "id_class=" + id_class + ", id_room=" + id_room + ", class_name=" + class_name + ", time=" + time + ", datestudy=" + datestudy + ", idaccount=" + idaccount + ", date=" + date + ", account=" + account + ", id_course=" + id_course + ", status=" + status + ", course=" + course + ", Choice=" + Choice + '}';
+        return "ClassDetail{" + "id_class=" + id_class + ", id_room=" + id_room + ", class_name=" + class_name + ", time=" + time + ", datestudy=" + datestudy + ", idaccount=" + idaccount + ", date=" + date + ", account=" + account + ", id_course=" + id_course + ", status=" + status + ", course=" + course + ", Choice=" + choice + '}';
     }
 }

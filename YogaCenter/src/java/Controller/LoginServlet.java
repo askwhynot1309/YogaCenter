@@ -91,6 +91,7 @@ public class LoginServlet extends HttpServlet {
                             break;
                         case 1:
                             if (Dao.ClassDetailDao.checkAnyRoomsUnactiveHasClassInDate(new Date(System.currentTimeMillis())).size() > 0) {
+                                request.setAttribute("message", "message");
                                 boolean insertMessage = Dao.MessageDao.createRequestChangeClass(1, "You need to change the classroom in which the classes were originally proposed to the new classroom.", accountLogin.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Change room");
                             }
                             ArrayList<Message> listMessageStaff = Dao.MessageDao.getAllMessageByUserIDWithNotRead(accountLogin.getIdaccount());

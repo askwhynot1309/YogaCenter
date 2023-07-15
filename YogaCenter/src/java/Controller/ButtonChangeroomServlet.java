@@ -40,8 +40,11 @@ public class ButtonChangeroomServlet extends HttpServlet {
             int room = Integer.parseInt(request.getParameter("id_room"));
             int time = Integer.parseInt(request.getParameter("id_time"));
             int id = Integer.parseInt(request.getParameter("id"));
-            Account account = (Account)session.getAttribute("Staff");
-            if(account == null){
+            int id_course = Integer.parseInt(request.getParameter("id_course"));
+            int idaccount = Integer.parseInt(request.getParameter("idaccount"));
+            int choice = Integer.parseInt(request.getParameter("choice"));
+            Account account = (Account) session.getAttribute("Staff");
+            if (account == null) {
                 request.getRequestDispatcher("viewschedule").forward(request, response);
             }
             String date = request.getParameter("newdate");
@@ -49,24 +52,30 @@ public class ButtonChangeroomServlet extends HttpServlet {
             Date newdate = Date.valueOf(date);
             Date olddate = Date.valueOf(date2);
             Date currentDate = new Date(System.currentTimeMillis());
-            if(newdate.before(newdate)){
+            if (newdate.before(newdate)) {
                 request.setAttribute("wrongDate", "message");
-            }else{
-                ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(room, time, newdate);
-                if(check == null){
-                    ArrayList<Account> listTrainerAndTrainee = Dao.AccountDao.GetAllTraineeAndTrainerinThisClass(id, olddate);
-                    int changeDateAttendence = Dao.AttendenceDao.changeDateToCheckAttendence(newdate, id);
-                    for (Account account1 : listTrainerAndTrainee) {
-                        boolean insertMessageForTrainerAndTraineeToChangeClass = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "Your classroom must be changed new classroom because of some problems. Please view your schedule to join clasroom.", account1.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Message");
+            } else {
+                ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(id, newdate);
+                if (check == null) {
+                    ArrayList<Account> listTrainerAndTrainee = Dao.AccountDao.GetAllTraineeinThisClass(id, olddate);
+                    int insertNewClassWhenChange = Dao.ClassDetailDao.insertNewClassWhenChangeClass(room, time, id_course, choice);
+                    if (insertNewClassWhenChange == 1) {
+                        int checkClass = Dao.ClassDetailDao.getIDClass(room, id_course, choice, time);
+                        int changeDateAttendence = Dao.AttendenceDao.changeDateToCheckAttendence(newdate, id, olddate, checkClass);
+                        int insertTrainer = Dao.ClassDetailDao.insertClassForLearn(room, time, idaccount, id_course, choice);
+                        for (Account account1 : listTrainerAndTrainee) {
+                            int insertTraineeInNewClass = Dao.ClassDetailDao.insertClassForLearn(room, time, account1.getIdaccount(), id_course, choice);
+                            boolean insertMessageForTrainerAndTraineeToChangeClass = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "Your classroom must be changed new classroom because of some problems. Please view your schedule to join clasroom.", account1.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Message");
+                        }
+                        int update = Dao.ClassDetailDao.deleteDateTimeRoomWithProblemAndChange(id, olddate, checkClass, newdate);
                     }
-                    int update = Dao.ClassDetailDao.updateDateTimeRoomWithProblem(id, room, time, newdate, olddate);
                     request.setAttribute("success", "message");
-                }else{
+                } else {
                     request.setAttribute("theSame", "message");
                 }
             }
-            request.getRequestDispatcher("viewschedule").forward(request, response);
-        }catch(Exception e){
+            request.getRequestDispatcher("/request?action=inf&id=" + id + "&option=staffChangeClass&date=" + olddate + "&acc=" + idaccount).forward(request, response);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

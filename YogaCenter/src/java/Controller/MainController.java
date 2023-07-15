@@ -1,6 +1,5 @@
 package Controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -8,7 +7,6 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 @MultipartConfig
 /**
@@ -206,6 +204,15 @@ public class MainController extends HttpServlet {
                         break;
                     case "ChangeAvatar":
                         url = "ChangeAvatarServlet";
+                        break;
+                    case "AttendenceAgain":
+                        url = "AttendenceAgainServlet";
+                        break;
+                    case "OpenForm":
+                        url = "OpenFormServlet";
+                        break;
+                    case "SubmitAttendanceAgain":
+                        url = "SubmitAttendanceAgainServlet";
                         break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);
