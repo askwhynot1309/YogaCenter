@@ -216,7 +216,7 @@
                 </div>
             </div>
         </c:if>
-        <c:if test="${ramdomCourse != null}">
+        <c:if test="${ramdomCourse.size() > 0}">
             <div class="our-classes">
                 <h1 style="font-weight: 700; text-transform: uppercase">Top Courses Booking</h1>
                 <div class="main-class">
@@ -283,13 +283,6 @@
         </div>
 
 
-
-        <div class="our-gallery">
-            <h1>GALLERY</h1>
-            <div class="main-gallery">
-                <img src="img/download.jpg" alt="alt"/>
-            </div>
-        </div>
 
         <script src="js/script.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

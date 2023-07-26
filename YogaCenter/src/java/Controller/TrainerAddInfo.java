@@ -40,8 +40,9 @@ public class TrainerAddInfo extends HttpServlet {
             String img = request.getParameter("img");
             String oldimg = request.getParameter("oldimg");
             String bio = request.getParameter("bio");
+            String oldbio = request.getParameter("oldbio");
             boolean checkValid = true;
-            if (phone.isEmpty() || address.isEmpty() || bio.isEmpty()) {
+            if (phone.isEmpty() || address.isEmpty()) {
                 checkValid = false;
                 request.setAttribute("ErrorMessage", "Please fill in all the information");
 
@@ -51,17 +52,33 @@ public class TrainerAddInfo extends HttpServlet {
 
             }
             if (checkValid) {
-                if ("".equals(img)) {
-                    boolean update = Dao.AccountDao.updateTrainerInfo(id, oldimg, phone, bio, address);
-                    if (update == true) {
-                        request.setAttribute("Success", "Update Information complete");
-                        request.getRequestDispatcher("TrainerDisplayInfo").forward(request, response);
+                if (bio.isEmpty()) {
+                    if ("".equals(img)) {
+                        boolean update = Dao.AccountDao.updateTrainerInfo(id, oldimg, phone, oldbio, address);
+                        if (update == true) {
+                            request.setAttribute("Success", "Update Information complete");
+                            request.getRequestDispatcher("TrainerDisplayInfo").forward(request, response);
+                        }
+                    } else {
+                        boolean update = Dao.AccountDao.updateTrainerInfo(id, img, phone, oldbio, address);
+                        if (update == true) {
+                            request.setAttribute("Success", "Update Information complete");
+                            request.getRequestDispatcher("TrainerDisplayInfo").forward(request, response);
+                        }
                     }
                 } else {
-                    boolean update = Dao.AccountDao.updateTrainerInfo(id, img, phone, bio, address);
-                    if (update == true) {
-                        request.setAttribute("Success", "Update Information complete");
-                        request.getRequestDispatcher("TrainerDisplayInfo").forward(request, response);
+                    if ("".equals(img)) {
+                        boolean update = Dao.AccountDao.updateTrainerInfo(id, oldimg, phone, bio, address);
+                        if (update == true) {
+                            request.setAttribute("Success", "Update Information complete");
+                            request.getRequestDispatcher("TrainerDisplayInfo").forward(request, response);
+                        }
+                    } else {
+                        boolean update = Dao.AccountDao.updateTrainerInfo(id, img, phone, bio, address);
+                        if (update == true) {
+                            request.setAttribute("Success", "Update Information complete");
+                            request.getRequestDispatcher("TrainerDisplayInfo").forward(request, response);
+                        }
                     }
                 }
             } else {

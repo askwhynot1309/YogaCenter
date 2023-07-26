@@ -7,6 +7,7 @@ package Controller;
 import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,20 +37,27 @@ public class ButtonSignCourseServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             Account account = (Account) session.getAttribute("Staff");
-            if(account == null){
+            if (account == null) {
                 request.getRequestDispatcher("trainee").forward(request, response);
             }
             int idcourse = Integer.parseInt(request.getParameter("id"));
             int idaccount = Integer.parseInt(request.getParameter("key"));
             int method = Integer.parseInt(request.getParameter("method"));
+            BigDecimal price = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
             int quantity = 1;
             Date dateorder = new Date(System.currentTimeMillis());
-            int insertOrder = Dao.OrderDao.insertOrderInOffline(quantity, idcourse, idaccount, dateorder);
-            if(insertOrder == 1){
-                request.setAttribute("success", "message");
-                request.getRequestDispatcher("trainee").forward(request, response);
+            int count = Dao.OrderCourseDao.checkNumberCourseToBuy(idaccount);
+            if (count < 3) {
+                int insertOrder = Dao.OrderDao.insertOrderInOffline(quantity, idcourse, idaccount, dateorder, price);
+                if (insertOrder == 1) {
+                    request.setAttribute("success", "message");
+                    request.getRequestDispatcher("/signcourse?key="+idaccount).forward(request, response);
+                }
+            } else {
+                request.setAttribute("message", "System limit you to sign 3 courses.");
+                request.getRequestDispatcher("/signcourse?key="+ idaccount).forward(request, response);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

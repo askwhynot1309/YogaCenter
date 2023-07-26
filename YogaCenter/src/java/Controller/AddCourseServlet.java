@@ -139,7 +139,7 @@ public class AddCourseServlet extends HttpServlet {
                                 }
                             }
                         } else {
-                            int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, objective, summary, start, close, slot, level, course_status);
+                            int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, objective, summary, start, close, slot, level, 1);
                             if (insertCourse == 1) {
                                 if (listCourse != null && !listCourse.isEmpty()) {
                                     if (listLevel != null && !listLevel.isEmpty()) {

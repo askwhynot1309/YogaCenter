@@ -79,7 +79,8 @@ CREATE TABLE BookingCourse(
 OrderID int IDENTITY(1,1) PRIMARY KEY,
 ID_Trainee int FOREIGN KEY REFERENCES Account(ID_Account),
 DateOrder DATE,
-Method int CHECK(Method = 0 or Method = 1 or Method = 2) --0:cash,1:onlinebanking,2:account money
+Method int CHECK(Method = 0 or Method = 1 or Method = 2), --0:cash,1:onlinebanking,2:account money
+Total DECIMAL(10,3)
 )
 
 CREATE TABLE StatusPayment(
@@ -107,7 +108,7 @@ Status int check(Status = 0 or Status = 1 or Status = 2) --0:not yet,1:present, 
 CREATE TABLE Message(
 ID_Message int IDENTITY(1,1) PRIMARY KEY,
 ID_sendMessage int FOREIGN KEY REFERENCES Account(ID_Account),
-Tilte nvarchar(max),
+Title nvarchar(max),
 Message nvarchar(max),
 ID_recieveMessage int FOREIGN KEY REFERENCES Account(ID_Account),
 DateCreate DATE,
@@ -170,7 +171,7 @@ Values
 8. Understand the role of self-care and compassion in nurturing relaxation and balance.<br />
 9. Learn techniques for promoting better sleep and rejuvenation through yoga and mindfulness practices.<br />
 10. Develop a personalized self-care routine that integrates yoga and mindfulness practices for sustained relaxation and balance.</p>
-',0 ),
+',1 ),
 ('The Art of Teaching', 200, 'yoga4.png', 30, 2, '2023-08-10', '2023-08-03', '<p>- The Yoga and Mindfulness for Relaxation and Balance course is designed to provide participants with practical tools and techniques to cultivate relaxation, inner balance, and mindfulness through the integration of yoga and mindfulness practices.&nbsp;<br />
 - This course combines gentle yoga postures, breathwork, guided meditations, and mindfulness exercises to help individuals reduce stress, find inner calm, and enhance overall well-being.<br />
 - By the end of this course, participants will have a deep understanding of the practices and principles of yoga and mindfulness for relaxation and balance.&nbsp;<br />
@@ -187,7 +188,7 @@ Values
 8. Understand the role of self-care and compassion in nurturing relaxation and balance.<br />
 9. Learn techniques for promoting better sleep and rejuvenation through yoga and mindfulness practices.<br />
 10. Develop a personalized self-care routine that integrates yoga and mindfulness practices for sustained relaxation and balance.</p>
-', 0),
+', 1),
 ('Inside Flow Grundausbildung (Deutsch)', 200, 'yoga3.png', 30, 3, '2023-07-30', '2023-07-23', '<p>- The Yoga and Mindfulness for Relaxation and Balance course is designed to provide participants with practical tools and techniques to cultivate relaxation, inner balance, and mindfulness through the integration of yoga and mindfulness practices.&nbsp;<br/>', '<p>The Yoga and Mindfulness for Relaxation and Balance course offers participants a comprehensive exploration of yoga and mindfulness practices specifically aimed at promoting relaxation and balance in everyday life. Through a combination of gentle yoga sequences, deep breathing exercises, guided meditations, and mindfulness techniques, participants will learn to quiet the mind, release tension from the body, and develop a greater sense of inner peace and balance.</p>
 ', '<p>1. Understand the foundations of yoga philosophy and mindfulness and their role in relaxation and balance.<br />
 2. Learn and practice gentle yoga postures that promote relaxation, flexibility, and body awareness.<br />
@@ -199,7 +200,7 @@ Values
 8. Understand the role of self-care and compassion in nurturing relaxation and balance.<br />
 9. Learn techniques for promoting better sleep and rejuvenation through yoga and mindfulness practices.<br />
 10. Develop a personalized self-care routine that integrates yoga and mindfulness practices for sustained relaxation and balance.</p>
-',0),
+',1),
 ('Inside Flow Fundamentals Teacher Training', 200, 'yoga2.png', 30, 1, '2023-07-30', '2023-07-23', '<p>- The Yoga and Posture Correction for Back Health course is designed to provide participants with a comprehensive understanding of The principles and practices of Yoga and Posture Correction specifically aimed at improving Back health.<br/>', '<p>The Yoga and Posture Correction for Back Health course is a practical and informative program that focuses on addressing common issues related to back pain and poor posture. Participants will learn a variety of yoga poses, stretches, and exercises specifically tailored to strengthen the back muscles, improve spinal alignment, and promote overall spinal health. The course will also cover the importance of proper posture and provide guidance on how to maintain correct alignment throughout daily activities.</p>
 ', '<p>1. Understand the anatomy of the spine and common causes of back pain.<br />
 2. Learn and practice a wide range of yoga poses and exercises that target the back muscles and promote spinal flexibility.<br />
@@ -211,7 +212,7 @@ Values
 8. Develop a personalized home practice for ongoing back health maintenance.<br />
 9. Enhance overall body awareness and mindfulness through the practice of yoga.<br />
 10. Foster a sense of self-care and well-being by incorporating yoga and posture correction into daily routines.</p>
-', 0),
+', 1),
 ('120-Hour Inside Yoga Online Teacher Training (On-Demand & Live)', 200, 'yoga1.png', 30, 2, '2023-07-30', '2023-07-23', '<p>- The Yoga and Posture Correction for Back Health course is designed to provide participants with a comprehensive understanding of The principles and practices of Yoga and Posture Correction specifically aimed at improving Back health.<br />', '<p>The Yoga and Posture Correction for Back Health course is a practical and informative program that focuses on addressing common issues related to back pain and poor posture. Participants will learn a variety of yoga poses, stretches, and exercises specifically tailored to strengthen the back muscles, improve spinal alignment, and promote overall spinal health. The course will also cover the importance of proper posture and provide guidance on how to maintain correct alignment throughout daily activities.</p>
 ', '<p>1. Understand the anatomy of the spine and common causes of back pain.<br />
 2. Learn and practice a wide range of yoga poses and exercises that target the back muscles and promote spinal flexibility.<br />
@@ -223,7 +224,7 @@ Values
 8. Develop a personalized home practice for ongoing back health maintenance.<br />
 9. Enhance overall body awareness and mindfulness through the practice of yoga.<br />
 10. Foster a sense of self-care and well-being by incorporating yoga and posture correction into daily routines.</p>
-', 0),
+', 1),
 ('120-Hour Self-Paced Online Restorative Yoga Teacher Training', 200, 'yoga6.png', 30, 3, '2023-07-30', '2023-07-23', '<p>- The Yoga and Posture Correction for Back Health course is designed to provide participants with a comprehensive understanding of The principles and practices of Yoga and Posture Correction specifically aimed at improving Back health.<br />', '<p>The Yoga and Posture Correction for Back Health course is a practical and informative program that focuses on addressing common issues related to back pain and poor posture. Participants will learn a variety of yoga poses, stretches, and exercises specifically tailored to strengthen the back muscles, improve spinal alignment, and promote overall spinal health. The course will also cover the importance of proper posture and provide guidance on how to maintain correct alignment throughout daily activities.</p>
 ', '<p>1. Understand the anatomy of the spine and common causes of back pain.<br />
 2. Learn and practice a wide range of yoga poses and exercises that target the back muscles and promote spinal flexibility.<br />
@@ -235,7 +236,7 @@ Values
 8. Develop a personalized home practice for ongoing back health maintenance.<br />
 9. Enhance overall body awareness and mindfulness through the practice of yoga.<br />
 10. Foster a sense of self-care and well-being by incorporating yoga and posture correction into daily routines.</p>
-', 0),
+', 1),
 ('120-Hour Self-Paced Restorative Yoga Teacher Training', 200, 'yoga6.png', 30, 1 ,'2023-07-30', '2023-07-23', '<p>- The Yoga Vinyasa for Strength and Flexibility course is designed to help participants build strength, increase flexibility, and enhance overall physical fitness through the practice of Vinyasa yoga.&nbsp;<br />
 - This course focuses on dynamic and flowing sequences of yoga poses, synchronized with breath, to develop a balanced combination of strength, flexibility, and mindfulness.<br />
 - By the end of this course, participants will have a comprehensive understanding of Vinyasa yoga as a means to build strength, increase flexibility, and improve overall physical fitness.&nbsp;<br />
@@ -252,7 +253,7 @@ Values
 8. Explore techniques to prevent injury and promote safe and effective Vinyasa practice.<br />
 9. Learn strategies for incorporating Vinyasa yoga into a regular fitness routine.<br />
 10. Develop a personalized Vinyasa practice that supports ongoing strength and flexibility goals.</p>
-',0),
+',1),
 ('120-Hour Yin Yoga Teacher Training', 200, 'yoga7.png', 30, 2, '2023-07-30', '2023-07-23', '<p>- The Yoga Vinyasa for Strength and Flexibility course is designed to help participants build strength, increase flexibility, and enhance overall physical fitness through the practice of Vinyasa yoga.&nbsp;<br />
 - This course focuses on dynamic and flowing sequences of yoga poses, synchronized with breath, to develop a balanced combination of strength, flexibility, and mindfulness.<br />
 - By the end of this course, participants will have a comprehensive understanding of Vinyasa yoga as a means to build strength, increase flexibility, and improve overall physical fitness.&nbsp;<br />
@@ -269,7 +270,7 @@ Values
 8. Explore techniques to prevent injury and promote safe and effective Vinyasa practice.<br />
 9. Learn strategies for incorporating Vinyasa yoga into a regular fitness routine.<br />
 10. Develop a personalized Vinyasa practice that supports ongoing strength and flexibility goals.</p>
-', 0),
+', 1),
 ('Self-Paced 100-Hour Yoga Teacher Training', 200, 'yoga9.png', 30, 2, '2023-07-30', '2023-07-23', '<p>- The Yoga and Posture Correction for Back Health course is designed to provide participants with a comprehensive understanding of The principles and practices of Yoga and Posture Correction specifically aimed at improving Back health.<br />', '<p>The Yoga and Posture Correction for Back Health course is a practical and informative program that focuses on addressing common issues related to back pain and poor posture. Participants will learn a variety of yoga poses, stretches, and exercises specifically tailored to strengthen the back muscles, improve spinal alignment, and promote overall spinal health. The course will also cover the importance of proper posture and provide guidance on how to maintain correct alignment throughout daily activities.</p>
 ', '<p>1. Understand the anatomy of the spine and common causes of back pain.<br />
 2. Learn and practice a wide range of yoga poses and exercises that target the back muscles and promote spinal flexibility.<br />
@@ -281,4 +282,4 @@ Values
 8. Develop a personalized home practice for ongoing back health maintenance.<br />
 9. Enhance overall body awareness and mindfulness through the practice of yoga.<br />
 10. Foster a sense of self-care and well-being by incorporating yoga and posture correction into daily routines.</p>
-', 0)
+', 1)

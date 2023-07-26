@@ -83,7 +83,7 @@
                         <div class="col-md-4">
                             <div>
                                 <div style="font-size: 60px;">2</div>
-                                <div style="font-size: 40px;">Center</div>
+                                <div style="font-size: 40px;">Centers</div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -93,18 +93,9 @@
                     <div class="col-md-4">
                         <div>
                             <div style="font-size: 60px;">${requestScope.employeeCount}</div>
-                            <div style="font-size: 40px;">Employee</div>
+                            <div style="font-size: 40px;">Employees</div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="mb-5 text-center">
-                <div style="font-size: 40px; color: #3eb489">THE YOGA CENTER PROVIDE A WIDE RANGE OF</div>
-
-                <div>
-                    <div style="font-size: 60px;">${requestScope.courseCount}</div>
-                    <div style="font-size: 40px;">Course</div>
                 </div>
             </div>
 
@@ -120,17 +111,17 @@
                                     <div class="card-body align-items-center">
                                         <div class="mb-5">
                                             <c:if test="${not empty trainer.image}">
-                                                <img src="img/${trainer.image}" style="max-width: 300px; height: 300px;">
+                                                <img src="img/${trainer.image}" style="width: 250px; height: 250px;">
                                             </c:if>
                                             <c:if test="${empty trainer.image}">
-                                                <img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" style="max-width: 100%; height: auto;">
+                                                <img src="img/_54148c2a-3c22-49b9-89f8-4e57d07bc7b1.png" style="width: 250px; height: 250px;">
                                             </c:if>
                                         </div>
 
                                         <div>
                                             <h4 class="text-center mb-1">${trainer.name}</h4>
                                             <div class="text-center mt-5">
-                                                <a class="text-center" href="${trainer.cv}"><strong>Curriculum Vitae</strong></a>                                       
+                                                <p class="text-center"><strong>${trainer.cv}</strong></p>                                       
                                             </div>
                                         </div>
                                     </div>

@@ -96,12 +96,14 @@
                     <c:set var="nulllist" value="${requestScope.nonelist}"/>
                     <c:set var="listCourseAccountActive" value="${requestScope.listCourseAccountActive}"/>
                     <c:set var="currentdate" value="${requestScope.currentDate}"></c:set>
+                    <c:set var="success" value="${requestScope.success}"/>
+                    <c:set var="message" value="${requestScope.message}"/>
                     <c:if test="${listcourse == null}">
                         <p style="text-align: center"><c:out value="${nulllist}"/></p>
                     </c:if>
                     <c:if test="${listcourse != null}">
                         <div class="course">
-                            <c:forEach var="course" items="${listcourse}">
+                            <c:forEach var="course" items="${listcourse}" varStatus="loop">
                                 <div style="border: 2px solid black; float: left; margin-left: 10px; padding: 10px; border-radius: 10px; width: 355px;height: 300px; margin-bottom: 10px; position: relative">
                                     <div>
                                         <form action="/YogaCenter/request" method="POST">
@@ -110,13 +112,15 @@
                                             <p>Level : ${course.name_level}</p>
                                             <p>Date-start : ${course.date_start}</p>
                                             <input name="id" value="${course.idCourse}" hidden="">
+                                            <input name="price" value="${course.fee_course}" hidden="">
                                             <c:if test="${idaccount != null}">
                                                 <input name="key" value="${idaccount}" hidden="">
                                             </c:if>
                                             <c:choose>
-                                                <c:when test="${listCourseAccountActive == null && course.status == 0}">
-                                                    <a class="btn-search open" style="left: 35%; position: absolute; bottom: 10px">Sign up</a>
-                                                    <dialog class="message" id="message">
+                                                <c:when test="${listCourseAccountActive.size() == 0 && course.status == 1}">
+                                                    <a class="btn-search open" style="left: 35%; position: absolute; bottom: 10px" data-index="${loop.index}">Sign up</a>
+                                                    <div class="message hidden" data-index="${loop.index}">
+                                                        <p><strong>Course name: </strong>${course.name_course}</p>
                                                         <h3 style="text-align: center; color: red">Payment</h3>
                                                         <p>Bank account number : 9775030435</p>
                                                         <p>Bank : Vietcombank</p>
@@ -127,16 +131,16 @@
                                                             </select></p>
                                                         <div style="display: flex; align-items: center; justify-content: space-between">
                                                             <button class="btn btn-primary" name="action" value="ButtonSignCourse">Comfirm</button>
-                                                            <a class="btn btn-primary btn-close">Close</a>
+                                                            <div class="btn btn-primary btn-close" data-index="${loop.index}">Close</div>
                                                         </div>
-                                                    </dialog>
+                                                    </div>
                                                 </c:when>
                                                 <c:when test="${currentdate.after(course.date_close) || currentdate.equals(course.date_close)}">
                                                     <div style="text-align: center">
                                                         <p style="color: red">The course has been closed.</p>
                                                     </div>
                                                 </c:when>
-                                                <c:when test="${listCourseAccountActive != null}">
+                                                <c:when test="${listCourseAccountActive.size() > 0}">
                                                     <c:set var="courseBought" value="false" scope="page" />
                                                     <c:forEach var="coureactive" items="${listCourseAccountActive}">
                                                         <c:if test="${course.idCourse == coureactive.id_course}">
@@ -148,8 +152,9 @@
                                                             <p style="text-align: center; color: red">You bought the course</p>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <a class="btn-search open" style="left: 35%; position: absolute; bottom: 10px">Sign up</a>
-                                                            <dialog class="message" id="message">
+                                                            <a class="btn-search open" style="left: 35%; position: absolute; bottom: 10px" data-index="${loop.index}">Sign up</a>
+                                                            <div class="message hidden" data-index="${loop.index}">
+                                                                <p><strong>Course name: </strong>${course.name_course}</p>
                                                                 <h3 style="text-align: center; color: red">Payment</h3>
                                                                 <p>Bank account number : 9775030435</p>
                                                                 <p>Bank : Vietcombank</p>
@@ -160,9 +165,9 @@
                                                                     </select></p>
                                                                 <div style="display: flex; align-items: center; justify-content: space-between">
                                                                     <button class="btn btn-primary" name="action" value="ButtonSignCourse">Comfirm</button>
-                                                                    <a class="btn btn-primary btn-close">Close</a>
+                                                                    <div class="btn btn-primary btn-close" data-index="${loop.index}">Close</div>
                                                                 </div>
-                                                            </dialog>
+                                                            </div>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </c:when>
@@ -177,30 +182,54 @@
             </div>
         </div>
     </body>
+
     <script>
-        const message = document.querySelector("#message");
-        const open = document.querySelector(".open");
-        const close = document.querySelector(".btn-close");
+        var feedbackButtons = document.getElementsByClassName("open");
+        var feedbackForms = document.getElementsByClassName("message");
+        var closeButtons = document.getElementsByClassName("btn-close");
         var overlay = document.getElementById("overlay");
 
-        open.addEventListener("click", () => {
-            message.showModal();
-            overlay.classList.remove("hidden");
-        });
-
-        close.addEventListener("click", () => {
-            message.setAttribute("closing", "");
-
-            message.addEventListener(
-                    "animationend",
-                    () => {
-                message.removeAttribute("closing");
-                message.close();
-            },
-                    {once: true}
-            );
-            overlay.classList.add("hidden");
-        });
-
+        for (var i = 0; i < feedbackButtons.length; i++) {
+            feedbackButtons[i].addEventListener("click", function () {
+                var index = this.getAttribute("data-index");
+                var feedbackForm = document.querySelector('.message[data-index="' + index + '"]');
+                feedbackForm.classList.remove("hidden");
+                overlay.classList.remove("hidden");
+            });
+        }
+        for (var i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].addEventListener("click", function () {
+                var index = this.getAttribute("data-index");
+                var message = document.querySelector('.message[data-index="' + index + '"]');
+                message.classList.add("hidden");
+                overlay.classList.add("hidden");
+            });
+        }
     </script>
+    <c:if test="${success != null}">
+        <div class="notification-success">
+            <div class="content">
+                <div class="title">Success</div>
+                <span>Sign course successfully !</span>
+            </div>
+            <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+        </div>
+        <script>
+            let notification = document.querySelector('.notification-success');
+            notification.timeOut = setTimeout(() => notification.remove(), 5000);
+        </script>
+    </c:if>
+        <c:if test="${message != null}">
+        <div class="notification">
+            <div class="content">
+                <div class="title">Fail</div>
+                <span>${message}</span>
+            </div>
+            <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+        </div>
+        <script>
+            let notification = document.querySelector('.notification');
+            notification.timeOut = setTimeout(() => notification.remove(), 5000);
+        </script>
+    </c:if>
 </html>

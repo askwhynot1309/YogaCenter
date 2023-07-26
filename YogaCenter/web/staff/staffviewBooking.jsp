@@ -107,6 +107,9 @@
                                                 <c:if test="${order.method == 1}">
                                                     Banking 
                                                 </c:if>
+                                                <c:if test="${order.method == 2}">
+                                                    Account money
+                                                </c:if>
                                             </td>
                                             <td style="width: 350px">
                                                 <form action="/YogaCenter/request" method="POST">

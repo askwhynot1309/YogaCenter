@@ -18,16 +18,17 @@ import java.util.ArrayList;
  */
 public class OrderDao {
 
-    public static int insertOrderInOffline(int quantity, int idcourse, int idaccount, Date date) throws Exception {
+    public static int insertOrderInOffline(int quantity, int idcourse, int idaccount, Date date, BigDecimal price) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             cn.setAutoCommit(false);
-            String s = "insert into BookingCourse(ID_Trainee, DateOrder, Method) values (?,?,?)";
+            String s = "insert into BookingCourse(ID_Trainee, DateOrder, Method, Total) values (?,?,?,?)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, idaccount);
             pst.setDate(2, date);
             pst.setInt(3, 0);
+            pst.setBigDecimal(4, price);
             kq = pst.executeUpdate();
             if (kq == 1) {
                 s = "select top 1 OrderID\n"
@@ -49,7 +50,7 @@ public class OrderDao {
                             s = "insert into StatusPayment(ID_Order, Status) values (?,?)";
                             PreparedStatement pst4 = cn.prepareStatement(s);
                             pst4.setInt(1, orderid);
-                            pst4.setInt(2, 2);
+                            pst4.setInt(2, 1);
                             kq = pst4.executeUpdate();
                         }
                     }
@@ -177,7 +178,7 @@ public class OrderDao {
             String s = "select c.Course_ID, c.Course_Fee, c.Img, c.Course_Name, c.Start_date, bd.Status_Account\n"
                     + "from BookingCourse bc JOIN BookingDetail bd ON bc.OrderID = bd.Order_ID JOIN StatusPayment sp ON sp.ID_Order = bc.OrderID\n"
                     + "JOIN Course c ON c.Course_ID = bd.ID_Course\n"
-                    + "where c.Status = 0 and bc.ID_Trainee = ? and bd.Status_Account = 1 and (sp.Status = 0 or sp.Status = 1)";
+                    + "where bc.ID_Trainee = ? and bd.Status_Account = 1 and (sp.Status = 0 or sp.Status = 1)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, acc);
             ResultSet table = pst.executeQuery();

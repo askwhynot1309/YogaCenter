@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,26 +32,32 @@ public class TraineeCheckOutCart extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             try {
                 /* TODO output your page here. You may use following sample code. */
-                int method = Integer.parseInt(request.getParameter("method"));
-                int totalmoney = Integer.parseInt(request.getParameter("txtPrice"));
-                switch (method) {
-                    case 0:
-                        request.setAttribute("totalmoney", totalmoney);
-                        request.setAttribute("method", method);
-                        request.getRequestDispatcher("TraineeSaveOrderServlet").forward(request, response);
-                        break;
-                    case 1:
-                        request.setAttribute("txtPrice", totalmoney);
-                        request.getRequestDispatcher("TraineeBankPaymentServlet").forward(request, response);
-                        break;
-                    case 2:
-                        request.setAttribute("totalmoney", totalmoney);
-                        request.setAttribute("method", method);
-                        request.getRequestDispatcher("TraineeSaveOrderServlet").forward(request, response);
-                        break;
+                HttpSession session = request.getSession();
+                Account account = (Account) session.getAttribute("account");
+                if (account == null) {
+                    request.getRequestDispatcher("viewcart");
+                } else {
+                    int method = Integer.parseInt(request.getParameter("method"));
+                    int totalmoney = Integer.parseInt(request.getParameter("txtPrice"));
+                    switch (method) {
+                        case 0:
+                            request.setAttribute("totalmoney", totalmoney);
+                            request.setAttribute("method", method);
+                            request.getRequestDispatcher("TraineeSaveOrderServlet").forward(request, response);
+                            break;
+                        case 1:
+                            request.setAttribute("txtPrice", totalmoney);
+                            request.getRequestDispatcher("TraineeBankPaymentServlet").forward(request, response);
+                            break;
+                        case 2:
+                            request.setAttribute("totalmoney", totalmoney);
+                            request.setAttribute("method", method);
+                            request.getRequestDispatcher("TraineeSaveOrderServlet").forward(request, response);
+                            break;
+                    }
                 }
             } catch (Exception e) {
                 out.print(e);

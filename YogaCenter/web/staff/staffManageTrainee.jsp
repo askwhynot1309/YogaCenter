@@ -93,7 +93,6 @@
                     </div>
                     <c:set var="listUser" value="${requestScope.listUser}"/>
                     <c:set var="nulllist" value="${requestScope.nulllist}"/>
-                    <c:set var="success" value="${requestScope.success}"/>
                     <c:if test="${listUser == null}">
                         <p style="text-align: center"><c:out value="${nulllist}"/></p>
                     </c:if>
@@ -221,18 +220,5 @@
             }
         });
     </script>
-    <c:if test="${success != null}">
-        <div class="notification-success">
-            <div class="content">
-                <div class="title">Success</div>
-                <span>Sign course successfully !</span>
-            </div>
-            <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
-        </div>
-        <script>
-            let notification = document.querySelector('.notification-success');
-            notification.timeOut = setTimeout(() => notification.remove(), 5000);
-        </script>
-    </c:if>
 </body>
 </html>

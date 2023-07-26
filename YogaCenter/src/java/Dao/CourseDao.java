@@ -55,6 +55,40 @@ public class CourseDao {
         }
         return kq;
     }
+    
+     public static ArrayList<Course> getAllCourseByTrainee() throws Exception {
+        ArrayList<Course> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select *\n"
+                    + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
+                    + "where Status = 1\n"
+                    + "Order by Course_ID desc";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int course_id = table.getInt("Course_ID");
+                    String course_name = table.getNString("Course_Name");
+                    String course_img = table.getString("Img");
+                    BigDecimal course_fee = table.getBigDecimal("Course_Fee");
+                    Date course_start = table.getDate("Start_date");
+                    Date course_close = table.getDate("Close_date");
+                    int slot = table.getInt("Slot");
+                    String description = table.getNString("Description");
+                    String learnt = table.getNString("Objective");
+                    String summary = table.getNString("Summary");
+                    int level = table.getInt("ID_Level");
+                    String name_level = table.getNString("Level_Name");
+                    int status = table.getInt("Status");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    kq.add(course);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
 
     public static ArrayList<Course> getAllCourseHaveTopOrder() throws Exception {
         ArrayList<Course> kq = new ArrayList<>();
@@ -64,7 +98,7 @@ public class CourseDao {
                     + "from BookingCourse BC JOIN BookingDetail BD ON BC.OrderID = BD.Order_ID Join Course C ON C.Course_ID = BD.ID_Course Join Level l ON l.Level_ID = C.ID_Level\n"
                     + "Where BD.Status_Account = 1\n"
                     + "Group by BD.ID_Course, C.Course_Name, C.Course_Fee, C.Description, C.ID_Level, C.Img, C.Objective, C.Slot, C.Close_date, C.Start_date, C.Status, C.Summary, l.Level_Name\n"
-                    + "Having Count(BD.ID_Course) > 0";
+                    + "Having Count(BD.ID_Course) > 10";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
             if (table != null) {
@@ -157,7 +191,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Status = 0\n"
+                    + "where Status = 1\n"
                     + "Order by Course_ID desc";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
@@ -191,7 +225,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Course_Name like ? AND Status = 0\n"
+                    + "where Course_Name like ?\n"
                     + "Order by Start_date desc";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, "%" + search + "%");
@@ -226,7 +260,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Course_Name like ? AND Status = 0\n"
+                    + "where Course_Name like ? AND Status = 1\n"
                     + "Order by Start_date desc";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, "%" + search + "%");
@@ -261,7 +295,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Course_Name like ? AND Status = 0\n"
+                    + "where Course_Name like ? AND Status = 1\n"
                     + "Order by Start_date asc";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, "%" + search + "%");
@@ -296,7 +330,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Course_Name like ? and ID_Level = ? and Status = 0";
+                    + "where Course_Name like ? and ID_Level = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, "%" + search + "%");
             pst.setInt(2, id_level);
@@ -331,7 +365,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Course_Name like ? and ID_Level = ? and Status = 0";
+                    + "where Course_Name like ? and ID_Level = ? and Status = 1";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, "%" + search + "%");
             pst.setInt(2, id_level);
@@ -366,7 +400,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Course_Name like ? and ID_Level = ? and Status = 0\n"
+                    + "where Course_Name like ? and ID_Level = ? and Status = 1\n"
                     + "Order by Start_date desc";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, "%" + search + "%");
@@ -402,7 +436,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Course_Name like ? and ID_Level = ? and Status = 0\n"
+                    + "where Course_Name like ? and ID_Level = ? and Status = 1\n"
                     + "Order by Start_date asc";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, "%" + search + "%");
@@ -633,7 +667,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Close_date = ?";
+                    + "where Close_date <= ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
             ResultSet table = pst.executeQuery();

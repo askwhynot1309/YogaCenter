@@ -48,7 +48,7 @@ public class ShowCourseListServlet extends HttpServlet {
             ArrayList<Level> CourseLevel = new ArrayList<>();
             CourseDao dao = new CourseDao();
             LevelDao ldao = new LevelDao();
-            CourseList = dao.getAllCourse();
+            CourseList = dao.getAllCourseByTrainee();
             CourseLevel = ldao.getAllLevel();
             if (account != null) {
                 ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(account.getIdaccount());

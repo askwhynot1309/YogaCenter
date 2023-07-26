@@ -122,6 +122,7 @@
                                     <input name="oldimg" value="${trainer.image}" hidden="">
                                 </div>
                             </div>
+                                    <input name="oldbio" value="${trainer.cv}" hidden="">
                             <div style="margin-bottom: 20px">
                                 Bio : <textarea name="bio"></textarea>
                             </div>

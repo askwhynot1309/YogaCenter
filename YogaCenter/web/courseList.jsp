@@ -332,7 +332,7 @@
                                         <p><strong>Start Date:</strong> ${course.date_start}</p>
                                         <p><strong>Level:</strong> ${course.name_level}</p>
                                         <c:choose>
-                                            <c:when test="${listCourseAccountActive == null && user != null && course.status == 0}">
+                                            <c:when test="${listCourseAccountActive == null && user != null && course.status == 1}">
                                                 <div style="position: absolute; bottom: 10px; width: 90%">
                                                     <div style="margin-bottom: 10px">
                                                         <a class="cartBtn" href="/YogaCenter/request?action=AddCourseToCart&cid=${course.idCourse}">
@@ -363,7 +363,7 @@
                                                     </a>
                                                 </div>
                                             </c:when>
-                                            <c:when test="${user != null && course.status == 1}">
+                                            <c:when test="${user != null && course.status == 0}">
                                                 <div style="position: absolute; bottom: 10px; width: 90%">
                                                     <p style="color: red; text-align: center">This course was closed.</p>
                                                     <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
