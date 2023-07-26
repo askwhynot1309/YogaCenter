@@ -107,7 +107,7 @@ Status int check(Status = 0 or Status = 1 or Status = 2) --0:not yet,1:present, 
 CREATE TABLE Message(
 ID_Message int IDENTITY(1,1) PRIMARY KEY,
 ID_sendMessage int FOREIGN KEY REFERENCES Account(ID_Account),
-Tilte nvarchar(max),
+Title nvarchar(max),
 Message nvarchar(max),
 ID_recieveMessage int FOREIGN KEY REFERENCES Account(ID_Account),
 DateCreate DATE,
