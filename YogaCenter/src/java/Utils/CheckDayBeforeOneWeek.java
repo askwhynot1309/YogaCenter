@@ -12,10 +12,18 @@ import java.util.Calendar;
  * @author ADMIN
  */
 public class CheckDayBeforeOneWeek {
-    public static Date getDateBeforeOneWeek(Date datestatrt){
+    public static Date getDateBeforeOneWeek(Date datestart){
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(datestatrt);
+        calendar.setTime(datestart);
         calendar.add(Calendar.DAY_OF_YEAR, -7);
+        Date sevenDaysBefore = new Date(calendar.getTimeInMillis());
+        return sevenDaysBefore;
+    }
+    
+    public static Date getDateBeforeDayStart(Date datestart){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(datestart);
+        calendar.add(Calendar.DAY_OF_YEAR, -2);
         Date sevenDaysBefore = new Date(calendar.getTimeInMillis());
         return sevenDaysBefore;
     }

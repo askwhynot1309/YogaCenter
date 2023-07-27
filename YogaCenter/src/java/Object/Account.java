@@ -87,6 +87,10 @@ public class Account implements Serializable {
         this.amount = amout;
     }
 
+    public Account(int acc) {
+        this.idaccount = acc;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }

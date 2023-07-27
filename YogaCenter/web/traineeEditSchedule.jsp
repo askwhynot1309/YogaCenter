@@ -273,8 +273,8 @@
                                                         <th class="col-lg-1"><%=classDetails.getClass_name()%></th>
                                                         <th class="col-lg-1">
                                                             <%
-                                                                int AccountID = ClassDetailDao.checkTraineeIDInClass(classDetails.getId_course(), trainee.getIdaccount(), classDetails.getTime(), classDetails.getId_room(), classDetails.getChoice());
-                                                                if (AccountID == 0) {
+                                                                Account AccountID = ClassDetailDao.checkTraineeIDInClass(classDetails.getId_course(), trainee.getIdaccount(), classDetails.getTime(), classDetails.getId_room(), classDetails.getChoice());
+                                                                if (AccountID == null) {
                                                             %>
                                                             <form action="/YogaCenter/request" method="post">
                                                                 <input type="hidden" name="trainee" value="<%=trainee.getIdaccount()%>">

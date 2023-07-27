@@ -4,6 +4,7 @@
  */
 package Dao;
 
+import Object.Account;
 import Object.ClassDetail;
 import Utils.DBUtils;
 import java.sql.Connection;
@@ -25,9 +26,9 @@ public class ClassDetailDao {
         ArrayList<ClassDetail> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name, R.Status\n"
+            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name, R.Status\n"
                     + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
-                    + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
+                    + "JOIN Room R ON C.Room_ID = R.Room_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
                     + "Where A.Role = 2 ";
             PreparedStatement pst = cn.prepareStatement(s);
@@ -37,7 +38,7 @@ public class ClassDetailDao {
                     int id_class = table.getInt("Class_ID");
                     String class_name = table.getString("Room_Name");
                     int id_time = table.getInt("IDtime");
-                    Date datestudy = table.getDate("DateStudy");
+                    Date datestudy = new Date(System.currentTimeMillis());
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(datestudy);
                     int year = calendar.get(Calendar.YEAR);
@@ -75,6 +76,30 @@ public class ClassDetailDao {
                     int idcourse = table.getInt("IDCourse");
                     int idaccount = table.getInt("ID_Account");
                     kq = new ClassDetail(idclass, 0, 0, idaccount, id_course);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ArrayList<ClassDetail> getAllClassDetail() throws Exception {
+        ArrayList<ClassDetail> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select Class_ID, Room_ID, IDtime, IDCourse, Choice\n"
+                    + "from Class ";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_class = table.getInt("Class_ID");
+                    int class_name = table.getInt("Room_ID");
+                    int id_time = table.getInt("IDtime");
+                    int id_course = table.getInt("IDCourse");
+                    int choice = table.getInt("Choice");
+                    ClassDetail classdetails = new ClassDetail(id_class, class_name, id_time, choice, id_course);
+                    kq.add(classdetails);
                 }
             }
             cn.close();
@@ -252,6 +277,20 @@ public class ClassDetailDao {
             }
             cn.commit();
             cn.setAutoCommit(true);
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static int insertClassForLearnAuto(int id_class, int idaccount) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "insert into ClassDetail(Class_ID, ID_Account) values (?,?)";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id_class);
+            pst.setInt(2, idaccount);
+            kq = pst.executeUpdate();
             cn.close();
         }
         return kq;
@@ -756,8 +795,8 @@ public class ClassDetailDao {
         return isExisted;
     }
 
-    public static int checkTraineeIDInClass(int Course_ID, int Trainee_ID, int ID_Time, int ID_Room, int choice) {
-        int AccountID = 0;
+    public static Account checkTraineeIDInClass(int Course_ID, int Trainee_ID, int ID_Time, int ID_Room, int choice) {
+        Account AccountID = null;
         Connection cn = null;
         try {
             cn = DBUtils.getConnection();
@@ -777,7 +816,8 @@ public class ClassDetailDao {
                 ResultSet rs = pst.executeQuery();
                 if (rs != null) {
                     while (rs.next()) {
-                        AccountID = rs.getInt("ID_Account");
+                        int acc = rs.getInt("ID_Account");
+                        AccountID = new Account(acc);
                     }
                 }
             }
@@ -964,10 +1004,10 @@ public class ClassDetailDao {
         try {
             cn = DBUtils.getConnection();
             if (cn != null) {
-                String sql = "  SELECT COUNT(cd.ID_Account) as Count\n"
+                String sql = "SELECT COUNT(cd.ID_Account) as Count\n"
                         + "  FROM ClassDetail cd JOIN Account a ON cd.ID_Account = a.ID_Account\n"
                         + "  GROUP BY cd.Class_ID, a.Role\n"
-                        + "  HAVING cd.Class_ID = ? AND a.Role = 3";
+                        + "  HAVING cd.Class_ID = ?";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setInt(1, class_ID);;
                 ResultSet rs = pst.executeQuery();

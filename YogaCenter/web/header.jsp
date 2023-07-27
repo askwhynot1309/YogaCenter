@@ -35,45 +35,6 @@
                     <div class="iconTrainee">
                         <div class="dropdown" style="cursor: pointer">
                             <a class="fa-solid fa-user fa-2xl" href="GeneralDashboard"></a>
-<!--                            <div class="dropdown-content" style="width: 200px; z-index: -1; background: #d0efe1">
-                                <p style="text-align: center; margin-top: 50px">${account.name}</p>
-                            <p style="font-weight: 900">
-                                <a href="/YogaCenter/information">
-                                    <i class="fas fa-user icon"></i>
-                                    Manage account
-                                </a>
-                            </p>
-                            <p style="font-weight: 900">
-                                <a href="/YogaCenter/yourcourse">
-                                    <i class="fa-solid fa-book icon"></i>
-                                    Your course
-                                </a>
-                            </p>
-                            <p style="font-weight: 900">
-                                <a href="/YogaCenter/classbooking">
-                                    <i class="fas fa-calendar-alt icon"></i>
-                                    Class booking
-                                </a>
-                            </p>
-                            <p style="font-weight: 900">
-                                <a href="/YogaCenter/purchase">
-                                    <i class="fas fa-money-bill"></i>                
-                                    Purchase history
-                                </a>
-                            </p>
-                            <p style="font-weight: 900">
-                                <a href="/YogaCenter/request?action=ChangePassword">
-                                    <i class="fas fa-lock"></i>
-                                    Change password
-                                </a>
-                            </p>
-                            <p style="font-weight: 900">
-                                <a href="/YogaCenter/request?action=Logout">
-                                    <i class="fas fa-sign-out-alt icon"></i>
-                                    Logout
-                                </a>
-                            </p>
-                        </div>-->
                     </div>
                     <div class='custom-cart-wrapper'>
                         <a href="/YogaCenter/request?action=viewNotification" class="fa-solid fa-bell fa-2xl"></a>
@@ -90,9 +51,15 @@
                             <c:when test="${cart != null}">
                                 <div id='cartQuantity' class='custom-cart'>${cart.size()}</div>
                             </c:when>
-                        </c:choose>
-
+                        </c:choose>     
                     </div>
+                        <div class="custom-cart-wrapper">
+                            <p style="font-weight: 900">
+                                <a href="/YogaCenter/request?action=Logout">
+                                    <i class="fas fa-sign-out-alt fa-2xl"></i>
+                                </a>
+                            </p>
+                        </div>
                 </div>
             </c:if>
             <c:if test="${account == null}">
