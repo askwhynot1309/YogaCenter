@@ -598,7 +598,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Start_date = ?";
+                    + "where Start_date <= ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
             ResultSet table = pst.executeQuery();
@@ -667,7 +667,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Close_date <= ?";
+                    + "where Close_date <= ? and Status = 1";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
             ResultSet table = pst.executeQuery();
@@ -695,6 +695,7 @@ public class CourseDao {
         return kq;
     }
 
+    
     public static Course checkTheSameCourse(String course, int id_level) throws Exception {
         Course kq = null;
         Connection cn = Utils.DBUtils.getConnection();

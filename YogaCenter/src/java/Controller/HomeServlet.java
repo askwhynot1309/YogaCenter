@@ -63,7 +63,7 @@ public class HomeServlet extends HttpServlet {
             }
             else if (liststartDate != null && !liststartDate.isEmpty()) {
                 for (Course course : liststartDate) {
-                    int changeStatus = Dao.CourseDao.changeStatusCourse(1, course.getIdCourse());
+                    int changeStatus = Dao.CourseDao.changeStatusCourse(0, course.getIdCourse());
                 }
                 Collections.shuffle(listramdom);
                 int count = 0;

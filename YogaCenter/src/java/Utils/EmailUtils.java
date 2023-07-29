@@ -9,7 +9,7 @@ import java.util.Random;
 public class EmailUtils {
 
     private static final String SENDER_EMAIL = "nguyencanqn123@gmail.com"; // Your Gmail address
-    private static final String SENDER_PASSWORD = "qtyaxtsyjejjlfbv"; // Your Gmail app password
+    private static final String SENDER_PASSWORD = "nfvmjequdqklpqmd"; // Your Gmail app password
 
     public static void sendOtpEmail(String recipientEmail, String otp) {
         // Email properties

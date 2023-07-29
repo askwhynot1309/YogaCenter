@@ -4,13 +4,16 @@
  */
 package Controller;
 
+import Object.Account;
 import Utils.EmailUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,13 +35,22 @@ public class SubmitFeedbackServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String emailAddress = request.getParameter("txtemail");
-            String name = request.getParameter("txtname");
-            String feedback = request.getParameter("txtfeedback");
-            
-            EmailUtils.sendToDedicatedEmail(emailAddress, name, feedback);
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("account");
+            if (account != null) {
+                String feedback = request.getParameter("txtfeedback");
+                boolean createMessage = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), feedback, 1, 0, new Date(System.currentTimeMillis()), "Message");
+            } else {
+                String emailAddress = request.getParameter("txtemail");
+                String name = request.getParameter("txtname");
+                String feedback = request.getParameter("txtfeedback");
+
+                EmailUtils.sendToDedicatedEmail(emailAddress, name, feedback);
+            }
             request.setAttribute("FeedbackMessage", "Feedback sent!");
             request.getRequestDispatcher("contactUs.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

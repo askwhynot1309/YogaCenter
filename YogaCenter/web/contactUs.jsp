@@ -77,14 +77,20 @@
         <div class="container">
             <h2 class="form-title">Feedback Form</h2>
             <form action="/YogaCenter/request" method="post">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="txtname" name="txtname" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="txtemail" name="txtemail" required>
-                </div>
+                <c:set var="account" value="${sessionScope.account}"/>
+                <c:if test="${account != null}">
+                    <input type="email" name="txtemail" value="${account.email}" hidden="">
+                </c:if>
+                <c:if test="${account == null}">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="txtname" name="txtname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="txtemail" name="txtemail" required>
+                    </div>
+                </c:if>
                 <div class="form-group">
                     <label for="feedback">Feedback:</label>
                     <textarea class="form-control" id="feedback" name="txtfeedback" required></textarea>
