@@ -75,7 +75,6 @@
                     <div class="title">Success</div>
                     <span>Password reset successful!</span>
                 </div>
-                <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
             </div>
             <script>
                 let notification = document.querySelector('.notification-success');

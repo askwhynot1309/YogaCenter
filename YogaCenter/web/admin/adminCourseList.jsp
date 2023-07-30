@@ -125,7 +125,7 @@
                     </c:if>
                     <div id="overlay" class="overlay hidden"></div>
 
-                    <div id="courseForm" class="hidden">
+                    <div id="courseForm" class="hidden" style="top: 50%; overflow-y: scroll; height: 100%">
                         <div id="closeButton" style="display: flex; float: right; cursor: pointer; width: 30px;height: 30px">&#10006;</div>
                         <div style="display: block; width: 1400px">
                             <h3 style="text-align: center;margin-top: 30px">New course</h3>
@@ -136,13 +136,15 @@
                                     <p>Start-date of course : <input type="date" name="course_start" value="${param.course_start}" required="" class="input-course"></p>
                                     <p>Slots : <input type="number" name="slot" value="${param.slot}" required="" class="input-course"></p>
                                 </div>
-                                <p>Image : <input type="file" name="course_img"></p>
+                                <div style="display: flex; align-items: center; justify-content: space-between">
+                                    <p>Image : <input type="file" name="course_img"></p>
+                                </div>
                                 <div style="display: flex; align-items: center; justify-content: space-between">
                                     <div><p>Detail of course :</p><textarea name="course_description" value="${param.course_description}" class="input-description"></textarea></div>
                                     <div style="margin-left: 10px"><p>Summary of course : </p><textarea name="course_summary" value="${param.course_description}" class="input-description"></textarea></div>
-                                    <div style="margin-left: 10px"><p>Object of course : </p><textarea name="course_object" value="${param.course_description}" class="input-description"></textarea></div>
                                 </div>
-                                <c:if test="${listLevel != null && !listLevel.isEmpty()}">
+                                <div style="margin-left: 10px"><p>Object of course : </p><textarea name="course_object" value="${param.course_description}" class="input-description"></textarea></div>
+                                    <c:if test="${listLevel != null && !listLevel.isEmpty()}">
                                     <p style="margin-top: 10px">Level : <select name="level" class="input-course">
                                             <option value="0"></option>
                                             <c:forEach var="level" items="${listLevel}">
@@ -188,15 +190,15 @@
                                                 <td>
                                                     <c:if test="${course.date_close.before(currentDate)}">
                                                         <form action="/YogaCenter/request" method="POST">
-                                                            <span>Active</span>&ensp; <input type="radio" name="status" value="0" disabled="">
-                                                            <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="">
+                                                            <span>Active</span>&ensp; <input type="radio" name="status" value="1" disabled="">
+                                                            <span>Unactive</span>&ensp; <input type="radio" name="status" value="0" checked="">
                                                         </form>
                                                     </c:if>
                                                     <c:if test="${course.date_close.after(currentDate)}">
-                                                        <c:if test="${course.status == 0}">
+                                                        <c:if test="${course.status == 1}">
                                                             <form action="/YogaCenter/request" method="POST">
-                                                                <span>Active</span>&ensp; <input type="radio" name="status" value="0" checked="" class ="noevent" data-index="${loop.index}">
-                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" class="feedbackButton" data-index="${loop.index}">
+                                                                <span>Active</span>&ensp; <input type="radio" name="status" value="1" checked="" class ="noevent" data-index="${loop.index}">
+                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="0" class="feedbackButton" data-index="${loop.index}">
                                                                 <div class="hidden feedbackForm" data-index="${loop.index}">
                                                                     <div class ="close" style="display: flex; float: right; cursor: pointer; width: 30px;height: 30px">&#10006;</div>
                                                                     <div style="display: block; width: 500px">
@@ -213,10 +215,10 @@
                                                                 </div>
                                                             </form>
                                                         </c:if>
-                                                        <c:if test="${course.status == 1}">
+                                                        <c:if test="${course.status == 0}">
                                                             <form action="/YogaCenter/request" method="POST">
-                                                                 <span>Active</span>&ensp; <input type="radio" name="status" value="0" class="feedbackButton" data-index="${loop.index}">
-                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="1" checked="" class ="noevent" data-index="${loop.index}">
+                                                                <span>Active</span>&ensp; <input type="radio" name="status" value="1" class="feedbackButton" data-index="${loop.index}">
+                                                                <span>Unactive</span>&ensp; <input type="radio" name="status" value="0" checked="" class ="noevent" data-index="${loop.index}">
                                                                 <div class="hidden feedbackForm" data-index="${loop.index}">
                                                                     <div class ="close" style="display: flex; float: right; cursor: pointer; width: 30px;height: 30px">&#10006;</div>
                                                                     <div style="display: block; width: 500px">

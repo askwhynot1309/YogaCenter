@@ -55,7 +55,7 @@ public class ButtonChangeroomServlet extends HttpServlet {
             if (newdate.before(newdate)) {
                 request.setAttribute("wrongDate", "message");
             } else {
-                ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(id, newdate);
+                ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(id, newdate, room);
                 if (check == null) {
                     ArrayList<Account> listTrainerAndTrainee = Dao.AccountDao.GetAllTraineeinThisClass(id, olddate);
                     int insertNewClassWhenChange = Dao.ClassDetailDao.insertNewClassWhenChangeClass(room, time, id_course, choice);

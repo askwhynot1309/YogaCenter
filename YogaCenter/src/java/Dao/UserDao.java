@@ -303,7 +303,7 @@ public class UserDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Account\n"
-                    + "Where Email = ?";
+                    + "Where Email = ? and Role = 3";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, input);
             ResultSet table = pst.executeQuery();
@@ -333,16 +333,16 @@ public class UserDao {
         return check;
     }
 
-    public static int updatePassword(String email, String newPassword) throws Exception {
+    public static int updatePassword(int id, String newPassword) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "update Account\n"
                     + "set Password = ?\n"
-                    + "where Email = ?";
+                    + "where ID_Account = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setString(1, newPassword);
-            pst.setString(2, email);
+            pst.setInt(2, id);
             kq = pst.executeUpdate();
             cn.close();
         }

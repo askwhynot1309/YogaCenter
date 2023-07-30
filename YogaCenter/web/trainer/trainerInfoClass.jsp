@@ -49,7 +49,7 @@
                 border: 0;
                 border-radius: 0.25rem;
                 position: fixed;
-                top: 50%;
+                top: 70%;
                 left: 50%;
                 border-radius: 20px;
                 transform: translate(-50%, -50%);

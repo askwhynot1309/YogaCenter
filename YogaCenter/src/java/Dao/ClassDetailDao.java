@@ -26,9 +26,9 @@ public class ClassDetailDao {
         ArrayList<ClassDetail> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name, R.Status\n"
+            String s = "select C.Class_ID, R.Room_Name, C.IDtime, CDATE.DateStudy, CD.ID_Account, A.Name, C.IDCourse, COU.Course_Name, R.Status\n"
                     + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
-                    + "JOIN Room R ON C.Room_ID = R.Room_ID\n"
+                    + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
                     + "Where A.Role = 2 ";
             PreparedStatement pst = cn.prepareStatement(s);
@@ -38,7 +38,7 @@ public class ClassDetailDao {
                     int id_class = table.getInt("Class_ID");
                     String class_name = table.getString("Room_Name");
                     int id_time = table.getInt("IDtime");
-                    Date datestudy = new Date(System.currentTimeMillis());
+                    Date datestudy = table.getDate("DateStudy");
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(datestudy);
                     int year = calendar.get(Calendar.YEAR);
@@ -739,17 +739,18 @@ public class ClassDetailDao {
         return Room_name;
     }
 
-    public static ClassDetail checkRoomTimeDateHasTheSame(int id_class, Date date) throws Exception {
+    public static ClassDetail checkRoomTimeDateHasTheSame(int id_class, Date date, int room) throws Exception {
         ClassDetail kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select c.Class_ID, r.Room_Name, c.IDtime, cd.DateStudy\n"
                     + "from Class c\n"
                     + "JOIN Room r ON c.Room_ID = r.Room_ID JOIN ClassDate cd ON c.Class_ID = cd.Class_ID\n"
-                    + "Where c.Class_ID = ? and cd.DateStudy = ?";
+                    + "Where c.Class_ID = ? and cd.DateStudy = ? and c.Room_ID = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id_class);
             pst.setDate(2, date);
+            pst.setInt(3, room);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {

@@ -69,7 +69,7 @@ public class OrderDao {
         if (cn != null) {
             String s = "select bc.OrderID, bc.ID_Trainee, bc.Method, bc.DateOrder, sp.Status, a.Name\n"
                     + "from BookingCourse bc JOIN Account a ON a.ID_Account = bc.ID_Trainee JOIN StatusPayment sp ON sp.ID_Order = bc.OrderID\n"
-                    + "Order by bc.DateOrder";
+                    + "Order by bc.OrderID DESC";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
             if (table != null) {
