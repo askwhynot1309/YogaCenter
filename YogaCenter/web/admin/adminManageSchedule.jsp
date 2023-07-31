@@ -661,8 +661,6 @@
                     <h3 style="margin-top: 20px; color: #2ba8fb; background-color: #6fc5ff50; padding: 5px">Set up Schedule Table for Trainers</h3>
                     <div>
                         <c:set var="listTrainer" value="${requestScope.listTrainer}" />
-                        <c:set var="listRoom" value="${requestScope.listRoom}" />
-                        <c:set var="listTime" value="${requestScope.listTime}" />
                         <c:set var="listCourse" value="${requestScope.listCourse}" />
                         <c:set var="arrangeFail" value="${requestScope.arrangeFail}" />
                         <c:set var="arrangeSameTime" value="${requestScope.arrangeSameTime}" />
@@ -707,26 +705,6 @@
                                     </c:if>
                                     <c:if test="${listRoom == null}">
                                         No Rooms
-                                    </c:if>
-                                </p>
-                                <p>Date:
-                                    <select name="option" id = "select-box-option">
-                                        <option value="1">Monday - Wednesday - Friday</option>
-                                        <option value="2">Tuesday - Thursday - Saturday</option>
-                                        <option value="3">Sunday</option>
-                                    </select>
-                                </p>
-                                <p>Time : 
-                                    <c:if test="${listTime != null}">
-                                        <select name="time" id="select-box">
-                                            <option value="0"></option>
-                                            <c:forEach var="period" items="${listTime}">
-                                                <option value="${period.id_time}">${period.time}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </c:if>
-                                    <c:if test="${listTime == null}">
-                                        No Times
                                     </c:if>
                                 </p>
                             </div>

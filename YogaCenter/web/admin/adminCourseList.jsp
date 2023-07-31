@@ -120,6 +120,7 @@
                     <c:set var="theSameName" value="${requestScope.theSameName}"/>
                     <c:set var="noimage" value="${requestScope.noimage}"/>
                     <c:set var="wrong" value="${requestScope.wrong}"/>
+                    <c:set var="listRoom" value="${requestScope.listRoom}" />
                     <c:if test="${listCourse == null}">
                         <p style="text-align: center"><c:out value="${nulllist}"/></p>
                     </c:if>
@@ -138,6 +139,26 @@
                                 </div>
                                 <div style="display: flex; align-items: center; justify-content: space-between">
                                     <p>Image : <input type="file" name="course_img"></p>
+                                    <p>Time : 
+                                        <c:if test="${listTime != null}">
+                                            <select name="time" id="select-box">
+                                                <option value="0"></option>
+                                                <c:forEach var="period" items="${listTime}">
+                                                    <option value="${period.id_time}">${period.time}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:if>
+                                        <c:if test="${listTime == null}">
+                                            No Times
+                                        </c:if>
+                                    </p>
+                                    <p>Date:
+                                        <select name="option" id = "select-box-option">
+                                            <option value="1">Monday - Wednesday - Friday</option>
+                                            <option value="2">Tuesday - Thursday - Saturday</option>
+                                            <option value="3">Sunday</option>
+                                        </select>
+                                    </p>
                                 </div>
                                 <div style="display: flex; align-items: center; justify-content: space-between">
                                     <div><p>Detail of course :</p><textarea name="course_description" value="${param.course_description}" class="input-description"></textarea></div>

@@ -27,6 +27,8 @@ public class Course implements Serializable {
     private int level;
     private String name_level;
     private int status;
+    private int choice;
+    private int idtime;
 
     public Course() {
     }
@@ -53,7 +55,7 @@ public class Course implements Serializable {
         this.status = status;
     }
 
-    public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, Date date_end, int slot, String description, String learnt, String summary, int level, String name_level, int status) {
+    public Course(int idCourse, String name_course, String img_course, BigDecimal fee_course, Date date_start, Date date_end, int slot, String description, String learnt, String summary, int level, String name_level, int status, int choice, int time) {
         this.idCourse = idCourse;
         this.name_course = name_course;
         this.img_course = img_course;
@@ -67,6 +69,24 @@ public class Course implements Serializable {
         this.level = level;
         this.name_level = name_level;
         this.status = status;
+        this.choice = choice;
+        this.idtime = time;
+    }
+
+    public int getChoice() {
+        return choice;
+    }
+
+    public void setChoice(int choice) {
+        this.choice = choice;
+    }
+
+    public int getIdtime() {
+        return idtime;
+    }
+
+    public void setIdtime(int idtime) {
+        this.idtime = idtime;
     }
 
     public Date getDate_close() {

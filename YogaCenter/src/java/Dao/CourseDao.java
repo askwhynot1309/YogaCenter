@@ -47,7 +47,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -81,7 +83,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -116,7 +120,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -176,7 +182,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -210,7 +218,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -245,7 +255,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -280,7 +292,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -315,7 +329,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -350,7 +366,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -385,7 +403,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -421,7 +441,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -457,7 +479,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -466,11 +490,11 @@ public class CourseDao {
         return kq;
     }
 
-    public static int insertCourse(String name, String img, BigDecimal fee, String description, String objective, String summary, Date start, Date close, int slot, int level, int status) throws Exception {
+    public static int insertCourse(String name, String img, BigDecimal fee, String description, String objective, String summary, Date start, Date close, int slot, int level, int choice, int time, int status) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "insert into Course(Course_Name, Course_Fee, Img, Start_date, Slot, Description, Objective, Summary, ID_Level, Status, Close_date)\n"
+            String s = "insert into Course(Course_Name, Course_Fee, Img, Start_date, Slot, Description, Objective, Summary, ID_Level, Status, Close_date, IDtime, Choice)\n"
                     + "Values (?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, name);
@@ -484,6 +508,8 @@ public class CourseDao {
             pst.setInt(9, level);
             pst.setInt(10, status);
             pst.setDate(11, close);
+            pst.setInt(12, time);
+            pst.setInt(13, choice);
             kq = pst.executeUpdate();
             cn.close();
         }
@@ -514,7 +540,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    kq = new Course(id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    kq = new Course(id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                 }
             }
             cn.close();
@@ -546,7 +574,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -617,7 +647,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -653,7 +685,9 @@ public class CourseDao {
                     String summary = table.getNString("Summary");
                     int level = table.getInt("ID_Level");
                     int status = table.getInt("Status");
-                    kq = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, "", status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    kq = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, "", status, choice, idtime);
                 }
             }
             cn.close();
@@ -686,7 +720,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }
@@ -722,7 +758,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    kq = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    kq = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                 }
             }
             cn.close();
@@ -912,7 +950,7 @@ public class CourseDao {
             if (table != null) {
                 while (table.next()) {
                     int course_id = table.getInt("Course_ID");
-                    Course course = new Course(course_id, "", "", BigDecimal.valueOf(0), date, date, 0, "", "", "", 0, "", 0);
+                    Course course = new Course(course_id, "", "", BigDecimal.valueOf(0), date, date, 0, "", "", "", 0, "", 0, 0 , 0);
                     kq.add(course);
                 }
             }
@@ -946,7 +984,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status);
+                    int choice = table.getInt("Choice");
+                    int idtime = table.getInt("IDtime");
+                    Course course = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }

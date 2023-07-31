@@ -41,8 +41,6 @@ public class ButtonScheduleServlet extends HttpServlet {
             int idaccount = Integer.parseInt(request.getParameter("trainer"));
             int id_course = Integer.parseInt(request.getParameter("course"));
             int id_room = Integer.parseInt(request.getParameter("room"));
-            int option = Integer.parseInt(request.getParameter("option"));
-            int id_time = Integer.parseInt(request.getParameter("time"));
             Date current = new Date(System.currentTimeMillis());
             HttpSession session = request.getSession();
             Account account = (Account) session.getAttribute("Admin");
@@ -50,11 +48,11 @@ public class ButtonScheduleServlet extends HttpServlet {
                 request.getRequestDispatcher("schedule").forward(request, response);
             }
             Course course = Dao.CourseDao.getInformationOfCourse(id_course);
-            if (idaccount == 0 || id_course == 0 || id_room == 0 || id_time == 0) {
+            if (idaccount == 0 || id_course == 0 || id_room == 0) {
                 request.setAttribute("arrangeFail", "Fill all fields before arrange !");
                 request.getRequestDispatcher("schedule").forward(request, response);
             }
-            if (Dao.ClassDetailDao.checkTrainerHasTheSameClassInSameTime(id_room, id_time, course.getDate_start(), option) != null) {
+            if (Dao.ClassDetailDao.checkTrainerHasTheSameClassInSameTime(id_room, course.getDate_start()) != null) {
                 request.setAttribute("arrangeSameTime", "This room has been have a course in this time !");
                 request.getRequestDispatcher("schedule").forward(request, response);
             } else if (Dao.ClassDetailDao.checkTrainerSameTimeToTeach(id_time, course.getDate_start(), option, idaccount) != null) {

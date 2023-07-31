@@ -353,7 +353,7 @@ public class ClassDetailDao {
         return kq;
     }
 
-    public static ClassDetail checkTrainerHasTheSameClassInSameTime(int room_id, int time_id, Date date, int option) throws Exception {
+    public static ClassDetail checkTrainerHasTheSameClassInSameTime(int room_id, Date date) throws Exception {
         ClassDetail kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
@@ -361,12 +361,10 @@ public class ClassDetailDao {
                     + "from Class C JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID JOIN Account A ON CD.ID_Account = A.ID_Account\n"
                     + "JOIN Room R ON C.Room_ID = R.Room_ID JOIN ClassDate CDATE ON CDATE.Class_ID = C.Class_ID\n"
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
-                    + "Where C.Room_ID = ? And C.IDtime = ? And COU.Start_date = ? And C.Choice = ? AND a.Role = 2";
+                    + "Where C.Room_ID = ? And COU.Start_date = ? AND a.Role = 2";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, room_id);
-            pst.setInt(2, time_id);
-            pst.setDate(3, date);
-            pst.setInt(4, option);
+            pst.setDate(2, date);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {

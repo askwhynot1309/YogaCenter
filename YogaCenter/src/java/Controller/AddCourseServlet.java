@@ -54,6 +54,8 @@ public class AddCourseServlet extends HttpServlet {
                 request.setAttribute("noimage", "message");
                 request.getRequestDispatcher("managecourse").forward(request, response);
             } else {
+                int time = Integer.parseInt(request.getParameter("time"));
+                int option = Integer.parseInt(request.getParameter("option"));
                 String description = request.getParameter("course_description");
                 String objective = request.getParameter("course_object");
                 String summary = request.getParameter("course_summary");
@@ -139,7 +141,7 @@ public class AddCourseServlet extends HttpServlet {
                                 }
                             }
                         } else {
-                            int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, objective, summary, start, close, slot, level, 1);
+                            int insertCourse = Dao.CourseDao.insertCourse(name, fileName, fee, description, objective, summary, start, close, slot, level, option, time, 1);
                             if (insertCourse == 1) {
                                 if (listCourse != null && !listCourse.isEmpty()) {
                                     if (listLevel != null && !listLevel.isEmpty()) {
