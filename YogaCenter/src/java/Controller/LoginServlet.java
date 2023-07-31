@@ -44,16 +44,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             Date currentdate = new Date(System.currentTimeMillis());
             String newpassword = Utils.HexPassword.HexPassword(password);
-            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);
-            ArrayList<Account> listTrainer = Dao.AccountDao.getAllTrainer();
-            ArrayList<Account> listTrainee = Dao.UserDao.getAllTrainee();
-            for (Account account1 : listTrainee) {
-                int AutoAddInClass = Utils.AutoJoinClassIfOverDay.joinClassAutoIfOverDay(account1.getIdaccount());
-            }
-            for (Account account1 : listTrainer) {
-                int autoRemoveClass = Utils.TrainerAutoCloseClassWhenNoTraineeInCourse.TrainerAutoCloseClassWhenNoTraineeInCourse(account1.getIdaccount());
-            }
-            
+            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);     
             if (accountLogin != null) {
                 if (accountLogin.getStatus() == 0) {
                     switch (accountLogin.getRole()) {

@@ -38,11 +38,9 @@ public class ButtonChangeroomServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             int room = Integer.parseInt(request.getParameter("id_room"));
-            int time = Integer.parseInt(request.getParameter("id_time"));
             int id = Integer.parseInt(request.getParameter("id"));
             int id_course = Integer.parseInt(request.getParameter("id_course"));
             int idaccount = Integer.parseInt(request.getParameter("idaccount"));
-            int choice = Integer.parseInt(request.getParameter("choice"));
             Account account = (Account) session.getAttribute("Staff");
             if (account == null) {
                 request.getRequestDispatcher("viewschedule").forward(request, response);
@@ -58,13 +56,13 @@ public class ButtonChangeroomServlet extends HttpServlet {
                 ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(id, newdate, room);
                 if (check == null) {
                     ArrayList<Account> listTrainerAndTrainee = Dao.AccountDao.GetAllTraineeinThisClass(id, olddate);
-                    int insertNewClassWhenChange = Dao.ClassDetailDao.insertNewClassWhenChangeClass(room, time, id_course, choice);
+                    int insertNewClassWhenChange = Dao.ClassDetailDao.insertNewClassWhenChangeClass(room, id_course);
                     if (insertNewClassWhenChange == 1) {
-                        int checkClass = Dao.ClassDetailDao.getIDClass(room, id_course, choice, time);
+                        int checkClass = Dao.ClassDetailDao.getIDClass(room, id_course);
                         int changeDateAttendence = Dao.AttendenceDao.changeDateToCheckAttendence(newdate, id, olddate, checkClass);
-                        int insertTrainer = Dao.ClassDetailDao.insertClassForLearn(room, time, idaccount, id_course, choice);
+                        int insertTrainer = Dao.ClassDetailDao.insertClassForLearn(room, idaccount, id_course);
                         for (Account account1 : listTrainerAndTrainee) {
-                            int insertTraineeInNewClass = Dao.ClassDetailDao.insertClassForLearn(room, time, account1.getIdaccount(), id_course, choice);
+                            int insertTraineeInNewClass = Dao.ClassDetailDao.insertClassForLearn(room, account1.getIdaccount(), id_course);
                             boolean insertMessageForTrainerAndTraineeToChangeClass = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "Your classroom must be changed new classroom because of some problems. Please view your schedule to join clasroom.", account1.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Message");
                         }
                         int update = Dao.ClassDetailDao.deleteDateTimeRoomWithProblemAndChange(id, olddate, checkClass, newdate);

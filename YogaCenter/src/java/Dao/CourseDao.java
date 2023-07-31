@@ -495,7 +495,7 @@ public class CourseDao {
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "insert into Course(Course_Name, Course_Fee, Img, Start_date, Slot, Description, Objective, Summary, ID_Level, Status, Close_date, IDtime, Choice)\n"
-                    + "Values (?,?,?,?,?,?,?,?,?,?,?)";
+                    + "Values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, name);
             pst.setBigDecimal(2, fee);

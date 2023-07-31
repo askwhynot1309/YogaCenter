@@ -46,7 +46,7 @@ public class HomeServlet extends HttpServlet {
                     Date staDate = Utils.CheckDayAfterOneMonth.getDateAfterOneMonth(course.getDate_start());
                     Date cloDate = Utils.CheckDayBeforeThreeWeek.getDateBefore1Week(staDate);
                     if (Dao.CourseDao.checkCourseToAddAuto(course.getName_course(), staDate, cloDate, course.getLevel()) == null){
-                        int insertCourseNewStartDate = Dao.CourseDao.insertCourse(course.getName_course(), course.getImg_course(), course.getFee_course(), course.getDescription(), course.getLearnt(), course.getSummary(), staDate, cloDate, course.getSlot(), course.getLevel(), 1);
+                        int insertCourseNewStartDate = Dao.CourseDao.insertCourse(course.getName_course(), course.getImg_course(), course.getFee_course(), course.getDescription(), course.getLearnt(), course.getSummary(), staDate, cloDate, course.getSlot(), course.getLevel(), course.getChoice(), course.getIdtime() ,1);
                     }
                 }
                 Collections.shuffle(listramdom);

@@ -29,25 +29,21 @@ public class ClassDetail implements Serializable{
     public ClassDetail() {
     }
 
-    public ClassDetail(int id_class, int id_room, int time, int idaccount, int id_course) {
+    public ClassDetail(int id_class, int id_room, int id_course) {
         this.id_class = id_class;
         this.id_room = id_room;
-        this.time = time;
-        this.idaccount = idaccount;
         this.id_course = id_course;
     }
 
-    public ClassDetail(int id_detail, String class_name, int time, Date date) {
+    public ClassDetail(int id_detail, String class_name, Date date) {
         this.id_class = id_detail;
         this.class_name = class_name;
-        this.time = time;
         this.date = date;
     }
 
-    public ClassDetail(int id_detail, String class_name, int time, String datestudy, int idaccount, String account, int id_course, int status, String course) {
+    public ClassDetail(int id_detail, String class_name, String datestudy, int idaccount, String account, int id_course, int status, String course) {
         this.id_class = id_detail;
         this.class_name = class_name;
-        this.time = time;
         this.datestudy = datestudy;
         this.idaccount = idaccount;
         this.account = account;
@@ -67,22 +63,9 @@ public class ClassDetail implements Serializable{
         this.course = course;
     }
 
-    public ClassDetail(int id_detail, String class_name, int time, int idaccount, Date date, String account, int id_course, String course, int choice) {
+    public ClassDetail(int id_detail, String class_name, int idaccount, Date date, String account, int id_course, String course) {
         this.id_class = id_detail;
         this.class_name = class_name;
-        this.time = time;
-        this.idaccount = idaccount;
-        this.date = date;
-        this.account = account;
-        this.id_course = id_course;
-        this.course = course;
-        this.choice = choice;
-    }
-
-    public ClassDetail(int id_detail, String class_name, int time, int idaccount, Date date, String account, int id_course, String course) {
-        this.id_class = id_detail;
-        this.class_name = class_name;
-        this.time = time;
         this.idaccount = idaccount;
         this.date = date;
         this.account = account;
@@ -101,18 +84,16 @@ public class ClassDetail implements Serializable{
         this.course = course;
     }
 
-    public ClassDetail(int Class_ID,int id_room, String Room_name, int time, String datestudy, int Account_ID, String Account_name, int Course_ID, int status, String Course_name, int choice) {
+    public ClassDetail(int Class_ID,int id_room, String Room_name, String datestudy, int Account_ID, String Account_name, int Course_ID, int status, String Course_name) {
         this.id_class = Class_ID;
         this.id_room = id_room;
         this.class_name = Room_name;
-        this.time = time;
         this.datestudy = datestudy;
         this.idaccount = Account_ID;
         this.account = Account_name;
         this.id_course = Course_ID;
         this.status = status;
         this.course = Course_name;
-        this.choice = choice;
     }
 
     public int getStatus() {

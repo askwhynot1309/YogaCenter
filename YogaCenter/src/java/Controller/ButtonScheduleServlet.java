@@ -55,12 +55,12 @@ public class ButtonScheduleServlet extends HttpServlet {
             if (Dao.ClassDetailDao.checkTrainerHasTheSameClassInSameTime(id_room, course.getDate_start()) != null) {
                 request.setAttribute("arrangeSameTime", "This room has been have a course in this time !");
                 request.getRequestDispatcher("schedule").forward(request, response);
-            } else if (Dao.ClassDetailDao.checkTrainerSameTimeToTeach(id_time, course.getDate_start(), option, idaccount) != null) {
+            } else if (Dao.ClassDetailDao.checkTrainerSameTimeToTeach(course.getDate_start(), idaccount) != null) {
                 request.setAttribute("arrangeSameTrainerInTime", "This trainer has had class in this time !");
                 request.getRequestDispatcher("schedule").forward(request, response);
             } else {
-                ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), option);
-                int insertClass = Dao.ClassDetailDao.insertClassForTeach(id_room, id_time, idaccount, id_course, option);
+                ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), course.getChoice());
+                int insertClass = Dao.ClassDetailDao.insertClassForTeach(id_room, idaccount, id_course);
                 for (Get30SlotsByCourse dateForSlot : list) {
                     int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(insertClass, dateForSlot.getDay());
                 }

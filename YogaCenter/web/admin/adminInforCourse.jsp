@@ -95,6 +95,33 @@
                                     <input name="id" value="${informationCourse.idCourse}" hidden="">
                                     <p>Slots : <input type="number" name="slot" value="${informationCourse.slot}" class="input-course"></p>
                                 </div>
+                                <div style="display: flex; align-items: center; justify-content: space-between">
+                                    <h5>Time :
+                                        <c:if test="${informationCourse.idtime == 1}">
+                                            9h - 11h
+                                        </c:if>
+                                        <c:if test="${informationCourse.idtime == 2}">
+                                            13h - 15h
+                                        </c:if>
+                                        <c:if test="${informationCourse.idtime == 3}">
+                                            16h - 18h
+                                        </c:if>
+                                        <c:if test="${informationCourse.idtime == 4}">
+                                            19h - 21h
+                                        </c:if>
+                                    </h5>
+                                    <h5>Time slot :
+                                        <c:if test="${informationCourse.choice == 1}">
+                                            Monday - Wednesday - Friday 
+                                        </c:if>
+                                        <c:if test="${informationCourse.choice == 2}">
+                                            Tuesday - Thursday - Saturday 
+                                        </c:if>
+                                        <c:if test="${informationCourse.choice == 3}">
+                                            Sunday
+                                        </c:if>
+                                    </h5>
+                                </div>
                                 <p>Level : ${informationCourse.name_level}</p>
                                 <p>Detail of course : </p><textarea name="course_description">${informationCourse.description}</textarea>
                                 <p>Summary of course : </p><textarea name="course_summary">${informationCourse.summary}</textarea>
