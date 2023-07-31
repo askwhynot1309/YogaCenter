@@ -17,7 +17,7 @@
     <body>
         <div class="login">
             <div class="login-form">
-                <h1 class="signin-heading">Sign In</h1>
+                <h1 class="signin-heading">Login</h1>
                 <div class="inner-form" style="width: 100%">
                     <form action="/YogaCenter/request" method="POST" class="display: flex; justify-content: center; align-items: center">
                         <div class="form-control">
@@ -33,7 +33,7 @@
                             </label>
                         </div>
                         <button name="action" value="Login">
-                            Sign in
+                            Login
                             <div class="arrow-wrapper">
                                 <div class="arrow"></div>
                             </div>

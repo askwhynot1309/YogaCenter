@@ -45,14 +45,18 @@ public class TraineeRequestChangeClassServlet extends HttpServlet {
             HttpSession session = request.getSession(true);
             Account trainee = (Account) session.getAttribute("account");
             Account acc = Dao.UserDao.getAccountByID(trainee.getIdaccount());
+            out.print("true");
             request.setAttribute("accountTrainee", acc);
             if (trainee == null) {
                 request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
+            }else{
+                
             }
             LocalDate startDate = CourseDao.getCourseStartDate(trainee.getIdaccount());
             LocalDate endDate = CourseDao.getCourseEndDate(trainee.getIdaccount());
             LocalDate currentDate = LocalDate.now();
             ArrayList<Course> courseList = CourseDao.getAllCourseByTraineeID(trainee.getIdaccount());
+            out.print("yes");
             if (!courseList.isEmpty()) {
                 if (currentDate.isAfter(endDate)) {
                     request.setAttribute("overdue", "Overdue for form application and registration");
@@ -66,10 +70,14 @@ public class TraineeRequestChangeClassServlet extends HttpServlet {
                     request.setAttribute("endDate", endDate);
                     request.setAttribute("courseList", courseList);
                     request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
+                }else{
+                    request.setAttribute("startDate", startDate);
+                    request.setAttribute("endDate", endDate);
+                    request.setAttribute("courseList", courseList);
+                    request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
                 }
             } else {
                 request.setAttribute("registered", "You have not registered for any courses yet");
-
                 request.getRequestDispatcher("traineeCreateRequest.jsp").forward(request, response);
             }
         } catch (Exception e) {
