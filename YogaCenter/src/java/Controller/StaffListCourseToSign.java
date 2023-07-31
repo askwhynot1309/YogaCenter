@@ -39,7 +39,7 @@ public class StaffListCourseToSign extends HttpServlet {
             int idaccount = Integer.parseInt(request.getParameter("key"));
             ArrayList<Course> listcourse = Dao.CourseDao.staffGetAllCourse();
             Date currentdate = new Date(System.currentTimeMillis());
-            ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(idaccount);
+            ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderCourseDao.getAllCourseThatTraineeActive(idaccount);
             ArrayList<Level> listlevel = Dao.LevelDao.getAllLevel();
             if(listcourse != null && !listcourse.isEmpty()){
                 request.setAttribute("listcourse", listcourse);

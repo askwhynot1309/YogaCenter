@@ -42,6 +42,7 @@ public class ButtonChangeroomServlet extends HttpServlet {
             int id_course = Integer.parseInt(request.getParameter("id_course"));
             int idaccount = Integer.parseInt(request.getParameter("idaccount"));
             Account account = (Account) session.getAttribute("Staff");
+            ArrayList<Account> listTrainerAndTrainee = Dao.AccountDao.GetAllTraineeinThisClass(id);
             if (account == null) {
                 request.getRequestDispatcher("viewschedule").forward(request, response);
             }
@@ -55,19 +56,13 @@ public class ButtonChangeroomServlet extends HttpServlet {
             } else {
                 ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(id, newdate, room);
                 if (check == null) {
-                    ArrayList<Account> listTrainerAndTrainee = Dao.AccountDao.GetAllTraineeinThisClass(id, olddate);
-                    int insertNewClassWhenChange = Dao.ClassDetailDao.insertNewClassWhenChangeClass(room, id_course);
-                    if (insertNewClassWhenChange == 1) {
-                        int checkClass = Dao.ClassDetailDao.getIDClass(room, id_course);
-                        int changeDateAttendence = Dao.AttendenceDao.changeDateToCheckAttendence(newdate, id, olddate, checkClass);
-                        int insertTrainer = Dao.ClassDetailDao.insertClassForLearn(room, idaccount, id_course);
+                    int update = Dao.ClassDetailDao.deleteDateTimeRoomWithProblemAndChange(id, newdate, room);
+                    if (update == 1) {
                         for (Account account1 : listTrainerAndTrainee) {
-                            int insertTraineeInNewClass = Dao.ClassDetailDao.insertClassForLearn(room, account1.getIdaccount(), id_course);
                             boolean insertMessageForTrainerAndTraineeToChangeClass = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "Your classroom must be changed new classroom because of some problems. Please view your schedule to join clasroom.", account1.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Message");
                         }
-                        int update = Dao.ClassDetailDao.deleteDateTimeRoomWithProblemAndChange(id, olddate, checkClass, newdate);
+                        request.setAttribute("success", "message");
                     }
-                    request.setAttribute("success", "message");
                 } else {
                     request.setAttribute("theSame", "message");
                 }

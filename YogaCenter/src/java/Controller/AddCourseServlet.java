@@ -70,7 +70,7 @@ public class AddCourseServlet extends HttpServlet {
                 Date currentDate = new Date(System.currentTimeMillis());
                 ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
                 ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-                if (Dao.CourseDao.checkTheSameCourse(name, level) != null) {
+                if (Dao.CourseDao.checkTheSameCourse(name, level, time, option) != null) {
                     request.setAttribute("listCourse", listCourse);
                     request.setAttribute("listLevel", listLevel);
                     request.setAttribute("theSameName", "message");

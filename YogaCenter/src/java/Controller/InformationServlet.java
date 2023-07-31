@@ -44,7 +44,7 @@ public class InformationServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             String option = request.getParameter("option");
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            ArrayList<OrderCourse> listinf = Dao.OrderDao.getInformationOrder(id);
+            ArrayList<OrderCourse> listinf = Dao.OrderCourseDao.getInformationOrder(id);
             HttpSession session = request.getSession();
             switch (option) {
                 case "infCourse":
@@ -57,6 +57,32 @@ public class InformationServlet extends HttpServlet {
                     request.setAttribute("listLevel", listLevel);
                     request.getRequestDispatcher("admin/adminInforCourse.jsp").forward(request, response);
                     break;
+                case "viewCourse":
+                    int count = Dao.OrderCourseDao.countTraineeOrderCourse(id);
+                    ArrayList<ClassDetail> listSession = Dao.ClassDetailDao.getSessionsInCourse(id);
+                    request.setAttribute("count", count);
+                    request.setAttribute("listSession", listSession);
+                    request.setAttribute("id", id);
+                    request.getRequestDispatcher("admin/adminViewCourse.jsp").forward(request, response);
+                    break;
+                case "viewTrainees":
+                    int id_room = Integer.parseInt(request.getParameter("room"));
+                    int id_course = Integer.parseInt(request.getParameter("id1"));
+                    ArrayList<ClassDetail> listTraineeInClass = Dao.ClassDetailDao.getAllTraineeInClass(id);
+                    request.setAttribute("listTraineeInClass", listTraineeInClass);
+                    request.setAttribute("id", id);
+                    request.setAttribute("room", id_room);
+                    request.setAttribute("id_course", id_course);
+                    request.getRequestDispatcher("admin/adminViewTrainee.jsp").forward(request, response);
+                    break;
+                case "viewDetailSession":
+                    int idroom = Integer.parseInt(request.getParameter("room"));
+                    ArrayList<ClassDetail> listSessions = Dao.ClassDetailDao.getSessionsInCourseWithRoom(idroom, id);
+                    request.setAttribute("listSessions", listSessions);
+                    request.setAttribute("id", id);
+                    request.setAttribute("room", idroom);
+                    request.getRequestDispatcher("admin/adminViewSessions.jsp").forward(request, response);
+                    break;
                 case "infEmployee":
                     Account inf = Dao.AccountDao.getInformationOfEmployee(id);
                     request.setAttribute("informationEmployee", inf);
@@ -66,7 +92,7 @@ public class InformationServlet extends HttpServlet {
                     Date date = Date.valueOf(request.getParameter("date"));
                     int id_account = Integer.parseInt(request.getParameter("acc"));
                     ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id, date, id_account);
-                    ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(information.getTime(), information.getClass_name(), information.getDate(), information.getId_course());
+                    ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(information.getClass_name(), information.getDate(), information.getId_course());
                     ArrayList<AccountAttendence> listAttendTrainer = Dao.AttendenceDao.getAccountToAttendence(information.getDate());
                     if (listTrainee.isEmpty()) {
                         request.setAttribute("InforClass", information);
@@ -90,18 +116,18 @@ public class InformationServlet extends HttpServlet {
                 case "staffClassDetail":
                     Date staffdate = Date.valueOf(request.getParameter("date"));
                     int staff_id_account = Integer.parseInt(request.getParameter("acc"));
-                    ClassDetail infor = Dao.ClassDetailDao.getClassDetailById(id, staffdate, staff_id_account);
-                    ArrayList<Account> listTrainees = Dao.UserDao.getAllTraineeInTimeAndRoom(infor.getTime(), infor.getClass_name(), infor.getDate(), infor.getId_course());
-                    ArrayList<AccountAttendence> listAttendence = Dao.AttendenceDao.getAccountToAttendence(infor.getDate());
+                    ClassDetail inform = Dao.ClassDetailDao.getClassDetailById(id, staffdate, staff_id_account);
+                    ArrayList<Account> listTrainees = Dao.UserDao.getAllTraineeInTimeAndRoom(inform.getClass_name(), inform.getDate(), inform.getId_course());
+                    ArrayList<AccountAttendence> listAttendence = Dao.AttendenceDao.getAccountToAttendence(inform.getDate());
                     if (listTrainees.isEmpty()) {
-                        request.setAttribute("InforClass", infor);
+                        request.setAttribute("InforClass", inform);
                         request.getRequestDispatcher("staff/staffInforClass.jsp").forward(request, response);
                     } else {
                         Date currentdate = new Date(System.currentTimeMillis());
                         request.setAttribute("currentDate", currentdate);
                         request.setAttribute("ListTrainee", listTrainees);
                         request.setAttribute("ListAttendence", listAttendence);
-                        request.setAttribute("InforClass", infor);
+                        request.setAttribute("InforClass", inform);
                         request.getRequestDispatcher("staff/staffInforClass.jsp").forward(request, response);
                     }
                     break;
@@ -129,7 +155,8 @@ public class InformationServlet extends HttpServlet {
                     java.time.LocalDate currentDate = java.time.LocalDate.now();
                     int trainer_id_account = Integer.parseInt(request.getParameter("acc"));
                     ClassDetail trainerinformation = Dao.ClassDetailDao.getClassDetailById(id, trainer_date, trainer_id_account);
-                    ArrayList<Account> trainerlistTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformation.getTime(), trainerinformation.getClass_name(), trainerinformation.getDate(), trainerinformation.getId_course());
+                    int id_checkAttendence = Dao.AttendenceDao.getIDCheckAttendence(id, trainer_date);
+                    ArrayList<Account> trainerlistTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformation.getClass_name(), trainerinformation.getDate(), trainerinformation.getId_course());
                     ArrayList<AccountAttendence> listAttend = Dao.AttendenceDao.getAccountToAttendence(trainerinformation.getDate());
                     java.sql.Date sqlDate = new java.sql.Date(trainerinformation.getDate().getTime());
                     java.time.LocalDate localDate = sqlDate.toLocalDate();
@@ -142,6 +169,7 @@ public class InformationServlet extends HttpServlet {
                         request.setAttribute("ListTrainee", trainerlistTrainee);
                         request.setAttribute("InforClass", trainerinformation);
                         request.setAttribute("currentDate", check);
+                        request.setAttribute("idAttendance", id_checkAttendence);
                         request.setAttribute("check", checkAttendAgain);
                         request.setAttribute("listAttend", listAttend);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
@@ -152,7 +180,7 @@ public class InformationServlet extends HttpServlet {
                     java.time.LocalDate currentDateAgain = java.time.LocalDate.now();
                     int trainer_id_account_again = Integer.parseInt(request.getParameter("acc"));
                     ClassDetail trainerinformationagain = Dao.ClassDetailDao.getClassDetailById(id, dateagain, trainer_id_account_again);
-                    ArrayList<Account> trainerlistTraineeAgain = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformationagain.getTime(), trainerinformationagain.getClass_name(), trainerinformationagain.getDate(), trainerinformationagain.getId_course());
+                    ArrayList<Account> trainerlistTraineeAgain = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformationagain.getClass_name(), trainerinformationagain.getDate(), trainerinformationagain.getId_course());
                     ArrayList<AccountAttendence> listAttendAgain = Dao.AttendenceDao.getAccountToAttendence(trainerinformationagain.getDate());
                     java.sql.Date sqlDateAgain = new java.sql.Date(trainerinformationagain.getDate().getTime());
                     java.time.LocalDate localDateAgain = sqlDateAgain.toLocalDate();
@@ -183,7 +211,7 @@ public class InformationServlet extends HttpServlet {
                     ArrayList<Course> top3Course = Dao.CourseDao.getTop3InformationOfCourse(viewcoure.getLevel());
                     Account account = (Account) session.getAttribute("account");
                     if (account != null) {
-                        ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(account.getIdaccount());
+                        ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderCourseDao.getAllCourseThatTraineeActive(account.getIdaccount());
                         request.setAttribute("listCourseAccountActive", listCourseAccountActive);
                     }
                     request.setAttribute("information", viewcoure);

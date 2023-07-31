@@ -71,7 +71,7 @@ public class ChangeStatusServlet extends HttpServlet {
                             boolean createMessageForTrainee = Dao.MessageDao.createRequestChangeClass(1, "The course is unactive, the money that you paid will refund in your account. If you want to take money, go to center, please. You should bring your citizen ID when you come to the center for verification.", orderCourse.getId_account(), 0, new Date(System.currentTimeMillis()), "Unactive Course Message");
                             Account account = Dao.UserDao.getAccountByID(orderCourse.getId_account());
                             BigDecimal money = account.getAmount().add(course.getFee_course());
-                            int changeStatusRefund = Dao.OrderDao.changeStatusAccountOrder(orderCourse.getId_order(), id, 2);
+                            int changeStatusRefund = Dao.OrderCourseDao.changeStatusAccountOrder(orderCourse.getId_order(), id, 2);
                             int updateFee = Dao.AccountDao.updateMoneyOfAccount(account.getIdaccount(), money);
                         }
                     }
@@ -81,11 +81,11 @@ public class ChangeStatusServlet extends HttpServlet {
                     }
                     break;
                 case "orderChange":
-                    int changeStatusOrder = Dao.OrderDao.changeStatusBooking(id, status);
+                    int changeStatusOrder = Dao.OrderCourseDao.changeStatusBooking(id, status);
                     if (changeStatusOrder == 1) {
-                        ArrayList<OrderCourse> listCourseInOrder = Dao.OrderDao.getInformationOrder(id);
+                        ArrayList<OrderCourse> listCourseInOrder = Dao.OrderCourseDao.getInformationOrder(id);
                         for (OrderCourse orderCourse : listCourseInOrder) {
-                            int changeStatusAccount = Dao.OrderDao.changeStatusAccountOrder(orderCourse.getId_order(), orderCourse.getId_course(), 1);
+                            int changeStatusAccount = Dao.OrderCourseDao.changeStatusAccountOrder(orderCourse.getId_order(), orderCourse.getId_course(), 1);
                         }
                         request.getRequestDispatcher("viewbooking").forward(request, response);
                     }

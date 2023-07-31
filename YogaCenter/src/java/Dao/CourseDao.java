@@ -732,13 +732,13 @@ public class CourseDao {
     }
 
     
-    public static Course checkTheSameCourse(String course, int id_level) throws Exception {
+    public static Course checkTheSameCourse(String course, int id_level, int time, int choice) throws Exception {
         Course kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Course_Name = ? and c.ID_Level = ?";
+                    + "where Course_Name = ? and c.ID_Level = ? and c.IDtime = ? and c.Choice = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, course);
             pst.setInt(2, id_level);
@@ -758,9 +758,9 @@ public class CourseDao {
                     int level = table.getInt("ID_Level");
                     String name_level = table.getNString("Level_Name");
                     int status = table.getInt("Status");
-                    int choice = table.getInt("Choice");
+                    int option = table.getInt("Choice");
                     int idtime = table.getInt("IDtime");
-                    kq = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
+                    kq = new Course(course_id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, option, idtime);
                 }
             }
             cn.close();

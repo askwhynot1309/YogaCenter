@@ -51,7 +51,7 @@ public class ShowCourseListServlet extends HttpServlet {
             CourseList = dao.getAllCourseByTrainee();
             CourseLevel = ldao.getAllLevel();
             if (account != null) {
-                ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(account.getIdaccount());
+                ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderCourseDao.getAllCourseThatTraineeActive(account.getIdaccount());
                 request.setAttribute("listCourseAccountActive", listCourseAccountActive);
             }
             if (!CourseList.isEmpty()) {

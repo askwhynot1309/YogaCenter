@@ -51,7 +51,6 @@ public class ViewScheduleServlet extends HttpServlet {
             }
             ArrayList<Account> listTrainer = Dao.AccountDao.getAllTrainer();
             ArrayList<Room> listRoom = Dao.RoomDao.getAllRoomActive();
-            ArrayList<Time> listTime = Dao.TimeDao.getAllTime();
             ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseThatTraineeOrder();
             for (Course course : listCourse) {
                 if(current.equals(course.getDate_close()) || current.after(course.getDate_close()) && current.before(course.getDate_start())){
@@ -61,7 +60,6 @@ public class ViewScheduleServlet extends HttpServlet {
             request.setAttribute("listCourse", newCourseList);
             request.setAttribute("listTrainer", listTrainer);
             request.setAttribute("listRoom", listRoom);
-            request.setAttribute("listTime", listTime);
             request.setAttribute("listDay", list);
             request.getRequestDispatcher("admin/adminManageSchedule.jsp").forward(request, response);
         } catch (Exception e) {

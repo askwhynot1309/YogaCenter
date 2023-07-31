@@ -52,21 +52,16 @@ public class ButtonScheduleServlet extends HttpServlet {
                 request.setAttribute("arrangeFail", "Fill all fields before arrange !");
                 request.getRequestDispatcher("schedule").forward(request, response);
             }
-            if (Dao.ClassDetailDao.checkTrainerHasTheSameClassInSameTime(id_room, course.getDate_start()) != null) {
+            if (Dao.ClassDetailDao.checkTrainerHasTheSameClassInSameTime(id_room, course.getIdCourse()) != null) {
                 request.setAttribute("arrangeSameTime", "This room has been have a course in this time !");
                 request.getRequestDispatcher("schedule").forward(request, response);
-            } else if (Dao.ClassDetailDao.checkTrainerSameTimeToTeach(course.getDate_start(), idaccount) != null) {
+            } else if (Dao.ClassDetailDao.checkTrainerSameTimeToTeach(course.getIdtime(), idaccount) != null) {
                 request.setAttribute("arrangeSameTrainerInTime", "This trainer has had class in this time !");
                 request.getRequestDispatcher("schedule").forward(request, response);
             } else {
                 ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), course.getChoice());
-                int insertClass = Dao.ClassDetailDao.insertClassForTeach(id_room, idaccount, id_course);
                 for (Get30SlotsByCourse dateForSlot : list) {
-                    int insertDateForSlots = Dao.ClassDetailDao.insertDayFor30Slots(insertClass, dateForSlot.getDay());
-                }
-                ArrayList<OrderCourse> listTraineeInCourse = Dao.OrderCourseDao.getTraineeBoughtCourse(id_course);
-                for (OrderCourse orderCourse : listTraineeInCourse) {
-                    boolean insertMessage = Dao.MessageDao.createRequestChangeClass(1, "The admin have set up class for your course. Please choose join class. If it is overdate, the system will set you in class automatically!", orderCourse.getId_account(), 0, current, "Notification");
+                    int insertClass = Dao.ClassDetailDao.insertClassForTeach(id_room, idaccount, id_course, dateForSlot.getDay());
                 }
                 request.setAttribute("arrangesuccess", "Settup successfully !");
                 request.getRequestDispatcher("schedule").forward(request, response);

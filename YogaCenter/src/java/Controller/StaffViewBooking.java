@@ -33,7 +33,7 @@ public class StaffViewBooking extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ArrayList<OrderCourse> listorder = Dao.OrderDao.getAllOrder();
+            ArrayList<OrderCourse> listorder = Dao.OrderCourseDao.getAllOrder();
             if(listorder.size() == 0){
                 request.setAttribute("nulllist", "There are any order of trainee.");
             }else{

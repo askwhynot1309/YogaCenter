@@ -64,7 +64,7 @@ public class CheckAttendance extends HttpServlet {
             String[] attendanceStatusArray = attendanceStatusList.toArray(new String[attendanceStatusList.size()]);
 
             String[] traineeIdArray = request.getParameterValues("traineeId");
-            String[] courseIdArray = request.getParameterValues("id_class");
+            String[] courseIdArray = request.getParameterValues("id_attendence");
             String[] classDateArray = request.getParameterValues("classDate");
             System.out.println(traineeIdArray.length);
 //            System.out.println(classDateArray.length);
@@ -94,12 +94,12 @@ public class CheckAttendance extends HttpServlet {
                     //System.out.println(attendanceStatus + classDate + traineeId);
                     ClassDetailDao dao = new ClassDetailDao();
                     if (newDate.equals(Dao.AttendenceDao.getFinalDateClass(classid))) {
-                        if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, AttendanceDate, status)) {
-                                int changeStatusCourse = Dao.OrderDao.changeStatusAccount(classdetail.getId_course(), 4);
+                        if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, status)) {
+                                int changeStatusCourse = Dao.OrderCourseDao.changeStatusAccount(classdetail.getId_course(), 4);
                                 request.setAttribute("message", "Attendance status updated successfully");
                         }
                     } else {
-                        if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, AttendanceDate, status)) {
+                        if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, status)) {
                             request.setAttribute("message", "Attendance status added successfully");
 
                         } else {

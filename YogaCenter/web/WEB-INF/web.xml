@@ -41,10 +41,6 @@
         <servlet-class>Controller.AdminManageEmployeeServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>InformationServlet</servlet-name>
-        <servlet-class>Controller.InformationServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ButtonScheduleServlet</servlet-name>
         <servlet-class>Controller.ButtonScheduleServlet</servlet-class>
     </servlet>
@@ -135,10 +131,6 @@
     <servlet>
         <servlet-name>TraineeDeleteCartItemsServlet</servlet-name>
         <servlet-class>Controller.TraineeDeleteCartItemsServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>TraineeChooseScheduleServlet</servlet-name>
-        <servlet-class>Controller.TraineeChooseScheduleServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>TraineeReoderServlet</servlet-name>
@@ -261,10 +253,6 @@
         <servlet-class>Controller.TraineeViewNotificationServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TraineeViewTheirCouse</servlet-name>
-        <servlet-class>Controller.TraineeViewTheirCouse</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>TraineeViewRequestChangeClass</servlet-name>
         <servlet-class>Controller.TraineeViewRequestChangeClass</servlet-class>
     </servlet>
@@ -380,6 +368,10 @@
         <servlet-name>SubmitAttendanceAgainServlet</servlet-name>
         <servlet-class>Controller.SubmitAttendanceAgainServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>InformationServlet</servlet-name>
+        <servlet-class>Controller.InformationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -419,10 +411,6 @@
     <servlet-mapping>
         <servlet-name>AdminManageEmployeeServlet</servlet-name>
         <url-pattern>/employee</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>InformationServlet</servlet-name>
-        <url-pattern>/InformationServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ButtonScheduleServlet</servlet-name>
@@ -515,10 +503,6 @@
     <servlet-mapping>
         <servlet-name>TraineeDeleteCartItemsServlet</servlet-name>
         <url-pattern>/TraineeDeleteCartItemsServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TraineeChooseScheduleServlet</servlet-name>
-        <url-pattern>/TraineeChooseScheduleServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeReoderServlet</servlet-name>
@@ -619,10 +603,6 @@
     <servlet-mapping>
         <servlet-name>TraineeViewNotificationServlet</servlet-name>
         <url-pattern>/viewNotification</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TraineeViewTheirCouse</servlet-name>
-        <url-pattern>/myCourses</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeViewRequestChangeClass</servlet-name>
@@ -759,6 +739,10 @@
     <servlet-mapping>
         <servlet-name>SubmitAttendanceAgainServlet</servlet-name>
         <url-pattern>/SubmitAttendanceAgainServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InformationServlet</servlet-name>
+        <url-pattern>/InformationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

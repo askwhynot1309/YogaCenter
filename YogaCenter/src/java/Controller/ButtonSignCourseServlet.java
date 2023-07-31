@@ -48,7 +48,7 @@ public class ButtonSignCourseServlet extends HttpServlet {
             Date dateorder = new Date(System.currentTimeMillis());
             int count = Dao.OrderCourseDao.checkNumberCourseToBuy(idaccount);
             if (count < 3) {
-                int insertOrder = Dao.OrderDao.insertOrderInOffline(quantity, idcourse, idaccount, dateorder, price);
+                int insertOrder = Dao.OrderCourseDao.insertOrderInOffline(quantity, idcourse, idaccount, dateorder, price);
                 if (insertOrder == 1) {
                     request.setAttribute("success", "message");
                     request.getRequestDispatcher("/signcourse?key="+idaccount).forward(request, response);

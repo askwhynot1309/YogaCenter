@@ -40,7 +40,7 @@ public class AdminViewBookingServlet extends HttpServlet {
             if(account == null){
                 request.getRequestDispatcher("admin/adminviewBooking.jsp").forward(request, response);
             }
-            ArrayList<OrderCourse> listorder = Dao.OrderDao.getAllOrder();
+            ArrayList<OrderCourse> listorder = Dao.OrderCourseDao.getAllOrder();
             if(listorder.size() == 0){
                 request.setAttribute("nullist", "There are any order of trainee.");
             }else{

@@ -41,7 +41,7 @@ public class ClassDetail implements Serializable{
         this.date = date;
     }
 
-    public ClassDetail(int id_detail, String class_name, String datestudy, int idaccount, String account, int id_course, int status, String course) {
+    public ClassDetail(int id_detail, String class_name, String datestudy, int idaccount, String account, int id_course, int status, String course, int time) {
         this.id_class = id_detail;
         this.class_name = class_name;
         this.datestudy = datestudy;
@@ -50,6 +50,7 @@ public class ClassDetail implements Serializable{
         this.id_course = id_course;
         this.status = status;
         this.course = course;
+        this.time = time;
     }
 
     public ClassDetail(int id_detail, int id_room, int time, int idaccount, Date date, String account, int id_course, String course) {
@@ -63,20 +64,20 @@ public class ClassDetail implements Serializable{
         this.course = course;
     }
 
-    public ClassDetail(int id_detail, String class_name, int idaccount, Date date, String account, int id_course, String course) {
+    public ClassDetail(int id_detail, String class_name, int idaccount, Date date, String account, int id_course, String course, int time) {
         this.id_class = id_detail;
         this.class_name = class_name;
         this.idaccount = idaccount;
         this.date = date;
+        this.time = time;
         this.account = account;
         this.id_course = id_course;
         this.course = course;
     }
     
-    public ClassDetail(int id_detail, String class_name, int time, String datestudy, int idaccount, String account, int id_course, String course) {
+    public ClassDetail(int id_detail, String class_name, String datestudy, int idaccount, String account, int id_course, String course) {
         this.id_class = id_detail;
         this.class_name = class_name;
-        this.time = time;
         this.datestudy = datestudy;
         this.idaccount = idaccount;
         this.account = account;
@@ -84,7 +85,7 @@ public class ClassDetail implements Serializable{
         this.course = course;
     }
 
-    public ClassDetail(int Class_ID,int id_room, String Room_name, String datestudy, int Account_ID, String Account_name, int Course_ID, int status, String Course_name) {
+    public ClassDetail(int Class_ID,int id_room, String Room_name, String datestudy, int Account_ID, String Account_name, int Course_ID, int status, String Course_name, int time) {
         this.id_class = Class_ID;
         this.id_room = id_room;
         this.class_name = Room_name;
@@ -94,6 +95,7 @@ public class ClassDetail implements Serializable{
         this.id_course = Course_ID;
         this.status = status;
         this.course = Course_name;
+        this.time = time;
     }
 
     public int getStatus() {

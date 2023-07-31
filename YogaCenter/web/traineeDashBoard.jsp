@@ -285,7 +285,7 @@
                                                                         <c:forEach var="acc" items="${listClass}">
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Sunday'}">
-                                                                                    <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p><p>${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy)}</p> 
+                                                                                    <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p><p>${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy)}</p> 
                                                                                 </c:when>
                                                                                 <c:otherwise>
                                                                                 </c:otherwise>
@@ -299,13 +299,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Monday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -321,13 +321,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Tuesday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -343,13 +343,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Wednesday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -365,13 +365,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Thursday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if> 
                                                                                 </c:when>
@@ -387,13 +387,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Friday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -409,13 +409,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Saturday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -436,13 +436,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Sunday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -458,13 +458,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Monday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if> 
                                                                                 </c:when>
@@ -480,13 +480,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Tuesday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -502,13 +502,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Wednesday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -524,13 +524,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Thursday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -546,13 +546,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Friday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -568,13 +568,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Saturday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -596,13 +596,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Sunday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -618,13 +618,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Monday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -640,13 +640,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Tuesday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -662,13 +662,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Wednesday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if> 
                                                                                 </c:when>
@@ -684,13 +684,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Thursday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -706,13 +706,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Friday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -728,13 +728,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Saturday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -755,13 +755,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Sunday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -777,13 +777,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Monday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -799,13 +799,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Tuesday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -821,13 +821,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Wednesday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -843,13 +843,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Thursday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -865,13 +865,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Friday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>
@@ -887,13 +887,13 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Saturday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=ClassDetailclassDetail">${acc.course}(${acc.class_name})</a></p>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'not yet'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
                                                                                         <p style="color: black">Not yet</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'present'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
                                                                                         <p style="color: green">Present</p>
                                                                                     </c:if>
-                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_class, acc.datestudy) == 'absent'}">
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
                                                                                         <p style="color: red">Absent</p>
                                                                                     </c:if>
                                                                                 </c:when>

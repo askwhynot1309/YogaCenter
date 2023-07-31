@@ -70,7 +70,7 @@ public class LoginServlet extends HttpServlet {
                                         boolean createMessageForTrainee = Dao.MessageDao.createRequestChangeClass(1, "The course is not enough trainees to set up course, the money that you paid will refund in your account. If you want to take money, go to center, please. You should bring your citizen ID when you come to the center for verification.", course.getId_account(), 0, new Date(System.currentTimeMillis()), "Not Enough Trainee Join Course Message");
                                         Account acc = Dao.UserDao.getAccountByID(course.getId_account());
                                         BigDecimal money = acc.getAmount().add(course.getFee_course());
-                                        int changeStatusRefund = Dao.OrderDao.changeStatusAccountOrder(course.getId_order(), course.getId_course(), 2);
+                                        int changeStatusRefund = Dao.OrderCourseDao.changeStatusAccountOrder(course.getId_order(), course.getId_course(), 2);
                                         int updateFee = Dao.AccountDao.updateMoneyOfAccount(acc.getIdaccount(), money);
                                     }
                                 }

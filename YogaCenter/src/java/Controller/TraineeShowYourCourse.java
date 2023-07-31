@@ -52,7 +52,7 @@ public class TraineeShowYourCourse extends HttpServlet {
                     if(getDate.equals(current_date) || getDate.before(current_date)){
                         for (OrderCourse orderCourse : listCourseTrainee) {
                             if(classDetail.getId_course() == orderCourse.getId_course()){
-                                int changeStatus = Dao.OrderDao.changeStatusAccountOrder(orderCourse.getId_order(), orderCourse.getId_account(), 4);
+                                int changeStatus = Dao.OrderCourseDao.changeStatusAccountOrder(orderCourse.getId_order(), orderCourse.getId_account(), 4);
                             }
                         }
                     }

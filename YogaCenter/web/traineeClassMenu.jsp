@@ -77,12 +77,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/YogaCenter/myCourses">
-                        <i class="fas fa-users" style="margin-right: 17px"></i>
-                        My courses
-                    </a>
-                </li>
-                <li>
                     <a href="/YogaCenter/viewRequest">
                         <i class="fas fa-exchange" style="margin-right: 17px"></i>
                         Request to change classes

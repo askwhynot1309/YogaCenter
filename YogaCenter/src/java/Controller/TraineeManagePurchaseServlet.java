@@ -58,7 +58,7 @@ public class TraineeManagePurchaseServlet extends HttpServlet {
                         LocalDate currentDate = LocalDate.now();
                         if (overduaDate.isBefore(currentDate)) {
                             boolean isUpdated = OrderCourseDao.cancelStatus(orderID);
-                            boolean isDeleted = Dao.ClassDetailDao.deleteTraineeInClass(account.getIdaccount(), orderCourse.getId_course());
+                            int isDeleted = Dao.ClassDetailDao.deleteTraineeInClass(account.getIdaccount(), orderCourse.getId_course());
                         }
                     }
                 }
@@ -68,6 +68,8 @@ public class TraineeManagePurchaseServlet extends HttpServlet {
             request.setAttribute("purchase", purchase);
             request.setAttribute("acc", acc);
             request.getRequestDispatcher("traineeManagePurchase.jsp").forward(request, response);
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

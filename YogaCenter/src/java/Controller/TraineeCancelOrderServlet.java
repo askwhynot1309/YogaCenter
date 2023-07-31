@@ -39,7 +39,7 @@ public class TraineeCancelOrderServlet extends HttpServlet {
                 request.getRequestDispatcher("traineeManagePurchase.jsp").forward(request, response);
             }
             int orderID = Integer.parseInt(request.getParameter("oID"));
-            int changeStatusOrder = Dao.OrderDao.changeStatusBooking(orderID, 2);
+            int changeStatusOrder = Dao.OrderCourseDao.changeStatusBooking(orderID, 2);
             if(changeStatusOrder == 1){
                 request.setAttribute("message", "Cancel order successfully!");
                 request.getRequestDispatcher("purchase").forward(request, response);

@@ -247,7 +247,7 @@ public class SearchValueServlet extends HttpServlet {
                 case "staffSearchCourseToSign": {
                     int level = Integer.parseInt(request.getParameter("level"));
                     int key = Integer.parseInt(request.getParameter("key"));
-                    ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderDao.getAllCourseThatTraineeActive(key);
+                    ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderCourseDao.getAllCourseThatTraineeActive(key);
                     if (level == 0) {
                         ArrayList<Course> listCourse = Dao.CourseDao.getAllCourseBySearch(search);
                         ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
@@ -386,7 +386,7 @@ public class SearchValueServlet extends HttpServlet {
                         }
                         request.getRequestDispatcher("admin/adminviewBooking.jsp").forward(request, response);
                     } else {
-                        ArrayList<OrderCourse> listorder = Dao.OrderDao.getAllOrder();
+                        ArrayList<OrderCourse> listorder = Dao.OrderCourseDao.getAllOrder();
                         if (listorder.size() == 0) {
                             request.setAttribute("nullist", "There are any order of trainee.");
                         } else {
@@ -425,7 +425,7 @@ public class SearchValueServlet extends HttpServlet {
                         }
                         request.getRequestDispatcher("staff/staffviewBooking.jsp").forward(request, response);
                     } else {
-                        ArrayList<OrderCourse> listorder = Dao.OrderDao.getAllOrder();
+                        ArrayList<OrderCourse> listorder = Dao.OrderCourseDao.getAllOrder();
                         if (listorder.size() == 0) {
                             request.setAttribute("nullist", "There are any order of trainee.");
                         } else {

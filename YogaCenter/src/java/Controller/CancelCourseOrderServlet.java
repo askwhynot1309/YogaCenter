@@ -10,6 +10,7 @@ import Object.OrderCourse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,14 +51,16 @@ public class CancelCourseOrderServlet extends HttpServlet {
                     BigDecimal fee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("course_fee")));
                     BigDecimal moneycurrent = account.getAmount();
                     BigDecimal total = moneycurrent.add(fee);
-                    int changeStatusRefund = Dao.OrderDao.changeStatusAccountOrder(id_order, id_course, status);
+                    int changeStatusRefund = Dao.OrderCourseDao.changeStatusAccountOrder(id_order, id_course, status);
                     int updateFee = Dao.AccountDao.updateMoneyOfAccount(acc.getIdaccount(), total);
                     request.setAttribute("refund", "message");
                     break;
                 case 0:
-                    int changeStatusCancel = Dao.OrderDao.changeStatusAccountOrder(id_order, id_course, status);
-                    ClassDetail getTraineeInThisClassWithCourse = Dao.ClassDetailDao.getAccountInClassWhenCancelCourse(id_course, acc.getIdaccount());
-                    boolean deleteTraineeWhenCancelCourse = Dao.ClassDetailDao.deleteTraineeInClass(acc.getIdaccount(), getTraineeInThisClassWithCourse.getId_class());
+                    int changeStatusCancel = Dao.OrderCourseDao.changeStatusAccountOrder(id_order, id_course, status);
+                    ArrayList<ClassDetail> getTraineeInThisClassWithCourse = Dao.ClassDetailDao.getAccountInClassWhenCancelCourse(id_course, acc.getIdaccount());
+                    for (ClassDetail classDetail : getTraineeInThisClassWithCourse) {
+                        int deleteTraineeWhenCancelCourse = Dao.ClassDetailDao.deleteTraineeInClass(acc.getIdaccount(), classDetail.getId_course());
+                    }
                     request.setAttribute("cancel", "message");
                     break;
             }

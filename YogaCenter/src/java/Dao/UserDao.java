@@ -227,10 +227,11 @@ public class UserDao {
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
             String sql = "SELECT DISTINCT A.ID_Account, A.Email, A.CCCD, A.Account, A.CV, A.Password, A.Name, A.Phone, A.Address, A.Img, A.Status, A.Role, A.Money\n"
-                    + "FROM Class C JOIN ClassDate CDATE ON C.Class_ID = CDATE.Class_ID JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
-                    + "JOIN Account a ON CD.ID_Account = a.ID_Account\n"
-                    + "JOIN Room r ON r.Room_ID = C.Room_ID\n"
-                    + "where a.Role = 3 AND C.Class_ID = ?";
+                    + "FROM Session S JOIN CheckAttendance CA ON CA.ID_Class = S.SessionID\n"
+                    + "JOIN Trainee T ON T.Attendance_ID = CA.Attendance_ID\n"
+                    + "JOIN Account A ON T.ID_Trainee = A.ID_Account\n"
+                    + "JOIN Room r ON r.Room_ID = S.Room_ID\n"
+                    + "where S.SessionID = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, ID_Class);
             ResultSet rs = pst.executeQuery();
@@ -257,20 +258,19 @@ public class UserDao {
         return traineeList;
     }
 
-    public static ArrayList<Account> getAllTraineeInTimeAndRoom(int id_time, String id_room, Date date, int id_course) throws Exception {
+    public static ArrayList<Account> getAllTraineeInTimeAndRoom(String id_room, Date date, int id_course) throws Exception {
         ArrayList<Account> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "select *\n"
-                    + "from Class C JOIN ClassDate CDATE ON C.Class_ID = CDATE.Class_ID JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
+                    + "from Session S JOIN ClassDate CDATE ON S.SessionID = CDATE.Class_ID JOIN ClassDetail CD ON S.SessionID = CD.Class_ID\n"
                     + "JOIN Account a ON CD.ID_Account = a.ID_Account\n"
-                    + "JOIN Room r ON r.Room_ID = C.Room_ID\n"
-                    + "where a.Role = 3 and C.IDtime = ? and CDATE.DateStudy = ? and r.Room_Name = ? and C.IDCourse = ?";
+                    + "JOIN Room r ON r.Room_ID = S.Room_ID\n"
+                    + "where a.Role = 3 and CDATE.DateStudy = ? and r.Room_Name = ? and S.IDCourse = ?";
             PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, id_time);
-            pst.setDate(2, date);
-            pst.setNString(3, id_room);
-            pst.setInt(4, id_course);
+            pst.setDate(1, date);
+            pst.setNString(2, id_room);
+            pst.setInt(3, id_course);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
@@ -580,7 +580,7 @@ public class UserDao {
         }
         return updated;
     }
-    
+
     public static int changeAvatar(String img, int ID_Account) {
         int updated = 0;
         Connection cn = null;

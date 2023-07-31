@@ -503,31 +503,6 @@ public class AccountDao {
         return kq;
     }
 
-    public static ArrayList<Account> GetAllTraineeinThisClass(int id, Date olddate) throws Exception {
-        ArrayList<Account> kq = new ArrayList<>();
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "select CDE.ID_Account\n"
-                    + "from Class C JOIN ClassDate CD ON C.Class_ID = CD.Class_ID\n"
-                    + "JOIN ClassDetail CDE ON CDE.Class_ID = C.Class_ID\n"
-                    + "Join Account A ON A.ID_Account = CDE.ID_Account\n"
-                    + "Where A.Role = 3 And CD.DateStudy = ? and C.Class_ID = ?";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(2, id);
-            pst.setDate(1, olddate);
-            ResultSet table = pst.executeQuery();
-            if (table != null) {
-                while (table.next()) {
-                    int id_account = table.getInt("ID_Account");
-                    Account account = new Account(id_account, "", "", "", "", "", "", "", "", "", 0, 0);
-                    kq.add(account);
-                }
-            }
-            cn.close();
-        }
-        return kq;
-    }
-
     public static boolean updateTrainerInfo(int accountId, String img, String phone, String cv, String address) throws SQLException, Exception {
         boolean check = false;
         Connection cn = Utils.DBUtils.getConnection();
@@ -547,6 +522,27 @@ public class AccountDao {
             }
         }
         return check;
+    }
+
+    public static ArrayList<Account> GetAllTraineeinThisClass(int id) throws Exception {
+        ArrayList<Account> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Select T.ID_Trainee\n"
+                    + "from CheckAttendance CA JOIN Trainee T ON CA.Attendance_ID = T.Attendance_ID\n"
+                    + "Where CA.ID_Class = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int idTrainer = table.getInt("ID_Account");
+                    Account account = new Account(idTrainer, "", "", "", "", "", "", "", "", "", 3, 0);
+                    kq.add(account);
+                }
+            }
+            cn.close();
+        }
+        return kq;
     }
 
 }

@@ -83,7 +83,7 @@
                             <table cellpadding="0" cellspacing="0" border="0">
                                 <thead>
                                     <tr>
-                                        <th style="width: 50px">No.</th>
+                                        <th style="width: 150px">Order Code</th>
                                         <th>Name</th>
                                         <th style="width: 150px">Order-date</th>
                                         <th style="width: 150px">Method</th>
@@ -98,7 +98,7 @@
                                 <tbody>
                                     <c:forEach var="order" items="${listOrder}" varStatus="loop">
                                         <tr>
-                                            <td style="width: 50px">${loop.count}</td>
+                                            <td style="width: 150px; text-align: center">${order.id_order}</td>
                                             <td>${order.name_account}</td>
                                             <td style="width: 150px">${order.dateorder}</td>
                                             <td style="width: 150px">

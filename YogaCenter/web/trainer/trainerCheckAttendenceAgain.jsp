@@ -142,6 +142,7 @@
                     <c:set var="listAttend" value="${requestScope.listAttend}"/>
                     <c:set var="status" value="${requestScope.status}"/>
                     <c:set var="message" value="${requestScope.message}"/>
+                    <c:set var="idAttendance" value="${requestScope.idAttendance}"/>
                     <c:if test="${inforClass != null}">
                         <table class="table">
                             <tbody>
@@ -215,8 +216,9 @@
                                                                             <input type="radio" name="attendanceStatus${loop.index}" value="2" id="no${loop.index}">
                                                                             <label for="no${loop.index}">No</label>
                                                                             <input type="hidden" name="traineeId" value="${trainee.idaccount}">
-                                                                            <input type="hidden" name="id_class" value="${inforClass.id_class}">
+                                                                            <input type="hidden" name="id_attendence" value="${idAttendance}">
                                                                             <input type="hidden" name="classDate" value="${inforClass.date}">
+                                                                            <input type="hidden" name="class_id" value="${inforClass.id_class}">
                                                                             <input type="hidden" name="reuseId" value="${sessionScope.reuseId}">
                                                                         </c:if>
                                                                         <c:if test="${attend.status == 1}">
@@ -225,8 +227,9 @@
                                                                             <input type="radio" name="attendanceStatus${loop.index}" value="2" id="no${loop.index}">
                                                                             <label for="no${loop.index}">No</label>
                                                                             <input type="hidden" name="traineeId" value="${trainee.idaccount}">
-                                                                            <input type="hidden" name="id_class" value="${inforClass.id_class}">
+                                                                            <input type="hidden" name="id_attendence" value="${idAttendance}">
                                                                             <input type="hidden" name="classDate" value="${inforClass.date}">
+                                                                            <input type="hidden" name="class_id" value="${inforClass.id_class}">
                                                                             <input type="hidden" name="reuseId" value="${sessionScope.reuseId}">
                                                                         </c:if>
                                                                         <c:if test="${attend.status == 2}">
@@ -235,8 +238,9 @@
                                                                             <input type="radio" name="attendanceStatus${loop.index}" value="2" id="no${loop.index}" checked="">
                                                                             <label for="no${loop.index}">No</label>
                                                                             <input type="hidden" name="traineeId" value="${trainee.idaccount}">
-                                                                            <input type="hidden" name="id_class" value="${inforClass.id_class}">
+                                                                            <input type="hidden" name="id_attendence" value="${idAttendance}">
                                                                             <input type="hidden" name="classDate" value="${inforClass.date}">
+                                                                            <input type="hidden" name="class_id" value="${inforClass.id_class}">
                                                                             <input type="hidden" name="reuseId" value="${sessionScope.reuseId}">
                                                                         </c:if>
                                                                     </c:if>

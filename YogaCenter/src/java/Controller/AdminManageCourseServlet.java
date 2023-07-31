@@ -7,6 +7,7 @@ package Controller;
 import Object.Account;
 import Object.Course;
 import Object.Level;
+import Object.Time;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -45,12 +46,14 @@ public class AdminManageCourseServlet extends HttpServlet {
             }
             ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
             ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
+            ArrayList<Time> listTime = Dao.TimeDao.getAllTime();
             Date date = new Date(System.currentTimeMillis());
             if (listCourse != null && !listCourse.isEmpty()) {
                 if (listLevel != null && !listLevel.isEmpty()) {
                     request.setAttribute("listCourse", listCourse);
                     request.setAttribute("currentdate", date);
                     request.setAttribute("listLevel", listLevel);
+                    request.setAttribute("listTime", listTime);
                     request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                 } else {
                     request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
@@ -58,6 +61,7 @@ public class AdminManageCourseServlet extends HttpServlet {
             } else {
                 if (listLevel != null && !listLevel.isEmpty()) {
                     request.setAttribute("listLevel", listLevel);
+                    request.setAttribute("listTime", listTime);
                     request.setAttribute("nulllist", "There are no courses in data.");
                     request.getRequestDispatcher("admin/adminCourseList.jsp").forward(request, response);
                 } else {

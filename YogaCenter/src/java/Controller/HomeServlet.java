@@ -41,7 +41,7 @@ public class HomeServlet extends HttpServlet {
             ArrayList<Course> liststartDate = Dao.CourseDao.getCourseByDateStart(currentdate);
             ArrayList<Course> listramdom = Dao.CourseDao.getAllCourseHaveTopOrder();
             ArrayList<Course> list4Course = Dao.CourseDao.get4Course();
-            if (list != null && !list.isEmpty()) {
+            if (list != null && !list.isEmpty() && liststartDate.size() == 0) {
                 for (Course course : list) {
                     Date staDate = Utils.CheckDayAfterOneMonth.getDateAfterOneMonth(course.getDate_start());
                     Date cloDate = Utils.CheckDayBeforeThreeWeek.getDateBefore1Week(staDate);

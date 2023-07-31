@@ -61,7 +61,7 @@ public class SubmitAttendanceAgainServlet extends HttpServlet {
             String[] attendanceStatusArray = attendanceStatusList.toArray(new String[attendanceStatusList.size()]);
 
             String[] traineeIdArray = request.getParameterValues("traineeId");
-            String[] courseIdArray = request.getParameterValues("id_class");
+            String[] courseIdArray = request.getParameterValues("id_attendence");
             String[] classDateArray = request.getParameterValues("classDate");
             System.out.println(traineeIdArray.length);
 //            System.out.println(classDateArray.length);
@@ -91,12 +91,12 @@ public class SubmitAttendanceAgainServlet extends HttpServlet {
                     //System.out.println(attendanceStatus + classDate + traineeId);
                     ClassDetailDao dao = new ClassDetailDao();
                     if (newDate.equals(Dao.AttendenceDao.getFinalDateClass(classid))) {
-                        if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, AttendanceDate, status)) {
-                                int changeStatusCourse = Dao.OrderDao.changeStatusAccount(classdetail.getId_course(), 4);
-                                request.setAttribute("message", "Attendance status updated successfully");
+                        if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, status)) {
+                            int changeStatusCourse = Dao.OrderCourseDao.changeStatusAccount(classdetail.getId_course(), 4);
+                            request.setAttribute("message", "Attendance status updated successfully");
                         }
                     } else {
-                        if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, AttendanceDate, status)) {
+                        if (dao.updateAttendanceStatus(traineeIdInt, id_classInt, status)) {
                             request.setAttribute("message", "Attendance status added successfully");
 
                         } else {
@@ -108,7 +108,7 @@ public class SubmitAttendanceAgainServlet extends HttpServlet {
                 request.getRequestDispatcher("/request?action=inf&id=" + classid + "&option=trainerCheckAttendenceAgain&date=" + newDate + "&acc=" + account.getIdaccount()).forward(request, response);
             }
             //request.getRequestDispatcher("/trainerviewschedule").forward(request, response);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -22,12 +22,13 @@ public class AttendenceDao {
         ArrayList<AccountAttendence> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "SELECT c.IDCourse, ca.AttendanceDate, ca.Status, ca.ID_Trainee\n"
-                    + "from Class c JOIN CheckAttendance ca ON c.Class_ID = ca.ID_Class\n"
-                    + "JOIN ClassDate cd ON cd.Class_ID = c.Class_ID\n"
-                    + "JOIN Account a ON ca.ID_Trainee = a.ID_Account\n"
+            String s = "SELECT S.IDCourse, ca.AttendanceDate, T.Status, T.ID_Trainee\n"
+                    + "from Session S JOIN CheckAttendance ca ON S.SessionID = ca.ID_Class\n"
+                    + "JOIN ClassDate cd ON cd.Class_ID = S.SessionID\n"
+                    + "JOIN Trainee T ON ca.Attendance_ID = T.Attendance_ID\n"
+                    + "JOIN Account a ON T.ID_Trainee = a.ID_Account\n"
                     + "where cd.DateStudy = ? AND a.Role = 3 AND ca.AttendanceDate = ?\n"
-                    + "GROUP BY c.IDCourse, ca.AttendanceDate, ca.Status, ca.ID_Trainee";
+                    + "GROUP BY S.IDCourse, ca.AttendanceDate, T.Status, T.ID_Trainee";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
             pst.setDate(2, date);
@@ -92,17 +93,19 @@ public class AttendenceDao {
         return kq;
     }
 
-    public static String attendanceStatus(int Trainee_ID, int Class_ID, String DateStudy) throws Exception {
+    public static String attendanceStatus(int Trainee_ID, int id_room, int id_course, String DateStudy) throws Exception {
         String attendanceStatus = "";
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
-            String sql = "SELECT Status\n"
-                    + "FROM [dbo].[CheckAttendance]\n"
-                    + "WHERE ID_Trainee = ? AND ID_Class = ? AND AttendanceDate = ?";
+            String sql = "SELECT Status \n"
+                    + "FROM Session S JOIN CheckAttendance CA ON S.SessionID = CA.ID_Class\n"
+                    + "JOIN Trainee T ON T.Attendance_ID = CA.Attendance_ID\n"
+                    + "WHERE T.ID_Trainee = ? AND S.IDCourse = ? And S.Room_ID = ? AND CA.AttendanceDate = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, Trainee_ID);
-            pst.setInt(2, Class_ID);
-            pst.setString(3, DateStudy);
+            pst.setInt(2, id_course);
+            pst.setInt(3, id_room);
+            pst.setString(4, DateStudy);
             ResultSet rs = pst.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -177,9 +180,9 @@ public class AttendenceDao {
             if (cn != null) {
 
                 String sql = "SELECT COUNT(Status) AS Progress\n"
-                        + "FROM [dbo].[CheckAttendance] CA\n"
-                        + "JOIN [dbo].[Class] C ON CA.ID_Class = C.Class_ID\n"
-                        + "WHERE CA.ID_Trainee = ? AND C.IDCourse = ? AND CA.Status = 1";
+                        + "FROM Session S JOIN CheckAttendance CA ON S.SessionID = CA.ID_Class\n"
+                        + "JOIN Trainee T ON T.Attendance_ID = CA.Attendance_ID\n"
+                        + "WHERE T.ID_Trainee = ? AND S.IDCourse = ? AND T.Status = 1";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setInt(1, Trainee_ID);
                 pst.setInt(2, Course_ID);
@@ -243,18 +246,22 @@ public class AttendenceDao {
         return newdate;
     }
 
-    public static int deleteOldClassAttendence(int currentClass_ID, int idaccount) throws Exception {
-        int check = 0;
-        Connection cn = Utils.DBUtils.getConnection();
+    public static int getIDCheckAttendence(int id, Date trainer_date) throws Exception {
+        int Attendance_ID = 0;
+        Connection cn = DBUtils.getConnection();
         if (cn != null) {
-            String s = "Delete CheckAttendance\n"
-                    + "Where ID_Class = ? and  ID_Trainee = ?";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, currentClass_ID);
-            pst.setInt(2, idaccount);
-            check = pst.executeUpdate();
-            cn.close();
+            String sql = "SELECT Attendance_ID\n"
+                    + "FROM CheckAttendance\n"
+                    + "WHERE ID_Class = ? and AttendanceDate = ?";
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setInt(1, id);
+            pst.setDate(2, trainer_date);
+            ResultSet rs = pst.executeQuery();
+            if (rs != null && rs.next()) {
+                Attendance_ID = rs.getInt("Attendance_ID");
+            }
         }
-        return check;
+        cn.close();
+        return Attendance_ID;
     }
 }
