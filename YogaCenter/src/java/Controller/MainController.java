@@ -181,9 +181,6 @@ public class MainController extends HttpServlet {
                     case "ButtonSignCourse":
                         url = "ButtonSignCourseServlet";
                         break;
-                    case "SubmitAttendance":
-                        url = "CheckAttendance";
-                        break;
                     case "Cancel":
                         url = "CancelCourseOrderServlet";
                         break;
@@ -213,6 +210,12 @@ public class MainController extends HttpServlet {
                         break;
                     case "SubmitAttendanceAgain":
                         url = "SubmitAttendanceAgainServlet";
+                        break;
+                    case "JoinClass":
+                        url = "AdminJoinClassServlet";
+                        break;
+                    case "SubmitAttendanceDetail":
+                        url = "SubmitAttendanceDetailServlet";
                         break;
                 }
                 request.getRequestDispatcher(url).forward(request, response);

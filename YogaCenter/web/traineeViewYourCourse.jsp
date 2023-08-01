@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="css/style.css"/>
         <link rel="stylesheet" href="css/trainee/trainee-viewyourcourse.css"/>
         <link rel="stylesheet" href="css/trainee/trainee-add-message.css">
+        <title>View Your Course</title>
         <style>
             .pagination a.active {
                 background-color: #ccc;
@@ -59,7 +60,7 @@
                 border: 0;
                 border-radius: 0.25rem;
                 position: fixed;
-                top: 50%;
+                top: 40%;
                 left: 50%;
                 border-radius: 20px;
                 transform: translate(-50%, -50%);
@@ -84,10 +85,9 @@
                 right: 0;
             }
         </style>
-        <title>View Your Course</title>
     </head>
+    <c:import url="header.jsp"/>
     <body class="w3-light-grey">
-        <c:import url="header.jsp"/>
         <c:set var="exist" value="${sessionScope.account}"/>
         <c:set var="requestList" value="${sessionScope.requestList}"></c:set>
         <c:if test="${exist == null}">

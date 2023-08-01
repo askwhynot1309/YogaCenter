@@ -4,20 +4,21 @@
  */
 package Controller;
 
-import Object.Account;
+import Object.ClassDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ADMIN
+ * @author DELL
  */
-public class AddRoomServlet extends HttpServlet {
+public class AdminManageClassServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,20 +34,10 @@ public class AddRoomServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-            Account account = (Account) session.getAttribute("Admin");
-            if(account == null){
-                request.getRequestDispatcher("manageclass").forward(request, response);
-            }
-            String room = request.getParameter("room_name");
-            int status = Integer.parseInt(request.getParameter("room_status"));
-            if(Dao.RoomDao.checkNameRoom(room) != null){
-                request.setAttribute("theSame", "messgae");
-            }else{
-             int insertRoom = Dao.RoomDao.insertNewRoom(room, status);
-             request.setAttribute("addsuccess", "messgae");
-            }
-            request.getRequestDispatcher("manageroom").forward(request, response);
+            Date date = new Date(System.currentTimeMillis());
+            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClass(date);
+            request.setAttribute("listClass", listClass);
+            request.getRequestDispatcher("admin/adminManageClasses.jsp").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
         }

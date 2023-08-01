@@ -628,7 +628,7 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Start_date <= ?";
+                    + "where Start_date <= ? and Status = 1";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
             ResultSet table = pst.executeQuery();

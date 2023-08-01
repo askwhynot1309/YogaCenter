@@ -45,7 +45,7 @@
                 <li>
                     <a href="/YogaCenter/class">
                         <i class="fas fa-door-open icon"></i>
-                        Manage Class
+                        Manage Room
                     </a>
                 </li>
                 <li>

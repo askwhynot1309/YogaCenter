@@ -286,7 +286,15 @@
                                                                             <c:choose>
                                                                                 <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Sunday'}">
                                                                                     <p><a href="/YogaCenter/request?action=ClassDetail&id=${acc.id_class}&option=classDetail&datestudy=${acc.datestudy}">${acc.course}(${acc.class_name})</a></p><p>${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy)}</p> 
-                                                                                </c:when>
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'not yet'}">
+                                                                                        <p style="color: black">Not yet</p>
+                                                                                    </c:if>
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'present'}">
+                                                                                        <p style="color: green">Present</p>
+                                                                                    </c:if>
+                                                                                    <c:if test="${AttendenceDao.attendanceStatus(acc.idaccount, acc.id_room, acc.id_course, acc.datestudy) == 'absent'}">
+                                                                                        <p style="color: red">Absent</p>
+                                                                                    </c:if></c:when>
                                                                                 <c:otherwise>
                                                                                 </c:otherwise>
                                                                             </c:choose>

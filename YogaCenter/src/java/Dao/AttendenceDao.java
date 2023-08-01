@@ -18,65 +18,6 @@ import java.util.ArrayList;
  */
 public class AttendenceDao {
 
-    public static ArrayList<AccountAttendence> getAccountToAttendence(Date date) throws Exception {
-        ArrayList<AccountAttendence> kq = new ArrayList<>();
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "SELECT S.IDCourse, ca.AttendanceDate, T.Status, T.ID_Trainee\n"
-                    + "from Session S JOIN CheckAttendance ca ON S.SessionID = ca.ID_Class\n"
-                    + "JOIN ClassDate cd ON cd.Class_ID = S.SessionID\n"
-                    + "JOIN Trainee T ON ca.Attendance_ID = T.Attendance_ID\n"
-                    + "JOIN Account a ON T.ID_Trainee = a.ID_Account\n"
-                    + "where cd.DateStudy = ? AND a.Role = 3 AND ca.AttendanceDate = ?\n"
-                    + "GROUP BY S.IDCourse, ca.AttendanceDate, T.Status, T.ID_Trainee";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setDate(1, date);
-            pst.setDate(2, date);
-            ResultSet table = pst.executeQuery();
-            if (table != null) {
-                while (table.next()) {
-                    int id_trainee = table.getInt("ID_Trainee");
-                    int id_course = table.getInt("IDCourse");
-                    int status = table.getInt("Status");
-                    AccountAttendence attendence = new AccountAttendence(1, id_trainee, id_course, date, status);
-                    kq.add(attendence);
-                }
-            }
-            cn.close();
-        }
-        return kq;
-    }
-
-    public static ArrayList<AccountAttendence> getAttendTable(Date date) throws Exception {
-        ArrayList<AccountAttendence> kq = new ArrayList<>();
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "SELECT DISTINCT c.ID_Course, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee\n"
-                    + "FROM Class c JOIN ClassDate cdate ON cdate.Class_ID = c.Class_ID\n"
-                    + "JOIN CheckAttendance ca ON c.Class_ID = ca.Class_ID\n"
-                    + "JOIN Room r ON cd.Class_ID = r.Room_ID\n"
-                    + "JOIN Time t ON cd.IDtime = t.Time_ID\n"
-                    + "JOIN Account a ON ca.ID_Trainee = a.ID_Account\n"
-                    + "WHERE cdate.DateStudy = ? AND a.Role = 3\n"
-                    + "GROUP BY c.ID_Course, ca.AttendanceDate, ca.Status, ca.Attendance_ID, ca.ID_Trainee";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setDate(1, date);
-            ResultSet table = pst.executeQuery();
-            if (table != null) {
-                while (table.next()) {
-                    int id_attendence = table.getInt("Attendance_ID");
-                    int id_trainee = table.getInt("ID_Trainee");
-                    int id_class = table.getInt("ID_Class");
-                    int status = table.getInt("Status");
-                    AccountAttendence attendence = new AccountAttendence(id_attendence, id_trainee, id_class, date, status);
-                    kq.add(attendence);
-                }
-            }
-            cn.close();
-        }
-        return kq;
-    }
-
     public static int insertDayToCheckAttendence(int idaccount, int insertClass, Date date, int status) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
@@ -131,17 +72,17 @@ public class AttendenceDao {
         return attendanceStatus;
     }
 
-    public static Date checkFinishCourse(int id) throws Exception {
+    public static Date checkFinishCourse(int room, int id) throws Exception {
         Date getdate = new Date(System.currentTimeMillis());
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select top 1 CDATE.DateStudy\n"
-                    + "from Class C JOIN ClassDate CDATE ON C.Class_ID = CDATE.Class_ID\n"
-                    + "JOIN ClassDetail CD ON C.Class_ID = CD.Class_ID\n"
-                    + "Where C.Class_ID = ?\n"
-                    + "Order by CDATE.DateStudy desc";
+            String s = "select top 1 DateStudy\n"
+                    + "from Session \n"
+                    + "Where IDCourse = ? and Room_ID = ? \n"
+                    + "Order by DateStudy desc";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
+            pst.setInt(2, room);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
@@ -207,43 +148,20 @@ public class AttendenceDao {
         return attendList;
     }
 
-    public static int changeDateToCheckAttendence(Date date, int idold, Date olddate, int idnew) throws Exception {
+    public static int changeDateToCheckAttendence(Date date, int idold) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
             String s = "Update CheckAttendance\n"
-                    + "Set AttendanceDate = ?, ID_Class = ?\n"
-                    + "Where ID_Class = ? and AttendanceDate = ?";
+                    + "Set AttendanceDate = ?\n"
+                    + "Where ID_Class = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
-            pst.setInt(2, idnew);
-            pst.setInt(3, idold);
-            pst.setDate(4, olddate);
+            pst.setInt(2, idold);
             kq = pst.executeUpdate();
             cn.close();
         }
         return kq;
-    }
-
-    public static Date getFinalDateClass(int classid) throws Exception {
-        Date newdate = new Date(System.currentTimeMillis());
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "Select Top 1 DateStudy\n"
-                    + "from ClassDate\n"
-                    + "Where Class_ID = ?\n"
-                    + "Order by DateStudy desc";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, classid);
-            ResultSet table = pst.executeQuery();
-            if (table != null) {
-                while (table.next()) {
-                    newdate = table.getDate("DateStudy");
-                }
-            }
-            cn.close();
-        }
-        return newdate;
     }
 
     public static int getIDCheckAttendence(int id, Date trainer_date) throws Exception {

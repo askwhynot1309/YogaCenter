@@ -169,7 +169,7 @@
         <c:if test="${success != null}">
             <div class="notification-success">
                 <div class="content">
-                    <div class="title">Error</div>
+                    <div class="title">Success</div>
                     <span>Change room successfully !</span>
                 </div>
                 <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>

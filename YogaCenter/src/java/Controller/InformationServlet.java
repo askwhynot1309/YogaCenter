@@ -75,12 +75,49 @@ public class InformationServlet extends HttpServlet {
                     request.setAttribute("id_course", id_course);
                     request.getRequestDispatcher("admin/adminViewTrainee.jsp").forward(request, response);
                     break;
-                case "viewDetailSession":
+                case "ViewTraineeInClass":
                     int idroom = Integer.parseInt(request.getParameter("room"));
-                    ArrayList<ClassDetail> listSessions = Dao.ClassDetailDao.getSessionsInCourseWithRoom(idroom, id);
-                    request.setAttribute("listSessions", listSessions);
+                    ArrayList<ClassDetail> listTraineeInClass1 = Dao.ClassDetailDao.getAllTraineeInClassWithStatus(id, idroom);
+                    request.setAttribute("listSessions", listTraineeInClass1);
                     request.setAttribute("id", id);
                     request.setAttribute("room", idroom);
+                    request.getRequestDispatcher("admin/adminViewTrainees.jsp").forward(request, response);
+                    break;
+                case "viewCourseTosign":
+                    int counts = Dao.OrderCourseDao.countTraineeOrderCourse(id);
+                    ArrayList<ClassDetail> listSessionss = Dao.ClassDetailDao.getSessionsInCourse(id);
+                    request.setAttribute("count", counts);
+                    request.setAttribute("listSession", listSessionss);
+                    request.setAttribute("id", id);
+                    request.getRequestDispatcher("admin/adminViewCourseToSign.jsp").forward(request, response);
+                    break;
+                case "setup":
+                    int idroom2 = Integer.parseInt(request.getParameter("room"));
+                    boolean check2 = false;
+                    ArrayList<OrderCourse> getAllTraineeBookingCourse = Dao.OrderCourseDao.getTraineeBoughtCourse(id);
+                    ArrayList<ClassDetail> getTrainee1 = Dao.ClassDetailDao.getAllTraineeWithCourse(id);
+                    request.setAttribute("room", idroom2);
+                    request.setAttribute("isTraineeAdded", check2);
+                    request.setAttribute("id", id);
+                    request.setAttribute("getAllTraineeBookingCourse", getAllTraineeBookingCourse);
+                    request.setAttribute("getTrainee1", getTrainee1);
+                    request.getRequestDispatcher("admin/adminViewTraineeToSign.jsp").forward(request, response);
+                    break;
+                case "ViewTraineeInClassInformation":
+                    int idroom1 = Integer.parseInt(request.getParameter("room"));
+                    int id_course1 = Integer.parseInt(request.getParameter("idcourse"));
+                    ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsByTrainee(id);
+                    request.setAttribute("listClass", listClass);
+                    request.setAttribute("id", id_course1);
+                    request.setAttribute("room", idroom1);
+                    request.getRequestDispatcher("admin/adminViewTraineeStatus.jsp").forward(request, response);
+                    break;
+                case "viewDetailSession":
+                    int idroomm = Integer.parseInt(request.getParameter("room"));
+                    ArrayList<ClassDetail> listSessions = Dao.ClassDetailDao.getSessionsInCourseWithRoom(idroomm, id);
+                    request.setAttribute("listSessions", listSessions);
+                    request.setAttribute("id", id);
+                    request.setAttribute("room", idroomm);
                     request.getRequestDispatcher("admin/adminViewSessions.jsp").forward(request, response);
                     break;
                 case "infEmployee":
@@ -92,14 +129,12 @@ public class InformationServlet extends HttpServlet {
                     Date date = Date.valueOf(request.getParameter("date"));
                     int id_account = Integer.parseInt(request.getParameter("acc"));
                     ClassDetail information = Dao.ClassDetailDao.getClassDetailById(id, date, id_account);
-                    ArrayList<Account> listTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(information.getClass_name(), information.getDate(), information.getId_course());
-                    ArrayList<AccountAttendence> listAttendTrainer = Dao.AttendenceDao.getAccountToAttendence(information.getDate());
-                    if (listTrainee.isEmpty()) {
+                    ArrayList<ClassDetail> listTraineeInSession2 = Dao.ClassDetailDao.getAllTraineeInClass(id);
+                    if (listTraineeInSession2.isEmpty()) {
                         request.setAttribute("InforClass", information);
                         request.getRequestDispatcher("admin/adminInforClass.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("ListTrainee", listTrainee);
-                        session.setAttribute("listAttend", listAttendTrainer);
+                        session.setAttribute("listAttend", listTraineeInSession2);
                         request.setAttribute("InforClass", information);
                         request.getRequestDispatcher("admin/adminInforClass.jsp").forward(request, response);
                     }
@@ -117,16 +152,14 @@ public class InformationServlet extends HttpServlet {
                     Date staffdate = Date.valueOf(request.getParameter("date"));
                     int staff_id_account = Integer.parseInt(request.getParameter("acc"));
                     ClassDetail inform = Dao.ClassDetailDao.getClassDetailById(id, staffdate, staff_id_account);
-                    ArrayList<Account> listTrainees = Dao.UserDao.getAllTraineeInTimeAndRoom(inform.getClass_name(), inform.getDate(), inform.getId_course());
-                    ArrayList<AccountAttendence> listAttendence = Dao.AttendenceDao.getAccountToAttendence(inform.getDate());
-                    if (listTrainees.isEmpty()) {
+                    ArrayList<ClassDetail> listTraineeInSession1 = Dao.ClassDetailDao.getAllTraineeInClass(id);
+                    if (listTraineeInSession1.isEmpty()) {
                         request.setAttribute("InforClass", inform);
                         request.getRequestDispatcher("staff/staffInforClass.jsp").forward(request, response);
                     } else {
                         Date currentdate = new Date(System.currentTimeMillis());
                         request.setAttribute("currentDate", currentdate);
-                        request.setAttribute("ListTrainee", listTrainees);
-                        request.setAttribute("ListAttendence", listAttendence);
+                        request.setAttribute("ListAttendence", listTraineeInSession1);
                         request.setAttribute("InforClass", inform);
                         request.getRequestDispatcher("staff/staffInforClass.jsp").forward(request, response);
                     }
@@ -156,22 +189,20 @@ public class InformationServlet extends HttpServlet {
                     int trainer_id_account = Integer.parseInt(request.getParameter("acc"));
                     ClassDetail trainerinformation = Dao.ClassDetailDao.getClassDetailById(id, trainer_date, trainer_id_account);
                     int id_checkAttendence = Dao.AttendenceDao.getIDCheckAttendence(id, trainer_date);
-                    ArrayList<Account> trainerlistTrainee = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformation.getClass_name(), trainerinformation.getDate(), trainerinformation.getId_course());
-                    ArrayList<AccountAttendence> listAttend = Dao.AttendenceDao.getAccountToAttendence(trainerinformation.getDate());
+                    ArrayList<ClassDetail> listTraineeInSession = Dao.ClassDetailDao.getAllTraineeInClass(id);
                     java.sql.Date sqlDate = new java.sql.Date(trainerinformation.getDate().getTime());
                     java.time.LocalDate localDate = sqlDate.toLocalDate();
                     boolean check = currentDate.equals(localDate);
                     boolean checkAttendAgain = currentDate.isAfter(localDate);
-                    if (trainerlistTrainee.isEmpty()) {
+                    if (listTraineeInSession.isEmpty()) {
                         request.setAttribute("InforClass", trainerinformation);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("ListTrainee", trainerlistTrainee);
                         request.setAttribute("InforClass", trainerinformation);
                         request.setAttribute("currentDate", check);
                         request.setAttribute("idAttendance", id_checkAttendence);
                         request.setAttribute("check", checkAttendAgain);
-                        request.setAttribute("listAttend", listAttend);
+                        request.setAttribute("listAttend", listTraineeInSession);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
                     }
                     break;
@@ -180,18 +211,37 @@ public class InformationServlet extends HttpServlet {
                     java.time.LocalDate currentDateAgain = java.time.LocalDate.now();
                     int trainer_id_account_again = Integer.parseInt(request.getParameter("acc"));
                     ClassDetail trainerinformationagain = Dao.ClassDetailDao.getClassDetailById(id, dateagain, trainer_id_account_again);
-                    ArrayList<Account> trainerlistTraineeAgain = Dao.UserDao.getAllTraineeInTimeAndRoom(trainerinformationagain.getClass_name(), trainerinformationagain.getDate(), trainerinformationagain.getId_course());
-                    ArrayList<AccountAttendence> listAttendAgain = Dao.AttendenceDao.getAccountToAttendence(trainerinformationagain.getDate());
+                    int id_checkAttendences = Dao.AttendenceDao.getIDCheckAttendence(id, dateagain);
+                    ArrayList<ClassDetail> listTraineeInSessions = Dao.ClassDetailDao.getAllTraineeInClass(id);
                     java.sql.Date sqlDateAgain = new java.sql.Date(trainerinformationagain.getDate().getTime());
                     java.time.LocalDate localDateAgain = sqlDateAgain.toLocalDate();
-                    if (trainerlistTraineeAgain.isEmpty()) {
+                    if (listTraineeInSessions.isEmpty()) {
                         request.setAttribute("InforClass", trainerinformationagain);
                         request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
                     } else {
-                        request.setAttribute("ListTrainee", trainerlistTraineeAgain);
+                        request.setAttribute("idAttendance", id_checkAttendences);
                         request.setAttribute("InforClass", trainerinformationagain);
-                        request.setAttribute("listAttend", listAttendAgain);
+                        request.setAttribute("listAttend", listTraineeInSessions);
                         request.getRequestDispatcher("trainer/trainerCheckAttendenceAgain.jsp").forward(request, response);
+                    }
+                    break;
+                case "trainerCheckAttendence":
+                    Date dateagains = Date.valueOf(request.getParameter("date"));
+                    java.time.LocalDate currentDateAgains = java.time.LocalDate.now();
+                    int trainer_id_account_agains = Integer.parseInt(request.getParameter("acc"));
+                    ClassDetail trainerinformationagains = Dao.ClassDetailDao.getClassDetailById(id, dateagains, trainer_id_account_agains);
+                    int id_checkAttendencess = Dao.AttendenceDao.getIDCheckAttendence(id, dateagains);
+                    ArrayList<ClassDetail> listTraineeInSessionss = Dao.ClassDetailDao.getAllTraineeInClass(id);
+                    java.sql.Date sqlDateAgains = new java.sql.Date(trainerinformationagains.getDate().getTime());
+                    java.time.LocalDate localDateAgains = sqlDateAgains.toLocalDate();
+                    if (listTraineeInSessionss.isEmpty()) {
+                        request.setAttribute("InforClass", trainerinformationagains);
+                        request.getRequestDispatcher("trainer/trainerInfoClass.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("idAttendance", id_checkAttendencess);
+                        request.setAttribute("InforClass", trainerinformationagains);
+                        request.setAttribute("listAttend", listTraineeInSessionss);
+                        request.getRequestDispatcher("trainer/trainerCheckAttendenceDetail.jsp").forward(request, response);
                     }
                     break;
                 case "infUser":

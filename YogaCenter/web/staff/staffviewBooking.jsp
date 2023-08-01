@@ -82,23 +82,23 @@
                             <table cellpadding="0" cellspacing="0" border="0">
                                 <thead>
                                     <tr>
-                                        <th style="width: 50px">No.</th>
-                                        <th>Name</th>
+                                        <th style="width: 150px">Order Code</th>
+                                        <th style="width: 200px">Name</th>
                                         <th style="width: 150px">Order-date</th>
                                         <th style="width: 150px">Method</th>
-                                        <th style="width: 350px">Status</th>
+                                        <th style="width: 300px">Status</th>
                                         <th>Detail</th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
-                        <div class="tbl-content" style="height: 500px">
+                        <div class="tbl-content" style="height: 450px">
                             <table cellpadding="0" cellspacing="0" border="0">
                                 <tbody>
                                     <c:forEach var="order" items="${listOrder}" varStatus="loop">
                                         <tr>
-                                            <td style="width: 50px">${loop.count}</td>
-                                            <td>${order.name_account}</td>
+                                            <td style="width: 150px">ORD${order.id_order}</td>
+                                            <td style="width: 200px">${order.name_account}</td>
                                             <td style="width: 150px">${order.dateorder}</td>
                                             <td style="width: 150px">
                                                 <c:if test="${order.method == 0}">
@@ -111,7 +111,7 @@
                                                     Account money
                                                 </c:if>
                                             </td>
-                                            <td style="width: 350px">
+                                            <td style="width: 300px">
                                                 <form action="/YogaCenter/request" method="POST">
                                                     <c:if test="${order.status == 0}">
                                                         <select name="status">

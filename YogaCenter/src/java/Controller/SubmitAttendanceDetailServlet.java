@@ -21,9 +21,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ADMIN
+ * @author DELL
  */
-public class SubmitAttendanceAgainServlet extends HttpServlet {
+public class SubmitAttendanceDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -105,7 +105,7 @@ public class SubmitAttendanceAgainServlet extends HttpServlet {
                         }
                     }
                 }
-                request.getRequestDispatcher("/request?action=inf&id=" + classid + "&option=trainerCheckAttendenceAgain&date=" + newDate + "&acc=" + account.getIdaccount()).forward(request, response);
+                request.getRequestDispatcher("/request?action=inf&id=" + classid + "&option=trainerCheckAttendence&date=" + newDate + "&acc=" + account.getIdaccount()).forward(request, response);
             }
             //request.getRequestDispatcher("/trainerviewschedule").forward(request, response);
         } catch (Exception e) {

@@ -5,6 +5,7 @@
 package Controller;
 
 import Object.Account;
+import Object.ClassDetail;
 import Object.Course;
 import Object.Message;
 import Object.OrderCourse;
@@ -44,24 +45,22 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             Date currentdate = new Date(System.currentTimeMillis());
             String newpassword = Utils.HexPassword.HexPassword(password);
-            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);     
+            Account accountLogin = Dao.AccountDao.checkAccountToLogin(account, newpassword);
             if (accountLogin != null) {
                 if (accountLogin.getStatus() == 0) {
                     switch (accountLogin.getRole()) {
                         case 0:
-                            ArrayList<Course> newlist = new ArrayList<>();
+                            boolean insertMessage = false;
                             ArrayList<Course> listCourseTraineeSingin = Dao.CourseDao.getCourseHaveTraineeSignInCourse(currentdate);
                             if (listCourseTraineeSingin != null && !listCourseTraineeSingin.isEmpty()) {
                                 for (Course course : listCourseTraineeSingin) {
-                                    if (Dao.ClassDetailDao.getCourseExistInClass(course.getIdCourse()) == null) {
-                                        newlist.add(course);
+                                    ArrayList<ClassDetail> list = Dao.ClassDetailDao.getCourseExistInClass(course.getIdCourse());
+                                    if (list.size() == 0) {
+                                        insertMessage = Dao.MessageDao.createRequestChangeClass(accountLogin.getIdaccount(), "There is a course to create a class, you need to create a class now!!!!", accountLogin.getIdaccount(), 0, currentdate, "Set up class");
                                     }
                                 }
-                                if (!newlist.isEmpty()) {
-                                    boolean insertMessage = Dao.MessageDao.createRequestChangeClass(accountLogin.getIdaccount(), "There is a course to create a class, you need to create a class now!!!!", accountLogin.getIdaccount(), 0, currentdate, "Set up class");
-                                    if (insertMessage) {
-                                        request.setAttribute("message", "message");
-                                    }
+                                if (insertMessage) {
+                                    request.setAttribute("message", "message");
                                 }
                             } else {
                                 ArrayList<OrderCourse> listCourseTraineeSinginSmalerThan5 = Dao.OrderCourseDao.getCourseHaveTraineeSignInCourseSmallerThan5(currentdate);
@@ -83,7 +82,7 @@ public class LoginServlet extends HttpServlet {
                         case 1:
                             if (Dao.ClassDetailDao.checkAnyRoomsUnactiveHasClassInDate(new Date(System.currentTimeMillis())).size() > 0) {
                                 request.setAttribute("message", "message");
-                                boolean insertMessage = Dao.MessageDao.createRequestChangeClass(1, "You need to change the classroom in which the classes were originally proposed to the new classroom.", accountLogin.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Change room");
+                                boolean insertMessage2 = Dao.MessageDao.createRequestChangeClass(1, "You need to change the classroom in which the classes were originally proposed to the new classroom.", accountLogin.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Change room");
                             }
                             ArrayList<Message> listMessageStaff = Dao.MessageDao.getAllMessageByUserIDWithNotRead(accountLogin.getIdaccount());
                             session.setAttribute("Message", listMessageStaff);

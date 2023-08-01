@@ -184,7 +184,7 @@
                         </div>
                     </div>
                     <c:if test="${listCourse != null && !listCourse.isEmpty()}">
-                        <div style="height: 450px">
+                        <div style="height: 500px">
                             <table class="table">
                                 <thead>
                                     <tr>

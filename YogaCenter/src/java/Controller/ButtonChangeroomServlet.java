@@ -54,10 +54,11 @@ public class ButtonChangeroomServlet extends HttpServlet {
             if (newdate.before(newdate)) {
                 request.setAttribute("wrongDate", "message");
             } else {
-                ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(id, newdate, room);
+                ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(newdate, room);
                 if (check == null) {
                     int update = Dao.ClassDetailDao.deleteDateTimeRoomWithProblemAndChange(id, newdate, room);
                     if (update == 1) {
+                        int updatedate = Dao.AttendenceDao.changeDateToCheckAttendence(newdate, id);
                         for (Account account1 : listTrainerAndTrainee) {
                             boolean insertMessageForTrainerAndTraineeToChangeClass = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "Your classroom must be changed new classroom because of some problems. Please view your schedule to join clasroom.", account1.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Message");
                         }

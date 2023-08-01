@@ -47,16 +47,6 @@ public class TraineeShowYourCourse extends HttpServlet {
             }           
             ArrayList<OrderCourse> listCourseTrainee = Dao.OrderCourseDao.getAllCourseTraineeLearn(trainee.getIdaccount());
             ArrayList<ClassDetail> listClassTraineeLearn = Dao.ClassDetailDao.getAllClassDetailsByTraineeLearn(trainee.getIdaccount());
-            for (ClassDetail classDetail : listClassTraineeLearn) {
-                Date getDate = Dao.AttendenceDao.checkFinishCourse(classDetail.getId_class());
-                    if(getDate.equals(current_date) || getDate.before(current_date)){
-                        for (OrderCourse orderCourse : listCourseTrainee) {
-                            if(classDetail.getId_course() == orderCourse.getId_course()){
-                                int changeStatus = Dao.OrderCourseDao.changeStatusAccountOrder(orderCourse.getId_order(), orderCourse.getId_account(), 4);
-                            }
-                        }
-                    }
-            }
             ArrayList<OrderCourse> listCourseTraineee = Dao.OrderCourseDao.getAllCourseTraineeLearn(trainee.getIdaccount());
             request.setAttribute("listCourseTrainee", listCourseTraineee);
             request.setAttribute("current_date", current_date);

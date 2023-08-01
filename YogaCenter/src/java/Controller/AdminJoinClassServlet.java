@@ -4,20 +4,18 @@
  */
 package Controller;
 
-import Object.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ADMIN
+ * @author DELL
  */
-public class AddRoomServlet extends HttpServlet {
+public class AdminJoinClassServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,21 +31,21 @@ public class AddRoomServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
-            Account account = (Account) session.getAttribute("Admin");
-            if(account == null){
-                request.getRequestDispatcher("manageclass").forward(request, response);
+            int id_course = Integer.parseInt(request.getParameter("idcourse"));
+            int room = Integer.parseInt(request.getParameter("room"));
+            int id = Integer.parseInt(request.getParameter("id"));
+            int checknumber = Dao.ClassDetailDao.checkNumTraineeInAClass(id_course, room);
+            if (checknumber < 30) {
+                int insert = Dao.ClassDetailDao.insertClassForLearn(room, id, id_course);
+                if (insert == 1) {
+                    request.setAttribute("message", "message");
+                    request.getRequestDispatcher("/request?action=inf&id=" + id_course + "&room=" + room + "&option=setup").forward(request, response);
+                }
+            } else {
+                request.setAttribute("error", "message");
+                request.getRequestDispatcher("/request?action=inf&id=" + id_course + "&room=" + room + "&option=setup").forward(request, response);
             }
-            String room = request.getParameter("room_name");
-            int status = Integer.parseInt(request.getParameter("room_status"));
-            if(Dao.RoomDao.checkNameRoom(room) != null){
-                request.setAttribute("theSame", "messgae");
-            }else{
-             int insertRoom = Dao.RoomDao.insertNewRoom(room, status);
-             request.setAttribute("addsuccess", "messgae");
-            }
-            request.getRequestDispatcher("manageroom").forward(request, response);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

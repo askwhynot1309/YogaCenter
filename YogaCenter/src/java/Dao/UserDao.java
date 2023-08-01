@@ -258,44 +258,6 @@ public class UserDao {
         return traineeList;
     }
 
-    public static ArrayList<Account> getAllTraineeInTimeAndRoom(String id_room, Date date, int id_course) throws Exception {
-        ArrayList<Account> kq = new ArrayList<>();
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "select *\n"
-                    + "from Session S JOIN ClassDate CDATE ON S.SessionID = CDATE.Class_ID JOIN ClassDetail CD ON S.SessionID = CD.Class_ID\n"
-                    + "JOIN Account a ON CD.ID_Account = a.ID_Account\n"
-                    + "JOIN Room r ON r.Room_ID = S.Room_ID\n"
-                    + "where a.Role = 3 and CDATE.DateStudy = ? and r.Room_Name = ? and S.IDCourse = ?";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setDate(1, date);
-            pst.setNString(2, id_room);
-            pst.setInt(3, id_course);
-            ResultSet table = pst.executeQuery();
-            if (table != null) {
-                while (table.next()) {
-                    int idTrainee = table.getInt("ID_Account");
-                    String email = table.getString("Email");
-                    String cccd = table.getString("CCCD");
-                    String acc = table.getString("Account");
-                    String cv = table.getString("CV");
-                    String password = table.getString("Password");
-                    String name = table.getNString("Name");
-                    String phone = table.getString("Phone");
-                    String address = table.getNString("Address");
-                    String img = table.getString("Img");
-                    int status = table.getInt("Status");
-                    int role = table.getInt("Role");
-                    BigDecimal amount = table.getBigDecimal("Money");
-                    Account classdetails = new Account(idTrainee, email, acc, password, name, cccd, cv, phone, address, img, role, status, amount);
-                    kq.add(classdetails);
-                }
-            }
-            cn.close();
-        }
-        return kq;
-    }
-
     public static boolean isEmailExist(String input) throws Exception {
         boolean check = false;
         Account account = null;

@@ -209,10 +209,6 @@
         <servlet-class>Controller.ViewPreviousServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CheckAttendance</servlet-name>
-        <servlet-class>Controller.CheckAttendance</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>TraineeBookScheduleServlet</servlet-name>
         <servlet-class>Controller.TraineeBookScheduleServlet</servlet-class>
     </servlet>
@@ -372,6 +368,22 @@
         <servlet-name>InformationServlet</servlet-name>
         <servlet-class>Controller.InformationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminManageClassServlet</servlet-name>
+        <servlet-class>Controller.AdminManageClassServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminJoinClassServlet</servlet-name>
+        <servlet-class>Controller.AdminJoinClassServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TrainerCheckAttendanceServlet</servlet-name>
+        <servlet-class>Controller.TrainerCheckAttendanceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitAttendanceDetailServlet</servlet-name>
+        <servlet-class>Controller.SubmitAttendanceDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
         <url-pattern>/LoginGoogle</url-pattern>
@@ -522,7 +534,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ClassManageServlet</servlet-name>
-        <url-pattern>/manageclass</url-pattern>
+        <url-pattern>/manageroom</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StaffCourseListServlet</servlet-name>
@@ -579,10 +591,6 @@
     <servlet-mapping>
         <servlet-name>ViewPreviousServlet</servlet-name>
         <url-pattern>/viewprevious</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CheckAttendance</servlet-name>
-        <url-pattern>/CheckAttendance</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TraineeBookScheduleServlet</servlet-name>
@@ -743,6 +751,22 @@
     <servlet-mapping>
         <servlet-name>InformationServlet</servlet-name>
         <url-pattern>/InformationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminManageClassServlet</servlet-name>
+        <url-pattern>/manageclass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminJoinClassServlet</servlet-name>
+        <url-pattern>/AdminJoinClassServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TrainerCheckAttendanceServlet</servlet-name>
+        <url-pattern>/trainercheckattendance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitAttendanceDetailServlet</servlet-name>
+        <url-pattern>/SubmitAttendanceDetailServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

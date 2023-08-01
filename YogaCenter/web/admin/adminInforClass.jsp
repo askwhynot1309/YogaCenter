@@ -100,7 +100,6 @@
                         </a>
                     </div>
                     <h2 style="display: flex; justify-content: center; margin-bottom: 50px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Class Information</h2>
-                    <c:set var="ListTrainee" value="${requestScope.ListTrainee}"/>
                     <c:set var="inforClass" value="${requestScope.InforClass}"/>
                     <c:set var="listAttend" value="${sessionScope.listAttend}"/>
                     <c:if test="${InforClass != null}">
@@ -143,15 +142,14 @@
                         </table>
                     </c:if>
                     <h3 style="display: flex; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 30px; text-transform: uppercase; background-color: #3b83f65f; color: #0071e2; padding: 10px">Trainees of the course</h3>
-                    <c:if test="${ListTrainee == null}">
+                    <c:if test="${listAttend == null}">
                         <p style="text-align: center; font-weight: 700">Do not have any trainees that learn this course !</p>
                     </c:if>
-                    <c:if test="${ListTrainee != null}">
+                    <c:if test="${listAttend != null}">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Image</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
@@ -159,33 +157,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="trainee" items="${ListTrainee}" varStatus="loop">
+                                <c:forEach var="trainee" items="${listAttend}" varStatus="loop">
                                     <tr>
                                         <td>${loop.count}</td>
+                                        <td>${trainee.account}</td>
+                                        <td>${trainee.datestudy}</td>
+                                        <td>${trainee.course}</td>
                                         <td>
-                                            <c:if test="${not empty trainee.image}">
-                                                <img src="img/${trainee.image}" width="100px" height="100px">
-                                            </c:if>
-                                        </td>
-                                        <td>${trainee.name}</td>
-                                        <td>${trainee.email}</td>
-                                        <td>${trainee.phone}</td>
-                                        <td>
-                                            <c:forEach var="attend" items="${listAttend}">
-                                                <c:if test="${attend.id_trainee == trainee.idaccount}">
-                                                    <c:choose>
-                                                        <c:when test="${attend.status == 0}">
-                                                            <p style="color: black">Not yet</p>
-                                                        </c:when>
-                                                        <c:when test="${attend.status == 1}">
-                                                            <p style="color: green">Present</p>
-                                                        </c:when>
-                                                        <c:when test="${attend.status == 2}">
-                                                            <p style="color: red">Absent</p>
-                                                        </c:when>
-                                                    </c:choose>
-                                                </c:if>
-                                            </c:forEach>
+                                            <c:choose>
+                                                <c:when test="${trainee.time == 0}">
+                                                    <p style="color: black">Not yet</p>
+                                                </c:when>
+                                                <c:when test="${trainee.time == 1}">
+                                                    <p style="color: green">Present</p>
+                                                </c:when>
+                                                <c:when test="${trainee.time == 2}">
+                                                    <p style="color: red">Absent</p>
+                                                </c:when>
+                                            </c:choose>
                                         </td>
                                     </tr>   
                                 </c:forEach>

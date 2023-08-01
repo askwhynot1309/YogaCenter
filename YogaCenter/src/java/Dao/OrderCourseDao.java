@@ -119,9 +119,10 @@ public class OrderCourseDao {
         ArrayList<OrderCourse> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select BC.ID_Trainee, BC.OrderID\n"
-                    + "from BookingDetail BD JOIN BookingCourse BC ON BD.Order_ID = BC.OrderID\n"
-                    + "Where ID_Course = ?";
+            String s = "select BC.ID_Trainee, BC.OrderID, A.Email, A.Name, A.Phone\n"
+                    + "from BookingDetail BD JOIN BookingCourse BC ON BD.Order_ID = BC.OrderID JOIN StatusPayment sp ON sp.ID_Order = BC.OrderID\n"
+                    + "JOIN Account A ON A.ID_Account = BC.ID_Trainee\n"
+                    + "Where BD.ID_Course = ? And sp.Status = 1";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
             ResultSet table = pst.executeQuery();
@@ -129,8 +130,11 @@ public class OrderCourseDao {
                 while (table.next()) {
                     int id_account = table.getInt("ID_Trainee");
                     int id_order = table.getInt("OrderID");
-                    OrderCourse coursedetail = new OrderCourse(id_order, id_account, new Date(System.currentTimeMillis()), id, id);
-                    kq.add(coursedetail);
+                    String name = table.getNString("Name");
+                    String email = table.getString("Email");
+                    String phone = table.getString("Phone");
+                    OrderCourse course = new OrderCourse(id_order, id_account, name, new Date(System.currentTimeMillis()) , BigDecimal.ZERO, email, new Date(System.currentTimeMillis()), phone, id, id);
+                    kq.add(course);
                 }
             }
             cn.close();

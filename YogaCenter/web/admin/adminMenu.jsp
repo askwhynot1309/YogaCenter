@@ -56,7 +56,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/YogaCenter/manageclass">
+                    <a href="/YogaCenter/manageroom">
                         <i class="fas fa-door-open icon"></i>
                         Manage Room
                     </a>
@@ -65,6 +65,12 @@
                     <a href="/YogaCenter/booking">
                         <i class="fas fa-door-open icon"></i>
                         Manage Booking
+                    </a>
+                </li>
+                <li>
+                    <a href="/YogaCenter/manageclass">
+                        <i class="fas fa-door-open icon"></i>
+                        Manage Class
                     </a>
                 </li>
             </ul>

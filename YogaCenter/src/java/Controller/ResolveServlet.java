@@ -49,7 +49,7 @@ public class ResolveServlet extends HttpServlet {
             if(updateRoom == 1 && updatestatus == 1){
                 request.setAttribute("sovlesuccess", "message");
             }
-            request.getRequestDispatcher("manageclass").forward(request, response);
+            request.getRequestDispatcher("manageroom").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
         }

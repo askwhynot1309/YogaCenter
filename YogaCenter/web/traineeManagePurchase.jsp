@@ -266,7 +266,7 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Order #</th>
+                                                <th>Order-Code #</th>
                                                 <th>Course name</th>
                                                 <th>Date</th>
                                                 <th>Total</th>
@@ -294,7 +294,7 @@
                                             <tr class="cell-1 <%= rowNumber % 2 == 0 ? "alternate-row" : ""%>">
 
                                                 <% if (isFirstRow) {%>
-                                                <th rowspan="<%= orderDetail.size()%>"><%= rowNumber + 1%></td>
+                                                <th rowspan="<%= orderDetail.size()%>">ORD<%= order.getId_order() %></td>
                                                     <% }%>
                                                 <th><a href="/YogaCenter/request?action=inf&option=viewmore&id=<%=order.getId_course()%>"><%= order.getName_course()%></a> </th>
                                                     <% if (isFirstRow) {%>

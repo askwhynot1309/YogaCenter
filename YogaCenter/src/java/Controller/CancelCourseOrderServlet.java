@@ -6,11 +6,12 @@ package Controller;
 
 import Object.Account;
 import Object.ClassDetail;
-import Object.OrderCourse;
+import Object.Course;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +46,7 @@ public class CancelCourseOrderServlet extends HttpServlet {
             if (acc == null) {
                 request.getRequestDispatcher("yourcourse").forward(request, response);
             }
+            Course course = Dao.CourseDao.getInformationOfCourse(id_course);
             Account account = Dao.UserDao.getAccountByID(acc.getIdaccount());
             switch (status) {
                 case 2:
@@ -53,6 +55,7 @@ public class CancelCourseOrderServlet extends HttpServlet {
                     BigDecimal total = moneycurrent.add(fee);
                     int changeStatusRefund = Dao.OrderCourseDao.changeStatusAccountOrder(id_order, id_course, status);
                     int updateFee = Dao.AccountDao.updateMoneyOfAccount(acc.getIdaccount(), total);
+                    boolean createMessage = Dao.MessageDao.createRequestChangeClass(acc.getIdaccount(), acc.getEmail() + "has refunded the course " + course.getName_course() + ".", 1, 0, new Date(System.currentTimeMillis()), "Refunding Course");
                     request.setAttribute("refund", "message");
                     break;
                 case 0:
@@ -61,6 +64,7 @@ public class CancelCourseOrderServlet extends HttpServlet {
                     for (ClassDetail classDetail : getTraineeInThisClassWithCourse) {
                         int deleteTraineeWhenCancelCourse = Dao.ClassDetailDao.deleteTraineeInClass(acc.getIdaccount(), classDetail.getId_course());
                     }
+                    boolean createMessage1 = Dao.MessageDao.createRequestChangeClass(acc.getIdaccount(), acc.getEmail() + "has canceled the course " + course.getName_course() + ".", 1, 0, new Date(System.currentTimeMillis()), "Canceling Course");
                     request.setAttribute("cancel", "message");
                     break;
             }

@@ -532,10 +532,11 @@ public class AccountDao {
                     + "from CheckAttendance CA JOIN Trainee T ON CA.Attendance_ID = T.Attendance_ID\n"
                     + "Where CA.ID_Class = ?";
             PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int idTrainer = table.getInt("ID_Account");
+                    int idTrainer = table.getInt("ID_Trainee");
                     Account account = new Account(idTrainer, "", "", "", "", "", "", "", "", "", 3, 0);
                     kq.add(account);
                 }

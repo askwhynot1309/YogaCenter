@@ -17,6 +17,36 @@
         <link rel="stylesheet" href="css/admin/admin.css">
         <link rel="stylesheet" href="css/admin/admin-course.css">
         <link rel="stylesheet" href="css/admin/admin-course-add.css">
+        <style>
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 9999;
+            }
+            .message {
+                box-shadow: var(--shadow-2), 0 0 0 100vw rgb(0 0 0 / 0.5);
+                background: #fff;
+                color: #222;
+                border: 0;
+                border-radius: 0.25rem;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                border-radius: 20px;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                z-index: 10000;
+            }
+
+            .message::backdrop {
+                background: rgb(0 0 0 / 0.5);
+                opacity: 0;
+            }
+        </style>
     </head>
     <body>
     <body>
@@ -48,6 +78,9 @@
                     <c:set var="listSession" value="${requestScope.listSession}"/>
                     <h5><strong>Number of Trainees that join this course: </strong>${count}</h5><br><br>
                     <h3>Number of Classes with Course</h3>
+                    <c:if test="${listSession.size() == 0}">
+                        <p style="color: red; text-align: center">There are no classes available for this course.</p>
+                    </c:if>
                     <c:if test="${listSession.size() > 0 && !listSession.isEmpty()}">
                         <div style="height: 450px">
                             <table class="table">
@@ -93,6 +126,7 @@
                                             </td>
                                             <td>
                                                 <a href="/YogaCenter/request?action=inf&id=${course.id_course}&room=${course.id_room}&option=viewDetailSession" class="btn btn-primary">View detail</a>
+                                                <a href="/YogaCenter/request?action=inf&id=${course.id_course}&room=${course.id_room}&option=ViewTraineeInClass" class="btn btn-primary">View Trainee</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

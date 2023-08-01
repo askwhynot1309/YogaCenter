@@ -35,9 +35,9 @@
                     <div class="iconTrainee">
                         <div class="dropdown" style="cursor: pointer">
                             <a class="fa-solid fa-user fa-2xl" href="GeneralDashboard"></a>
-                    </div>
-                    <div class='custom-cart-wrapper'>
-                        <a href="/YogaCenter/request?action=viewNotification" class="fa-solid fa-bell fa-2xl"></a>
+                        </div>
+                        <div class='custom-cart-wrapper'>
+                            <a href="/YogaCenter/request?action=viewNotification" class="fa-solid fa-bell fa-2xl"></a>
                         <c:choose>
                             <c:when test="${notiList.size() > 0}">
                                 <div id='cartQuantity' class='custom-cart'>${notiList.size()}</div>
@@ -53,13 +53,9 @@
                             </c:when>
                         </c:choose>     
                     </div>
-                        <div class="custom-cart-wrapper">
-                            <p style="font-weight: 900">
-                                <a href="/YogaCenter/request?action=Logout">
-                                    <i class="fas fa-sign-out-alt fa-2xl"></i>
-                                </a>
-                            </p>
-                        </div>
+                    <div class="custom-cart-wrapper">
+                            <a class="fa-solid fa-sign-out-alt fa-2xl" href="/YogaCenter/request?action=Logout"></a>
+                    </div>
                 </div>
             </c:if>
             <c:if test="${account == null}">

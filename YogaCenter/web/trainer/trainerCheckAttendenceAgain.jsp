@@ -137,7 +137,6 @@
                         </a>
                     </div>
                     <h2 style="display: flex; justify-content: center; margin-bottom: 50px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Class Information</h2>
-                    <c:set var="ListTrainee" value="${requestScope.ListTrainee}"/>
                     <c:set var="inforClass" value="${requestScope.InforClass}"/>
                     <c:set var="listAttend" value="${requestScope.listAttend}"/>
                     <c:set var="status" value="${requestScope.status}"/>
@@ -182,10 +181,10 @@
                             </tbody>
                         </table>
                         <h3 style="display: flex; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 30px; text-transform: uppercase; background-color: #3b83f65f; color: #0071e2; padding: 10px">Trainees of the course</h3>
-                        <c:if test="${ListTrainee == null}">
+                        <c:if test="${listAttend == null}">
                             <p style="text-align: center; font-weight: 700">Do not have any trainees that learn this course !</p>
                         </c:if>
-                        <c:if test="${ListTrainee != null}">
+                        <c:if test="${listAttend != null}">
                             <form action="/YogaCenter/request">
                                 <div class="tabel-container">
                                     <div class="table-responsive">
@@ -200,17 +199,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="trainee" items="${ListTrainee}" varStatus="loop">
+                                                <c:forEach var="trainee" items="${listAttend}" varStatus="loop">
                                                     <tr>
                                                         <td>${loop.count}</td>
-                                                        <td>${trainee.name}</td>
+                                                        <td>${trainee.account}</td>
                                                         <td>
                                                             <a href="/YogaCenter/request?action=inf&id=${trainee.idaccount}&option=trainerUserDetail" class="btn btn-primary">Details</a>
                                                         </td>
                                                         <td>
-                                                                <c:forEach var="attend" items="${listAttend}">
-                                                                    <c:if test="${attend.id_trainee == trainee.idaccount}">
-                                                                        <c:if test="${attend.status == 0}">
+                                                                        <c:if test="${trainee.time == 0}">
                                                                             <input type="radio" name="attendanceStatus${loop.index}" value="1" id="yes${loop.index}">
                                                                             <label for="yes${loop.index}">Yes</label>
                                                                             <input type="radio" name="attendanceStatus${loop.index}" value="2" id="no${loop.index}">
@@ -221,7 +218,7 @@
                                                                             <input type="hidden" name="class_id" value="${inforClass.id_class}">
                                                                             <input type="hidden" name="reuseId" value="${sessionScope.reuseId}">
                                                                         </c:if>
-                                                                        <c:if test="${attend.status == 1}">
+                                                                        <c:if test="${trainee.time == 1}">
                                                                             <input type="radio" name="attendanceStatus${loop.index}" value="1" id="yes${loop.index}" checked="">
                                                                             <label for="yes${loop.index}">Yes</label>
                                                                             <input type="radio" name="attendanceStatus${loop.index}" value="2" id="no${loop.index}">
@@ -232,7 +229,7 @@
                                                                             <input type="hidden" name="class_id" value="${inforClass.id_class}">
                                                                             <input type="hidden" name="reuseId" value="${sessionScope.reuseId}">
                                                                         </c:if>
-                                                                        <c:if test="${attend.status == 2}">
+                                                                        <c:if test="${trainee.time == 2}">
                                                                             <input type="radio" name="attendanceStatus${loop.index}" value="1" id="yes${loop.index}">
                                                                             <label for="yes${loop.index}">Yes</label>
                                                                             <input type="radio" name="attendanceStatus${loop.index}" value="2" id="no${loop.index}" checked="">
@@ -243,25 +240,19 @@
                                                                             <input type="hidden" name="class_id" value="${inforClass.id_class}">
                                                                             <input type="hidden" name="reuseId" value="${sessionScope.reuseId}">
                                                                         </c:if>
-                                                                    </c:if>
-                                                                </c:forEach>
                                                         </td>
                                                         <td>
-                                                            <c:forEach var="attend" items="${listAttend}">
-                                                                <c:if test="${attend.id_trainee == trainee.idaccount}">
                                                                     <c:choose>
-                                                                        <c:when test="${attend.status == 0}">
+                                                                        <c:when test="${trainee.time == 0}">
                                                                             <p style="color: black">Not yet</p>
                                                                         </c:when>
-                                                                        <c:when test="${attend.status == 1}">
+                                                                        <c:when test="${trainee.time == 1}">
                                                                             <p style="color: green">Present</p>
                                                                         </c:when>
-                                                                        <c:when test="${attend.status == 2}">
+                                                                        <c:when test="${trainee.time == 2}">
                                                                             <p style="color: red">Absent</p>
                                                                         </c:when>
                                                                     </c:choose>
-                                                                </c:if>
-                                                            </c:forEach>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

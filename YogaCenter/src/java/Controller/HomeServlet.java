@@ -41,7 +41,7 @@ public class HomeServlet extends HttpServlet {
             ArrayList<Course> liststartDate = Dao.CourseDao.getCourseByDateStart(currentdate);
             ArrayList<Course> listramdom = Dao.CourseDao.getAllCourseHaveTopOrder();
             ArrayList<Course> list4Course = Dao.CourseDao.get4Course();
-            if (list != null && !list.isEmpty() && liststartDate.size() == 0) {
+            if (list != null && !list.isEmpty() && liststartDate.size() > 0) {
                 for (Course course : list) {
                     Date staDate = Utils.CheckDayAfterOneMonth.getDateAfterOneMonth(course.getDate_start());
                     Date cloDate = Utils.CheckDayBeforeThreeWeek.getDateBefore1Week(staDate);
@@ -49,19 +49,6 @@ public class HomeServlet extends HttpServlet {
                         int insertCourseNewStartDate = Dao.CourseDao.insertCourse(course.getName_course(), course.getImg_course(), course.getFee_course(), course.getDescription(), course.getLearnt(), course.getSummary(), staDate, cloDate, course.getSlot(), course.getLevel(), course.getChoice(), course.getIdtime() ,1);
                     }
                 }
-                Collections.shuffle(listramdom);
-                int count = 0;
-                for (Course course : listramdom) {
-                    if (count < 3) {
-                        randomList.add(course);
-                        count++;
-                    }
-                }
-                request.setAttribute("ramdomCourse", randomList);
-                request.setAttribute("list4Course", list4Course);
-                request.getRequestDispatcher("homepage.jsp").forward(request, response);
-            }
-            else if (liststartDate != null && !liststartDate.isEmpty()) {
                 for (Course course : liststartDate) {
                     int changeStatus = Dao.CourseDao.changeStatusCourse(0, course.getIdCourse());
                 }
@@ -76,7 +63,6 @@ public class HomeServlet extends HttpServlet {
                 request.setAttribute("ramdomCourse", randomList);
                 request.setAttribute("list4Course", list4Course);
                 request.getRequestDispatcher("homepage.jsp").forward(request, response);
-                
             }
             else {
                 Collections.shuffle(listramdom);
