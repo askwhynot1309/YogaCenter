@@ -39,6 +39,8 @@ public class AttendenceAgainServlet extends HttpServlet {
             int classid = Integer.parseInt(request.getParameter("id"));
             Date date = Date.valueOf(request.getParameter("date"));
             int idaccount = Integer.parseInt(request.getParameter("acc"));
+            int courseid = Integer.parseInt(request.getParameter("course"));
+            int room = Integer.parseInt(request.getParameter("room"));
             String reason = request.getParameter("reason");
             ClassDetail classdetail = Dao.ClassDetailDao.getClassByClassID(classid);
             Course course = Dao.CourseDao.getInformationOfCourse(classdetail.getId_course());
@@ -47,7 +49,7 @@ public class AttendenceAgainServlet extends HttpServlet {
                 boolean insertMessageToStaff = Dao.MessageDao.createRequestChangeClass(idaccount, "I need to check attendence again in class : " + course.getName_course() + ".</p><br><p>Idclass : " + classdetail.getId_class() + ".</p><br><p>Date : " + date + ".</p><br><p>Reason : " + reason + ".</p>", account.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Check Attendence Again");
             }
             request.setAttribute("message1", "The system has sent your requirement to staff. Please waiting to check attendence again.");
-            request.getRequestDispatcher("/request?action=inf&id=" + classid + "&option=trainerClassDetail&date=" + date + "&acc=" + idaccount).forward(request, response);
+            request.getRequestDispatcher("/request?action=inf&id=" + courseid + "&room=" + room +"&option=trainerView").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

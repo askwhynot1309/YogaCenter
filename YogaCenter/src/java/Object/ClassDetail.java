@@ -41,7 +41,7 @@ public class ClassDetail implements Serializable{
         this.date = date;
     }
 
-    public ClassDetail(int id_detail, String class_name, String datestudy, int idaccount, String account, int id_course, int status, String course, int time) {
+    public ClassDetail(int id_detail, String class_name, String datestudy, int idaccount, Date date, String account, int id_course, int status, String course, int time) {
         this.id_class = id_detail;
         this.class_name = class_name;
         this.datestudy = datestudy;
@@ -51,6 +51,7 @@ public class ClassDetail implements Serializable{
         this.status = status;
         this.course = course;
         this.time = time;
+        this.date = date;
     }
 
     public ClassDetail(int id_detail, int id_room, int time, int idaccount, Date date, String account, int id_course, String course) {

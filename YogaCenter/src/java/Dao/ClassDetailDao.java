@@ -49,7 +49,7 @@ public class ClassDetailDao {
                     int status = table.getInt("Status");
                     int time = table.getInt("IDtime");
                     String course = table.getNString("Course_Name");
-                    ClassDetail classdetails = new ClassDetail(id_class, class_name, date, idaccount, account, id_course, status, course, time);
+                    ClassDetail classdetails = new ClassDetail(id_class, class_name, date, idaccount, datestudy, account, id_course, status, course, time);
                     kq.add(classdetails);
                 }
             }
@@ -62,11 +62,11 @@ public class ClassDetailDao {
         ArrayList<ClassDetail> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "Select COU.Course_ID, COU.Course_Name, COU.Start_date\n"
+            String s = "Select COU.Course_ID, COU.Course_Name, COU.Start_date, COUNT(BD.Order_ID)\n"
                     + "From Course COU JOIN BookingDetail BD ON COU.Course_ID = BD.ID_Course\n"
-                    + "Where COU.Start_date > ?\n"
+                    + "Where COU.Start_date > ? AND (BD.Status_Account = 1 OR BD.Status_Account = 3)\n"
                     + "Group by COU.Course_ID, COU.Course_Name, COU.Start_date\n"
-                    + "Having COUNT(BD.Order_ID) > 0";
+                    + "Having COUNT(BD.Order_ID) >= 1";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
             ResultSet table = pst.executeQuery();
@@ -106,6 +106,37 @@ public class ClassDetailDao {
                     String course = table.getNString("Course_Name");
                     String name = table.getNString("Name");
                     String room_name = table.getString("Room_Name");
+                    ClassDetail classdetails = new ClassDetail(room, name, 1, date, room_name, id_course, course, id_acc);
+                    kq.add(classdetails);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static ArrayList<ClassDetail> getAllClassForTrainer(int acc) throws Exception {
+        ArrayList<ClassDetail> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Select S.IDCourse, COU.Course_Name, A.Name, R.Room_Name, R.Room_ID, S.ID_Account, COU.Start_date\n"
+                    + "From Course COU JOIN Session S ON COU.Course_ID = S.IDCourse\n"
+                    + "JOIN Account A ON A.ID_Account = S.ID_Account\n"
+                    + "JOIN Room R ON R.Room_ID = S.Room_ID\n"
+                    + "Where S.ID_Account = ?\n"
+                    + "Group by S.IDCourse, COU.Course_Name, A.Name, R.Room_Name, R.Room_ID, S.ID_Account, COU.Start_date";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, acc);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_course = table.getInt("IDCourse");
+                    int room = table.getInt("Room_ID");
+                    int id_acc = table.getInt("ID_Account");
+                    String course = table.getNString("Course_Name");
+                    String name = table.getNString("Name");
+                    String room_name = table.getString("Room_Name");
+                    Date date = table.getDate("Start_date");
                     ClassDetail classdetails = new ClassDetail(room, name, 1, date, room_name, id_course, course, id_acc);
                     kq.add(classdetails);
                 }
@@ -235,39 +266,7 @@ public class ClassDetailDao {
                     int time = table.getInt("IDtime");
                     int status = table.getInt("Status");
                     String course = table.getNString("Course_Name");
-                    ClassDetail classdetails = new ClassDetail(class_id, room_name, date, idaccount, account, id_course, status, course, time);
-                    kq.add(classdetails);
-                }
-            }
-            cn.close();
-        }
-        return kq;
-    }
-
-    public static ArrayList<ClassDetail> getAllClassDetailsForTrainerDistinct(int id) throws Exception {
-        ArrayList<ClassDetail> kq = new ArrayList<>();
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "select S.SessionID, R.Room_Name, S.Room_ID, S.ID_Account, A.Name, S.IDCourse, COU.Course_Name, R.Status, COU.Start_date, COU.IDtime\n"
-                    + "from Session S JOIN Account A ON S.ID_Account = A.ID_Account\n"
-                    + "JOIN Room R ON S.Room_ID = R.Room_ID\n"
-                    + "JOIN Course COU ON COU.Course_ID = S.IDCourse\n"
-                    + "Where  S.ID_Account = ? ";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, id);
-            ResultSet table = pst.executeQuery();
-            if (table != null) {
-                while (table.next()) {
-                    int class_id = table.getInt("SessionID");
-                    String room_name = table.getString("Room_Name");
-                    int idaccount = table.getInt("ID_Account");
-                    String account = table.getNString("Name");
-                    int id_course = table.getInt("IDCourse");
-                    int status = table.getInt("Status");
-                    int time = table.getInt("IDtime");
-                    Date datestudy = table.getDate("Start_date");
-                    String course = table.getNString("Course_Name");
-                    ClassDetail classdetails = new ClassDetail(class_id, room_name, idaccount, datestudy, account, id_course, course, time);
+                    ClassDetail classdetails = new ClassDetail(class_id, room_name, date, idaccount, datestudy, account, id_course, status, course, time);
                     kq.add(classdetails);
                 }
             }
@@ -305,7 +304,7 @@ public class ClassDetailDao {
                     int time = table.getInt("IDtime");
                     int status = table.getInt("Status");
                     String course = table.getNString("Course_Name");
-                    ClassDetail classdetails = new ClassDetail(class_id, room_name, date, idaccount, account, id_course, status, course, time);
+                    ClassDetail classdetails = new ClassDetail(class_id, room_name, date, idaccount, datestudy, account, id_course, status, course, time);
                     kq.add(classdetails);
                 }
             }
@@ -886,7 +885,7 @@ public class ClassDetailDao {
                     String phone = table.getString("Phone");
                     int status = table.getInt("Status");
                     int idaccount = table.getInt("ID_Account");
-                    ClassDetail classdetails = new ClassDetail(1, "", email, idaccount, Account_name, 0, 0, phone, status);
+                    ClassDetail classdetails = new ClassDetail(1, "", email, idaccount, new Date(System.currentTimeMillis()), Account_name, 0, 0, phone, status);
                     traineeList.add(classdetails);
                 }
             }
@@ -914,7 +913,7 @@ public class ClassDetailDao {
                     String phone = table.getString("Phone");
                     String room = table.getString("Room_Name");
                     int idaccount = table.getInt("ID_Account");
-                    ClassDetail classdetails = new ClassDetail(1, room, email, idaccount, Account_name, 0, 0, phone, 1);
+                    ClassDetail classdetails = new ClassDetail(1, room, email, idaccount, new Date(System.currentTimeMillis()), Account_name, 0, 0, phone, 1);
                     traineeList.add(classdetails);
                 }
             }
@@ -947,7 +946,7 @@ public class ClassDetailDao {
                     int count = table.getInt("Count");
                     int idaccount = table.getInt("ID_Account");
                     int slot = table.getInt("Slot");
-                    ClassDetail classdetails = new ClassDetail(1, "", email, idaccount, Account_name, 0, slot, phone, count);
+                    ClassDetail classdetails = new ClassDetail(1, "", email, idaccount, new Date(System.currentTimeMillis()), Account_name, 0, slot, phone, count);
                     traineeList.add(classdetails);
                 }
             }

@@ -66,54 +66,32 @@
                 <c:import url="trainerDashboard.jsp"/>
             </div>
             <div class="col-lg-9">
-                <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Yoga Center Course List</h2>
-                <div style="display: flex; margin-left: 30%; margin-bottom: 2rem; margin-top: 2rem">
-                    <form action="/YogaCenter/request" method="POST" class="form-search">
-                        <div class="group">
-                            <svg class="icon-search" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-                            <input placeholder="Search by Name Course" type="text" name="txtsearch" value="${param.txtsearch}" class="input">
-                            <input name="option" value="TrainerSearchCourse" hidden="">
-                            <c:set var="listLevel" value="${requestScope.listLevel}"/>
-                            <c:if test="${listLevel != null && !listLevel.isEmpty()}">
-                                <select name="level">
-                                    <option value="0"></option>
-                                    <c:forEach var="level" items="${listLevel}">
-                                        <option value="${level.getIdLevel()}">${level.getLevel_Name()}</option>
-                                    </c:forEach>
-                                </select>
-                            </c:if>
-                            <c:if test="${listLevel == null}">
-                                <select name="level">
-                                    <option value="0"></option>
-                                </select>
-                            </c:if>
-                            <button name="action" value="search" class="btn-search">Search</button>
-                        </div>
-                    </form>
+                <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Trainer's Course</h2>
+                <div style="margin-bottom: 2rem"> 
                 </div>
-                <c:set var="listCourse" value="${requestScope.listCourse}"/>
-                <c:set var="nulllist" value="${requestScope.nulllist}"/>
-                <c:if test="${listCourse == null}">
-                    <p style="text-align: center"><c:out value="${nulllist}"/></p>
+                <c:set var="listClass" value="${requestScope.listClass}"/>
+                <c:if test="${listClass.size() == 0}">
+                    <p style="text-align: center; color: red">You don't have any courses to view!</p>
                 </c:if>
-                <c:if test="${listCourse != null && !listCourse.isEmpty()}">
+                <c:if test="${listClass != null && !listClass.isEmpty()}">
                     <div style="height: 550px">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>No.</th>
                                     <th>Name of course</th>
-                                    <th>Fee of course</th>
-                                    <th>Detail of course</th>
+                                    <th>Room</th>
+                                    <th>Date-Start</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="course" items="${listCourse}" varStatus="loop">
+                            <c:forEach var="course" items="${listClass}" varStatus="loop">
                                 <tr>
                                     <td>${loop.count}</td>
-                                    <td>${course.name_course}</td>
-                                    <td>${course.fee_course} VNĐ</td>
-                                    <td><a href="/YogaCenter/request?action=inf&id=${course.idCourse}&option=trainerCourseInfo" class="btn btn-primary">More information</a></td>
+                                    <td>${course.course}</td>
+                                    <td>${course.account}</td>
+                                    <td>${course.date}</td>
+                                    <td><a href="/YogaCenter/request?action=inf&id=${course.id_course}&room=${course.id_class}&acc=${course.time}&option=trainerView" class="btn btn-primary"> View more</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -138,7 +116,7 @@
     const pagination = document.querySelector('.pagination ul');
     const page = document.querySelector('.pagination ul li:nth-child(2)');
 
-    const productsPerPage = 8;
+    const productsPerPage = 6;
     let currentPage = 1;
 
     function displayProducts() {

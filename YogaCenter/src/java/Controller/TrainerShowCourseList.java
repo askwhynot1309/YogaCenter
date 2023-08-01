@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import Object.Account;
+import Object.ClassDetail;
 import Object.Course;
 import Object.Level;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,27 +37,19 @@ public class TrainerShowCourseList extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            ArrayList<Course> listCourse = Dao.CourseDao.trainerGetAllCourse();
-            ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();
-            if (listCourse != null && !listCourse.isEmpty()) {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listCourse", listCourse);
-                    request.setAttribute("listLevel", listLevel);
-                    request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
-                }
-            } else {
-                if (listLevel != null && !listLevel.isEmpty()) {
-                    request.setAttribute("listLevel", listLevel);
-                    request.setAttribute("nulllist", "There are no courses in data.");
-                    request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
-                }
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("Trainer");
+            if (account == null) {
+                request.setAttribute("message", "message");
+                request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
+            }
+            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassForTrainer(account.getIdaccount());
+            if (listClass != null && !listClass.isEmpty()) {
+                request.setAttribute("listClass", listClass);
+                request.getRequestDispatcher("trainer/trainerViewCourseList.jsp").forward(request, response);
             }
         } catch (Exception e) {
-            request.getRequestDispatcher("error.html").forward(request, response);
+            e.printStackTrace();
         }
     }
 
