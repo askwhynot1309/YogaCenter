@@ -77,6 +77,7 @@
                     <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Information of Class</h2>
                     <c:set var="listSession" value="${requestScope.listSessions}"/>
                     <c:set var="count" value="${requestScope.count}"/>
+                    <c:set var="staffdate" value="${requestScope.staffdate}"/>
                     <h5><strong>Number of Trainees that join this course: </strong>${count}</h5><br><br>
                     <h3>Number of Sessions with Class</h3>
                     <c:if test="${listSession.size() > 0 && !listSession.isEmpty()}">
@@ -115,6 +116,9 @@
                                             <td>${course.date}</td>
                                             <td>
                                                 <a href="/YogaCenter/request?action=inf&id=${course.id_class}&course2=${course2}&idclass=${course.id_course}&option=staffviewTrainees" class="btn btn-primary">View detail</a>
+                                                <c:if test="${staffdate.after(course.date)}">
+                                                    <a class="btn btn-primary" href="/YogaCenter/request?action=OpenForm&id=${course.id_class}&date=${course.date}&acc=${course.idaccount}&course=${course2}&idsession=${id}" style="margin-bottom: 20px; float: right; width: 220px">Open Attendence Form</a>
+                                                </c:if>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -124,5 +128,17 @@
                     </c:if>
                 </div>
             </div>
+            <c:if test="${message != null}">
+                <div class="notification-success" style="height: 100px">
+                    <div class="content">
+                        <div class="title">Success</div>
+                        <span>${message}</span>
+                    </div>
+                </div>
+                <script>
+                    let notification = document.querySelector('.notification-success');
+                    notification.timeOut = setTimeout(() => notification.remove(), 5000);
+                </script>
+            </c:if>
     </body>
 </html>

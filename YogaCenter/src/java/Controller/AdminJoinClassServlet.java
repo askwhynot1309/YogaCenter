@@ -6,6 +6,7 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,11 @@ public class AdminJoinClassServlet extends HttpServlet {
             if (checknumber < 30) {
                 int insert = Dao.ClassDetailDao.insertClassForLearn(room, id, id_course);
                 if (insert == 1) {
+                    boolean createMessage = Dao.MessageDao.createRequestChangeClass(1, "The admin has set up class for you. Please view schedule to attend class", id, 0, new Date(System.currentTimeMillis()), "Setup Class");
                     request.setAttribute("message", "message");
+                    request.getRequestDispatcher("/request?action=inf&id=" + id_course + "&room=" + room + "&option=setup").forward(request, response);
+                } else {
+                    request.setAttribute("error", "message");
                     request.getRequestDispatcher("/request?action=inf&id=" + id_course + "&room=" + room + "&option=setup").forward(request, response);
                 }
             } else {

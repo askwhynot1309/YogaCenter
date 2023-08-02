@@ -95,6 +95,7 @@
                                         <th>No.</th>
                                         <th style="width: 500px">Name of course</th>
                                         <th>Start of course</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>

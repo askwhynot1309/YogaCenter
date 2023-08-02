@@ -201,7 +201,6 @@
                     <c:if test="${listAttendence == null}">
                         <p style="text-align: center; font-weight: 700">Do not have any trainees that learn this course !</p>
                     </c:if>
-                    <a class="btn btn-primary" href="/YogaCenter/request?action=OpenForm&id=${inforClass.id_class}&date=${inforClass.date}&acc=${inforClass.idaccount}" style="margin-bottom: 20px; float: right; width: 220px">Open Attendence Form</a>
                     <c:if test="${listAttendence != null}">
                         <table class="table" style="text-align: center">
                             <thead>

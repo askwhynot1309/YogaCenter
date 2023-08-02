@@ -59,9 +59,10 @@ public class ButtonScheduleServlet extends HttpServlet {
                 request.setAttribute("arrangeSameTrainerInTime", "This trainer has had class in this time !");
                 request.getRequestDispatcher("schedule").forward(request, response);
             } else {
+                int insert = Dao.ClassDetailDao.insertClassForTeach(idaccount, id_course);
                 ArrayList<Get30SlotsByCourse> list = Utils.Get30SlotsByCourse.get30Slots(course.getDate_start(), course.getSlot(), course.getChoice());
                 for (Get30SlotsByCourse dateForSlot : list) {
-                    int insertClass = Dao.ClassDetailDao.insertClassForTeach(id_room, idaccount, id_course, dateForSlot.getDay());
+                    int insertClass = Dao.ClassDetailDao.insertDateForClass(id_room, dateForSlot.getDay());
                 }
                 request.setAttribute("arrangesuccess", "Settup successfully !");
                 request.getRequestDispatcher("schedule").forward(request, response);

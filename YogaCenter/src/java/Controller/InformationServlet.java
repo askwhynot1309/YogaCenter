@@ -201,9 +201,11 @@ public class InformationServlet extends HttpServlet {
                 case "staffviewDetailSession":
                     int staffcounts2 = Dao.OrderCourseDao.countTraineeInClass(id);
                     int staffcourse2 = Integer.parseInt(request.getParameter("course"));
+                    Date staffdate2 = new Date(System.currentTimeMillis());
                     ArrayList<ClassDetail> stafflistSessions = Dao.ClassDetailDao.getSessionsInCourseWithRoom(id);
                     request.setAttribute("listSessions", stafflistSessions);
                     request.setAttribute("id", id);
+                    request.setAttribute("staffdate", staffdate2);
                     request.setAttribute("count", staffcounts2);
                     request.setAttribute("course2", staffcourse2);
                     request.getRequestDispatcher("staff/staffViewSessions.jsp").forward(request, response);

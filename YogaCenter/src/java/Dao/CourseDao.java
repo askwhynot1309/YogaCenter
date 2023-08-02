@@ -528,6 +528,7 @@ public class CourseDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
+                    int idcourse = table.getInt("Course_ID");
                     String course_name = table.getNString("Course_Name");
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
@@ -542,7 +543,7 @@ public class CourseDao {
                     int status = table.getInt("Status");
                     int choice = table.getInt("Choice");
                     int idtime = table.getInt("IDtime");
-                    kq = new Course(id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
+                    kq = new Course(idcourse, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                 }
             }
             cn.close();
@@ -556,12 +557,14 @@ public class CourseDao {
         if (cn != null) {
             String s = "select top 3 *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where l.Level_ID = ?";
+                    + "where l.Level_ID = ? and c.Status = 1\n"
+                    + "Order by c.Course_ID ASC";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
+                    int idcourse = table.getInt("Course_ID");
                     String course_name = table.getNString("Course_Name");
                     String course_img = table.getString("Img");
                     BigDecimal course_fee = table.getBigDecimal("Course_Fee");
@@ -576,7 +579,7 @@ public class CourseDao {
                     int status = table.getInt("Status");
                     int choice = table.getInt("Choice");
                     int idtime = table.getInt("IDtime");
-                    Course course = new Course(id, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
+                    Course course = new Course(idcourse, course_name, course_img, course_fee, course_start, course_close, slot, description, learnt, summary, level, name_level, status, choice, idtime);
                     kq.add(course);
                 }
             }

@@ -90,6 +90,7 @@
                                         <th style="width: 400px">Trainee</th>
                                         <th>Email</th>
                                         <th>Phone</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -138,16 +139,17 @@
                     notification.timeOut = setTimeout(() => notification.remove(), 2000);
                 </script>
             </c:if>
+
             <c:if test="${error != null}">
-                <div class="notification" style="z-index: 1000">
+                <div class="notification" style="z-index: 1000; height: 100px">
                     <div class="content">
                         <div class="title">Error</div>
                         <span>Class is full. Please choose the other class to set up Trainee!.</span>
                     </div>
                 </div>
                 <script>
-                    let notification = document.querySelector('notification');
-                    notification.timeOut = setTimeout(() => notification.remove(), 2000);
+                    let notification2 = document.querySelector('.notification');
+                    notification2.timeOut = setTimeout(() => notification2.remove(), 5000);
                 </script>
             </c:if>
     </body>

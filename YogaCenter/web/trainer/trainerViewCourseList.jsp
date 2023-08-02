@@ -88,7 +88,7 @@
                             <c:forEach var="course" items="${listClass}" varStatus="loop">
                                 <tr>
                                     <td>${loop.count}</td>
-                                    <td>${course.account}</td>
+                                    <td>${course.course}</td>
                                     <td>${course.date}</td>
                                     <td><a href="/YogaCenter/request?action=inf&id=${course.id_class}&option=trainerView" class="btn btn-primary"> View more</a></td>
                                 </tr>

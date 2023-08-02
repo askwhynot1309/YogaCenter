@@ -315,8 +315,9 @@ public class ClassDetailDao {
         Connection cn = Utils.DBUtils.getConnection();
         cn.setAutoCommit(false);
         if (cn != null) {
-            String s = "select S.SessionID, S.DateStudy\n"
-                    + "from Session S JOIN Class C ON S.Class = C.No_ID\n"
+            String s = "select CA.Attendance_ID\n"
+                    + "from Class C JOIN Session S ON C.No_ID = S.Class\n"
+                    + "JOIN CheckAttendance CA ON CA.ID_Class = S.SessionID\n"
                     + "where S.Room_ID = ? and C.IDCourse = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, room_id);
@@ -324,38 +325,19 @@ public class ClassDetailDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int class_id = table.getInt("SessionID");
-                    Date date = table.getDate("DateStudy");
-                    ClassDetail cl = new ClassDetail(class_id, "", date);
+                    int idcheck = table.getInt("Attendance_ID");
+                    ClassDetail cl = new ClassDetail(idcheck, 1, 1);
                     list.add(cl);
                 }
             }
             if (list.size() > 0) {
                 for (ClassDetail classDetail : list) {
-                    String s5 = "insert into CheckAttendance(ID_Class, AttendanceDate) values (?,?)";
-                    PreparedStatement pst5 = cn.prepareStatement(s5);
-                    pst5.setInt(1, classDetail.getId_class());
-                    pst5.setDate(2, classDetail.getDate());
-                    kq = pst5.executeUpdate();
-                    if (kq > 0) {
-                        String s4 = "Select Attendance_ID\n"
-                                + "from CheckAttendance\n"
-                                + "Where ID_Class = ?";
-                        PreparedStatement pst4 = cn.prepareStatement(s4);
-                        pst4.setInt(1, classDetail.getId_class());
-                        ResultSet table1 = pst4.executeQuery();
-                        if (table1 != null) {
-                            while (table1.next()) {
-                                int idattendance = table1.getInt("Attendance_ID");
-                                String s3 = "insert into Trainee(Attendance_ID, ID_Trainee, Status) values (?,?,?)";
-                                PreparedStatement pst3 = cn.prepareStatement(s3);
-                                pst3.setInt(1, idattendance);
-                                pst3.setInt(2, id_account);
-                                pst3.setInt(3, 0);
-                                kq = pst3.executeUpdate();
-                            }
-                        }
-                    }
+                    String s3 = "insert into Trainee(Attendance_ID, ID_Trainee, Status) values (?,?,?)";
+                    PreparedStatement pst3 = cn.prepareStatement(s3);
+                    pst3.setInt(1, classDetail.getId_class());
+                    pst3.setInt(2, id_account);
+                    pst3.setInt(3, 0);
+                    kq = pst3.executeUpdate();
                 }
             }
             cn.commit();
@@ -365,33 +347,56 @@ public class ClassDetailDao {
         return kq;
     }
 
-    public static int insertClassForTeach(int room_id, int id_account, int id_course, Date date) throws Exception {
+    public static int insertClassForTeach(int id_account, int id_course) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "insert into Class(IDCourse, ID_Account) values (?,?)";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id_course);
+            pst.setInt(2, id_account);
+            kq = pst.executeUpdate();
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static int insertDateForClass(int room_id, Date date) throws Exception {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         cn.setAutoCommit(false);
         if (cn != null) {
-            String s = "insert into Class(IDCourse, ID_Account) values (?,?)";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, room_id);
-            pst.setInt(2, id_course);
-            pst.setInt(3, id_account);
-            pst.setDate(4, date);
-            kq = pst.executeUpdate();
-            if (kq == 1) {
-                String s1 = "Select Top 1 No_ID\n"
-                        + "From Class\n"
-                        + "Order by No_ID Desc";
-                PreparedStatement pst1 = cn.prepareStatement(s1);
-                ResultSet table = pst1.executeQuery();
-                if (table != null) {
-                    while (table.next()) {
-                        int id_no = table.getInt("No_ID");
-                        String s2 = "insert into Session(Room_ID, Class, DateStudy) values (?,?,?)";
-                        PreparedStatement pst2 = cn.prepareStatement(s2);
-                        pst2.setInt(1, room_id);
-                        pst2.setInt(2, id_no);
-                        pst2.setDate(3, date);
-                        kq = pst2.executeUpdate();
+            String s1 = "Select Top 1 No_ID\n"
+                    + "From Class\n"
+                    + "Order by No_ID Desc";
+            PreparedStatement pst1 = cn.prepareStatement(s1);
+            ResultSet table = pst1.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_no = table.getInt("No_ID");
+                    String s2 = "insert into Session(Room_ID, Class, DateStudy) values (?,?,?)";
+                    PreparedStatement pst2 = cn.prepareStatement(s2);
+                    pst2.setInt(1, room_id);
+                    pst2.setInt(2, id_no);
+                    pst2.setDate(3, date);
+                    kq = pst2.executeUpdate();
+                    if (kq == 1) {
+                        String s3 = "Select Top 1 SessionID, DateStudy\n"
+                                + "From Class\n"
+                                + "Order by SessionID Desc";
+                        PreparedStatement pst3 = cn.prepareStatement(s3);
+                        ResultSet table2 = pst3.executeQuery();
+                        if (table2 != null) {
+                            while (table2.next()) {
+                                int idsession = table2.getInt("SessionID");
+                                Date datestudy = table2.getDate("DateStudy");
+                                String s4 = "insert into CheckAttendance(ID_Class, AttendanceDate) values (?,?)";
+                                PreparedStatement pst4 = cn.prepareStatement(s4);
+                                pst4.setInt(1, idsession);
+                                pst4.setDate(2, datestudy);
+                                kq = pst4.executeUpdate();
+                            }
+                        }
                     }
                 }
             }
@@ -814,11 +819,11 @@ public class ClassDetailDao {
         ArrayList<ClassDetail> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select S.Class, C.IDCourse, COU.Course_Name, A.Name, COU.IDtime, COU.Choice\n"
+            String s = "select S.Class, C.IDCourse, COU.Course_Name, A.Name, COU.IDtime, COU.Choice, S.Room_ID\n"
                     + "from Class C JOIN Session S ON C.No_ID = S.Class JOIN Course COU ON C.IDCourse = COU.Course_ID\n"
                     + "JOIN Account A ON A.ID_Account = C.ID_Account\n"
                     + "Where C.IDCourse = ?\n"
-                    + "GROUP BY S.Class, C.IDCourse, COU.Course_Name, A.Name, COU.IDtime, COU.Choice";
+                    + "GROUP BY S.Class, C.IDCourse, COU.Course_Name, A.Name, COU.IDtime, COU.Choice, S.Room_ID";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
             ResultSet table = pst.executeQuery();
@@ -829,8 +834,9 @@ public class ClassDetailDao {
                     int Course_ID = table.getInt("IDCourse");
                     int choice = table.getInt("Choice");
                     int time = table.getInt("IDtime");
-                    String Course_name = table.getNString("Course_Name");
-                    ClassDetail classdetails = new ClassDetail(1, Room_ID, "", "", choice, Account_name, Course_ID, 0, Course_name, time);
+                    int room_id = table.getInt("Room_ID");
+                    String Course_name = table.getString("Course_Name");
+                    ClassDetail classdetails = new ClassDetail(1, Room_ID, "", "", choice, Account_name, Course_ID, room_id, Course_name, time);
                     kq.add(classdetails);
                 }
             }
@@ -888,7 +894,7 @@ public class ClassDetailDao {
         ArrayList<ClassDetail> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "Select S.SessionID, S.Room_ID, S.Class, COU.Course_Name, R.Room_Name, COU.IDtime, COU.Choice, S.DateStudy, A.Name\n"
+            String s = "Select S.SessionID, S.Room_ID, S.Class, COU.Course_Name, R.Room_Name, COU.IDtime, COU.Choice, S.DateStudy, A.Name, C.ID_Account\n"
                     + "from Class C JOIN Session S ON C.No_ID = S.Class\n"
                     + "JOIN Account A ON A.ID_Account = C.ID_Account\n"
                     + "JOIN Room R ON R.Room_ID = S.Room_ID\n"
@@ -901,15 +907,14 @@ public class ClassDetailDao {
             if (table != null) {
                 while (table.next()) {
                     int id_class = table.getInt("SessionID");
-                    int Room_ID = table.getInt("Room_ID");
                     String Room_name = table.getString("Room_Name");
                     String name = table.getNString("Name");
                     int Course_ID = table.getInt("Class");
-                    int choice = table.getInt("Choice");
+                    int idacc = table.getInt("ID_Account");
                     int time = table.getInt("IDtime");
                     Date day = table.getDate("DateStudy");
                     String Course_name = table.getNString("Course_Name");
-                    ClassDetail classdetails = new ClassDetail(id_class, Room_name, choice, day, name, Course_ID, Course_name, time);
+                    ClassDetail classdetails = new ClassDetail(id_class, Room_name, idacc, day, name, Course_ID, Course_name, time);
                     kq.add(classdetails);
                 }
             }
@@ -986,7 +991,7 @@ public class ClassDetailDao {
                     + "JOIN Course COU ON COU.Course_ID = C.IDCourse\n"
                     + "where S.Class = ?\n"
                     + "GROUP BY A.ID_Account, A.Email, A.Name, A.Phone, T.Status, COU.Slot\n"
-                    + "Having T.Status = 1";
+                    + "Having T.Status = 0";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, id);
             ResultSet table = pst.executeQuery();
@@ -998,7 +1003,8 @@ public class ClassDetailDao {
                     int count = table.getInt("Count");
                     int idaccount = table.getInt("ID_Account");
                     int slot = table.getInt("Slot");
-                    ClassDetail classdetails = new ClassDetail(1, "", email, idaccount, new Date(System.currentTimeMillis()), Account_name, 0, slot, phone, count);
+                    int countstatus = slot - count;
+                    ClassDetail classdetails = new ClassDetail(1, "", email, idaccount, new Date(System.currentTimeMillis()), Account_name, 0, slot, phone, countstatus);
                     traineeList.add(classdetails);
                 }
             }

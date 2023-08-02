@@ -40,12 +40,14 @@ public class OpenFormServlet extends HttpServlet {
                 request.getRequestDispatcher("viewschedule").forward(request, response);
             }
             int classid = Integer.parseInt(request.getParameter("id"));
+            int courseid = Integer.parseInt(request.getParameter("course"));
+            int idsession = Integer.parseInt(request.getParameter("idsession"));
             String date = request.getParameter("date");
             Date newDate = Date.valueOf(date);
             int idaccount = Integer.parseInt(request.getParameter("acc"));
             boolean insertMessageToStaff = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "<p> Link Form : <a href=\"/YogaCenter/request?action=inf&id=" + classid + "&option=trainerCheckAttendenceAgain&date=" + newDate + "&acc=" + idaccount +"\">Link check attendence again.</a></p>", idaccount, 0, new Date(System.currentTimeMillis()), "Open Attendence Form");
             request.setAttribute("message", "The system has sent your requirement to trainer.");
-            request.getRequestDispatcher("/request?action=inf&id=" + classid + "&option=staffClassDetail&date=" + date + "&acc=" + idaccount).forward(request, response);
+            request.getRequestDispatcher("/request?action=inf&id=" + idsession + "&course=" + courseid + "&option=staffviewDetailSession").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
         }

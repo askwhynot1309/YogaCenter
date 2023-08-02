@@ -53,7 +53,7 @@
                 border: 0;
                 border-radius: 0.25rem;
                 position: fixed;
-                top: 70%;
+                top: 50%;
                 left: 50%;
                 border-radius: 20px;
                 transform: translate(-50%, -50%);
@@ -244,12 +244,13 @@
                                             <td>
                                                 <a href="/YogaCenter/request?action=inf&id=${course.id_class}&class=${id}&option=trainerViewtrainee" class="btn btn-primary">View detail</a>
                                                 <c:if test="${course.date.before(date2)}">
-                                                    <button class="btn btn-primary openButton" style="margin-bottom: 20px; float: right">Check Attendence Again</button>
+                                                    <button class="btn btn-primary openButton" style="margin-bottom: 20px; float: right" data-index="${loop.index}">Check Attendence Again</button>
                                                     <div id="overlay" class="overlay hidden"></div>
-                                                    <dialog class="mess" id="message" style="width: 500px">
+                                                    <div class="hidden mess" id="message" style="width: 500px" data-index="${loop.index}">
+                                                        <div class ="close" style="display: flex; float: right; cursor: pointer; width: 30px;height: 30px">&#10006;</div>
                                                         <form action="/YogaCenter/request" method="POST">
                                                             <h3 style="text-align: center; color: blue">Message</h3>
-                                                            <div style="margin-left: 10px"><p>Reason : </p><textarea name="reason" value="" class="input-description"></textarea></div>
+                                                            <div style="margin-left: 10px"><p>Reason : </p><textarea name="reason" value="" class="reason"></textarea></div>
                                                             <input name="id" value="${course.id_class}" hidden="">
                                                             <input name="acc" value="${accid}" hidden="">
                                                             <input name="course" value="${course.id_course}" hidden="">
@@ -257,10 +258,9 @@
                                                             <input name="date" value="${course.date}" hidden="">
                                                             <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px">
                                                                 <button class="btn btn-primary" name="action" value="AttendenceAgain" style="width: 100px">Comfirm</button>
-                                                                <a class="btn btn-primary btn-close" style="width: 75px; color: white; text-decoration: none">Close</a>
                                                             </div>
                                                         </form>
-                                                    </dialog>  
+                                                    </div>  
                                                 </c:if>
                                             </td>
                                         </tr>
@@ -271,59 +271,65 @@
                     </c:if>
                 </div>
             </div>
-            <script>
-                const modal = document.querySelector("#message");
-                const closeModal = document.querySelector(".btn-close");
-                const openModal = document.querySelector(".openButton");
-                var overlay = document.getElementById("overlay");
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+        <script type="text/javascript" <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+        <script>
+            $(document).ready(function () {
+                var feedbackElements = document.getElementsByClassName("reason");
+                for (var i = 0; i < feedbackElements.length; i++) {
+                    CKEDITOR.replace(feedbackElements[i]);
+                }
+            });
+        </script>
 
-                openModal.addEventListener("click", () => {
-                    modal.showModal();
-                    overlay.classList.remove("hidden");
-                });
-
-                closeModal.addEventListener("click", () => {
-                    modal.setAttribute("closing", "");
-
-                    modal.addEventListener(
-                            "animationend",
-                            () => {
-                        modal.removeAttribute("closing");
-                        modal.close();
-                    },
-                            {once: true}
-                    );
-                    overlay.classList.add("hidden");
-                });
-
-            </script>
-            <c:if test="${message != null}">
-                <div class="notification-success">
-                    <div class="content">
-                        <div class="title">Success</div>
-                        <span>${message}</span>
-                    </div>
+        <c:if test="${message != null}">
+            <div class="notification-success">
+                <div class="content">
+                    <div class="title">Success</div>
+                    <span>${message}</span>
                 </div>
-                <script>
-                    let notification = document.querySelector('.notification-success');
-                    notification.timeOut = setTimeout(() => notification.remove(), 5000);
-                </script>
-            </c:if>
-            <c:if test="${message1 != null}">
-                <div class="notification-success" style="height: 120px">
-                    <div class="content">
-                        <div class="title">Success</div>
-                        <span>${message1}</span>
-                    </div>
-                </div>
-                <script>
-                    let notification = document.querySelector('.notification-success');
-                    notification.timeOut = setTimeout(() => notification.remove(), 5000);
-                </script>
-            </c:if>
-            <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+            </div>
             <script>
-                    CKEDITOR.replace('reason');
+                let notification = document.querySelector('.notification-success');
+                notification.timeOut = setTimeout(() => notification.remove(), 5000);
             </script>
+        </c:if>
+        <c:if test="${message1 != null}">
+            <div class="notification-success" style="height: 120px">
+                <div class="content">
+                    <div class="title">Success</div>
+                    <span>${message1}</span>
+                </div>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification-success');
+                notification.timeOut = setTimeout(() => notification.remove(), 5000);
+            </script>
+        </c:if>     
     </body>
+    <script>
+        var feedbackButtons = document.getElementsByClassName("openButton");
+        var feedbackForms = document.getElementsByClassName("mess");
+        var overlay = document.getElementById("overlay");
+        var closeButtons = document.getElementsByClassName("close");
+
+        for (var i = 0; i < feedbackButtons.length; i++) {
+            feedbackButtons[i].addEventListener("click", function () {
+                var index = this.getAttribute("data-index");
+                var feedbackForm = document.querySelector('.mess[data-index="' + index + '"]');
+                feedbackForm.classList.remove("hidden");
+                overlay.classList.remove("hidden");
+            });
+        }
+        for (var i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].addEventListener("click", function () {
+                var index = this.parentNode.getAttribute("data-index");
+                var feedbackForm = document.querySelector('.mess[data-index="' + index + '"]');
+                feedbackForm.classList.add("hidden");
+                overlay.classList.add("hidden");
+            });
+        }
+    </script>
 </html>
