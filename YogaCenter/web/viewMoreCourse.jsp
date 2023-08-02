@@ -339,7 +339,6 @@
                             </c:if>
 
                         </h5>
-
                         <c:choose>
                             <c:when test="${listCourseAccountActive == null && user != null && information.status == 0}">
                                 <div style="margin-bottom: 10px">
@@ -386,7 +385,7 @@
                                 <p style="color: red">This course was closed.</p>
                             </c:otherwise>
                         </c:choose>
-                    </div>
+                    </div>  
                 </div>
                 <div style="width: 100%; margin-top: 20px; margin-bottom: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px">
                     <h5><strong>Objective</strong></h5>
