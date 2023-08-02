@@ -205,19 +205,16 @@
                     <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Information of Class</h2>
                     <c:set var="listSession" value="${requestScope.listSessions}"/>
                     <c:set var="date2" value="${requestScope.date2}"/>
-                    <c:set var="room" value="${requestScope.room}"/>
                     <c:set var="id" value="${requestScope.id}"/>
                     <c:set var="message" value="${requestScope.message}"/>
                     <c:set var="message1" value="${requestScope.message1}"/>
-                    <c:set var="accid" value="${requestScope.accid}"/>
                     <h3>Number of Sessions with Class</h3>
                     <c:if test="${listSession.size() > 0 && !listSession.isEmpty()}">
-                        <div style="height: 450px">
+                        <div>
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Trainer</th>
                                         <th>Room</th>
                                         <th>Time</th>
                                         <th>Date-Study</th>
@@ -228,7 +225,6 @@
                                     <c:forEach var="course" items="${listSession}" varStatus="loop">
                                         <tr>
                                             <td>${loop.count}</td>
-                                            <td style="width: 395px">${course.account}</td>
                                             <td>${course.class_name}</td>
                                             <td>
                                                 <c:if test="${course.time == 1}">
@@ -246,7 +242,7 @@
                                             </td>
                                             <td>${course.date}</td>
                                             <td>
-                                                <a href="/YogaCenter/request?action=inf&id=${course.id_class}&room=${room}&id1=${course.id_course}&acc=${accid}&option=trainerViewtrainee" class="btn btn-primary">View detail</a>
+                                                <a href="/YogaCenter/request?action=inf&id=${course.id_class}&class=${id}&option=trainerViewtrainee" class="btn btn-primary">View detail</a>
                                                 <c:if test="${course.date.before(date2)}">
                                                     <button class="btn btn-primary openButton" style="margin-bottom: 20px; float: right">Check Attendence Again</button>
                                                     <div id="overlay" class="overlay hidden"></div>
@@ -269,10 +265,10 @@
                                             </td>
                                         </tr>
                                     </c:forEach>
-                                </c:if>
-                            </tbody>
-                        </table>
-                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </c:if>
                 </div>
             </div>
             <script>

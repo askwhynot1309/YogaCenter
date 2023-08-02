@@ -369,8 +369,8 @@
         <servlet-class>Controller.InformationServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminManageClassServlet</servlet-name>
-        <servlet-class>Controller.AdminManageClassServlet</servlet-class>
+        <servlet-name>AdminJoinClassServlet</servlet-name>
+        <servlet-class>Controller.AdminJoinClassServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminJoinClassServlet</servlet-name>
@@ -383,6 +383,18 @@
     <servlet>
         <servlet-name>SubmitAttendanceDetailServlet</servlet-name>
         <servlet-class>Controller.SubmitAttendanceDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminSettingClassServlet</servlet-name>
+        <servlet-class>Controller.AdminSettingClassServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminManageClassServlet</servlet-name>
+        <servlet-class>Controller.AdminManageClassServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffManageClassesServlet</servlet-name>
+        <servlet-class>Controller.StaffManageClassesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginGoogle</servlet-name>
@@ -753,10 +765,6 @@
         <url-pattern>/InformationServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminManageClassServlet</servlet-name>
-        <url-pattern>/manageclass</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AdminJoinClassServlet</servlet-name>
         <url-pattern>/AdminJoinClassServlet</url-pattern>
     </servlet-mapping>
@@ -767,6 +775,18 @@
     <servlet-mapping>
         <servlet-name>SubmitAttendanceDetailServlet</servlet-name>
         <url-pattern>/SubmitAttendanceDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminSettingClassServlet</servlet-name>
+        <url-pattern>/setting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminManageClassServlet</servlet-name>
+        <url-pattern>/manageclass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffManageClassesServlet</servlet-name>
+        <url-pattern>/staff-manageclass</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -784,4 +804,12 @@
         <error-code>505</error-code>
         <location>/error.html</location>
     </error-page>
+    <servlet>
+        <servlet-name>SubmitAttendanceDetailServlet</servlet-name>
+        <servlet-class>Controller.SubmitAttendanceDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitAttendanceDetailServlet</servlet-name>
+        <servlet-class>Controller.SubmitAttendanceDetailServlet</servlet-class>
+    </servlet>
 </web-app>

@@ -75,6 +75,7 @@
                         </div>
                         <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Information of Course</h2>
                     <c:set var="count" value="${requestScope.count}"/>
+                    <c:set var="id" value="${requestScope.id}"/>
                     <c:set var="listSession" value="${requestScope.listSession}"/>
                     <h5><strong>Number of Trainees that join this course: </strong>${count}</h5><br><br>
                     <h3>Number of Classes with Course</h3>
@@ -82,15 +83,16 @@
                         <p style="color: red; text-align: center">There are no classes available for this course.</p>
                     </c:if>
                     <c:if test="${listSession.size() > 0 && !listSession.isEmpty()}">
-                        <div style="height: 450px">
+                        <div>
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
                                         <th>Name of course</th>
-                                        <th>Room</th>
+                                        <th>Class</th>
                                         <th>Time</th>
                                         <th>Time Slot</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -98,7 +100,7 @@
                                         <tr>
                                             <td>${loop.count}</td>
                                             <td style="width: 395px">${course.course}</td>
-                                            <td>${course.class_name}</td>
+                                            <td>YG${course.id_room}</td>
                                             <td>
                                                 <c:if test="${course.time == 1}">
                                                     9h - 11h
@@ -125,15 +127,15 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <a href="/YogaCenter/request?action=inf&id=${course.id_course}&room=${course.id_room}&option=viewDetailSession" class="btn btn-primary">View detail</a>
-                                                <a href="/YogaCenter/request?action=inf&id=${course.id_course}&room=${course.id_room}&option=ViewTraineeInClass" class="btn btn-primary">View Trainee</a>
+                                                <a href="/YogaCenter/request?action=inf&id=${course.id_room}&course=${id}&option=viewDetailSession" class="btn btn-primary">View detail</a>
+                                                <a href="/YogaCenter/request?action=inf&id=${course.id_room}&course=${id}&option=ViewTraineeInClass" class="btn btn-primary">View Trainee</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
-                                </c:if>
-                            </tbody>
-                        </table>
-                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </c:if>
                 </div>
             </div>
     </body>

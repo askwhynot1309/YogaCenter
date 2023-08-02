@@ -80,18 +80,17 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Name of course</th>
-                                    <th>Room</th>
                                     <th>Date-Start</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                             <c:forEach var="course" items="${listClass}" varStatus="loop">
                                 <tr>
                                     <td>${loop.count}</td>
-                                    <td>${course.course}</td>
                                     <td>${course.account}</td>
                                     <td>${course.date}</td>
-                                    <td><a href="/YogaCenter/request?action=inf&id=${course.id_course}&room=${course.id_class}&acc=${course.time}&option=trainerView" class="btn btn-primary"> View more</a></td>
+                                    <td><a href="/YogaCenter/request?action=inf&id=${course.id_class}&option=trainerView" class="btn btn-primary"> View more</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

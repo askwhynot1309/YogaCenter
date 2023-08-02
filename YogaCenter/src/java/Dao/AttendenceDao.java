@@ -4,13 +4,11 @@
  */
 package Dao;
 
-import Object.AccountAttendence;
 import Utils.DBUtils;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 /**
  *
@@ -18,30 +16,14 @@ import java.util.ArrayList;
  */
 public class AttendenceDao {
 
-    public static int insertDayToCheckAttendence(int idaccount, int insertClass, Date date, int status) throws Exception {
-        int kq = 0;
-        Connection cn = Utils.DBUtils.getConnection();
-        if (cn != null) {
-            String s = "insert into CheckAttendance(ID_Trainee, ID_Class, AttendanceDate, Status) values (?,?,?,?)";
-            PreparedStatement pst = cn.prepareStatement(s);
-            pst.setInt(1, idaccount);
-            pst.setInt(2, insertClass);
-            pst.setDate(3, date);
-            pst.setInt(4, status);
-            kq = pst.executeUpdate();
-            cn.close();
-        }
-        return kq;
-    }
-
     public static String attendanceStatus(int Trainee_ID, int id_room, int id_course, String DateStudy) throws Exception {
         String attendanceStatus = "";
         Connection cn = DBUtils.getConnection();
         if (cn != null) {
-            String sql = "SELECT Status \n"
-                    + "FROM Session S JOIN CheckAttendance CA ON S.SessionID = CA.ID_Class\n"
+            String sql = "SELECT T.Status \n"
+                    + "FROM Class C JOIN Session S ON S.Class = C.No_ID JOIN CheckAttendance CA ON S.SessionID = CA.ID_Class\n"
                     + "JOIN Trainee T ON T.Attendance_ID = CA.Attendance_ID\n"
-                    + "WHERE T.ID_Trainee = ? AND S.IDCourse = ? And S.Room_ID = ? AND CA.AttendanceDate = ?";
+                    + "WHERE T.ID_Trainee = ? AND C.IDCourse = ? And S.Room_ID = ? AND CA.AttendanceDate = ?";
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setInt(1, Trainee_ID);
             pst.setInt(2, id_course);
@@ -76,10 +58,10 @@ public class AttendenceDao {
         Date getdate = new Date(System.currentTimeMillis());
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select top 1 DateStudy\n"
-                    + "from Session \n"
-                    + "Where IDCourse = ? and Room_ID = ? \n"
-                    + "Order by DateStudy desc";
+            String s = "select top 1 S.DateStudy\n"
+                    + "from Class C JOIN Session S ON S.Class = C.No_ID\n"
+                    + "Where C.IDCourse = ? and S.Room_ID = ? \n"
+                    + "Order by S.DateStudy desc";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
             pst.setInt(2, room);
@@ -121,9 +103,9 @@ public class AttendenceDao {
             if (cn != null) {
 
                 String sql = "SELECT COUNT(Status) AS Progress\n"
-                        + "FROM Session S JOIN CheckAttendance CA ON S.SessionID = CA.ID_Class\n"
+                        + "FROM Class C JOIN Session S ON S.Class = C.No_ID JOIN CheckAttendance CA ON S.SessionID = CA.ID_Class\n"
                         + "JOIN Trainee T ON T.Attendance_ID = CA.Attendance_ID\n"
-                        + "WHERE T.ID_Trainee = ? AND S.IDCourse = ? AND T.Status = 1";
+                        + "WHERE T.ID_Trainee = ? AND C.IDCourse = ? AND T.Status = 1";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setInt(1, Trainee_ID);
                 pst.setInt(2, Course_ID);
@@ -139,13 +121,6 @@ public class AttendenceDao {
         }
 
         return progress;
-    }
-
-    public static ArrayList<AccountAttendence> getAttendanceByTraineeIDAndCourseID(int CourseID, int TraineeID) throws Exception {
-        ArrayList<AccountAttendence> attendList = new ArrayList<>();
-        Connection cn = DBUtils.getConnection();
-        String sql = "";
-        return attendList;
     }
 
     public static int changeDateToCheckAttendence(Date date, int idold) throws Exception {

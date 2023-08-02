@@ -5,7 +5,6 @@
 package Dao;
 
 import Object.OrderCourse;
-import Object.SlotsTrainee;
 import Utils.DBUtils;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -133,7 +132,7 @@ public class OrderCourseDao {
                     String name = table.getNString("Name");
                     String email = table.getString("Email");
                     String phone = table.getString("Phone");
-                    OrderCourse course = new OrderCourse(id_order, id_account, name, new Date(System.currentTimeMillis()) , BigDecimal.ZERO, email, new Date(System.currentTimeMillis()), phone, id, id);
+                    OrderCourse course = new OrderCourse(id_order, id_account, name, new Date(System.currentTimeMillis()), BigDecimal.ZERO, email, new Date(System.currentTimeMillis()), phone, id, id);
                     kq.add(course);
                 }
             }
@@ -460,6 +459,29 @@ public class OrderCourseDao {
                     + "JOIN StatusPayment sp ON sp.ID_Order = BC.OrderID\n"
                     + "Where BD.ID_Course = ? And (sp.Status = 1 Or sp.Status = 0) And (BD.Status_Account = 1 OR BD.Status_Account = 3)\n"
                     + "Group By BD.ID_Course";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    kq = table.getInt("Count");
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
+    public static int countTraineeInClass(int id) throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "Select Top 1 COUNT(CA.ID_Class) AS Count\n"
+                    + "from Class C JOIN Session S ON C.No_ID = S.Class\n"
+                    + "JOIN CheckAttendance CA ON CA.ID_Class = S.SessionID\n"
+                    + "JOIN Trainee T ON T.Attendance_ID = CA.Attendance_ID\n"
+                    + "Where C.No_ID = ? \n"
+                    + "Group By CA.ID_Class";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
             ResultSet table = pst.executeQuery();

@@ -169,7 +169,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div style=" align-items: center; justify-content: space-between">
-                                                <a href="/YogaCenter/request?action=inf&option=viewmore&id=${course.id_course}" class="btn btn-primary">View detail course</a>
+                                                <a href="/YogaCenter/request?action=inf&option=getInforOfClass&id=${course.id_course}" class="btn btn-primary">View detail course</a>
                                                 <c:if test="${course.status == 1}">
                                                     <c:if test="${current_date.before(course.course_start)}">
                                                         <button class="btn btn-primary open" data-dialog="dialog${status.index}">Cancel</button>

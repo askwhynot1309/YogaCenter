@@ -151,162 +151,190 @@
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Sunday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Sunday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Monday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Monday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Tuesday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Tuesday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Wednesday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Wednesday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Thursday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Thursday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Friday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Friday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Saturday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 1 && day.getDay() == 'Saturday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                         </tr>
@@ -317,162 +345,190 @@
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Sunday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Sunday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Monday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Monday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Tuesday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Tuesday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Wednesday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Wednesday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Thursday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Thursday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Friday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Friday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Saturday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 2 && day.getDay() == 'Saturday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                         </tr>
@@ -484,162 +540,190 @@
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Sunday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Sunday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Monday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Monday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Tuesday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Tuesday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Wednesday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Wednesday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Thursday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Thursday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Friday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Friday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Saturday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 3 && day.getDay() == 'Saturday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                         </tr>
@@ -650,162 +734,189 @@
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Sunday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Sunday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Monday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Monday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Tuesday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Tuesday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Wednesday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Wednesday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Thursday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Thursday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Friday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Friday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                             <td>
                                                                 <c:forEach var="day" items="${listDay}">
                                                                     <c:forEach var="acc" items="${listClass}">
-                                                                        <c:forEach var="current" items="${currentDate}">
-                                                                            <c:choose>
-                                                                                <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Saturday'}">
-                                                                                    <c:choose>
-                                                                                        <c:when test="${current.datestudy == acc.datestudy && current.status == 1}">
-                                                                                            <p style="color: red">Warning (${acc.class_name})</p>
-                                                                                            <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>
-                                                                                            <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
-                                                                                        </c:otherwise>
-                                                                                    </c:choose>
-                                                                                </c:when>
-                                                                                <c:otherwise>
-                                                                                </c:otherwise>
-                                                                            </c:choose>
-                                                                        </c:forEach>
+                                                                        <c:set var="check" value="${false}"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${acc.datestudy == day.getDate() && acc.time == 4 && day.getDay() == 'Saturday'}">
+                                                                                <c:forEach var="current" items="${currentDate}">
+                                                                                    <c:if test="${current.datestudy == acc.datestudy && current.status == 1 && acc.class_name == current.class_name}">
+                                                                                        <p style="color: red">Warning (${acc.class_name})</p>
+                                                                                        <a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffChangeClass&date=${acc.datestudy}&acc=${acc.idaccount}">Need to change room</a>
+                                                                                        <c:set var="check" value="true"/>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                                <c:if test="${check == false}">
+
+                                                                                    <p><a href="/YogaCenter/request?action=inf&id=${acc.id_class}&option=staffClassDetail&date=${acc.datestudy}&acc=${acc.idaccount}">${acc.account}(${acc.class_name})</a></p> 
+
+                                                                                </c:if>
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
                                                                     </c:forEach>
+
                                                                 </c:forEach>
                                                             </td>
                                                         </tr>

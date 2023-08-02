@@ -7,8 +7,8 @@ package Controller;
 import Object.ClassDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.sql.Date;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DELL
  */
-public class AdminManageClassServlet extends HttpServlet {
+public class AdminSettingClassServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,9 +35,9 @@ public class AdminManageClassServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             Date date = new Date(System.currentTimeMillis());
-            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.adminViewClassInCourse(date);
+            ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClass(date);
             request.setAttribute("listClass", listClass);
-            request.getRequestDispatcher("admin/adminManageClasses.jsp").forward(request, response);
+            request.getRequestDispatcher("admin/adminSettingClass.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

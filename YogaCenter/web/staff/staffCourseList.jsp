@@ -97,7 +97,7 @@
                         <p style="text-align: center"><c:out value="${nulllist}"/></p>
                     </c:if>
                     <c:if test="${listCourse != null && !listCourse.isEmpty()}">
-                        <div style="height: 550px">
+                        <div style="height: 500px">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -138,7 +138,7 @@
         const pagination = document.querySelector('.pagination ul');
         const page = document.querySelector('.pagination ul li:nth-child(2)');
 
-        const productsPerPage = 8;
+        const productsPerPage = 6;
         let currentPage = 1;
 
         function displayProducts() {

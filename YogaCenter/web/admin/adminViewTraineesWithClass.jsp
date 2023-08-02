@@ -1,8 +1,4 @@
-<%-- 
-    Document   : adminViewCourse
-    Created on : Jul 31, 2023, 5:57:15 PM
-    Author     : DELL
---%>
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -49,7 +45,6 @@
         </style>
     </head>
     <body>
-    <body>
         <c:set var="exist" value="${sessionScope.Admin}"/>
         <c:if test="${exist == null}">
             <div id="overlay" class="overlay"></div>
@@ -67,56 +62,44 @@
                     <c:import url="adminMenu.jsp"></c:import>
                     </div>
                     <div class="col-lg-9">
+                    <c:set var="idclass3" value="${requestScope.idclass3}"/>
                     <c:set var="id" value="${requestScope.id}"/>
                     <div style="height: 40px; width: 100%; margin-top: 10px; margin-bottom: 10px">
-                        <a href="/YogaCenter/request?action=inf&id=${id}&option=viewCourseTosign" class="btn">
+                        <a href="/YogaCenter/manageclass" class="btn">
                             <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
                             <span>Back</span>
                         </a>
                     </div>
-                    <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Information of Course</h2>
-                    <c:set var="room" value="${requestScope.room}"/>
-                    <c:set var="id" value="${requestScope.id}"/>
-                    <c:set var="message" value="${requestScope.message}"/>
-                    <c:set var="getAllTraineeBookingCourse" value="${requestScope.getAllTraineeBookingCourse}"/>
-                    <c:set var="getTrainee1" value="${requestScope.getTrainee1}"/>
-                    <h3>Number of Trainees with Bought Course</h3>
-                    <c:if test="${getAllTraineeBookingCourse.size() > 0 && !getAllTraineeBookingCourse.isEmpty()}">
+                    <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Information of Class</h2>
+                    <c:set var="listSessions" value="${requestScope.listSessions}"/>
+                    <h3>List trainee in Class</h3>
+                    <c:if test="${listSessions.size() == 0}">
+                        <p style="color: red; text-align: center">Don't have any Trainee in this class</p>
+                    </c:if>
+                    <c:if test="${listSessions.size() > 0 && !listTraineeInClass.isEmpty()}">
                         <div>
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th style="width: 400px">Trainee</th>
-                                        <th>Email</th>
+                                        <th>Trainee</th>
                                         <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="course" items="${getAllTraineeBookingCourse}" varStatus="loop">
+                                    <c:forEach var="course" items="${listSessions}" varStatus="loop">
                                         <tr>
                                             <td>${loop.count}</td>
-                                            <td style="width: 400px">${course.name_course}</td>
-                                            <td>${course.level}</td>
-                                            <td>${course.img}</td>
+                                            <td style="width: 395px">${course.account}</td>
+                                            <td>${course.course}</td>
+                                            <td>${course.datestudy}</td>
                                             <td>
-                                                <c:if test="${getTrainee1.size() >= 0}">
-                                                    <c:set var="isTraineeAdded" value="false" />
-                                                    <c:forEach var="trainee" items="${getTrainee1}">
-                                                        <c:if test="${trainee.idaccount == course.id_course}">
-                                                            <p style="color: red">The trainee has added in course class!</p>
-                                                            <c:set var="isTraineeAdded" value="true" />
-                                                        </c:if>
-                                                    </c:forEach>
-                                                    <c:if test="${isTraineeAdded == false}">
-                                                        <form action="/YogaCenter/request" method="POST">
-                                                            <input name="idcourse" value="${id}" hidden=""/>
-                                                            <input name="room" value="${room}" hidden=""/>
-                                                            <input name="id" value="${course.id_course}" hidden=""/>
-                                                            <button name="action" class="btn btn-primary" value="JoinClass">Join Class</button>
-                                                        </form>
-                                                    </c:if>
-                                                </c:if>
+                                                <span style="color: green">${course.time}</span>/${course.status}
+                                            </td>
+                                            <td>
+                                                <a href="/YogaCenter/request?action=inf&id=${course.idaccount}&idclass=${id}&idcourse=${idclass3}&option=adminViewTraineeInClassInformation" class="btn btn-primary">View Trainee</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -126,29 +109,5 @@
                     </c:if>
                 </div>
             </div>
-            <c:if test="${message != null}">
-                <div class="notification-success" style="z-index: 1000">
-                    <div class="content">
-                        <div class="title">Success</div>
-                        <span>Join class successfully!.</span>
-                    </div>
-                </div>
-                <script>
-                    let notification = document.querySelector('.notification-success');
-                    notification.timeOut = setTimeout(() => notification.remove(), 2000);
-                </script>
-            </c:if>
-            <c:if test="${error != null}">
-                <div class="notification" style="z-index: 1000">
-                    <div class="content">
-                        <div class="title">Error</div>
-                        <span>Class is full. Please choose the other class to set up Trainee!.</span>
-                    </div>
-                </div>
-                <script>
-                    let notification = document.querySelector('notification');
-                    notification.timeOut = setTimeout(() => notification.remove(), 2000);
-                </script>
-            </c:if>
     </body>
 </html>

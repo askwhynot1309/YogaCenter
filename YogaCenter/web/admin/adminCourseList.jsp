@@ -184,7 +184,7 @@
                         </div>
                     </div>
                     <c:if test="${listCourse != null && !listCourse.isEmpty()}">
-                        <div style="height: 500px">
+                        <div style="height: 450px">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -384,7 +384,7 @@
         const pagination = document.querySelector('.pagination ul');
         const page = document.querySelector('.pagination ul li:nth-child(2)');
 
-        const productsPerPage = 6;
+        const productsPerPage = 5;
         let currentPage = 1;
 
         function displayProducts() {

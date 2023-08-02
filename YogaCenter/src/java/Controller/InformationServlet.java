@@ -60,27 +60,43 @@ public class InformationServlet extends HttpServlet {
                     int count = Dao.OrderCourseDao.countTraineeOrderCourse(id);
                     ArrayList<ClassDetail> listSession = Dao.ClassDetailDao.getSessionsInCourse(id);
                     request.setAttribute("count", count);
-                    request.setAttribute("listSession", listSession);
                     request.setAttribute("id", id);
+                    request.setAttribute("listSession", listSession);
                     request.getRequestDispatcher("admin/adminViewCourse.jsp").forward(request, response);
                     break;
                 case "viewTrainees":
-                    int id_room = Integer.parseInt(request.getParameter("room"));
-                    int id_course = Integer.parseInt(request.getParameter("id1"));
+                    int course3 = Integer.parseInt(request.getParameter("course2"));
+                    int idclass2 = Integer.parseInt(request.getParameter("idclass"));
                     ArrayList<ClassDetail> listTraineeInClass = Dao.ClassDetailDao.getAllTraineeInClass(id);
                     request.setAttribute("listTraineeInClass", listTraineeInClass);
-                    request.setAttribute("id", id);
-                    request.setAttribute("room", id_room);
-                    request.setAttribute("id_course", id_course);
+                    request.setAttribute("course3", course3);
+                    request.setAttribute("idclass2", idclass2);
                     request.getRequestDispatcher("admin/adminViewTrainee.jsp").forward(request, response);
                     break;
+                case "adminviewTrainees":
+                    int course33 = Integer.parseInt(request.getParameter("course2"));
+                    int idclass23 = Integer.parseInt(request.getParameter("idclass"));
+                    ArrayList<ClassDetail> listTraineeInClass3 = Dao.ClassDetailDao.getAllTraineeInClass(id);
+                    request.setAttribute("listTraineeInClass", listTraineeInClass3);
+                    request.setAttribute("course3", course33);
+                    request.setAttribute("idclass2", idclass23);
+                    request.getRequestDispatcher("admin/adminViewTraineeWithCourse.jsp").forward(request, response);
+                    break;
                 case "ViewTraineeInClass":
-                    int idroom = Integer.parseInt(request.getParameter("room"));
-                    ArrayList<ClassDetail> listTraineeInClass1 = Dao.ClassDetailDao.getAllTraineeInClassWithStatus(id, idroom);
+                    int idclass3 = Integer.parseInt(request.getParameter("course"));
+                    ArrayList<ClassDetail> listTraineeInClass1 = Dao.ClassDetailDao.getAllTraineeInClassWithStatus(id);
                     request.setAttribute("listSessions", listTraineeInClass1);
                     request.setAttribute("id", id);
-                    request.setAttribute("room", idroom);
+                    request.setAttribute("idclass3", idclass3);
                     request.getRequestDispatcher("admin/adminViewTrainees.jsp").forward(request, response);
+                    break;
+                case "adminViewTraineeInClass":
+                    int idclass34 = Integer.parseInt(request.getParameter("course"));
+                    ArrayList<ClassDetail> listTraineeInClass14 = Dao.ClassDetailDao.getAllTraineeInClassWithStatus(id);
+                    request.setAttribute("listSessions", listTraineeInClass14);
+                    request.setAttribute("id", id);
+                    request.setAttribute("idclass3", idclass34);
+                    request.getRequestDispatcher("admin/adminViewTraineesWithClass.jsp").forward(request, response);
                     break;
                 case "viewCourseTosign":
                     int counts = Dao.OrderCourseDao.countTraineeOrderCourse(id);
@@ -103,21 +119,40 @@ public class InformationServlet extends HttpServlet {
                     request.getRequestDispatcher("admin/adminViewTraineeToSign.jsp").forward(request, response);
                     break;
                 case "ViewTraineeInClassInformation":
-                    int idroom1 = Integer.parseInt(request.getParameter("room"));
-                    int id_course1 = Integer.parseInt(request.getParameter("idcourse"));
-                    ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllClassDetailsByTrainee(id);
+                    int idclass4 = Integer.parseInt(request.getParameter("idclass"));
+                    int idcourse2 = Integer.parseInt(request.getParameter("idcourse"));
+                    ArrayList<ClassDetail> listClass = Dao.ClassDetailDao.getAllSessionByTrainee(id, idclass4);
                     request.setAttribute("listClass", listClass);
-                    request.setAttribute("id", id_course1);
-                    request.setAttribute("room", idroom1);
+                    request.setAttribute("id", idcourse2);
+                    request.setAttribute("idclass", idclass4);
                     request.getRequestDispatcher("admin/adminViewTraineeStatus.jsp").forward(request, response);
                     break;
+                case "adminViewTraineeInClassInformation":
+                    int idclass45 = Integer.parseInt(request.getParameter("idclass"));
+                    int idcourse25 = Integer.parseInt(request.getParameter("idcourse"));
+                    ArrayList<ClassDetail> listClass5 = Dao.ClassDetailDao.getAllSessionByTrainee(id, idclass45);
+                    request.setAttribute("listClass", listClass5);
+                    request.setAttribute("id", idcourse25);
+                    request.setAttribute("idclass", idclass45);
+                    request.getRequestDispatcher("admin/adminViewTraineeStatusWithClass.jsp").forward(request, response);
+                    break;
                 case "viewDetailSession":
-                    int idroomm = Integer.parseInt(request.getParameter("room"));
-                    ArrayList<ClassDetail> listSessions = Dao.ClassDetailDao.getSessionsInCourseWithRoom(idroomm, id);
+                    int course2 = Integer.parseInt(request.getParameter("course"));
+                    ArrayList<ClassDetail> listSessions = Dao.ClassDetailDao.getSessionsInCourseWithRoom(id);
                     request.setAttribute("listSessions", listSessions);
                     request.setAttribute("id", id);
-                    request.setAttribute("room", idroomm);
+                    request.setAttribute("course2", course2);
                     request.getRequestDispatcher("admin/adminViewSessions.jsp").forward(request, response);
+                    break;
+                case "adminviewDetailSession":
+                    int course22 = Integer.parseInt(request.getParameter("course"));
+                    int counts2 = Dao.OrderCourseDao.countTraineeInClass(id);
+                    ArrayList<ClassDetail> listSessions22 = Dao.ClassDetailDao.getSessionsInCourseWithRoom(id);
+                    request.setAttribute("listSessions", listSessions22);
+                    request.setAttribute("id", id);
+                    request.setAttribute("count", counts2);
+                    request.setAttribute("course2", course22);
+                    request.getRequestDispatcher("admin/adminViewSessionsWithClass.jsp").forward(request, response);
                     break;
                 case "infEmployee":
                     Account inf = Dao.AccountDao.getInformationOfEmployee(id);
@@ -162,6 +197,42 @@ public class InformationServlet extends HttpServlet {
                         request.setAttribute("InforClass", inform);
                         request.getRequestDispatcher("staff/staffInforClass.jsp").forward(request, response);
                     }
+                    break;
+                case "staffviewDetailSession":
+                    int staffcounts2 = Dao.OrderCourseDao.countTraineeInClass(id);
+                    int staffcourse2 = Integer.parseInt(request.getParameter("course"));
+                    ArrayList<ClassDetail> stafflistSessions = Dao.ClassDetailDao.getSessionsInCourseWithRoom(id);
+                    request.setAttribute("listSessions", stafflistSessions);
+                    request.setAttribute("id", id);
+                    request.setAttribute("count", staffcounts2);
+                    request.setAttribute("course2", staffcourse2);
+                    request.getRequestDispatcher("staff/staffViewSessions.jsp").forward(request, response);
+                    break;
+                case "staffViewTraineeInClass":
+                    int staffidclass34 = Integer.parseInt(request.getParameter("course"));
+                    ArrayList<ClassDetail> stafflistTraineeInClass14 = Dao.ClassDetailDao.getAllTraineeInClassWithStatus(id);
+                    request.setAttribute("listSessions", stafflistTraineeInClass14);
+                    request.setAttribute("id", id);
+                    request.setAttribute("idclass3", staffidclass34);
+                    request.getRequestDispatcher("staff/staffViewTraineesWithClass.jsp").forward(request, response);
+                    break;
+                case "staffViewTraineeInClassInformation":
+                    int staffidclass45 = Integer.parseInt(request.getParameter("idclass"));
+                    int staffidcourse25 = Integer.parseInt(request.getParameter("idcourse"));
+                    ArrayList<ClassDetail> stafflistClass5 = Dao.ClassDetailDao.getAllSessionByTrainee(id, staffidclass45);
+                    request.setAttribute("listClass", stafflistClass5);
+                    request.setAttribute("id", staffidcourse25);
+                    request.setAttribute("idclass", staffidclass45);
+                    request.getRequestDispatcher("staff/staffViewTraineeStatusWithClass.jsp").forward(request, response);
+                    break;
+                case "staffviewTrainees":
+                    int staffcourse33 = Integer.parseInt(request.getParameter("course2"));
+                    int staffidclass23 = Integer.parseInt(request.getParameter("idclass"));
+                    ArrayList<ClassDetail> stafflistTraineeInClass3 = Dao.ClassDetailDao.getAllTraineeInClass(id);
+                    request.setAttribute("listTraineeInClass", stafflistTraineeInClass3);
+                    request.setAttribute("course3", staffcourse33);
+                    request.setAttribute("idclass2", staffidclass23);
+                    request.getRequestDispatcher("staff/staffViewTraineeWithCourse.jsp").forward(request, response);
                     break;
                 case "staffChangeClass":
                     Date Staffdate = Date.valueOf(request.getParameter("date"));
@@ -245,27 +316,19 @@ public class InformationServlet extends HttpServlet {
                     request.getRequestDispatcher("staff/staffInforTrainee.jsp").forward(request, response);
                     break;
                 case "trainerView":
-                    int idroomm2 = Integer.parseInt(request.getParameter("room"));
-                    int accid = Integer.parseInt(request.getParameter("acc"));
                     Date date2 = new Date(System.currentTimeMillis());
-                    ArrayList<ClassDetail> listSessions2 = Dao.ClassDetailDao.getSessionsInCourseWithRoom(idroomm2, id);
+                    ArrayList<ClassDetail> listSessions2 = Dao.ClassDetailDao.getSessionsInCourseWithRoom(id);
                     request.setAttribute("listSessions", listSessions2);
                     request.setAttribute("id", id);
                     request.setAttribute("date2", date2);
-                    request.setAttribute("room", idroomm2);
-                    request.setAttribute("accid", accid);
                     request.getRequestDispatcher("trainer/trainerViewCourseInfo.jsp").forward(request, response);
                     break;
                 case "trainerViewtrainee":
-                    int id_room2 = Integer.parseInt(request.getParameter("room"));
-                    int id_course2 = Integer.parseInt(request.getParameter("id1"));
-                    int idaccount2 = Integer.parseInt(request.getParameter("acc"));
+                    int idclass = Integer.parseInt(request.getParameter("class"));
                     ArrayList<ClassDetail> listTraineeInClass2 = Dao.ClassDetailDao.getAllTraineeInClass(id);
                     request.setAttribute("listTraineeInClass", listTraineeInClass2);
                     request.setAttribute("id", id);
-                    request.setAttribute("room", id_room2);
-                    request.setAttribute("accid", idaccount2);
-                    request.setAttribute("id_course", id_course2);
+                    request.setAttribute("classid", idclass);
                     request.getRequestDispatcher("trainer/trainerViewTraineeInClass.jsp").forward(request, response);
                     break;
                 case "detailmessage":
@@ -322,6 +385,32 @@ public class InformationServlet extends HttpServlet {
                     request.setAttribute("informationEmployee", trainer);
                     request.getRequestDispatcher("trainerInformation.jsp").forward(request, response);
                     break;
+                case "viewmore":
+                    session = request.getSession();
+                    Date currentdate = new Date(System.currentTimeMillis());
+                    Course viewcoure = Dao.CourseDao.getInformationOfCourse(id);
+                    ArrayList<Course> top3Course = Dao.CourseDao.getTop3InformationOfCourse(viewcoure.getLevel());
+                    Account account = (Account) session.getAttribute("account");
+                    if (account != null) {
+                        ArrayList<OrderCourse> listCourseAccountActive = Dao.OrderCourseDao.getAllCourseThatTraineeActive(account.getIdaccount());
+                        request.setAttribute("listCourseAccountActive", listCourseAccountActive);
+                    }
+                    request.setAttribute("information", viewcoure);
+                    request.setAttribute("currentDate", currentdate);
+                    request.setAttribute("top3Course", top3Course);
+                    request.getRequestDispatcher("viewMoreCourse.jsp").forward(request, response);
+                    break;
+                case "getInforOfClass":
+                    Account accountTrainee = (Account) session.getAttribute("account");
+                    Account accTrainees = Dao.UserDao.getAccountByID(accountTrainee.getIdaccount());
+                    if(accountTrainee == null){
+                        request.setAttribute("message", "message");
+                        request.getRequestDispatcher("yourcourse").forward(request, response);
+                    }
+                    ArrayList<ClassDetail> traineeListClass = Dao.ClassDetailDao.getAllSessionByTraineeWithCourse(accountTrainee.getIdaccount(), id);
+                    request.setAttribute("traineeListClass", traineeListClass);
+                    request.setAttribute("accountTrainee", accTrainees);
+                    request.getRequestDispatcher("traineeViewDetailClass.jsp").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
