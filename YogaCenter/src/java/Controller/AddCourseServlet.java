@@ -66,7 +66,7 @@ public class AddCourseServlet extends HttpServlet {
                 int slot = Integer.parseInt(request.getParameter("slot"));
                 Date start = Date.valueOf(datestart);
                 Date close = Utils.CheckDayBeforeOneWeek.getDateBeforeOneWeek(start);
-                Date create = Utils.CheckDayBeforeThreeWeek.getDateBefore1Week(start);
+                Date create = Utils.CheckDayBeforeThreeWeek.getDateBefore3Week(start);
                 Date currentDate = new Date(System.currentTimeMillis());
                 ArrayList<Course> listCourse = Dao.CourseDao.getAllCourse();
                 ArrayList<Level> listLevel = Dao.LevelDao.getAllLevel();

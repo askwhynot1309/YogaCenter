@@ -166,13 +166,15 @@ public class DashboardDao {
         int kq = 0;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select sum(Total) AS Sum\n"
-                    + "from BookingCourse\n"
-                    + "Group by Total";
+            String s = "select sum(BC.Total) as Sum\n"
+                    + "from BookingCourse BC JOIN StatusPayment SP ON BC.OrderID = SP.ID_Order\n"
+                    + "JOIN BookingDetail BD ON BC.OrderID = BD.Order_ID\n"
+                    + "Where SP.Status = 1 and (BD.Status_Account = 1 OR BD.Status_Account = 4)\n"
+                    + "Group by BD.Quantity";
             PreparedStatement pst = cn.prepareStatement(s);
             ResultSet table = pst.executeQuery();
-            if(table != null){
-                while (table.next()) {                    
+            if (table != null) {
+                while (table.next()) {
                     BigDecimal sum = table.getBigDecimal("Sum");
                     int total = sum.intValue();
                     kq = total;

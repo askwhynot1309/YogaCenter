@@ -51,7 +51,6 @@ public class DashBoardServlet extends HttpServlet {
             int employeeCount = DashboardDao.getTotalEmployee();
             int customerCount = DashboardDao.getTotalCustomer();
             int courseCount = DashboardDao.getTotalCourse();
-            int pendingOrders = DashboardDao.getPendingOrders();
             int total = DashboardDao.getTotal();
             ArrayList<Message> message = Dao.MessageDao.getAllMessageByUserIDWithNotRead(account.getIdaccount());
             request.setAttribute("msg", message);
@@ -72,7 +71,6 @@ public class DashBoardServlet extends HttpServlet {
             request.setAttribute("employeeCount", employeeCount);
             request.setAttribute("customerCount", customerCount);
             request.setAttribute("courseCount", courseCount);
-            request.setAttribute("pendingOrders", pendingOrders);
             request.getRequestDispatcher("admin/adminDashboard.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
