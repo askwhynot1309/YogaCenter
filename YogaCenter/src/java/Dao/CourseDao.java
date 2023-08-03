@@ -704,9 +704,10 @@ public class CourseDao {
         if (cn != null) {
             String s = "select *\n"
                     + "from Course c JOIN Level l ON c.ID_Level = l.Level_ID\n"
-                    + "where Close_date <= ? and Status = 1";
+                    + "where Close_date <= ? and Status = 1 and Start_date > ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setDate(1, date);
+            pst.setDate(2, date);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
@@ -745,6 +746,8 @@ public class CourseDao {
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setNString(1, course);
             pst.setInt(2, id_level);
+            pst.setInt(3, time);
+            pst.setInt(4, choice);
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {

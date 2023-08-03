@@ -75,7 +75,7 @@
                         </a>
                     </div>
                     <h2 style="display: flex; justify-content: center; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 20px; text-transform: uppercase">Information of Course</h2>
-                    <c:set var="room" value="${requestScope.room}"/>
+                    <c:set var="idclass" value="${requestScope.idclass}"/>
                     <c:set var="id" value="${requestScope.id}"/>
                     <c:set var="message" value="${requestScope.message}"/>
                     <c:set var="getAllTraineeBookingCourse" value="${requestScope.getAllTraineeBookingCourse}"/>
@@ -112,7 +112,7 @@
                                                     <c:if test="${isTraineeAdded == false}">
                                                         <form action="/YogaCenter/request" method="POST">
                                                             <input name="idcourse" value="${id}" hidden=""/>
-                                                            <input name="room" value="${room}" hidden=""/>
+                                                            <input name="idclass" value="${idclass}" hidden=""/>
                                                             <input name="id" value="${course.id_course}" hidden=""/>
                                                             <button name="action" class="btn btn-primary" value="JoinClass">Join Class</button>
                                                         </form>

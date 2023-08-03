@@ -457,7 +457,7 @@ public class OrderCourseDao {
             String s = "Select Count(BD.ID_Course) AS Count\n"
                     + "from BookingCourse BC JOIN BookingDetail BD ON BC.OrderID = BD.Order_ID\n"
                     + "JOIN StatusPayment sp ON sp.ID_Order = BC.OrderID\n"
-                    + "Where BD.ID_Course = ? And (sp.Status = 1 Or sp.Status = 0) And (BD.Status_Account = 1 OR BD.Status_Account = 3)\n"
+                    + "Where BD.ID_Course = ? And (sp.Status = 1 Or sp.Status = 0) And (BD.Status_Account = 1 OR BD.Status_Account = 3 OR Status_Account = 4)\n"
                     + "Group By BD.ID_Course";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);

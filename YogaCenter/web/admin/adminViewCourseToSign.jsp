@@ -126,7 +126,7 @@
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <a href="/YogaCenter/request?action=inf&id=${course.id_course}&room=${course.status}&option=setup" class="btn btn-primary">Set up</a>
+                                                <a href="/YogaCenter/request?action=inf&id=${course.id_course}&idclass=${course.id_room}&option=setup" class="btn btn-primary">Set up</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

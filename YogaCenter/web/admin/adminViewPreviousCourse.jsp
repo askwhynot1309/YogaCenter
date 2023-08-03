@@ -117,14 +117,40 @@
             <article class="product">
                 <h2>${information.name_course}</h2>
                 <div class="row">
-                    <div class="col-md-4 image-box">
-                        <img src="img/${information.img_course}" alt="${information.name_course}" width="250" height="250"/>
+                    <div class="col-md-5 image-box">
+                        <img src="img/${information.img_course}" alt="${information.name_course}" width="400" height="300"/>
                     </div>
-                    <div class="col-md-8 box">
+                    <div class="col-md-7 box">
                         <h5><strong>Fee of course :</strong> ${stringPrice}.000 VNĐ</h5>
                         <h5><strong>Start-date of course :</strong> ${information.date_start}</h5>
                         <h5><strong>Slots of course :</strong> ${information.slot}</h5>
                         <h5><strong>Level of course :</strong> ${information.name_level}</h5>
+                        <h5><strong>Time :</strong>
+                            <c:if test="${information.idtime == 1}">
+                                9h - 11h
+                            </c:if>
+                            <c:if test="${information.idtime == 2}">
+                                13h - 15h
+                            </c:if>
+                            <c:if test="${information.idtime == 3}">
+                                16h - 18h
+                            </c:if>
+                            <c:if test="${information.idtime == 4}">
+                                19h - 21h
+                            </c:if>
+                        </h5>
+                        <h5><strong>Time slot :</strong>
+                            <c:if test="${information.choice == 1}">
+                                Monday - Wednesday - Friday 
+                            </c:if>
+                            <c:if test="${information.choice == 2}">
+                                Tuesday - Thursday - Saturday 
+                            </c:if>
+                            <c:if test="${information.choice == 3}">
+                                Sunday
+                            </c:if>
+
+                        </h5>
                         <a class="cartBtn" href="#">
                             <svg class="cart" fill="white" viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg>
                             Buy now

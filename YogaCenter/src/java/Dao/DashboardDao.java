@@ -5,13 +5,16 @@
 package Dao;
 
 import Utils.DBUtils;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -140,7 +143,6 @@ public class DashboardDao {
         return 0;
     }
 
-
     public static class MessageInfo {
 
         private String message;
@@ -158,5 +160,26 @@ public class DashboardDao {
         public String getSender() {
             return sender;
         }
+    }
+
+    public static int getTotal() throws Exception {
+        int kq = 0;
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "select sum(Total) AS Sum\n"
+                    + "from BookingCourse\n"
+                    + "Group by Total";
+            PreparedStatement pst = cn.prepareStatement(s);
+            ResultSet table = pst.executeQuery();
+            if(table != null){
+                while (table.next()) {                    
+                    BigDecimal sum = table.getBigDecimal("Sum");
+                    int total = sum.intValue();
+                    kq = total;
+                }
+            }
+            cn.close();
+        }
+        return kq;
     }
 }

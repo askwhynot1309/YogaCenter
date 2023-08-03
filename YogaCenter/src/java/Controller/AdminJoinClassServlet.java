@@ -33,22 +33,22 @@ public class AdminJoinClassServlet extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int id_course = Integer.parseInt(request.getParameter("idcourse"));
-            int room = Integer.parseInt(request.getParameter("room"));
+            int idclass = Integer.parseInt(request.getParameter("idclass"));
             int id = Integer.parseInt(request.getParameter("id"));
-            int checknumber = Dao.ClassDetailDao.checkNumTraineeInAClass(id_course, room);
+            int checknumber = Dao.ClassDetailDao.checkNumTraineeInAClass(id_course, idclass);
             if (checknumber < 30) {
-                int insert = Dao.ClassDetailDao.insertClassForLearn(room, id, id_course);
+                int insert = Dao.ClassDetailDao.insertClassForLearn(idclass, id, id_course);
                 if (insert == 1) {
                     boolean createMessage = Dao.MessageDao.createRequestChangeClass(1, "The admin has set up class for you. Please view schedule to attend class", id, 0, new Date(System.currentTimeMillis()), "Setup Class");
                     request.setAttribute("message", "message");
-                    request.getRequestDispatcher("/request?action=inf&id=" + id_course + "&room=" + room + "&option=setup").forward(request, response);
+                    request.getRequestDispatcher("/request?action=inf&id=" + id_course + "&option=setup").forward(request, response);
                 } else {
                     request.setAttribute("error", "message");
-                    request.getRequestDispatcher("/request?action=inf&id=" + id_course + "&room=" + room + "&option=setup").forward(request, response);
+                    request.getRequestDispatcher("/request?action=inf&id=" + id_course + "&option=setup").forward(request, response);
                 }
             } else {
                 request.setAttribute("error", "message");
-                request.getRequestDispatcher("/request?action=inf&id=" + id_course + "&room=" + room + "&option=setup").forward(request, response);
+                request.getRequestDispatcher("/request?action=inf&id=" + id_course + "&option=setup").forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();

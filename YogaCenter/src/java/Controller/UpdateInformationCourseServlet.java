@@ -45,11 +45,6 @@ public class UpdateInformationCourseServlet extends HttpServlet {
             String oldimg = request.getParameter("oldimg");
             Part filePart = request.getPart("img");
             String fileName = filePart.getSubmittedFileName();
-            String imagePath = "D:/YogaCenter/YogaCenter/web/img";
-            File file = new File(imagePath + File.separator + fileName);
-            if (!file.exists()) {
-                filePart.write(file.getAbsolutePath());
-            }
             String description = request.getParameter("course_description");
             String objective = request.getParameter("course_object");
             String summary = request.getParameter("course_summary");
@@ -62,6 +57,11 @@ public class UpdateInformationCourseServlet extends HttpServlet {
                     request.getRequestDispatcher("InformationServlet?id=" + id + "&option=infCourse").forward(request, response);
                 }
             } else {
+                String imagePath = "D:/YogaCenter/YogaCenter/web/img";
+                File file = new File(imagePath + File.separator + fileName);
+                if (!file.exists()) {
+                    filePart.write(file.getAbsolutePath());
+                }
                 int updateCourse = Dao.CourseDao.updateCourse(id, fileName, fee, description, objective, summary, slot);
                 if (updateCourse == 1) {
                     request.setAttribute("success", "Update mới khoá học thành công");

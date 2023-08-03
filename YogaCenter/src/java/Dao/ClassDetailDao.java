@@ -215,7 +215,7 @@ public class ClassDetailDao {
         ClassDetail kq = null;
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "Select C.IDCourse, S.Room_ID\n"
+            String s = "Select C.IDCourse, S.Class\n"
                     + "From Session S JOIN Class C ON S.Class = C.No_ID\n"
                     + "Where S.SessionID = ?";
             PreparedStatement pst = cn.prepareStatement(s);
@@ -224,7 +224,7 @@ public class ClassDetailDao {
             if (table != null) {
                 while (table.next()) {
                     int id_course = table.getInt("IDCourse");
-                    int room = table.getInt("Room_ID");
+                    int room = table.getInt("Class");
                     kq = new ClassDetail(room, "", 0, Date.valueOf(LocalDate.now()), "", id_course, "", 0);
                 }
             }
@@ -318,7 +318,7 @@ public class ClassDetailDao {
             String s = "select CA.Attendance_ID\n"
                     + "from Class C JOIN Session S ON C.No_ID = S.Class\n"
                     + "JOIN CheckAttendance CA ON CA.ID_Class = S.SessionID\n"
-                    + "where S.Room_ID = ? and C.IDCourse = ?";
+                    + "where S.Class = ? and C.IDCourse = ?";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, room_id);
             pst.setInt(2, id_course);
@@ -382,7 +382,7 @@ public class ClassDetailDao {
                     kq = pst2.executeUpdate();
                     if (kq == 1) {
                         String s3 = "Select Top 1 SessionID, DateStudy\n"
-                                + "From Class\n"
+                                + "From Session\n"
                                 + "Order by SessionID Desc";
                         PreparedStatement pst3 = cn.prepareStatement(s3);
                         ResultSet table2 = pst3.executeQuery();
@@ -819,11 +819,11 @@ public class ClassDetailDao {
         ArrayList<ClassDetail> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
         if (cn != null) {
-            String s = "select S.Class, C.IDCourse, COU.Course_Name, A.Name, COU.IDtime, COU.Choice, S.Room_ID\n"
+            String s = "select S.Class, C.IDCourse, COU.Course_Name, A.Name, COU.IDtime, COU.Choice\n"
                     + "from Class C JOIN Session S ON C.No_ID = S.Class JOIN Course COU ON C.IDCourse = COU.Course_ID\n"
                     + "JOIN Account A ON A.ID_Account = C.ID_Account\n"
                     + "Where C.IDCourse = ?\n"
-                    + "GROUP BY S.Class, C.IDCourse, COU.Course_Name, A.Name, COU.IDtime, COU.Choice, S.Room_ID";
+                    + "GROUP BY S.Class, C.IDCourse, COU.Course_Name, A.Name, COU.IDtime, COU.Choice";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
             ResultSet table = pst.executeQuery();
@@ -834,9 +834,8 @@ public class ClassDetailDao {
                     int Course_ID = table.getInt("IDCourse");
                     int choice = table.getInt("Choice");
                     int time = table.getInt("IDtime");
-                    int room_id = table.getInt("Room_ID");
                     String Course_name = table.getString("Course_Name");
-                    ClassDetail classdetails = new ClassDetail(1, Room_ID, "", "", choice, Account_name, Course_ID, room_id, Course_name, time);
+                    ClassDetail classdetails = new ClassDetail(1, Room_ID, "", "", choice, Account_name, Course_ID, 1, Course_name, time);
                     kq.add(classdetails);
                 }
             }
@@ -1059,7 +1058,7 @@ public class ClassDetailDao {
                 String sql = "SELECT Distinct Count(T.Attendance_ID) AS Count\n"
                         + "FROM Session S JOIN Class C ON S.Class = C.No_ID JOIN CheckAttendance CA ON S.SessionID = CA.ID_Class\n"
                         + "JOIN Trainee T ON T.Attendance_ID = CA.Attendance_ID\n"
-                        + "Where C.IDCourse = ? AND S.Room_ID = ?\n"
+                        + "Where C.IDCourse = ? AND and S.Class = ?\n"
                         + "GROUP BY T.Attendance_ID";
                 PreparedStatement pst = cn.prepareStatement(sql);
                 pst.setInt(1, idcourse);

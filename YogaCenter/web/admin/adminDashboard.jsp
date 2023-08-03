@@ -1,6 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <!DOCTYPE html>
 <html style="overflow-y: scroll">
 
@@ -111,8 +112,11 @@
                                     <div class="card-body border d-flex align-items-center" style="height: 150px">
                                         <i class="fas fa-shopping-cart fa-3x text-warning" style="margin-right: 5px;"></i>
                                         <div>
-                                            <h5 class="card-title mb-1">Pending Orders</h5>
-                                            <h2 class="card-title mb-0">${requestScope.pendingOrders}</h2>
+                                            <h5 class="card-title mb-1">Total</h5>
+                                            <fmt:setLocale value="vi_VN" />
+                                            <fmt:setBundle basename="java.text.resources.LocaleElements" />
+                                            <fmt:formatNumber value="${requestScope.total}" var="stringPrice" />
+                                            <h2 class="card-title mb-0">${stringPrice}.000 VNĐ</h2> 
                                         </div>
                                     </div>
                                 </div>

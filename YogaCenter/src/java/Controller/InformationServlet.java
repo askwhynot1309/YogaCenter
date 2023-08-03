@@ -107,13 +107,13 @@ public class InformationServlet extends HttpServlet {
                     request.getRequestDispatcher("admin/adminViewCourseToSign.jsp").forward(request, response);
                     break;
                 case "setup":
-                    int idroom2 = Integer.parseInt(request.getParameter("room"));
+                    int idclass345 = Integer.parseInt(request.getParameter("idclass"));
                     boolean check2 = false;
                     ArrayList<OrderCourse> getAllTraineeBookingCourse = Dao.OrderCourseDao.getTraineeBoughtCourse(id);
                     ArrayList<ClassDetail> getTrainee1 = Dao.ClassDetailDao.getAllTraineeWithCourse(id);
-                    request.setAttribute("room", idroom2);
                     request.setAttribute("isTraineeAdded", check2);
                     request.setAttribute("id", id);
+                    request.setAttribute("idclass", idclass345);
                     request.setAttribute("getAllTraineeBookingCourse", getAllTraineeBookingCourse);
                     request.setAttribute("getTrainee1", getTrainee1);
                     request.getRequestDispatcher("admin/adminViewTraineeToSign.jsp").forward(request, response);

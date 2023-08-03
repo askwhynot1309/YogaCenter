@@ -60,7 +60,7 @@ public class AttendenceDao {
         if (cn != null) {
             String s = "select top 1 S.DateStudy\n"
                     + "from Class C JOIN Session S ON S.Class = C.No_ID\n"
-                    + "Where C.IDCourse = ? and S.Room_ID = ? \n"
+                    + "Where C.IDCourse = ? and S.Class = ? \n"
                     + "Order by S.DateStudy desc";
             PreparedStatement pst = cn.prepareStatement(s);
             pst.setInt(1, id);
