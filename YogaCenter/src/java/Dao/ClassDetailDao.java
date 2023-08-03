@@ -382,7 +382,7 @@ public class ClassDetailDao {
                     kq = pst2.executeUpdate();
                     if (kq == 1) {
                         String s3 = "Select Top 1 SessionID, DateStudy\n"
-                                + "From Class\n"
+                                + "From Session\n"
                                 + "Order by SessionID Desc";
                         PreparedStatement pst3 = cn.prepareStatement(s3);
                         ResultSet table2 = pst3.executeQuery();
