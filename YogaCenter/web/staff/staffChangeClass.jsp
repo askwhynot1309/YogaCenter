@@ -93,6 +93,7 @@
                     <c:set var="roomlist" value="${requestScope.roomlist}"/>
                     <c:set var="timelist" value="${requestScope.timelist}"/>
                     <c:set var="wrongDate" value="${requestScope.wrongDate}"/>
+                    <c:set var="wrong" value="${requestScope.wrong}"/>
                     <c:set var="success" value="${requestScope.success}"/>
                     <c:set var="theSame" value="${requestScope.theSame}"/>
                     <h3 style="display: flex; margin-bottom: 20px; font-family: monospace;font-weight: 700; margin-top: 30px; text-transform: uppercase; background-color: #3b83f65f; color: #0071e2; padding: 10px">Change class</h3>
@@ -158,6 +159,19 @@
                 <div class="content">
                     <div class="title">Error</div>
                     <span>Set up date wrong. Date was over !</span>
+                </div>
+                <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification-date');
+                notification.timeOut = setTimeout(() => notification.remove(), 5000);
+            </script>
+        </c:if>
+        <c:if test="${wrong != null}">
+            <div class="notification-date">
+                <div class="content">
+                    <div class="title">Error</div>
+                    <span>Please fill date to change room !</span>
                 </div>
                 <i class="fa-solid fa-xmark" onclick="(this.parentElement).remove()"></i>
             </div>

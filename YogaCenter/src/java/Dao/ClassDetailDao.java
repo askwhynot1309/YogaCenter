@@ -1113,7 +1113,7 @@ public class ClassDetailDao {
             ResultSet table = pst.executeQuery();
             if (table != null) {
                 while (table.next()) {
-                    int Class_ID = table.getInt("Class_ID");
+                    int Class_ID = table.getInt("SessionID");
                     int Room_ID = table.getInt("Room_ID");
                     String DateStudy = table.getString("DateStudy");
                     int IDCourse = table.getInt("IDCourse");

@@ -280,6 +280,7 @@
         <c:set var="addsuccess" value="${requestScope.addsuccess}"></c:set>
         <c:set var="ErrorMessage" value="${requestScope.ErrorMessage}"></c:set>
         <c:set var="wrong" value="${requestScope.wrong}"></c:set>
+        <c:set var="thesametime" value="${requestScope.thesametime}"></c:set>
         <c:set var="message" value="${requestScope.message}"></c:set>
         <c:set var="currentdate" value="${requestScope.currentDate}"></c:set>
         <c:set var="user" value="${sessionScope.account}"/>
@@ -419,8 +420,8 @@
                                                     </button>
                                                 </div>
                                             </c:when>
-                                                <c:otherwise>
-                                                    <div style="position: absolute; bottom: 10px; width: 90%">
+                                            <c:otherwise>
+                                                <div style="position: absolute; bottom: 10px; width: 90%">
                                                     <a class="fancy" href="/YogaCenter/request?action=inf&option=viewmore&id=${course.idCourse}">
                                                         <span class="top-key"></span>
                                                         <span class="text">View more</span>
@@ -433,7 +434,7 @@
                                                         </a>
                                                     </button>
                                                 </div>
-                                                </c:otherwise>
+                                            </c:otherwise>
                                         </c:choose>
                                     </div>
                                 </div>
@@ -467,7 +468,19 @@
                 notification.timeOut = setTimeout(() => notification.remove(), 2000);
             </script>
         </c:if>
-            <c:if test="${message != null}">
+        <c:if test="${thesametime != null}">
+            <div class="notification" style="z-index: 1000; height: 100px">
+                <div class="content">
+                    <div class="title">Error</div>
+                    <span>The course start time has coincided with your current class.</span>
+                </div>
+            </div>
+            <script>
+                let notification = document.querySelector('.notification');
+                notification.timeOut = setTimeout(() => notification.remove(), 4000);
+            </script>
+        </c:if>
+        <c:if test="${message != null}">
             <div class="notification" style="z-index: 1000">
                 <div class="content">
                     <div class="title">Error</div>

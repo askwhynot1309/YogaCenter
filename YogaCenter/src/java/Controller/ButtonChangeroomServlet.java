@@ -46,26 +46,31 @@ public class ButtonChangeroomServlet extends HttpServlet {
             if (account == null) {
                 request.getRequestDispatcher("viewschedule").forward(request, response);
             }
-            String date = request.getParameter("newdate");
             String date2 = request.getParameter("olddate");
-            Date newdate = Date.valueOf(date);
+            String date = request.getParameter("newdate");
             Date olddate = Date.valueOf(date2);
-            Date currentDate = new Date(System.currentTimeMillis());
-            if (newdate.before(newdate)) {
-                request.setAttribute("wrongDate", "message");
+            if (date == "") {
+                request.setAttribute("wrong", "message");
+                request.getRequestDispatcher("/request?action=inf&id=" + id + "&option=staffChangeClass&date=" + olddate + "&acc=" + idaccount).forward(request, response);
             } else {
-                ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(newdate, room);
-                if (check == null) {
-                    int update = Dao.ClassDetailDao.deleteDateTimeRoomWithProblemAndChange(id, newdate, room);
-                    if (update == 1) {
-                        int updatedate = Dao.AttendenceDao.changeDateToCheckAttendence(newdate, id);
-                        for (Account account1 : listTrainerAndTrainee) {
-                            boolean insertMessageForTrainerAndTraineeToChangeClass = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "Your classroom must be changed new classroom because of some problems. Please view your schedule to join clasroom.", account1.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Message");
-                        }
-                        request.setAttribute("success", "message");
-                    }
+                Date newdate = Date.valueOf(date);
+                Date currentDate = new Date(System.currentTimeMillis());
+                if (newdate.before(newdate)) {
+                    request.setAttribute("wrongDate", "message");
                 } else {
-                    request.setAttribute("theSame", "message");
+                    ClassDetail check = Dao.ClassDetailDao.checkRoomTimeDateHasTheSame(newdate, room);
+                    if (check == null) {
+                        int update = Dao.ClassDetailDao.deleteDateTimeRoomWithProblemAndChange(id, newdate, room);
+                        if (update == 1) {
+                            int updatedate = Dao.AttendenceDao.changeDateToCheckAttendence(newdate, id);
+                            for (Account account1 : listTrainerAndTrainee) {
+                                boolean insertMessageForTrainerAndTraineeToChangeClass = Dao.MessageDao.createRequestChangeClass(account.getIdaccount(), "Your classroom must be changed new classroom because of some problems. Please view your schedule to join clasroom.", account1.getIdaccount(), 0, new Date(System.currentTimeMillis()), "Message");
+                            }
+                            request.setAttribute("success", "message");
+                        }
+                    } else {
+                        request.setAttribute("theSame", "message");
+                    }
                 }
             }
             request.getRequestDispatcher("/request?action=inf&id=" + id + "&option=staffChangeClass&date=" + olddate + "&acc=" + idaccount).forward(request, response);

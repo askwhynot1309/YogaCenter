@@ -114,6 +114,42 @@ public class OrderCourseDao {
         return kq;
     }
 
+    public static ArrayList<OrderCourse> getAllCourseTraineeLearnWithTheSameTime(int id, Date date, int idtime, int choice) throws Exception {
+        ArrayList<OrderCourse> kq = new ArrayList<>();
+        Connection cn = Utils.DBUtils.getConnection();
+        if (cn != null) {
+            String s = "SELECT *\n"
+                    + "from Course COU JOIN BookingDetail BD ON COU.Course_ID = BD.ID_Course\n"
+                    + "JOIN BookingCourse BC ON BC.OrderID  = BD.Order_ID\n"
+                    + "JOIN Class C ON C.IDCourse = COU.Course_ID\n"
+                    + "JOIN Session S ON S.Class = C.No_ID\n"
+                    + "Where BD.Status_Account = 1 and BC.ID_Trainee = ? and S.DateStudy = ? and COU.IDtime = ? and COU.Choice = ?";
+            PreparedStatement pst = cn.prepareStatement(s);
+            pst.setInt(1, id);
+            pst.setDate(2, date);
+            pst.setInt(3, idtime);
+            pst.setInt(4, choice);
+            ResultSet table = pst.executeQuery();
+            if (table != null) {
+                while (table.next()) {
+                    int id_course = table.getInt("ID_Course");
+                    int id_order = table.getInt("OrderID");
+                    int slot = table.getInt("Slot");
+                    String course_name = table.getNString("Course_Name");
+                    Date date_order = table.getDate("DateOrder");
+                    Date date_start = table.getDate("Start_date");
+                    BigDecimal fee = table.getBigDecimal("Course_Fee");
+                    String img = table.getString("Img");
+                    int status = table.getInt("Status_Account");
+                    OrderCourse coursedetail = new OrderCourse(id_order, id_course, course_name, date_order, fee, "", date_start, img, slot, status);
+                    kq.add(coursedetail);
+                }
+            }
+            cn.close();
+        }
+        return kq;
+    }
+
     public static ArrayList<OrderCourse> getTraineeBoughtCourse(int id) throws Exception {
         ArrayList<OrderCourse> kq = new ArrayList<>();
         Connection cn = Utils.DBUtils.getConnection();
